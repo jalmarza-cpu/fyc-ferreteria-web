@@ -6,12 +6,11 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '0.0.0.0',
     port: 8080,
+    host: true,
   },
   preview: {
-    host: '0.0.0.0',
     port: 8080,
-    allowedHosts: true, // Permite cualquier host, necesario para Cloud Run
+    host: true,
   },
 });
