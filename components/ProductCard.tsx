@@ -218,8 +218,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     <ShoppingCart className="w-4 h-4" />
                     <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">
                        {pricingMode === 'wholesale' 
-                          ? `Agregar Pack (${MIN_WHOLESALE_QTY})` 
-                          : 'Agregar 1 Unidad'}
+                          ? 'AGREGAR PACK' 
+                          : 'AGREGAR'}
                     </span>
                   </motion.div>
                 )}

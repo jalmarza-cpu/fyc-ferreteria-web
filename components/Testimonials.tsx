@@ -7,25 +7,25 @@ const TESTIMONIALS = [
   {
     id: 1,
     name: "Juan Carlos Muñoz",
-    role: "Contratista Civil",
+    role: "Jefe de Obra",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
-    quote: "La rapidez del despacho es impresionante. Pedí los materiales en la mañana y en la tarde ya estaban en la obra. Eso es oro para nosotros.",
+    quote: "Pedí 3 taladros y llegaron al día siguiente a la obra con la factura lista. Excelente servicio.",
     highlight: "Rapidez Extrema"
   },
   {
     id: 2,
     name: "Roberto 'Tito' González",
-    role: "Maestro Pintor",
+    role: "Contratista General",
     image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&q=80&w=200",
-    quote: "Coticé en las grandes tiendas y acá me ahorré casi un 20% comprando la tineta por mayor. La calidad es profesional, nada aguado.",
+    quote: "Cotización formal rápida. Los precios mayoristas son reales, se nota el ahorro en el total final.",
     highlight: "Precio Justo"
   },
   {
     id: 3,
     name: "Patricio Araya",
-    role: "Soldador Calificado",
+    role: "Dueño de Casa",
     image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=200",
-    quote: "Herramientas de verdad. Compré el esmeril angular y aguanta la faena dura sin calentarse. Se ganaron mi confianza.",
+    quote: "Necesitaba asesoría para un proyecto personal y me atendieron por WhatsApp como a un profesional.",
     highlight: "Calidad Industrial"
   }
 ];

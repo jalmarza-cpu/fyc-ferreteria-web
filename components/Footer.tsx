@@ -8,7 +8,7 @@ interface FooterProps {
   onNavigate: (section: string) => void;
 }
 
-const Footer: React.FC<FooterProps> = () => {
+const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const [formData, setFormData] = useState({ email: '', phone: '' });
   const [errors, setErrors] = useState({ email: '', phone: '' });
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success'>('idle');
@@ -59,41 +59,34 @@ const Footer: React.FC<FooterProps> = () => {
     }
   };
 
-  // Helper to handle scrolling for hash links if on home, or navigate home then scroll
-  const handleScrollLink = (id: string) => {
-      // Logic handled nicely by Home component usually, but here we can force a nav to / then scroll
-      // Simple implementation:
-      window.location.href = `/#${id}`;
-  };
-
   return (
     <footer className="bg-[#050505] border-t border-[#222] text-neutral-400 pt-16 pb-8">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
         
-        {/* Top Section */}
+        {/* Top Section: Sección de Confianza */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 border-b border-[#1A1A1A]">
           <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFD700]/50 transition-colors">
             <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFD700] transition-colors duration-300">
                <Truck className="w-8 h-8 text-[#FFD700] group-hover:text-black transition-colors" />
             </div>
-            <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Envíos en 24h</h4>
-            <p className="text-xs text-neutral-500">Despacho express para mantener tu obra en movimiento.</p>
+            <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Despacho a Faena y Domicilio</h4>
+            <p className="text-xs text-neutral-500">Logística optimizada para mantener tu obra en movimiento.</p>
           </div>
           
           <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFD700]/50 transition-colors">
             <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFD700] transition-colors duration-300">
               <ShieldCheck className="w-8 h-8 text-[#FFD700] group-hover:text-black transition-colors" />
             </div>
-            <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Garantía de Calidad</h4>
-            <p className="text-xs text-neutral-500">Productos certificados y 100% garantizados.</p>
+            <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Garantía Legal 6 Meses</h4>
+            <p className="text-xs text-neutral-500">Productos certificados y protegidos por ley del consumidor.</p>
           </div>
           
           <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFD700]/50 transition-colors">
             <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFD700] transition-colors duration-300">
               <Headphones className="w-8 h-8 text-[#FFD700] group-hover:text-black transition-colors" />
             </div>
-            <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Asesoría Técnica</h4>
-            <p className="text-xs text-neutral-500">Expertos listos para resolver tus dudas por WhatsApp.</p>
+            <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Atención Técnica por WhatsApp</h4>
+            <p className="text-xs text-neutral-500">Expertos listos para resolver tus dudas técnicas en minutos.</p>
           </div>
         </div>
 
@@ -106,7 +99,7 @@ const Footer: React.FC<FooterProps> = () => {
                 <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-600">Soluciones en Ferretería</span>
              </div>
              <p className="text-xs leading-relaxed max-w-xs">
-               Tu socio estratégico en construcción. Herramientas profesionales y materiales de primera calidad al mejor precio del mercado.
+               Tu ferretería técnica de confianza. Precios netos y con IVA claros desde el principio.
              </p>
              <div className="flex gap-4 pt-4">
                <a href="#" className="w-10 h-10 bg-[#1A1A1A] flex items-center justify-center hover:bg-[#FFD700] hover:text-black transition-all rounded-full border border-[#333]">
@@ -118,7 +111,7 @@ const Footer: React.FC<FooterProps> = () => {
              </div>
           </div>
 
-          {/* Quick Links - NOW USING REACT ROUTER LINK */}
+          {/* Quick Links */}
           <div>
             <h3 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-l-2 border-[#FFD700] pl-4">Navegación</h3>
             <ul className="space-y-4 text-xs font-bold uppercase tracking-wider">
@@ -240,7 +233,7 @@ const Footer: React.FC<FooterProps> = () => {
           </div>
         </div>
 
-        {/* Copyright & Legal Links - NOW USING LINK */}
+        {/* Copyright & Legal Links */}
         <div className="border-t border-[#1A1A1A] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest">
           <p>© 2026 F y C Spa. Ferretería Industrial.</p>
           <div className="flex flex-wrap justify-center gap-6 text-neutral-600">

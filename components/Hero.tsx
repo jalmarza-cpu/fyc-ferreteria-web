@@ -43,14 +43,14 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
              </div>
 
              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.1] tracking-tighter font-industrial text-white mb-2 drop-shadow-2xl">
-               Todo para <br/>
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">Tu Proyecto</span>
+               EL SOCIO DE TU OBRA: <br/>
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">PRECIOS MAYORISTAS Y RAPIDEZ</span>
              </h1>
 
              {/* NUEVO SUBTÍTULO: CLARIDAD EN EL MODELO DE NEGOCIO */}
              <h2 className="text-xl md:text-2xl text-neutral-300 font-bold uppercase tracking-widest mb-6 flex items-center gap-3">
                <span className="w-8 h-[2px] bg-[#FFD700]"></span>
-               Venta al Detalle y al Por Mayor
+               VENTA TÉCNICA INDUSTRIAL
              </h2>
           </motion.div>
           
@@ -60,7 +60,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-base md:text-xl text-neutral-300 font-medium max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6"
           >
-            Abastecimiento técnico para maestros que no pueden parar. Herramientas, materiales y fijaciones con despacho express a obra.
+            Herramientas y materiales técnicos. Cotiza formalmente con Factura o Boleta en segundos. Despachos a todo Chile.
           </motion.p>
           
           <motion.div 
@@ -73,7 +73,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
               onClick={onCatalogClick}
               className="group bg-[#FFD700] text-black px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_40px_rgba(255,215,0,0.6)] font-industrial flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
             >
-              Ver Catálogo
+              VER CATÁLOGO COMPLETO
               <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
             </button>
             
