@@ -50,7 +50,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
              {/* NUEVO SUBTÍTULO: CLARIDAD EN EL MODELO DE NEGOCIO */}
              <h2 className="text-xl md:text-2xl text-neutral-300 font-bold uppercase tracking-widest mb-6 flex items-center gap-3">
                <span className="w-8 h-[2px] bg-[#FFD700]"></span>
-               VENTA TÉCNICA INDUSTRIAL
+               HERRAMIENTAS Y MATERIALES DE CONSTRUCCIÓN
              </h2>
           </motion.div>
           
