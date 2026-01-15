@@ -1,23 +1,24 @@
 
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Truck, ShieldCheck, FileText, ArrowLeft, CheckCircle2, AlertTriangle, Scale, CreditCard } from 'lucide-react';
 
 interface LegalPageProps {
-  onBack: () => void;
+  onBack: () => void; // Kept for prop compatibility if needed, but unused in favor of Link
 }
 
 // ------------------------------------------------------------------
 // 1. POLÍTICAS DE DESPACHO (/despachos)
 // ------------------------------------------------------------------
-export const ShippingPolicy: React.FC<LegalPageProps> = ({ onBack }) => {
+export const ShippingPolicy: React.FC<LegalPageProps> = () => {
   useEffect(() => window.scrollTo(0, 0), []);
   
   return (
-    <div className="bg-[#050505] min-h-screen py-12 px-6 md:px-12 text-neutral-300">
+    <div className="bg-[#050505] min-h-screen py-12 pt-32 px-6 md:px-12 text-neutral-300">
       <div className="max-w-4xl mx-auto">
-        <button onClick={onBack} className="flex items-center gap-2 text-[#FFD700] hover:text-white mb-8 transition-colors font-bold uppercase text-xs tracking-widest">
+        <Link to="/" className="inline-flex items-center gap-2 text-[#FFD700] hover:text-white mb-8 transition-colors font-bold uppercase text-xs tracking-widest">
           <ArrowLeft className="w-4 h-4" /> Volver al Inicio
-        </button>
+        </Link>
         
         <div className="flex items-center gap-4 mb-8 border-b border-[#222] pb-6">
           <div className="p-3 bg-[#111] border border-[#333] rounded-xl">
@@ -89,15 +90,15 @@ export const ShippingPolicy: React.FC<LegalPageProps> = ({ onBack }) => {
 // ------------------------------------------------------------------
 // 2. CAMBIOS Y DEVOLUCIONES (/devoluciones)
 // ------------------------------------------------------------------
-export const ReturnsPolicy: React.FC<LegalPageProps> = ({ onBack }) => {
+export const ReturnsPolicy: React.FC<LegalPageProps> = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   return (
-    <div className="bg-[#050505] min-h-screen py-12 px-6 md:px-12 text-neutral-300">
+    <div className="bg-[#050505] min-h-screen py-12 pt-32 px-6 md:px-12 text-neutral-300">
       <div className="max-w-4xl mx-auto">
-        <button onClick={onBack} className="flex items-center gap-2 text-[#FFD700] hover:text-white mb-8 transition-colors font-bold uppercase text-xs tracking-widest">
+        <Link to="/" className="inline-flex items-center gap-2 text-[#FFD700] hover:text-white mb-8 transition-colors font-bold uppercase text-xs tracking-widest">
           <ArrowLeft className="w-4 h-4" /> Volver al Inicio
-        </button>
+        </Link>
         
         <div className="flex items-center gap-4 mb-8 border-b border-[#222] pb-6">
           <div className="p-3 bg-[#111] border border-[#333] rounded-xl">
@@ -172,15 +173,15 @@ export const ReturnsPolicy: React.FC<LegalPageProps> = ({ onBack }) => {
 // ------------------------------------------------------------------
 // 3. TÉRMINOS Y CONDICIONES (/terminos)
 // ------------------------------------------------------------------
-export const TermsAndConditions: React.FC<LegalPageProps> = ({ onBack }) => {
+export const TermsAndConditions: React.FC<LegalPageProps> = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   return (
-    <div className="bg-[#050505] min-h-screen py-12 px-6 md:px-12 text-neutral-300">
+    <div className="bg-[#050505] min-h-screen py-12 pt-32 px-6 md:px-12 text-neutral-300">
       <div className="max-w-4xl mx-auto">
-        <button onClick={onBack} className="flex items-center gap-2 text-[#FFD700] hover:text-white mb-8 transition-colors font-bold uppercase text-xs tracking-widest">
+        <Link to="/" className="inline-flex items-center gap-2 text-[#FFD700] hover:text-white mb-8 transition-colors font-bold uppercase text-xs tracking-widest">
           <ArrowLeft className="w-4 h-4" /> Volver al Inicio
-        </button>
+        </Link>
         
         <div className="flex items-center gap-4 mb-8 border-b border-[#222] pb-6">
           <div className="p-3 bg-[#111] border border-[#333] rounded-xl">

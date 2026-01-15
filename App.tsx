@@ -1,5 +1,6 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck, FileText, Receipt, User, Building2, MapPin, Phone, ArrowLeft, Send } from 'lucide-react';
 import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE } from './constants';
@@ -124,7 +125,7 @@ const ScrollToTopButton = () => {
     );
 };
 
-// --- CART DRAWER (UPDATED WITH CHECKOUT FORM) ---
+// --- CART DRAWER ---
 const CartDrawer = () => {
   const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal } = useCartStore();
   const [step, setStep] = useState<'cart' | 'checkout'>('cart');
@@ -141,13 +142,11 @@ const CartDrawer = () => {
     giro: ''
   });
 
-  // Configuración de Envío Gratis
   const FREE_SHIPPING_THRESHOLD = 100000;
   const currentTotal = getTotal();
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - currentTotal);
   const progressPercentage = Math.min((currentTotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
 
-  // Reset step on close
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => setStep('cart'), 300);
@@ -163,14 +162,11 @@ const CartDrawer = () => {
   };
 
   const handleWhatsAppCheckout = () => {
-    // 1. Validaciones Básicas (Nombre y Teléfono son obligatorios siempre)
     if (!formData.name || !formData.phone) {
       alert("Por favor completa tu nombre y teléfono.");
       return;
     }
 
-    // 2. Validación Específica para Factura
-    // Solo validamos RUT y Razón Social si el usuario quiere Factura explícitamente.
     if (docType === 'factura') {
         if (!formData.rut || !formData.razonSocial) {
             alert("Para solicitar FACTURA, el RUT y la Razón Social son obligatorios.");
@@ -178,12 +174,9 @@ const CartDrawer = () => {
         }
     }
 
-    // 3. Construcción del Mensaje Profesional
     let message = `*SOLICITUD DE PEDIDO / COTIZACIÓN*\n`;
     message += `--------------------------------\n`;
-    // Encabezado dinámico: La verdad única es 'docType'
     message += `📋 *DOCUMENTO:* ${docType === 'factura' ? 'FACTURA' : 'BOLETA'}\n`;
-    
     message += `👤 *CLIENTE:* ${formData.name}\n`;
     message += `📱 *TEL:* ${formData.phone}\n`;
     
@@ -191,8 +184,6 @@ const CartDrawer = () => {
         message += `📍 *DESPACHO:* ${formData.address}${formData.region ? `, ${formData.region}` : ''}\n`;
     }
 
-    // 4. Lógica de Exclusión Estricta
-    // Si docType es 'boleta', este bloque NUNCA se ejecuta, ignorando cualquier dato basura en los inputs de factura.
     if (docType === 'factura') {
       message += `--------------------------------\n`;
       message += `🏢 *DATOS FACTURACIÓN*\n`;
@@ -230,7 +221,6 @@ const CartDrawer = () => {
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-[#0A0A0A] text-white z-[90] flex flex-col shadow-2xl border-l border-[#222]"
           >
-            {/* Header */}
             <div className="p-5 border-b border-[#222] flex items-center justify-between bg-[#111]">
               <div className="flex items-center gap-3">
                  {step === 'checkout' && (
@@ -247,10 +237,7 @@ const CartDrawer = () => {
               </button>
             </div>
 
-            {/* CONTENT AREA */}
             <div className="flex-1 overflow-y-auto bg-[#0A0A0A]">
-              
-              {/* VISTA 1: LISTA DE PRODUCTOS */}
               {step === 'cart' && (
                   <div className="p-5 space-y-4">
                     {items.length === 0 ? (
@@ -260,11 +247,7 @@ const CartDrawer = () => {
                         </div>
                     ) : (
                         items.map(item => (
-                        <motion.div 
-                            layout
-                            key={item.id} 
-                            className="flex gap-4 border-b border-[#222] pb-4 last:border-0"
-                        >
+                        <motion.div layout key={item.id} className="flex gap-4 border-b border-[#222] pb-4 last:border-0">
                             <div className="w-20 h-20 bg-white rounded border border-[#333] overflow-hidden p-2 flex-shrink-0">
                                <img src={item.image || "https://placehold.co/100"} alt="" className="w-full h-full object-contain mix-blend-multiply" />
                             </div>
@@ -276,7 +259,6 @@ const CartDrawer = () => {
                                     </div>
                                     <button onClick={() => removeItem(item.id)} className="text-neutral-600 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
                                 </div>
-                                
                                 <div className="flex items-center justify-between mt-2">
                                     <div className="flex items-center bg-[#151515] rounded border border-[#333] h-7">
                                         <button onClick={() => updateQuantity(item.id, -1)} className="w-7 h-full flex items-center justify-center hover:bg-[#222] text-neutral-400 rounded-l transition-colors"><Minus className="w-3 h-3" /></button>
@@ -294,22 +276,13 @@ const CartDrawer = () => {
                   </div>
               )}
 
-              {/* VISTA 2: FORMULARIO CHECKOUT SII */}
               {step === 'checkout' && (
                  <div className="p-5 space-y-6">
-                    
-                    {/* SELECTOR BOLETA / FACTURA */}
                     <div className="bg-[#111] p-1 rounded-lg border border-[#333] flex relative">
-                        <button 
-                          onClick={() => setDocType('boleta')}
-                          className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'boleta' ? 'text-black bg-[#FFD700] shadow-md' : 'text-neutral-500 hover:text-white'}`}
-                        >
+                        <button onClick={() => setDocType('boleta')} className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'boleta' ? 'text-black bg-[#FFD700] shadow-md' : 'text-neutral-500 hover:text-white'}`}>
                             <Receipt className="w-4 h-4" /> Boleta
                         </button>
-                        <button 
-                          onClick={() => setDocType('factura')}
-                          className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'factura' ? 'text-black bg-[#FFD700] shadow-md' : 'text-neutral-500 hover:text-white'}`}
-                        >
+                        <button onClick={() => setDocType('factura')} className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'factura' ? 'text-black bg-[#FFD700] shadow-md' : 'text-neutral-500 hover:text-white'}`}>
                             <FileText className="w-4 h-4" /> Factura
                         </button>
                     </div>
@@ -319,53 +292,30 @@ const CartDrawer = () => {
                             <User className="w-4 h-4 text-[#FFD700]" />
                             <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Datos de Contacto</h3>
                         </div>
-                        
                         <div className="space-y-3">
                             <div>
                                 <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Nombre Completo *</label>
-                                <input 
-                                    type="text" name="name" value={formData.name} onChange={handleInputChange}
-                                    className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors"
-                                    placeholder="Ej: Juan Pérez"
-                                />
+                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Ej: Juan Pérez" />
                             </div>
                             <div>
                                 <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Teléfono / WhatsApp *</label>
-                                <input 
-                                    type="tel" name="phone" value={formData.phone} onChange={handleInputChange}
-                                    className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors"
-                                    placeholder="+56 9 ..."
-                                />
+                                <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="+56 9 ..." />
                             </div>
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Región / Comuna</label>
-                                    <input 
-                                        type="text" name="region" value={formData.region} onChange={handleInputChange}
-                                        className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors"
-                                        placeholder="Ej: Santiago"
-                                    />
+                                    <input type="text" name="region" value={formData.region} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Ej: Santiago" />
                                 </div>
                                 <div>
                                     <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Dirección</label>
-                                    <input 
-                                        type="text" name="address" value={formData.address} onChange={handleInputChange}
-                                        className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors"
-                                        placeholder="Calle 123"
-                                    />
+                                    <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Calle 123" />
                                 </div>
                             </div>
                         </div>
 
-                        {/* CAMPOS FACTURA (CONDICIONALES) */}
                         <AnimatePresence>
                             {docType === 'factura' && (
-                                <motion.div 
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden space-y-4 pt-4"
-                                >
+                                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden space-y-4 pt-4">
                                     <div className="flex items-center gap-2 pb-2 border-b border-[#222]">
                                         <Building2 className="w-4 h-4 text-[#FFD700]" />
                                         <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Datos Empresa (SII)</h3>
@@ -373,44 +323,27 @@ const CartDrawer = () => {
                                     <div className="space-y-3">
                                         <div>
                                             <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">RUT Empresa *</label>
-                                            <input 
-                                                type="text" name="rut" value={formData.rut} onChange={handleInputChange}
-                                                className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5"
-                                                placeholder="76.123.456-K"
-                                            />
+                                            <input type="text" name="rut" value={formData.rut} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5" placeholder="76.123.456-K" />
                                         </div>
                                         <div>
                                             <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Razón Social *</label>
-                                            <input 
-                                                type="text" name="razonSocial" value={formData.razonSocial} onChange={handleInputChange}
-                                                className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5"
-                                                placeholder="Constructora SPA"
-                                            />
+                                            <input type="text" name="razonSocial" value={formData.razonSocial} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5" placeholder="Constructora SPA" />
                                         </div>
                                         <div>
                                             <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Giro Comercial</label>
-                                            <input 
-                                                type="text" name="giro" value={formData.giro} onChange={handleInputChange}
-                                                className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5"
-                                                placeholder="Ej: Obras menores en construcción"
-                                            />
+                                            <input type="text" name="giro" value={formData.giro} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5" placeholder="Ej: Obras menores en construcción" />
                                         </div>
                                     </div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
-
                     </div>
                  </div>
               )}
-
             </div>
 
-            {/* FOOTER ACTIONS */}
             {items.length > 0 && (
               <div className="bg-[#111] p-6 border-t border-[#222] shadow-[0_-5px_30px_rgba(0,0,0,0.5)]">
-                
-                {/* INFO ENVÍO */}
                 <div className="mb-4">
                     <div className="flex justify-between items-end mb-2">
                          <span className="text-xs text-neutral-400 font-medium">Total Estimado</span>
@@ -418,46 +351,29 @@ const CartDrawer = () => {
                     </div>
                     {step === 'cart' && (
                         <div className="w-full h-1.5 bg-[#222] rounded-full overflow-hidden">
-                            <motion.div 
-                                initial={{ width: 0 }}
-                                animate={{ width: `${progressPercentage}%` }}
-                                className={`h-full ${remainingForFreeShipping <= 0 ? 'bg-green-500' : 'bg-[#FFD700]'} relative`}
-                            />
+                            <motion.div initial={{ width: 0 }} animate={{ width: `${progressPercentage}%` }} className={`h-full ${remainingForFreeShipping <= 0 ? 'bg-green-500' : 'bg-[#FFD700]'} relative`} />
                         </div>
                     )}
                     {step === 'cart' && remainingForFreeShipping > 0 && (
                         <p className="text-[9px] text-neutral-500 mt-1 text-right">Faltan {formatPrice(remainingForFreeShipping)} para envío gratis (Stgo).</p>
                     )}
                 </div>
-
-                {/* BOTONES DE ACCIÓN */}
                 <div className="space-y-3">
                     {step === 'cart' ? (
-                        <button 
-                            onClick={() => setStep('checkout')}
-                            className="w-full py-4 bg-[#FFD700] hover:bg-white text-black font-black text-xs uppercase tracking-[0.15em] rounded transition-all shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_rgba(255,215,0,0.4)] flex items-center justify-center gap-2"
-                        >
+                        <button onClick={() => setStep('checkout')} className="w-full py-4 bg-[#FFD700] hover:bg-white text-black font-black text-xs uppercase tracking-[0.15em] rounded transition-all shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_rgba(255,215,0,0.4)] flex items-center justify-center gap-2">
                             Continuar Compra <ArrowRight className="w-4 h-4" />
                         </button>
                     ) : (
-                        <button 
-                            onClick={handleWhatsAppCheckout}
-                            className="w-full py-4 bg-green-600 hover:bg-green-500 text-white font-black text-xs uppercase tracking-[0.15em] rounded transition-all shadow-[0_0_20px_rgba(22,163,74,0.3)] hover:shadow-[0_0_30px_rgba(22,163,74,0.5)] flex items-center justify-center gap-2"
-                        >
+                        <button onClick={handleWhatsAppCheckout} className="w-full py-4 bg-green-600 hover:bg-green-500 text-white font-black text-xs uppercase tracking-[0.15em] rounded transition-all shadow-[0_0_20px_rgba(22,163,74,0.3)] hover:shadow-[0_0_30px_rgba(22,163,74,0.5)] flex items-center justify-center gap-2">
                             <Send className="w-4 h-4" /> Enviar Pedido / Cotizar
                         </button>
                     )}
-                    
                     {step === 'cart' && (
-                         <button 
-                            onClick={toggleCart} 
-                            className="w-full py-3 bg-transparent border border-[#333] hover:border-[#FFD700] text-neutral-400 hover:text-[#FFD700] font-bold text-[10px] uppercase tracking-wider rounded transition-colors"
-                        >
+                         <button onClick={toggleCart} className="w-full py-3 bg-transparent border border-[#333] hover:border-[#FFD700] text-neutral-400 hover:text-[#FFD700] font-bold text-[10px] uppercase tracking-wider rounded transition-colors">
                             Seguir Viendo Productos
                         </button>
                     )}
                 </div>
-
               </div>
             )}
           </motion.div>
@@ -467,13 +383,111 @@ const CartDrawer = () => {
   );
 };
 
-// --- MAIN APP ---
-export default function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'shipping' | 'returns' | 'terms'>('home');
+// --- HOME COMPONENT (CATALOG VIEW) ---
+const Home = ({ 
+    category, setCategory, 
+    searchTerm, setSearchTerm, 
+    maxPrice, setMaxPrice, 
+    maxProductPrice, 
+    filteredProducts, 
+    setSidebarOpen 
+  }: any) => {
+
+  const handleBentoCategorySelect = (cat: string) => {
+    setCategory(cat);
+    const grid = document.getElementById('catalogo');
+    grid?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <>
+        {/* Hero Section (Only shows when not searching) */}
+        {category === 'Todas' && !searchTerm && (
+        <>
+            <Hero onCatalogClick={() => {
+                const grid = document.getElementById('catalogo');
+                grid?.scrollIntoView({ behavior: 'smooth' });
+            }} />
+            <CategoryBento onSelectCategory={handleBentoCategorySelect} />
+            <About />
+        </>
+        )}
+
+        {/* Catalog Section */}
+        <div className="bg-[#111] border-t border-[#222]">
+        <div id="catalogo" className="max-w-[1600px] mx-auto px-6 py-16 md:py-24 scroll-mt-32">
+            <div className="flex flex-col lg:flex-row gap-12 items-start">
+            
+            {/* Desktop Sidebar (Sticky) */}
+            <div className="hidden lg:block sticky top-32 w-72 flex-shrink-0">
+                <Sidebar 
+                selectedCategory={category} 
+                onSelectCategory={setCategory}
+                maxPrice={maxPrice}
+                onPriceChange={setMaxPrice}
+                absMaxPrice={maxProductPrice}
+                />
+            </div>
+
+            {/* Product Grid Area */}
+            <div className="flex-1 w-full">
+                {/* Results Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-[#222]">
+                <div>
+                    <h2 className="text-3xl md:text-4xl font-industrial font-black text-white uppercase tracking-tighter mb-2">
+                    {searchTerm ? `Buscando "${searchTerm}"` : category}
+                    </h2>
+                    <div className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
+                    <span className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></span>
+                    {filteredProducts.length} Productos Disponibles
+                    </div>
+                </div>
+                
+                {/* Mobile Filter Trigger */}
+                <button 
+                    onClick={() => setSidebarOpen(true)}
+                    className="lg:hidden flex items-center justify-center gap-2 w-full md:w-auto bg-[#1A1A1A] border border-[#333] rounded-full py-4 px-6 text-white text-xs font-black uppercase tracking-widest hover:border-[#FFD700] hover:text-[#FFD700] transition-all shadow-md"
+                >
+                    <Menu className="w-4 h-4" /> Filtrar Catálogo
+                </button>
+                </div>
+
+                {/* Grid */}
+                {filteredProducts.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {filteredProducts.map((product: any) => (
+                    <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+                ) : (
+                <div className="min-h-[400px] flex flex-col items-center justify-center text-neutral-500 border border-[#222] border-dashed rounded-2xl bg-[#0E0E0E] p-12 text-center">
+                    <AlertCircle className="w-16 h-16 mb-4 text-neutral-700" />
+                    <h3 className="text-2xl font-industrial font-bold uppercase mb-2 text-white">Sin resultados</h3>
+                    <p className="text-sm uppercase tracking-wider mb-8 text-neutral-500">No encontramos herramientas con esos filtros.</p>
+                    <button onClick={() => {setSearchTerm(''); setCategory('Todas'); setMaxPrice(maxProductPrice)}} className="bg-[#FFD700] text-black px-8 py-4 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl">
+                    Ver Todo el Catálogo
+                    </button>
+                </div>
+                )}
+            </div>
+            </div>
+        </div>
+        </div>
+        <Testimonials />
+    </>
+  );
+};
+
+// --- APP CONTENT WRAPPER (To use Hooks) ---
+const AppContent = () => {
   const [category, setCategory] = useState('Todas');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   
+  // Navigation Hooks
+  const navigate = useNavigate();
+  const location = useLocation();
+
   // Price filter logic
   const maxProductPrice = Math.max(...PRODUCTS.map(p => p.priceRetail));
   const [maxPrice, setMaxPrice] = useState(maxProductPrice);
@@ -488,52 +502,19 @@ export default function App() {
     });
   }, [category, searchTerm, maxPrice]);
 
-  const handleBentoCategorySelect = (cat: string) => {
-    setCategory(cat);
-    const grid = document.getElementById('catalogo');
-    grid?.scrollIntoView({ behavior: 'smooth' });
+  // Handle Search Redirection
+  const handleSearchChange = (term: string) => {
+    setSearchTerm(term);
+    // If user starts searching while on a legal page, redirect to home/catalog
+    if (term && location.pathname !== '/') {
+        navigate('/');
+    }
   };
 
-  const handleFooterNavigation = (section: string) => {
-    // 1. Manejo de Vistas Legales
-    if (section === 'shipping' || section === 'despachos') {
-        setCurrentView('shipping');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-    }
-    if (section === 'returns' || section === 'devoluciones') {
-        setCurrentView('returns');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-    }
-    if (section === 'terms' || section === 'terminos') {
-        setCurrentView('terms');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-    }
-
-    // 2. Navegación en Home
-    if (currentView !== 'home') {
-        setCurrentView('home');
-        // Pequeño delay para permitir que el DOM se monte antes de scrollear
-        setTimeout(() => {
-            if (section === 'inicio') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                const el = document.getElementById(section);
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }
-        }, 100);
-    } else {
-        if (section === 'inicio') {
-            setCategory('Todas');
-            setSearchTerm('');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            const el = document.getElementById(section);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
+  const handleSidebarCategorySelect = (c: string) => {
+    setCategory(c); 
+    setSidebarOpen(false);
+    if(location.pathname !== '/') navigate('/');
   };
 
   return (
@@ -541,17 +522,14 @@ export default function App() {
       
       <Header 
         searchTerm={searchTerm} 
-        onSearchChange={(term) => {
-            setSearchTerm(term);
-            if (currentView !== 'home') setCurrentView('home');
-        }} 
+        onSearchChange={handleSearchChange} 
         onMenuClick={() => setSidebarOpen(true)}
       />
 
       <MobileSidebarDrawer isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)}>
          <Sidebar 
             selectedCategory={category} 
-            onSelectCategory={(c) => { setCategory(c); setSidebarOpen(false); if(currentView !== 'home') setCurrentView('home'); }}
+            onSelectCategory={handleSidebarCategorySelect}
             maxPrice={maxPrice}
             onPriceChange={setMaxPrice}
             absMaxPrice={maxProductPrice}
@@ -561,100 +539,36 @@ export default function App() {
       <main className="flex-1 relative">
         <MarqueeBar />
 
-        {/* --- CONDITIONAL RENDERING BASED ON VIEW STATE --- */}
-        {currentView === 'home' ? (
-            <>
-                {/* Hero Section (Only shows on home/no search) */}
-                {category === 'Todas' && !searchTerm && (
-                <>
-                    <Hero onCatalogClick={() => {
-                        const grid = document.getElementById('catalogo');
-                        grid?.scrollIntoView({ behavior: 'smooth' });
-                    }} />
-                    
-                    <CategoryBento onSelectCategory={handleBentoCategorySelect} />
+        <Routes>
+            <Route path="/" element={
+                <Home 
+                    category={category} setCategory={setCategory}
+                    searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+                    maxPrice={maxPrice} setMaxPrice={setMaxPrice}
+                    maxProductPrice={maxProductPrice}
+                    filteredProducts={filteredProducts}
+                    setSidebarOpen={setSidebarOpen}
+                />
+            } />
+            <Route path="/despachos" element={<ShippingPolicy onBack={() => {}} />} />
+            <Route path="/devoluciones" element={<ReturnsPolicy onBack={() => {}} />} />
+            <Route path="/terminos" element={<TermsAndConditions onBack={() => {}} />} />
+        </Routes>
 
-                    {/* New About Us Section */}
-                    <About />
-                </>
-                )}
-
-                {/* Catalog Section with Sidebar Layout */}
-                <div className="bg-[#111] border-t border-[#222]">
-                <div id="catalogo" className="max-w-[1600px] mx-auto px-6 py-16 md:py-24 scroll-mt-32">
-                    
-                    <div className="flex flex-col lg:flex-row gap-12 items-start">
-                    
-                    {/* Desktop Sidebar (Sticky) */}
-                    <div className="hidden lg:block sticky top-32 w-72 flex-shrink-0">
-                        <Sidebar 
-                        selectedCategory={category} 
-                        onSelectCategory={setCategory}
-                        maxPrice={maxPrice}
-                        onPriceChange={setMaxPrice}
-                        absMaxPrice={maxProductPrice}
-                        />
-                    </div>
-
-                    {/* Product Grid Area */}
-                    <div className="flex-1 w-full">
-                        {/* Results Header */}
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-[#222]">
-                        <div>
-                            <h2 className="text-3xl md:text-4xl font-industrial font-black text-white uppercase tracking-tighter mb-2">
-                            {searchTerm ? `Buscando "${searchTerm}"` : category}
-                            </h2>
-                            <div className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
-                            <span className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></span>
-                            {filteredProducts.length} Productos Disponibles
-                            </div>
-                        </div>
-                        
-                        {/* Mobile Filter Trigger (Visible only on mobile/tablet) */}
-                        <button 
-                            onClick={() => setSidebarOpen(true)}
-                            className="lg:hidden flex items-center justify-center gap-2 w-full md:w-auto bg-[#1A1A1A] border border-[#333] rounded-full py-4 px-6 text-white text-xs font-black uppercase tracking-widest hover:border-[#FFD700] hover:text-[#FFD700] transition-all shadow-md"
-                        >
-                            <Menu className="w-4 h-4" /> Filtrar Catálogo
-                        </button>
-                        </div>
-
-                        {/* Grid UPDATED: Compact Design (4 columns on XL, tighter gap) */}
-                        {filteredProducts.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            {filteredProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
-                            ))}
-                        </div>
-                        ) : (
-                        <div className="min-h-[400px] flex flex-col items-center justify-center text-neutral-500 border border-[#222] border-dashed rounded-2xl bg-[#0E0E0E] p-12 text-center">
-                            <AlertCircle className="w-16 h-16 mb-4 text-neutral-700" />
-                            <h3 className="text-2xl font-industrial font-bold uppercase mb-2 text-white">Sin resultados</h3>
-                            <p className="text-sm uppercase tracking-wider mb-8 text-neutral-500">No encontramos herramientas con esos filtros.</p>
-                            <button onClick={() => {setSearchTerm(''); setCategory('Todas'); setMaxPrice(maxProductPrice)}} className="bg-[#FFD700] text-black px-8 py-4 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl">
-                            Ver Todo el Catálogo
-                            </button>
-                        </div>
-                        )}
-                    </div>
-
-                    </div>
-                </div>
-                </div>
-                <Testimonials />
-            </>
-        ) : currentView === 'shipping' ? (
-            <ShippingPolicy onBack={() => setCurrentView('home')} />
-        ) : currentView === 'returns' ? (
-            <ReturnsPolicy onBack={() => setCurrentView('home')} />
-        ) : (
-            <TermsAndConditions onBack={() => setCurrentView('home')} />
-        )}
       </main>
 
-      <Footer onNavigate={handleFooterNavigation} />
+      <Footer onNavigate={() => {}} /> {/* onNavigate is deprecated in Footer, uses Link now */}
       <CartDrawer />
       <ScrollToTopButton />
     </div>
+  );
+};
+
+// --- MAIN APP ---
+export default function App() {
+  return (
+    <Router>
+        <AppContent />
+    </Router>
   );
 }

@@ -1,22 +1,23 @@
 
 import React, { useState } from 'react';
-import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY } from '../constants';
+import { Link, useNavigate } from 'react-router-dom';
+import { CONTACT_PHONE_DISPLAY } from '../constants';
 import { Phone, Mail, MapPin, Facebook, Instagram, ShieldCheck, Truck, Headphones, ArrowRight, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (section: string) => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+const Footer: React.FC<FooterProps> = () => {
   const [formData, setFormData] = useState({ email: '', phone: '' });
   const [errors, setErrors] = useState({ email: '', phone: '' });
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success'>('idle');
+  const navigate = useNavigate();
 
   const validateForm = () => {
     let isValid = true;
     const newErrors = { email: '', phone: '' };
 
-    // Validación de Email
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!formData.email.trim()) {
       newErrors.email = 'El correo es obligatorio';
@@ -26,7 +27,6 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       isValid = false;
     }
 
-    // Validación de Teléfono (Acepta formatos numéricos generales, min 8 dígitos)
     const phoneRegex = /^[0-9\+\s]{8,15}$/;
     if (!formData.phone.trim()) {
       newErrors.phone = 'El teléfono es obligatorio';
@@ -43,10 +43,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      // Simulación de envío al backend
       setSubmitStatus('success');
-      
-      // Reset del formulario
       setTimeout(() => {
         setSubmitStatus('idle');
         setFormData({ email: '', phone: '' });
@@ -57,17 +54,23 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Limpiar error al escribir
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+  };
+
+  // Helper to handle scrolling for hash links if on home, or navigate home then scroll
+  const handleScrollLink = (id: string) => {
+      // Logic handled nicely by Home component usually, but here we can force a nav to / then scroll
+      // Simple implementation:
+      window.location.href = `/#${id}`;
   };
 
   return (
     <footer className="bg-[#050505] border-t border-[#222] text-neutral-400 pt-16 pb-8">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
         
-        {/* Top Section: Sección de Confianza */}
+        {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 border-b border-[#1A1A1A]">
           <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFD700]/50 transition-colors">
             <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFD700] transition-colors duration-300">
@@ -115,39 +118,37 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
              </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links - NOW USING REACT ROUTER LINK */}
           <div>
             <h3 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-l-2 border-[#FFD700] pl-4">Navegación</h3>
             <ul className="space-y-4 text-xs font-bold uppercase tracking-wider">
               <li>
-                <button onClick={() => onNavigate('inicio')} className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
+                <Link to="/" className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
                   <ArrowRight className="w-3 h-3 text-[#FFD700] opacity-0 group-hover:opacity-100 transition-opacity" /> Inicio
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => onNavigate('catalogo')} className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
+                <a href="/#catalogo" className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
                   <ArrowRight className="w-3 h-3 text-[#FFD700] opacity-0 group-hover:opacity-100 transition-opacity" /> Catálogo
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => onNavigate('nosotros')} className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
+                <a href="/#nosotros" className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
                   <ArrowRight className="w-3 h-3 text-[#FFD700] opacity-0 group-hover:opacity-100 transition-opacity" /> Nosotros
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => onNavigate('contacto')} className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
+                <a href="/#contacto" className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
                   <ArrowRight className="w-3 h-3 text-[#FFD700] opacity-0 group-hover:opacity-100 transition-opacity" /> Contacto
-                </button>
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* Info Column (Merged Horarios + Ubicacion) */}
+          {/* Info Column */}
           <div>
             <h3 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-l-2 border-[#FFD700] pl-4">Información</h3>
-            
             <div className="space-y-6">
-              {/* Horarios */}
               <ul className="space-y-2 text-xs tracking-wider mb-6">
                 <li className="flex justify-between border-b border-[#222] pb-1">
                   <span className="text-white font-bold">Lunes - Viernes</span>
@@ -158,8 +159,6 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   <span className="text-[#FFD700]">09:00 - 14:00</span>
                 </li>
               </ul>
-
-              {/* Ubicación */}
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-[#FFD700] mt-1 shrink-0" />
@@ -179,7 +178,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* New Contact Form Column */}
+          {/* Contact Form */}
           <div id="contacto" className="bg-[#0E0E0E] p-6 border border-[#222] rounded-xl relative overflow-hidden scroll-mt-32">
             <div className="absolute top-0 right-0 w-16 h-16 bg-[#FFD700] opacity-5 rounded-bl-full -mr-8 -mt-8 pointer-events-none"></div>
             
@@ -241,12 +240,13 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Copyright */}
+        {/* Copyright & Legal Links - NOW USING LINK */}
         <div className="border-t border-[#1A1A1A] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest">
           <p>© 2026 F y C Spa. Ferretería Industrial.</p>
-          <div className="flex gap-4 text-neutral-600">
-            <a href="#" className="hover:text-white transition-colors">Términos y Condiciones</a>
-            <a href="#" className="hover:text-white transition-colors">Políticas de Privacidad</a>
+          <div className="flex flex-wrap justify-center gap-6 text-neutral-600">
+            <Link to="/terminos" className="hover:text-white transition-colors">Términos y Condiciones</Link>
+            <Link to="/despachos" className="hover:text-white transition-colors">Políticas de Despacho</Link>
+            <Link to="/devoluciones" className="hover:text-white transition-colors">Cambios y Devoluciones</Link>
           </div>
         </div>
       </div>
