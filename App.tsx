@@ -14,6 +14,8 @@ import Sidebar from './components/Sidebar';
 import CategoryBento from './components/CategoryBento';
 import About from './components/About';
 import Testimonials from './components/Testimonials';
+// Legal Pages Import
+import { ShippingPolicy, ReturnsPolicy, TermsAndConditions } from './components/LegalPages';
 
 // --- UTILS ---
 const formatPrice = (val: number) => 
@@ -467,6 +469,7 @@ const CartDrawer = () => {
 
 // --- MAIN APP ---
 export default function App() {
+  const [currentView, setCurrentView] = useState<'home' | 'shipping' | 'returns' | 'terms'>('home');
   const [category, setCategory] = useState('Todas');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -492,16 +495,43 @@ export default function App() {
   };
 
   const handleFooterNavigation = (section: string) => {
-    if (section === 'inicio') {
-        // Reset state so Hero and Bento appear
-        setCategory('Todas');
-        setSearchTerm('');
-        // Scroll to top
+    // 1. Manejo de Vistas Legales
+    if (section === 'shipping' || section === 'despachos') {
+        setCurrentView('shipping');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+    }
+    if (section === 'returns' || section === 'devoluciones') {
+        setCurrentView('returns');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+    }
+    if (section === 'terms' || section === 'terminos') {
+        setCurrentView('terms');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+    }
+
+    // 2. Navegación en Home
+    if (currentView !== 'home') {
+        setCurrentView('home');
+        // Pequeño delay para permitir que el DOM se monte antes de scrollear
+        setTimeout(() => {
+            if (section === 'inicio') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const el = document.getElementById(section);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 100);
     } else {
-        const el = document.getElementById(section);
-        if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
+        if (section === 'inicio') {
+            setCategory('Todas');
+            setSearchTerm('');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            const el = document.getElementById(section);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
         }
     }
   };
@@ -511,14 +541,17 @@ export default function App() {
       
       <Header 
         searchTerm={searchTerm} 
-        onSearchChange={setSearchTerm} 
+        onSearchChange={(term) => {
+            setSearchTerm(term);
+            if (currentView !== 'home') setCurrentView('home');
+        }} 
         onMenuClick={() => setSidebarOpen(true)}
       />
 
       <MobileSidebarDrawer isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)}>
          <Sidebar 
             selectedCategory={category} 
-            onSelectCategory={(c) => { setCategory(c); setSidebarOpen(false); }}
+            onSelectCategory={(c) => { setCategory(c); setSidebarOpen(false); if(currentView !== 'home') setCurrentView('home'); }}
             maxPrice={maxPrice}
             onPriceChange={setMaxPrice}
             absMaxPrice={maxProductPrice}
@@ -528,86 +561,97 @@ export default function App() {
       <main className="flex-1 relative">
         <MarqueeBar />
 
-        {/* Hero Section (Only shows on home/no search) */}
-        {category === 'Todas' && !searchTerm && (
-          <>
-            <Hero onCatalogClick={() => {
-                const grid = document.getElementById('catalogo');
-                grid?.scrollIntoView({ behavior: 'smooth' });
-            }} />
-            
-            <CategoryBento onSelectCategory={handleBentoCategorySelect} />
+        {/* --- CONDITIONAL RENDERING BASED ON VIEW STATE --- */}
+        {currentView === 'home' ? (
+            <>
+                {/* Hero Section (Only shows on home/no search) */}
+                {category === 'Todas' && !searchTerm && (
+                <>
+                    <Hero onCatalogClick={() => {
+                        const grid = document.getElementById('catalogo');
+                        grid?.scrollIntoView({ behavior: 'smooth' });
+                    }} />
+                    
+                    <CategoryBento onSelectCategory={handleBentoCategorySelect} />
 
-            {/* New About Us Section */}
-            <About />
-          </>
-        )}
-
-        {/* Catalog Section with Sidebar Layout */}
-        <div className="bg-[#111] border-t border-[#222]">
-          <div id="catalogo" className="max-w-[1600px] mx-auto px-6 py-16 md:py-24 scroll-mt-32">
-            
-            <div className="flex flex-col lg:flex-row gap-12 items-start">
-              
-              {/* Desktop Sidebar (Sticky) */}
-              <div className="hidden lg:block sticky top-32 w-72 flex-shrink-0">
-                <Sidebar 
-                  selectedCategory={category} 
-                  onSelectCategory={setCategory}
-                  maxPrice={maxPrice}
-                  onPriceChange={setMaxPrice}
-                  absMaxPrice={maxProductPrice}
-                />
-              </div>
-
-              {/* Product Grid Area */}
-              <div className="flex-1 w-full">
-                {/* Results Header */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-[#222]">
-                  <div>
-                    <h2 className="text-3xl md:text-4xl font-industrial font-black text-white uppercase tracking-tighter mb-2">
-                      {searchTerm ? `Buscando "${searchTerm}"` : category}
-                    </h2>
-                    <div className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
-                      <span className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></span>
-                      {filteredProducts.length} Productos Disponibles
-                    </div>
-                  </div>
-                  
-                  {/* Mobile Filter Trigger (Visible only on mobile/tablet) */}
-                  <button 
-                    onClick={() => setSidebarOpen(true)}
-                    className="lg:hidden flex items-center justify-center gap-2 w-full md:w-auto bg-[#1A1A1A] border border-[#333] rounded-full py-4 px-6 text-white text-xs font-black uppercase tracking-widest hover:border-[#FFD700] hover:text-[#FFD700] transition-all shadow-md"
-                  >
-                    <Menu className="w-4 h-4" /> Filtrar Catálogo
-                  </button>
-                </div>
-
-                {/* Grid UPDATED: Compact Design (4 columns on XL, tighter gap) */}
-                {filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    {filteredProducts.map(product => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="min-h-[400px] flex flex-col items-center justify-center text-neutral-500 border border-[#222] border-dashed rounded-2xl bg-[#0E0E0E] p-12 text-center">
-                    <AlertCircle className="w-16 h-16 mb-4 text-neutral-700" />
-                    <h3 className="text-2xl font-industrial font-bold uppercase mb-2 text-white">Sin resultados</h3>
-                    <p className="text-sm uppercase tracking-wider mb-8 text-neutral-500">No encontramos herramientas con esos filtros.</p>
-                    <button onClick={() => {setSearchTerm(''); setCategory('Todas'); setMaxPrice(maxProductPrice)}} className="bg-[#FFD700] text-black px-8 py-4 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl">
-                      Ver Todo el Catálogo
-                    </button>
-                  </div>
+                    {/* New About Us Section */}
+                    <About />
+                </>
                 )}
-              </div>
 
-            </div>
-          </div>
-        </div>
+                {/* Catalog Section with Sidebar Layout */}
+                <div className="bg-[#111] border-t border-[#222]">
+                <div id="catalogo" className="max-w-[1600px] mx-auto px-6 py-16 md:py-24 scroll-mt-32">
+                    
+                    <div className="flex flex-col lg:flex-row gap-12 items-start">
+                    
+                    {/* Desktop Sidebar (Sticky) */}
+                    <div className="hidden lg:block sticky top-32 w-72 flex-shrink-0">
+                        <Sidebar 
+                        selectedCategory={category} 
+                        onSelectCategory={setCategory}
+                        maxPrice={maxPrice}
+                        onPriceChange={setMaxPrice}
+                        absMaxPrice={maxProductPrice}
+                        />
+                    </div>
+
+                    {/* Product Grid Area */}
+                    <div className="flex-1 w-full">
+                        {/* Results Header */}
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-[#222]">
+                        <div>
+                            <h2 className="text-3xl md:text-4xl font-industrial font-black text-white uppercase tracking-tighter mb-2">
+                            {searchTerm ? `Buscando "${searchTerm}"` : category}
+                            </h2>
+                            <div className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
+                            <span className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></span>
+                            {filteredProducts.length} Productos Disponibles
+                            </div>
+                        </div>
+                        
+                        {/* Mobile Filter Trigger (Visible only on mobile/tablet) */}
+                        <button 
+                            onClick={() => setSidebarOpen(true)}
+                            className="lg:hidden flex items-center justify-center gap-2 w-full md:w-auto bg-[#1A1A1A] border border-[#333] rounded-full py-4 px-6 text-white text-xs font-black uppercase tracking-widest hover:border-[#FFD700] hover:text-[#FFD700] transition-all shadow-md"
+                        >
+                            <Menu className="w-4 h-4" /> Filtrar Catálogo
+                        </button>
+                        </div>
+
+                        {/* Grid UPDATED: Compact Design (4 columns on XL, tighter gap) */}
+                        {filteredProducts.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                            {filteredProducts.map(product => (
+                            <ProductCard key={product.id} product={product} />
+                            ))}
+                        </div>
+                        ) : (
+                        <div className="min-h-[400px] flex flex-col items-center justify-center text-neutral-500 border border-[#222] border-dashed rounded-2xl bg-[#0E0E0E] p-12 text-center">
+                            <AlertCircle className="w-16 h-16 mb-4 text-neutral-700" />
+                            <h3 className="text-2xl font-industrial font-bold uppercase mb-2 text-white">Sin resultados</h3>
+                            <p className="text-sm uppercase tracking-wider mb-8 text-neutral-500">No encontramos herramientas con esos filtros.</p>
+                            <button onClick={() => {setSearchTerm(''); setCategory('Todas'); setMaxPrice(maxProductPrice)}} className="bg-[#FFD700] text-black px-8 py-4 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl">
+                            Ver Todo el Catálogo
+                            </button>
+                        </div>
+                        )}
+                    </div>
+
+                    </div>
+                </div>
+                </div>
+                <Testimonials />
+            </>
+        ) : currentView === 'shipping' ? (
+            <ShippingPolicy onBack={() => setCurrentView('home')} />
+        ) : currentView === 'returns' ? (
+            <ReturnsPolicy onBack={() => setCurrentView('home')} />
+        ) : (
+            <TermsAndConditions onBack={() => setCurrentView('home')} />
+        )}
       </main>
 
-      <Testimonials />
       <Footer onNavigate={handleFooterNavigation} />
       <CartDrawer />
       <ScrollToTopButton />
