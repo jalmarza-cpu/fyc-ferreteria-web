@@ -13,6 +13,7 @@ import ProductCard from './components/ProductCard';
 import Sidebar from './components/Sidebar';
 import CategoryBento from './components/CategoryBento';
 import About from './components/About';
+import Testimonials from './components/Testimonials';
 
 // --- UTILS ---
 const formatPrice = (val: number) => 
@@ -598,6 +599,7 @@ export default function App() {
         </div>
       </main>
 
+      <Testimonials />
       <Footer onNavigate={handleFooterNavigation} />
       <CartDrawer />
       <ScrollToTopButton />

@@ -70,15 +70,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
            )}
         </div>
 
-        {/* Imagen */}
+        {/* Imagen - Updated for Better Visibility on Dark Mode */}
         <div 
-          className="relative h-48 bg-white flex items-center justify-center overflow-hidden p-4 cursor-zoom-in"
+          className="relative h-48 bg-[#151515] border-b border-[#222] flex items-center justify-center overflow-hidden p-4 cursor-zoom-in"
           onClick={() => setIsZoomOpen(true)}
         >
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out"
+            className="w-full h-full object-contain group-hover:scale-105 group-hover:brightness-110 transition-all duration-500 ease-out"
           />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
              <div className="bg-black/80 text-white p-2 rounded-full backdrop-blur-sm shadow-xl">
@@ -117,7 +117,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {/* --- TIERED PRICING SYSTEM --- */}
             <div className="flex flex-col gap-2 mt-2">
               
-              {/* LEVEL 1: Retail (Standard) */}
+              {/* LEVEL 1: Retail (Standard) - UPDATED FOR ACCESSIBILITY */}
               <div 
                 onClick={() => setPricingMode('retail')}
                 className={`flex items-center justify-between px-2 py-1.5 rounded cursor-pointer transition-all border ${
@@ -133,8 +133,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                    <span className="text-[10px] text-neutral-400 uppercase font-medium">1 Unidad</span>
                 </div>
                 <div className="text-right flex flex-col items-end">
-                   <span className="text-sm font-bold text-neutral-300 font-industrial">{formatCLP(product.priceRetail)}</span>
-                   <span className="text-[8px] text-neutral-600">(IVA incl.)</span>
+                   {/* Main Price: Max Contrast (White) & Larger Size */}
+                   <span className="text-base font-bold text-white font-industrial">{formatCLP(product.priceRetail)}</span>
+                   {/* VAT Label: Green, Semi-Bold, Larger (Accessiblity Update) */}
+                   <span className="text-xs text-green-400 font-semibold tracking-wide">(IVA incluido)</span>
                 </div>
               </div>
 
@@ -251,11 +253,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               className="relative max-w-4xl w-full flex flex-col items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-white p-4 md:p-8 rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px]">
+              {/* Modal Image Container - Dark Mode */}
+              <div className="bg-[#151515] p-4 md:p-8 rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333]">
                 <img 
                   src={product.imageUrl} 
                   alt={product.name} 
-                  className="w-full h-full object-contain max-h-[60vh] mix-blend-multiply"
+                  className="w-full h-full object-contain max-h-[60vh]"
                 />
               </div>
               <div className="mt-6 text-center">
@@ -276,6 +279,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     <div className="bg-[#111] p-4 rounded-xl border border-[#333] flex flex-col items-center">
                        <span className="text-[10px] text-neutral-400 font-bold uppercase mb-1">Unidad</span>
                        <p className="text-white font-bold text-xl">{formatCLP(product.priceRetail)}</p>
+                       <span className="text-[10px] text-green-400 font-semibold mt-1">(IVA incluido)</span>
                     </div>
                     
                     {/* Wholesale Modal */}
@@ -285,7 +289,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                        </div>
                        <span className="text-[10px] text-[#FFD700] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</span>
                        <p className="text-[#FFD700] font-bold text-2xl font-industrial">{formatCLP(product.priceWholesale)}</p>
-                       <span className="text-[9px] text-neutral-500">c/u</span>
+                       <span className="text-[9px] text-neutral-500">c/u + IVA</span>
                     </div>
                  </div>
 
