@@ -254,12 +254,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   className="relative w-full max-w-[600px] flex flex-col bg-[#111] max-h-[85vh] overflow-y-auto rounded-2xl shadow-2xl border border-[#333] my-4"
   onClick={(e) => e.stopPropagation()}
 >
-              {/* Modal Image Container - Dark Mode */}
-              <div className="bg-[#151515] p-4 md:p-8 rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333]">
+              {/* Modal Image Container - ARREGLADO */}
+              <div className="bg-[#151515] p-4 md:p-8 rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333] shrink-0">
                 <img 
                   src={product.imageUrl} 
                   alt={product.name} 
-                  className="w-full h-full object-contain max-h-[60vh]"
+                  className="w-full h-64 md:h-96 object-contain bg-transparent"
                 />
               </div>
               <div className="mt-6 text-center">
