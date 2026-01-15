@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
 import { useCartStore } from '../store';
-import { Eye, ShoppingCart, ZoomIn, X, Check, Package, Tag } from 'lucide-react';
+import { Eye, ShoppingCart, ZoomIn, X, Check, Star, Zap, TrendingDown, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductCardProps {
@@ -12,6 +12,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const addItem = useCartStore(state => state.addItem);
   const [viewers] = useState(() => Math.floor(Math.random() * (15 - 4 + 1)) + 4);
+  const [rating] = useState(() => (Math.random() * (5 - 4.5) + 4.5).toFixed(1)); // Random rating 4.5 - 5.0
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   
@@ -53,12 +54,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <>
       <div className="group relative bg-[#0a0a0a] border border-[#222] transition-all duration-300 hover:border-[#FFD700] hover:-translate-y-1 flex flex-col overflow-hidden shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] rounded-xl h-full">
         
-        {/* Etiqueta de Ahorro */}
+        {/* BADGE SYSTEM: Floating Badges */}
         <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start pointer-events-none">
-           <span className="bg-[#FFD700] text-black px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider shadow-md rounded flex items-center gap-1">
-             <Tag className="w-3 h-3" />
-             Ahorra {savingPercent}%
-           </span>
+           {savingPercent > 0 && (
+             <>
+                {/* Red Sale Badge */}
+                <span className="bg-[#D32F2F] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-md rounded-sm flex items-center gap-1">
+                   <Zap className="w-3 h-3 fill-current" /> OFERTA
+                </span>
+                {/* Yellow Discount Badge */}
+                <span className="bg-[#FFD700] text-black px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-md rounded-sm">
+                   -{savingPercent}% OFF
+                </span>
+             </>
+           )}
         </div>
 
         {/* Imagen */}
@@ -85,83 +94,102 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Cuerpo */}
         <div className="p-3 flex-grow flex flex-col bg-[#111] relative border-t border-[#222]">
           
-          <div className="mb-4">
+          <div className="mb-3">
             <div className="flex items-center gap-1.5 mb-1">
                <span className="w-1 h-1 bg-[#FFD700] rounded-full"></span>
                <p className="text-[9px] text-neutral-400 font-bold uppercase tracking-widest truncate">{product.category}</p>
             </div>
             
-            <h3 className="text-sm font-bold text-white uppercase font-industrial leading-none mb-3 group-hover:text-[#FFD700] transition-colors line-clamp-2 h-[2.5em]">
+            <h3 className="text-sm font-bold text-white uppercase font-industrial leading-none mb-1 group-hover:text-[#FFD700] transition-colors line-clamp-2 h-[2.5em]">
               {product.name}
             </h3>
 
-            {/* Selector de Precio */}
-            <div className="flex flex-col gap-2">
+            {/* SOCIAL RATING: 5 Stars */}
+            <div className="flex items-center gap-1 mb-3">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 fill-[#FFD700] text-[#FFD700]" />
+                ))}
+              </div>
+              <span className="text-[10px] text-neutral-500 font-medium">({rating})</span>
+            </div>
+
+            {/* --- TIERED PRICING SYSTEM --- */}
+            <div className="flex flex-col gap-2 mt-2">
               
-              {/* Opción 1: Unidad (Retail) */}
+              {/* LEVEL 1: Retail (Standard) */}
               <div 
                 onClick={() => setPricingMode('retail')}
-                className={`relative flex items-center justify-between p-2 rounded border cursor-pointer transition-all ${
+                className={`flex items-center justify-between px-2 py-1.5 rounded cursor-pointer transition-all border ${
                   pricingMode === 'retail' 
-                    ? 'bg-[#1a1a1a] border-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.1)]' 
-                    : 'bg-[#080808] border-[#333] hover:border-neutral-500'
+                    ? 'border-neutral-500 bg-[#1a1a1a]' 
+                    : 'border-transparent hover:bg-[#1a1a1a]'
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full border flex items-center justify-center ${pricingMode === 'retail' ? 'border-[#FFD700]' : 'border-neutral-600'}`}>
-                    {pricingMode === 'retail' && <div className="w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
-                  </div>
-                  <span className={`text-[10px] font-bold uppercase ${pricingMode === 'retail' ? 'text-white' : 'text-neutral-500'}`}>
-                    Unidad
-                  </span>
+                   <div className={`w-3 h-3 rounded-full border flex items-center justify-center ${pricingMode === 'retail' ? 'border-white' : 'border-neutral-600'}`}>
+                      {pricingMode === 'retail' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                   </div>
+                   <span className="text-[10px] text-neutral-400 uppercase font-medium">1 Unidad</span>
                 </div>
-                <span className={`text-xs font-bold ${pricingMode === 'retail' ? 'text-white' : 'text-neutral-500'}`}>
-                  {formatCLP(product.priceRetail)}
-                </span>
+                <div className="text-right flex flex-col items-end">
+                   <span className="text-sm font-bold text-neutral-300 font-industrial">{formatCLP(product.priceRetail)}</span>
+                   <span className="text-[8px] text-neutral-600">(IVA incl.)</span>
+                </div>
               </div>
 
-              {/* Opción 2: Mayorista */}
+              {/* LEVEL 2: Wholesale (Incentive - Highlighted) */}
               <div 
                 onClick={() => setPricingMode('wholesale')}
-                className={`relative flex flex-col p-2 rounded border cursor-pointer transition-all ${
+                className={`relative flex flex-col px-3 py-2 rounded-lg cursor-pointer transition-all border-2 ${
                   pricingMode === 'wholesale' 
-                    ? 'bg-[#1a1a1a] border-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.1)]' 
-                    : 'bg-[#080808] border-[#333] hover:border-neutral-500'
+                    ? 'border-[#FFD700] bg-[#FFD700]/5 shadow-[0_0_15px_rgba(255,215,0,0.1)]' 
+                    : 'border-[#333] bg-[#0E0E0E] hover:border-[#FFD700]/50'
                 }`}
               >
-                <div className="flex items-center justify-between w-full mb-1">
-                  <div className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full border flex items-center justify-center ${pricingMode === 'wholesale' ? 'border-[#FFD700]' : 'border-neutral-600'}`}>
-                      {pricingMode === 'wholesale' && <div className="w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
-                    </div>
-                    <span className={`text-[10px] font-black uppercase ${pricingMode === 'wholesale' ? 'text-[#FFD700]' : 'text-neutral-500'}`}>
-                      Mayorista
-                    </span>
-                  </div>
-                  <span className={`text-sm font-black font-industrial ${pricingMode === 'wholesale' ? 'text-[#FFD700]' : 'text-neutral-500'}`}>
-                    {formatCLP(product.priceWholesale)}
-                  </span>
+                {/* Header del Tier */}
+                <div className="flex justify-between items-center mb-1">
+                   <div className="flex items-center gap-1.5">
+                      <div className={`w-3 h-3 rounded-full border flex items-center justify-center ${pricingMode === 'wholesale' ? 'border-[#FFD700]' : 'border-neutral-600'}`}>
+                        {pricingMode === 'wholesale' && <div className="w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
+                      </div>
+                      <span className="text-[10px] font-black uppercase text-[#FFD700] tracking-wider">Pack Maestro</span>
+                   </div>
+                   {/* Savings Pill */}
+                   <div className="bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded text-[9px] font-bold flex items-center gap-1 border border-green-500/30">
+                      <TrendingDown className="w-3 h-3" />
+                      Ahorra {formatCLP(savingAmount * MIN_WHOLESALE_QTY)}
+                   </div>
                 </div>
-                
-                <div className="flex items-center justify-between text-[9px] pl-5">
-                   <span className="text-neutral-400">Min. {MIN_WHOLESALE_QTY} unidades</span>
-                   <span className="text-green-500 font-bold">Ahorras {formatCLP(savingAmount)} c/u</span>
+
+                {/* The "Hook" - Big Numbers */}
+                <div className="flex items-baseline justify-between pl-4">
+                   <div className="flex items-center gap-1 text-xs text-neutral-400">
+                      <Package className="w-3 h-3" />
+                      <span>Lleva <strong className="text-white">{MIN_WHOLESALE_QTY}</strong> x</span>
+                   </div>
+                   <div className="text-right">
+                      <span className="text-xl font-black font-industrial text-[#FFD700] leading-none">
+                        {formatCLP(product.priceWholesale)}
+                      </span>
+                      <span className="text-[9px] text-neutral-500 font-bold ml-1">c/u</span>
+                   </div>
                 </div>
               </div>
 
             </div>
           </div>
 
-          {/* Botón de Acción Único */}
+          {/* Botón de Acción */}
           <div className="mt-auto pt-2">
             <motion.button 
               onClick={handleAddToCart}
               whileTap={{ scale: 0.98 }}
-              className={`w-full py-3 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg group/btn ${
-                 isAdded 
-                 ? 'bg-green-500 text-white' 
-                 : 'bg-[#FFD700] hover:bg-[#FFED4D] text-black hover:shadow-[0_0_15px_rgba(255,215,0,0.4)]'
-              }`}
+              className={`w-full py-3 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg group/btn border border-transparent
+                 ${isAdded 
+                   ? 'bg-green-600 text-white' 
+                   : 'bg-[#FFD700] group-hover:bg-[#FFED4D] text-black shadow-md group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'
+                 }`}
             >
               <AnimatePresence mode="wait" initial={false}>
                 {isAdded ? (
@@ -174,7 +202,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     className="flex items-center gap-2"
                   >
                     <Check className="w-4 h-4" />
-                    <span className="text-xs">¡Agregado!</span>
+                    <span className="text-xs">¡Listo!</span>
                   </motion.div>
                 ) : (
                   <motion.div
@@ -187,7 +215,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   >
                     <ShoppingCart className="w-4 h-4" />
                     <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">
-                       {pricingMode === 'wholesale' ? `Agregar Pack (${MIN_WHOLESALE_QTY})` : 'Agregar al Carro'}
+                       {pricingMode === 'wholesale' 
+                          ? `Agregar Pack (${MIN_WHOLESALE_QTY})` 
+                          : 'Agregar 1 Unidad'}
                     </span>
                   </motion.div>
                 )}
@@ -197,7 +227,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
 
-      {/* Lightbox / Modal de Zoom */}
+      {/* Lightbox / Modal de Zoom - Updated with Logic */}
       <AnimatePresence>
         {isZoomOpen && (
           <motion.div 
@@ -230,20 +260,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </div>
               <div className="mt-6 text-center">
                  <h3 className="text-xl font-industrial font-bold text-white uppercase mb-2">{product.name}</h3>
-                 <p className="text-neutral-400 max-w-md mx-auto mb-4">{product.description}</p>
                  
-                 <div className="flex items-center justify-center gap-8 mt-4 bg-[#111] p-4 rounded-xl border border-[#333] inline-flex">
-                   <div className="flex flex-col items-center">
-                     <span className="text-xs text-neutral-400 font-bold uppercase">Precio Unidad</span>
-                     <p className="text-white font-bold text-xl">{formatCLP(product.priceRetail)}</p>
-                   </div>
-                   <div className="w-[1px] h-10 bg-[#333]"></div>
-                   <div className="flex flex-col items-center">
-                     <span className="text-xs text-[#FFD700] font-bold uppercase">Precio Mayorista</span>
-                     <p className="text-[#FFD700] font-bold text-2xl font-industrial">{formatCLP(product.priceWholesale)}</p>
-                     <span className="text-[10px] text-neutral-500 font-bold uppercase">Desde {MIN_WHOLESALE_QTY} u.</span>
-                   </div>
+                 <div className="flex items-center justify-center gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-[#FFD700] text-[#FFD700]" />
+                    ))}
+                    <span className="text-xs text-neutral-400 ml-2">({rating}/5.0)</span>
                  </div>
+
+                 <p className="text-neutral-400 max-w-md mx-auto mb-6">{product.description}</p>
+                 
+                 {/* Visualización de Precios en Modal */}
+                 <div className="grid grid-cols-2 gap-4 w-full max-w-md mx-auto">
+                    {/* Retail Modal */}
+                    <div className="bg-[#111] p-4 rounded-xl border border-[#333] flex flex-col items-center">
+                       <span className="text-[10px] text-neutral-400 font-bold uppercase mb-1">Unidad</span>
+                       <p className="text-white font-bold text-xl">{formatCLP(product.priceRetail)}</p>
+                    </div>
+                    
+                    {/* Wholesale Modal */}
+                    <div className="bg-[#111] p-4 rounded-xl border border-[#FFD700] bg-[#FFD700]/5 flex flex-col items-center relative overflow-hidden">
+                       <div className="absolute top-0 right-0 bg-[#FFD700] text-black text-[8px] font-black px-2 py-0.5 uppercase">
+                          Recomendado
+                       </div>
+                       <span className="text-[10px] text-[#FFD700] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</span>
+                       <p className="text-[#FFD700] font-bold text-2xl font-industrial">{formatCLP(product.priceWholesale)}</p>
+                       <span className="text-[9px] text-neutral-500">c/u</span>
+                    </div>
+                 </div>
+
               </div>
             </motion.div>
           </motion.div>
