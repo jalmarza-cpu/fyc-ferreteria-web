@@ -247,12 +247,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </button>
 
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-4xl w-full flex flex-col items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
-            >
+  initial={{ scale: 0.9, opacity: 0 }}
+  animate={{ scale: 1, opacity: 1 }}
+  exit={{ scale: 0.9, opacity: 0 }}
+  // CAMBIOS: max-h-[85vh] (altura max), overflow-y-auto (scroll), pt-10 (espacio arriba)
+  className="relative w-full max-w-[600px] flex flex-col bg-[#111] max-h-[85vh] overflow-y-auto rounded-2xl shadow-2xl border border-[#333] my-4"
+  onClick={(e) => e.stopPropagation()}
+>
               {/* Modal Image Container - Dark Mode */}
               <div className="bg-[#151515] p-4 md:p-8 rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333]">
                 <img 
