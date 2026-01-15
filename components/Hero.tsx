@@ -2,12 +2,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
+import { useCartStore } from '../store';
 
 interface HeroProps {
   onCatalogClick: () => void;
 }
 
 const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
+  const toggleCart = useCartStore((state) => state.toggleCart);
+
   return (
     <section 
       id="inicio" 
@@ -75,10 +78,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             </button>
             
             <button 
-              onClick={() => {
-                 const contactSection = document.getElementById('catalogo'); // O footer
-                 contactSection?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={toggleCart}
               className="group bg-transparent border border-white/30 text-white px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white/10 transition-all backdrop-blur-sm rounded-full w-full sm:w-auto flex items-center justify-center"
             >
               Cotizar Lista

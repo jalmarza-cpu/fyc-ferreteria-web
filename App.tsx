@@ -1,8 +1,8 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck } from 'lucide-react';
-import { PRODUCTS, CONTACT_PHONE_DISPLAY } from './constants';
+import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck, FileText, Receipt, User, Building2, MapPin, Phone, ArrowLeft, Send } from 'lucide-react';
+import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE } from './constants';
 import { useCartStore } from './store';
 
 // Imports from specialized components
@@ -121,9 +121,22 @@ const ScrollToTopButton = () => {
     );
 };
 
-// --- CART DRAWER ---
+// --- CART DRAWER (UPDATED WITH CHECKOUT FORM) ---
 const CartDrawer = () => {
-  const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal, checkout } = useCartStore();
+  const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal } = useCartStore();
+  const [step, setStep] = useState<'cart' | 'checkout'>('cart');
+  const [docType, setDocType] = useState<'boleta' | 'factura'>('boleta');
+  
+  // Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    region: '',
+    rut: '',
+    razonSocial: '',
+    giro: ''
+  });
 
   // Configuración de Envío Gratis
   const FREE_SHIPPING_THRESHOLD = 100000;
@@ -131,14 +144,66 @@ const CartDrawer = () => {
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - currentTotal);
   const progressPercentage = Math.min((currentTotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
 
+  // Reset step on close
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
+    if (!isOpen) {
+      setTimeout(() => setStep('cart'), 300);
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = 'hidden';
     }
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleWhatsAppCheckout = () => {
+    // Validaciones Básicas
+    if (!formData.name || !formData.phone) {
+      alert("Por favor completa tu nombre y teléfono.");
+      return;
+    }
+    if (docType === 'factura' && (!formData.rut || !formData.razonSocial)) {
+      alert("Para factura, el RUT y Razón Social son obligatorios.");
+      return;
+    }
+
+    // Construcción del Mensaje Profesional
+    let message = `*SOLICITUD DE PEDIDO / COTIZACIÓN*\n`;
+    message += `--------------------------------\n`;
+    message += `📋 *DOCUMENTO:* ${docType === 'factura' ? 'FACTURA' : 'BOLETA'}\n`;
+    
+    message += `👤 *CLIENTE:* ${formData.name}\n`;
+    message += `📱 *TEL:* ${formData.phone}\n`;
+    
+    if (formData.address) {
+        message += `📍 *DESPACHO:* ${formData.address}${formData.region ? `, ${formData.region}` : ''}\n`;
+    }
+
+    if (docType === 'factura') {
+      message += `--------------------------------\n`;
+      message += `🏢 *DATOS FACTURACIÓN*\n`;
+      message += `RUT: ${formData.rut}\n`;
+      message += `RAZÓN: ${formData.razonSocial}\n`;
+      if (formData.giro) message += `GIRO: ${formData.giro}\n`;
+    }
+
+    message += `--------------------------------\n`;
+    message += `🛒 *DETALLE DEL PEDIDO*\n`;
+    items.forEach(item => {
+      message += `▪ ${item.quantity}x ${item.name}\n   SKU: ${item.sku} | $${new Intl.NumberFormat('es-CL').format(item.price * item.quantity)}\n`;
+    });
+    
+    message += `--------------------------------\n`;
+    message += `💰 *TOTAL A PAGAR: ${formatPrice(currentTotal)}*\n`;
+    message += `--------------------------------\n`;
+    message += `Quedo atento a la confirmación de stock y datos de transferencia.`;
+
+    const url = `https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  };
 
   return (
     <AnimatePresence>
@@ -152,107 +217,234 @@ const CartDrawer = () => {
           <motion.div 
             initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-[#f5f5f5] text-black z-[90] flex flex-col shadow-2xl"
+            className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-[#0A0A0A] text-white z-[90] flex flex-col shadow-2xl border-l border-[#222]"
           >
-            {/* Header Limpio (Estilo imagen referencia) */}
-            <div className="p-5 border-b border-gray-200 flex items-center justify-between bg-white">
-              <h2 className="text-xl font-bold text-black">Carrito</h2>
-              <button onClick={toggleCart} className="flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-black transition-colors">
+            {/* Header */}
+            <div className="p-5 border-b border-[#222] flex items-center justify-between bg-[#111]">
+              <div className="flex items-center gap-3">
+                 {step === 'checkout' && (
+                    <button onClick={() => setStep('cart')} className="hover:text-[#FFD700] transition-colors">
+                        <ArrowLeft className="w-5 h-5" />
+                    </button>
+                 )}
+                 <h2 className="text-xl font-industrial font-bold text-white uppercase tracking-wider">
+                    {step === 'cart' ? 'Mi Carro' : 'Finalizar Compra'}
+                 </h2>
+              </div>
+              <button onClick={toggleCart} className="flex items-center gap-1 text-sm font-medium text-neutral-400 hover:text-white transition-colors">
                 <X className="w-5 h-5" /> Cerrar
               </button>
             </div>
 
-            {/* Lista de Items */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-white">
-              {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-gray-400 opacity-80">
-                  <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                     <ShoppingCart className="w-8 h-8 text-gray-400" />
-                  </div>
-                  <p className="font-bold text-sm text-gray-500">Tu carrito está vacío</p>
-                </div>
-              ) : (
-                items.map(item => (
-                  <motion.div 
-                    layout
-                    key={item.id} 
-                    className="flex gap-4 border-b border-gray-100 pb-4 last:border-0"
-                  >
-                    <div className="w-20 h-20 bg-gray-50 flex-shrink-0 rounded border border-gray-200 overflow-hidden p-2">
-                      <img src={item.image || "https://placehold.co/100"} alt="" className="w-full h-full object-contain mix-blend-multiply" />
-                    </div>
-                    <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
-                      <div className="flex justify-between items-start">
-                        <div>
-                            <h4 className="text-sm font-bold text-black leading-tight mb-1 pr-2 line-clamp-2">{item.name}</h4>
-                            <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SKU: {item.sku}</p>
+            {/* CONTENT AREA */}
+            <div className="flex-1 overflow-y-auto bg-[#0A0A0A]">
+              
+              {/* VISTA 1: LISTA DE PRODUCTOS */}
+              {step === 'cart' && (
+                  <div className="p-5 space-y-4">
+                    {items.length === 0 ? (
+                        <div className="h-[50vh] flex flex-col items-center justify-center text-neutral-600">
+                        <ShoppingCart className="w-16 h-16 mb-4 opacity-20" />
+                        <p className="font-bold text-sm uppercase tracking-widest">Tu carrito está vacío</p>
                         </div>
-                        <button onClick={() => removeItem(item.id)} className="text-gray-400 hover:text-red-500 transition-colors"><X className="w-4 h-4" /></button>
-                      </div>
-                      
-                      <div className="flex items-center justify-between mt-2">
-                         <div className="flex items-center bg-gray-100 rounded px-1 h-8">
-                           <button onClick={() => updateQuantity(item.id, -1)} className="w-8 h-full flex items-center justify-center hover:bg-gray-200 text-gray-600 rounded transition-colors"><Minus className="w-3 h-3" /></button>
-                           <span className="w-8 text-center text-xs font-bold text-black select-none">{item.quantity}</span>
-                           <button onClick={() => updateQuantity(item.id, 1)} className="w-8 h-full flex items-center justify-center hover:bg-gray-200 text-gray-600 rounded transition-colors"><Plus className="w-3 h-3" /></button>
-                         </div>
-                         <div className="text-right">
-                             <p className="text-sm font-bold text-black">{formatPrice(item.price * item.quantity)}</p>
-                             {item.quantity > 1 && <p className="text-[10px] text-gray-500">{formatPrice(item.price)} c/u</p>}
-                         </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))
+                    ) : (
+                        items.map(item => (
+                        <motion.div 
+                            layout
+                            key={item.id} 
+                            className="flex gap-4 border-b border-[#222] pb-4 last:border-0"
+                        >
+                            <div className="w-20 h-20 bg-white rounded border border-[#333] overflow-hidden p-2 flex-shrink-0">
+                               <img src={item.image || "https://placehold.co/100"} alt="" className="w-full h-full object-contain mix-blend-multiply" />
+                            </div>
+                            <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
+                                <div className="flex justify-between items-start gap-2">
+                                    <div>
+                                        <h4 className="text-xs font-bold text-white uppercase leading-tight mb-1 line-clamp-2">{item.name}</h4>
+                                        <p className="text-[10px] text-[#FFD700] font-bold tracking-wider">SKU: {item.sku}</p>
+                                    </div>
+                                    <button onClick={() => removeItem(item.id)} className="text-neutral-600 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                                </div>
+                                
+                                <div className="flex items-center justify-between mt-2">
+                                    <div className="flex items-center bg-[#151515] rounded border border-[#333] h-7">
+                                        <button onClick={() => updateQuantity(item.id, -1)} className="w-7 h-full flex items-center justify-center hover:bg-[#222] text-neutral-400 rounded-l transition-colors"><Minus className="w-3 h-3" /></button>
+                                        <span className="w-8 text-center text-xs font-bold text-white select-none">{item.quantity}</span>
+                                        <button onClick={() => updateQuantity(item.id, 1)} className="w-7 h-full flex items-center justify-center hover:bg-[#222] text-neutral-400 rounded-r transition-colors"><Plus className="w-3 h-3" /></button>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-sm font-bold text-[#FFD700]">{formatPrice(item.price * item.quantity)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                        ))
+                    )}
+                  </div>
               )}
+
+              {/* VISTA 2: FORMULARIO CHECKOUT SII */}
+              {step === 'checkout' && (
+                 <div className="p-5 space-y-6">
+                    
+                    {/* SELECTOR BOLETA / FACTURA */}
+                    <div className="bg-[#111] p-1 rounded-lg border border-[#333] flex relative">
+                        <button 
+                          onClick={() => setDocType('boleta')}
+                          className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'boleta' ? 'text-black bg-[#FFD700] shadow-md' : 'text-neutral-500 hover:text-white'}`}
+                        >
+                            <Receipt className="w-4 h-4" /> Boleta
+                        </button>
+                        <button 
+                          onClick={() => setDocType('factura')}
+                          className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'factura' ? 'text-black bg-[#FFD700] shadow-md' : 'text-neutral-500 hover:text-white'}`}
+                        >
+                            <FileText className="w-4 h-4" /> Factura
+                        </button>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-2 pb-2 border-b border-[#222]">
+                            <User className="w-4 h-4 text-[#FFD700]" />
+                            <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Datos de Contacto</h3>
+                        </div>
+                        
+                        <div className="space-y-3">
+                            <div>
+                                <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Nombre Completo *</label>
+                                <input 
+                                    type="text" name="name" value={formData.name} onChange={handleInputChange}
+                                    className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors"
+                                    placeholder="Ej: Juan Pérez"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Teléfono / WhatsApp *</label>
+                                <input 
+                                    type="tel" name="phone" value={formData.phone} onChange={handleInputChange}
+                                    className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors"
+                                    placeholder="+56 9 ..."
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Región / Comuna</label>
+                                    <input 
+                                        type="text" name="region" value={formData.region} onChange={handleInputChange}
+                                        className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors"
+                                        placeholder="Ej: Santiago"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Dirección</label>
+                                    <input 
+                                        type="text" name="address" value={formData.address} onChange={handleInputChange}
+                                        className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors"
+                                        placeholder="Calle 123"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* CAMPOS FACTURA (CONDICIONALES) */}
+                        <AnimatePresence>
+                            {docType === 'factura' && (
+                                <motion.div 
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="overflow-hidden space-y-4 pt-4"
+                                >
+                                    <div className="flex items-center gap-2 pb-2 border-b border-[#222]">
+                                        <Building2 className="w-4 h-4 text-[#FFD700]" />
+                                        <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Datos Empresa (SII)</h3>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">RUT Empresa *</label>
+                                            <input 
+                                                type="text" name="rut" value={formData.rut} onChange={handleInputChange}
+                                                className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5"
+                                                placeholder="76.123.456-K"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Razón Social *</label>
+                                            <input 
+                                                type="text" name="razonSocial" value={formData.razonSocial} onChange={handleInputChange}
+                                                className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5"
+                                                placeholder="Constructora SPA"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Giro Comercial</label>
+                                            <input 
+                                                type="text" name="giro" value={formData.giro} onChange={handleInputChange}
+                                                className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5"
+                                                placeholder="Ej: Obras menores en construcción"
+                                            />
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                    </div>
+                 </div>
+              )}
+
             </div>
 
-            {/* Footer con Lógica de Envío Gratis (Replica de Referencia) */}
+            {/* FOOTER ACTIONS */}
             {items.length > 0 && (
-              <div className="bg-white p-6 border-t border-gray-200 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
+              <div className="bg-[#111] p-6 border-t border-[#222] shadow-[0_-5px_30px_rgba(0,0,0,0.5)]">
                 
-                {/* Subtotal */}
-                <div className="flex justify-between items-center mb-6">
-                    <span className="text-lg font-bold text-black">Subtotal:</span>
-                    <span className="text-xl font-bold text-[#0056b3]">{formatPrice(getTotal())}</span>
-                </div>
-
-                {/* Barra de Progreso Envío */}
-                <div className="mb-6">
-                    <p className="text-xs text-gray-600 mb-2">
-                    {remainingForFreeShipping > 0 
-                        ? <>Agrega <span className="font-bold text-[#0056b3]">{formatPrice(remainingForFreeShipping)}</span> al carrito y obtén envío gratuito (solo en Santiago)</>
-                        : <span className="text-green-600 font-bold flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> ¡Felicidades! Tienes envío gratuito en Santiago</span>
-                    }
-                    </p>
-                    <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
-                        <motion.div 
-                            initial={{ width: 0 }}
-                            animate={{ width: `${progressPercentage}%` }}
-                            transition={{ duration: 0.5 }}
-                            className={`h-full ${remainingForFreeShipping <= 0 ? 'bg-green-500' : 'bg-[#0056b3]'} rounded-full relative`}
-                        >
-                            {/* Efecto de rayas en la barra (Estilo similar a referencia) */}
-                            <div className="absolute inset-0 w-full h-full opacity-30 bg-[linear-gradient(45deg,rgba(255,255,255,.15)_25%,transparent_25%,transparent_50%,rgba(255,255,255,.15)_50%,rgba(255,255,255,.15)_75%,transparent_75%,transparent)] bg-[length:1rem_1rem]"></div>
-                        </motion.div>
+                {/* INFO ENVÍO */}
+                <div className="mb-4">
+                    <div className="flex justify-between items-end mb-2">
+                         <span className="text-xs text-neutral-400 font-medium">Total Estimado</span>
+                         <span className="text-2xl font-black font-industrial text-[#FFD700]">{formatPrice(getTotal())}</span>
                     </div>
+                    {step === 'cart' && (
+                        <div className="w-full h-1.5 bg-[#222] rounded-full overflow-hidden">
+                            <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${progressPercentage}%` }}
+                                className={`h-full ${remainingForFreeShipping <= 0 ? 'bg-green-500' : 'bg-[#FFD700]'} relative`}
+                            />
+                        </div>
+                    )}
+                    {step === 'cart' && remainingForFreeShipping > 0 && (
+                        <p className="text-[9px] text-neutral-500 mt-1 text-right">Faltan {formatPrice(remainingForFreeShipping)} para envío gratis (Stgo).</p>
+                    )}
                 </div>
 
-                {/* Botones de Acción */}
+                {/* BOTONES DE ACCIÓN */}
                 <div className="space-y-3">
-                    <button 
-                        onClick={toggleCart} // En una SPA esto suele ser "Seguir Comprando"
-                        className="w-full py-3.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs uppercase tracking-wider rounded transition-colors"
-                    >
-                        Ver Carrito / Seguir Comprando
-                    </button>
+                    {step === 'cart' ? (
+                        <button 
+                            onClick={() => setStep('checkout')}
+                            className="w-full py-4 bg-[#FFD700] hover:bg-white text-black font-black text-xs uppercase tracking-[0.15em] rounded transition-all shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_rgba(255,215,0,0.4)] flex items-center justify-center gap-2"
+                        >
+                            Continuar Compra <ArrowRight className="w-4 h-4" />
+                        </button>
+                    ) : (
+                        <button 
+                            onClick={handleWhatsAppCheckout}
+                            className="w-full py-4 bg-green-600 hover:bg-green-500 text-white font-black text-xs uppercase tracking-[0.15em] rounded transition-all shadow-[0_0_20px_rgba(22,163,74,0.3)] hover:shadow-[0_0_30px_rgba(22,163,74,0.5)] flex items-center justify-center gap-2"
+                        >
+                            <Send className="w-4 h-4" /> Enviar Pedido / Cotizar
+                        </button>
+                    )}
                     
-                    <button 
-                        onClick={checkout}
-                        className="w-full py-3.5 bg-[#0056b3] hover:bg-[#004494] text-white font-bold text-xs uppercase tracking-wider rounded transition-all shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2"
-                    >
-                        Finalizar Compra
-                    </button>
+                    {step === 'cart' && (
+                         <button 
+                            onClick={toggleCart} 
+                            className="w-full py-3 bg-transparent border border-[#333] hover:border-[#FFD700] text-neutral-400 hover:text-[#FFD700] font-bold text-[10px] uppercase tracking-wider rounded transition-colors"
+                        >
+                            Seguir Viendo Productos
+                        </button>
+                    )}
                 </div>
 
               </div>
@@ -343,7 +535,7 @@ export default function App() {
         )}
 
         {/* Catalog Section with Sidebar Layout */}
-        <div className="bg-gray-100 border-t border-[#222]">
+        <div className="bg-[#111] border-t border-[#222]">
           <div id="catalogo" className="max-w-[1600px] mx-auto px-6 py-16 md:py-24 scroll-mt-32">
             
             <div className="flex flex-col lg:flex-row gap-12 items-start">
@@ -362,12 +554,12 @@ export default function App() {
               {/* Product Grid Area */}
               <div className="flex-1 w-full">
                 {/* Results Header */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-gray-300">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-[#222]">
                   <div>
-                    <h2 className="text-3xl md:text-4xl font-industrial font-black text-black uppercase tracking-tighter mb-2">
+                    <h2 className="text-3xl md:text-4xl font-industrial font-black text-white uppercase tracking-tighter mb-2">
                       {searchTerm ? `Buscando "${searchTerm}"` : category}
                     </h2>
-                    <div className="flex items-center gap-2 text-xs font-bold text-gray-600 uppercase tracking-widest">
+                    <div className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
                       <span className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></span>
                       {filteredProducts.length} Productos Disponibles
                     </div>
@@ -376,7 +568,7 @@ export default function App() {
                   {/* Mobile Filter Trigger (Visible only on mobile/tablet) */}
                   <button 
                     onClick={() => setSidebarOpen(true)}
-                    className="lg:hidden flex items-center justify-center gap-2 w-full md:w-auto bg-white border border-gray-300 rounded-full py-4 px-6 text-black text-xs font-black uppercase tracking-widest hover:border-[#FFD700] hover:shadow-lg transition-all shadow-md"
+                    className="lg:hidden flex items-center justify-center gap-2 w-full md:w-auto bg-[#1A1A1A] border border-[#333] rounded-full py-4 px-6 text-white text-xs font-black uppercase tracking-widest hover:border-[#FFD700] hover:text-[#FFD700] transition-all shadow-md"
                   >
                     <Menu className="w-4 h-4" /> Filtrar Catálogo
                   </button>
@@ -390,11 +582,11 @@ export default function App() {
                     ))}
                   </div>
                 ) : (
-                  <div className="min-h-[400px] flex flex-col items-center justify-center text-gray-500 border-2 border-dashed border-gray-300 rounded-2xl bg-white p-12 text-center">
-                    <AlertCircle className="w-16 h-16 mb-4 text-gray-300" />
-                    <h3 className="text-2xl font-industrial font-bold uppercase mb-2 text-black">Sin resultados</h3>
-                    <p className="text-sm uppercase tracking-wider mb-8 text-gray-500">No encontramos herramientas con esos filtros.</p>
-                    <button onClick={() => {setSearchTerm(''); setCategory('Todas'); setMaxPrice(maxProductPrice)}} className="bg-black text-white px-8 py-4 rounded-full text-xs font-black uppercase tracking-widest hover:bg-[#FFD700] hover:text-black transition-colors shadow-xl">
+                  <div className="min-h-[400px] flex flex-col items-center justify-center text-neutral-500 border border-[#222] border-dashed rounded-2xl bg-[#0E0E0E] p-12 text-center">
+                    <AlertCircle className="w-16 h-16 mb-4 text-neutral-700" />
+                    <h3 className="text-2xl font-industrial font-bold uppercase mb-2 text-white">Sin resultados</h3>
+                    <p className="text-sm uppercase tracking-wider mb-8 text-neutral-500">No encontramos herramientas con esos filtros.</p>
+                    <button onClick={() => {setSearchTerm(''); setCategory('Todas'); setMaxPrice(maxProductPrice)}} className="bg-[#FFD700] text-black px-8 py-4 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl">
                       Ver Todo el Catálogo
                     </button>
                   </div>
