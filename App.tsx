@@ -161,19 +161,25 @@ const CartDrawer = () => {
   };
 
   const handleWhatsAppCheckout = () => {
-    // Validaciones Básicas
+    // 1. Validaciones Básicas (Nombre y Teléfono son obligatorios siempre)
     if (!formData.name || !formData.phone) {
       alert("Por favor completa tu nombre y teléfono.");
       return;
     }
-    if (docType === 'factura' && (!formData.rut || !formData.razonSocial)) {
-      alert("Para factura, el RUT y Razón Social son obligatorios.");
-      return;
+
+    // 2. Validación Específica para Factura
+    // Solo validamos RUT y Razón Social si el usuario quiere Factura explícitamente.
+    if (docType === 'factura') {
+        if (!formData.rut || !formData.razonSocial) {
+            alert("Para solicitar FACTURA, el RUT y la Razón Social son obligatorios.");
+            return;
+        }
     }
 
-    // Construcción del Mensaje Profesional
+    // 3. Construcción del Mensaje Profesional
     let message = `*SOLICITUD DE PEDIDO / COTIZACIÓN*\n`;
     message += `--------------------------------\n`;
+    // Encabezado dinámico: La verdad única es 'docType'
     message += `📋 *DOCUMENTO:* ${docType === 'factura' ? 'FACTURA' : 'BOLETA'}\n`;
     
     message += `👤 *CLIENTE:* ${formData.name}\n`;
@@ -183,6 +189,8 @@ const CartDrawer = () => {
         message += `📍 *DESPACHO:* ${formData.address}${formData.region ? `, ${formData.region}` : ''}\n`;
     }
 
+    // 4. Lógica de Exclusión Estricta
+    // Si docType es 'boleta', este bloque NUNCA se ejecuta, ignorando cualquier dato basura en los inputs de factura.
     if (docType === 'factura') {
       message += `--------------------------------\n`;
       message += `🏢 *DATOS FACTURACIÓN*\n`;
