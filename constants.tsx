@@ -58,7 +58,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'bh-004',
     name: "Brocha de calidad forceman 2″.",
-    sku: "011386",
+    sku: "011384",
     description: "Brocha 2″.",
     priceRetail: 1260,
     priceWholesale: 960,
@@ -79,7 +79,7 @@ export const PRODUCTS: Product[] = [
     id: 'bh-006',
     name: "Brocha de calidad forceman 1″.",
     sku: "011382",
-    description: "Brocha 1".",
+    description: "Brocha 1″.", // <--- AQUÍ estaba el error, ya lo arreglé con el símbolo ″
     priceRetail: 680,
     priceWholesale: 480,
     imageUrl: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800",
