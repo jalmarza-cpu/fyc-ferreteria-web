@@ -13,23 +13,24 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
   return (
     <section 
       id="inicio" 
-      // 1. Quitamos la imagen de fondo CSS (bg-[url...]) y dejamos solo el contenedor
       className="relative h-[600px] md:h-[700px] w-full flex items-center overflow-hidden border-b border-[#222] bg-[#050505] scroll-mt-32"
     >
       
-      {/* 2. NUEVO: Fondo Animado desde Supabase (Z-Index 0) */}
+      {/* 1. Fondo Animado (WEBP) de Supabase */}
       <div className="absolute inset-0 z-0">
         <img 
           src="https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/sign/video-webp/animacion-hero-video.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81ZTM0ZjgxOS0wMWJlLTRiY2MtOThiNi1mNDljMzlmZTgyMjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlby13ZWJwL2FuaW1hY2lvbi1oZXJvLXZpZGVvLndlYnAiLCJpYXQiOjE3Njg2MDEyNTgsImV4cCI6MTg1NTAwMTI1OH0.aXrSt6rMa-ldBKlQZhv9gsB-Seuay3eGz1OZzg4zNto"
           alt="Animación Industrial FYC"
-          className="w-full h-full object-cover opacity-90" // Opacidad ligera para mezclar con el fondo negro si es necesario
+          // Quitamos la opacidad aquí para que el video brille al 100%
+          className="w-full h-full object-cover" 
         />
       </div>
 
-      {/* 3. Overlay Oscuro (Z-Index 10) - Ajustado para que el texto resalte sobre la animación */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-black/30 z-10"></div>
+      {/* 2. Overlay (Sombra) CORREGIDO - MUCHO MÁS CLARO */}
+      {/* Antes era muy oscuro en el medio (via-black/70). Ahora es mucho más transparente (via-black/20) */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-10"></div>
 
-      {/* 4. Contenido (Z-Index 20) - Elevado para estar encima del video y el overlay */}
+      {/* 3. Contenido */}
       <div className="relative z-20 max-w-[1600px] mx-auto w-full px-6 md:px-12 flex items-center h-full">
         
         {/* Barra Amarilla Decorativa */}
@@ -70,7 +71,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-base md:text-xl text-neutral-300 font-medium max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6"
+            className="text-base md:text-xl text-neutral-300 font-medium max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6 drop-shadow-lg"
           >
             Herramientas y materiales técnicos. Cotiza formalmente con Factura o Boleta en segundos. Despachos a todo Chile.
           </motion.p>
