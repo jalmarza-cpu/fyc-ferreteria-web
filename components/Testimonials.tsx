@@ -6,25 +6,25 @@ import { motion } from 'framer-motion';
 const TESTIMONIALS = [
   {
     id: 1,
-    name: "Juan Carlos Muñoz",
+    name: "Matias Canto",
     role: "Jefe de Obra",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
+    image: "Cliente-1-Matias-Canto.jpg",
     quote: "Pedí 3 taladros y llegaron al día siguiente a la obra con la factura lista. Excelente servicio.",
     highlight: "Rapidez Extrema"
   },
   {
     id: 2,
-    name: "Roberto 'Tito' González",
+    name: "Axel 'Tito' Cabrera",
     role: "Contratista General",
-    image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&q=80&w=200",
+    image: "Cliente-2-Axel-Cabrera.jpg",
     quote: "Cotización formal rápida. Los precios mayoristas son reales, se nota el ahorro en el total final.",
     highlight: "Precio Justo"
   },
   {
     id: 3,
-    name: "Patricio Araya",
+    name: "Hector 'El maestro'",
     role: "Dueño de Casa",
-    image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=200",
+    image: "Cliente-3-Hector-El-maestro",
     quote: "Necesitaba asesoría para un proyecto personal y me atendieron por WhatsApp como a un profesional.",
     highlight: "Calidad Industrial"
   }
