@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { HardHat, Handshake, Users, Award } from 'lucide-react';
+import { HardHat, Handshake, Users, Award, ShieldCheck, Wrench } from 'lucide-react';
 
 const About = () => {
   return (
@@ -15,7 +14,7 @@ const About = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
-          {/* Column 1: The Manifesto */}
+          {/* Column 1: The Manifesto (Textos Principales) */}
           <div>
             <div className="inline-flex items-center gap-2 mb-6 bg-[#FFD700]/10 border border-[#FFD700]/20 rounded-full px-4 py-1.5">
                <Users className="w-4 h-4 text-[#FFD700]" />
@@ -45,12 +44,14 @@ const About = () => {
                 En <strong className="text-white">F y C Spa</strong>, entendemos la regla de oro: <span className="text-[#FFD700]">una obra no puede detenerse</span>. 
               </p>
               
+              {/* Fusión de la Misión del Cliente */}
               <p>
-                Nacimos con una misión radicalmente clara: <strong>democratizar los precios industriales en Chile</strong>. Rompemos la barrera entre las grandes constructoras y el maestro independiente. Creemos firmemente que todos merecen acceso a herramientas profesionales, insumos de primera línea y <span className="text-white underline decoration-[#FFD700] decoration-2 underline-offset-4">precios mayoristas reales</span>, sin letra chica ni requisitos imposibles.
+                Nuestra misión es ofrecer soluciones prácticas a precios competitivos. Pero no solo entregamos una caja; <strong>te guiamos en la correcta instalación y uso</strong> de cada producto para asegurar resultados eficientes y seguros. Rompemos la barrera entre la constructora y el maestro, democratizando el acceso a herramientas profesionales.
               </p>
 
+              {/* Fusión de la Visión del Cliente */}
               <p>
-                Somos una empresa chilena forjada en el compromiso con la <strong>calidad</strong>, la obsesión por la <strong>rapidez en el despacho</strong> y, sobre todo, el profundo <strong>respeto</strong> por quienes construyen el futuro del país con sus propias manos.
+                Trabajamos para ser el referente indiscutido a nivel local y regional. Crecemos junto a ti basándonos en una <strong>confiabilidad absoluta</strong>, asesoría experta y un compromiso real con el cliente.
               </p>
 
               <div className="pt-4">
@@ -61,38 +62,38 @@ const About = () => {
             </motion.div>
           </div>
 
-          {/* Column 2: Visual Grid & Values */}
+          {/* Column 2: Visual Grid & Values (Puntos Clave) */}
           <div className="relative">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
-                {/* Card 1 */}
+                {/* Card 1: Asesoría Técnica */}
                 <motion.div 
                   whileHover={{ y: -5 }}
                   className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFD700] transition-colors"
                 >
-                    <HardHat className="w-10 h-10 text-neutral-600 group-hover:text-[#FFD700] mb-4 transition-colors" />
-                    <h4 className="text-white font-bold uppercase text-sm mb-2">Para el Maestro</h4>
-                    <p className="text-xs text-neutral-500">Trato digno y precios justos sin importar el tamaño de tu compra.</p>
+                    <Wrench className="w-10 h-10 text-neutral-600 group-hover:text-[#FFD700] mb-4 transition-colors" />
+                    <h4 className="text-white font-bold uppercase text-sm mb-2">Asesoría Experta</h4>
+                    <p className="text-xs text-neutral-500">Te guiamos en el uso correcto para asegurar resultados eficientes.</p>
                 </motion.div>
 
-                {/* Card 2 */}
+                {/* Card 2: Precios (Misión) */}
                 <motion.div 
                   whileHover={{ y: -5 }}
                   className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFD700] transition-colors sm:mt-8"
                 >
-                    <Award className="w-10 h-10 text-neutral-600 group-hover:text-[#FFD700] mb-4 transition-colors" />
-                    <h4 className="text-white font-bold uppercase text-sm mb-2">Calidad Certificada</h4>
-                    <p className="text-xs text-neutral-500">Solo vendemos herramientas que nosotros mismos usaríamos.</p>
+                    <ShieldCheck className="w-10 h-10 text-neutral-600 group-hover:text-[#FFD700] mb-4 transition-colors" />
+                    <h4 className="text-white font-bold uppercase text-sm mb-2">Precios Competitivos</h4>
+                    <p className="text-xs text-neutral-500">Soluciones prácticas y valores justos que cuidan tu presupuesto.</p>
                 </motion.div>
 
-                 {/* Card 3 */}
+                 {/* Card 3: Visión Regional */}
                  <motion.div 
                   whileHover={{ y: -5 }}
                   className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFD700] transition-colors"
                 >
                     <Handshake className="w-10 h-10 text-neutral-600 group-hover:text-[#FFD700] mb-4 transition-colors" />
-                    <h4 className="text-white font-bold uppercase text-sm mb-2">Trato Directo</h4>
-                    <p className="text-xs text-neutral-500">Sin intermediarios burocráticos. Hablas con expertos.</p>
+                    <h4 className="text-white font-bold uppercase text-sm mb-2">Confianza Regional</h4>
+                    <p className="text-xs text-neutral-500">Crecimiento sostenido basado en la cercanía y el respeto.</p>
                 </motion.div>
 
                 {/* Image Decorator */}
@@ -105,7 +106,7 @@ const About = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                     <div className="absolute bottom-4 left-4">
                         <span className="text-[#FFD700] font-black text-4xl">100%</span>
-                        <span className="block text-white text-[10px] font-bold uppercase tracking-widest">Compromiso</span>
+                        <span className="block text-white text-[10px] font-bold uppercase tracking-widest">Técnicos</span>
                     </div>
                 </div>
 
