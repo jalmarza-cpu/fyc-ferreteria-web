@@ -8,7 +8,7 @@ const TESTIMONIALS = [
     id: 1,
     name: "Matias Canto",
     role: "Jefe de Obra",
-    image: "Cliente-1-Matias-Canto.jpg",
+    image: "/clientes/Cliente-1-Matias-Canto.jpg",
     quote: "Pedí 3 taladros y llegaron al día siguiente a la obra con la factura lista. Excelente servicio.",
     highlight: "Rapidez Extrema"
   },
@@ -16,7 +16,7 @@ const TESTIMONIALS = [
     id: 2,
     name: "Axel 'Tito' Cabrera",
     role: "Contratista General",
-    image: "Cliente-2-Axel-Cabrera.jpg",
+    image: "/clientes/Cliente-2-Axel-Cabrera.jpeg",
     quote: "Cotización formal rápida. Los precios mayoristas son reales, se nota el ahorro en el total final.",
     highlight: "Precio Justo"
   },
@@ -24,7 +24,7 @@ const TESTIMONIALS = [
     id: 3,
     name: "Hector 'El maestro'",
     role: "Dueño de Casa",
-    image: "Cliente-3-Hector-El-maestro",
+    image: "/clientes/Cliente-3-Hector-El-maestro.jpeg",
     quote: "Necesitaba asesoría para un proyecto personal y me atendieron por WhatsApp como a un profesional.",
     highlight: "Calidad Industrial"
   }
