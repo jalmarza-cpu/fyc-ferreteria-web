@@ -27,7 +27,7 @@ export const PRODUCTS: Product[] = [
   // --- BROCHA Y HERRAMIENTAS ---
   {
     id: 'bh-001',
-    name: "Brocha de calidad forceman 4″",
+    name: "Brocha de calidad forceman 4″.",
     sku: "011387",
     description: "Brocha 4″.",
     priceRetail: 1900,
@@ -37,7 +37,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'bh-002',
-    name: "Brocha de calidad forceman 3″",
+    name: "Brocha de calidad forceman 3″.",
     sku: "011386",
     description: "Brocha 3″.",
     priceRetail: 1500,
@@ -47,7 +47,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'bh-003',
-    name: "Brocha de calidad forceman 2 1/2″",
+    name: "Brocha de calidad forceman 2 1/2″.",
     sku: "011385",
     description: "Brocha 2 1/2″.",
     priceRetail: 1450,
@@ -57,9 +57,9 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'bh-004',
-    name: "Brocha de calidad forceman 3″",
+    name: "Brocha de calidad forceman 2″.",
     sku: "011386",
-    description: "Brocha 3″.",
+    description: "Brocha 2″.",
     priceRetail: 1260,
     priceWholesale: 960,
     imageUrl: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800",
@@ -67,7 +67,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'bh-005',
-    name: "Brocha de calidad forceman 1 1/2″",
+    name: "Brocha de calidad forceman 1 1/2″.",
     sku: "011383",
     description: "Brocha 1 1/2″.",
     priceRetail: 990,
@@ -77,7 +77,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'bh-006',
-    name: 'Brocha de calidad Forceman 1"',
+    name: 'Brocha de calidad Forceman 1".',
     sku: "011382",
     description: "Brocha 1".",
     priceRetail: 680,
