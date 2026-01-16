@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
@@ -14,13 +13,26 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
   return (
     <section 
       id="inicio" 
-      className="h-[600px] md:h-[700px] w-full flex items-center overflow-hidden border-b border-[#222] bg-[url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat relative scroll-mt-32"
+      // 1. Quitamos la imagen de fondo CSS (bg-[url...]) y dejamos solo el contenedor
+      className="relative h-[600px] md:h-[700px] w-full flex items-center overflow-hidden border-b border-[#222] bg-[#050505] scroll-mt-32"
     >
-      {/* Overlay oscuro para legibilidad mejorada sobre la foto del maestro */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40 z-0"></div>
+      
+      {/* 2. NUEVO: Fondo Animado desde Supabase (Z-Index 0) */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/sign/video-webp/animacion-hero-video.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81ZTM0ZjgxOS0wMWJlLTRiY2MtOThiNi1mNDljMzlmZTgyMjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlby13ZWJwL2FuaW1hY2lvbi1oZXJvLXZpZGVvLndlYnAiLCJpYXQiOjE3Njg2MDEyNTgsImV4cCI6MTg1NTAwMTI1OH0.aXrSt6rMa-ldBKlQZhv9gsB-Seuay3eGz1OZzg4zNto"
+          alt="Animación Industrial FYC"
+          className="w-full h-full object-cover opacity-90" // Opacidad ligera para mezclar con el fondo negro si es necesario
+        />
+      </div>
 
-      <div className="relative z-10 max-w-[1600px] mx-auto w-full px-6 md:px-12 flex items-center h-full">
-        {/* Barra Amarilla Decorativa (Identidad de Marca) */}
+      {/* 3. Overlay Oscuro (Z-Index 10) - Ajustado para que el texto resalte sobre la animación */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-black/30 z-10"></div>
+
+      {/* 4. Contenido (Z-Index 20) - Elevado para estar encima del video y el overlay */}
+      <div className="relative z-20 max-w-[1600px] mx-auto w-full px-6 md:px-12 flex items-center h-full">
+        
+        {/* Barra Amarilla Decorativa */}
         <motion.div 
           initial={{ height: 0 }}
           animate={{ height: '60%' }}
@@ -34,7 +46,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-             {/* Etiqueta Superior Actualizada */}
+             {/* Etiqueta Superior */}
              <div className="inline-flex items-center gap-2 mb-4 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 backdrop-blur-sm">
                 <span className="w-2 h-2 rounded-full bg-[#FFD700] animate-pulse"></span>
                 <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-widest">
@@ -47,7 +59,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">PRECIOS MAYORISTAS Y RAPIDEZ</span>
              </h1>
 
-             {/* NUEVO SUBTÍTULO: CLARIDAD EN EL MODELO DE NEGOCIO */}
+             {/* Subtítulo */}
              <h2 className="text-xl md:text-2xl text-neutral-300 font-bold uppercase tracking-widest mb-6 flex items-center gap-3">
                <span className="w-8 h-[2px] bg-[#FFD700]"></span>
                HERRAMIENTAS Y MATERIALES DE CONSTRUCCIÓN
