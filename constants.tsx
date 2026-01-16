@@ -77,7 +77,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'bh-006',
-    name: 'Brocha de calidad Forceman 1".',
+    name: "Brocha de calidad forceman 1″.",
     sku: "011382",
     description: "Brocha 1".",
     priceRetail: 680,
