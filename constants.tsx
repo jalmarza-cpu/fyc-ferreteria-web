@@ -24,36 +24,66 @@ export const CATEGORIES = [
 // BASE DE DATOS DE PRODUCTOS
 // ==========================================
 export const PRODUCTS: Product[] = [
-  // --- HERRAMIENTAS ELÉCTRICAS ---
+  // --- BROCHA Y HERRAMIENTAS ---
   {
-    id: 'he-001',
-    name: "Taladro Percutor Industrial 750W",
-    sku: "TAL-750-IND",
-    description: "Taladro percutor de velocidad variable, mandril 13mm. Ideal para hormigón y acero.",
-    priceRetail: 45990,
-    priceWholesale: 39990,
+    id: 'bh-001',
+    name: "Brocha de calidad forceman 4″",
+    sku: "011387",
+    description: "Brocha 4″.",
+    priceRetail: 1900,
+    priceWholesale: 1620,
     imageUrl: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800",
-    category: "Herramientas Eléctricas"
+    category: "Brocha, Herramientas"
   },
   {
-    id: 'he-002',
-    name: "Esmeril Angular 4-1/2\" Pro",
-    sku: "ESM-450-PRO",
-    description: "Motor de 900W, mango lateral antivibración. Corte de metales y piedra.",
-    priceRetail: 38900,
-    priceWholesale: 32500,
+    id: 'bh-002',
+    name: "Brocha de calidad forceman 3″",
+    sku: "011386",
+    description: "Brocha 3″.",
+    priceRetail: 1500,
+    priceWholesale: 1300,
     imageUrl: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800",
-    category: "Herramientas Eléctricas"
+    category: "Brocha, Herramientas"
   },
   {
-    id: 'he-003',
-    name: "Sierra Circular 7-1/4\" 1800W",
-    sku: "SIE-180-MAD",
-    description: "Sierra para dimensionado de madera, guía láser y disco de tungsteno incluido.",
-    priceRetail: 65000,
-    priceWholesale: 58900,
+    id: 'bh-003',
+    name: "Brocha de calidad forceman 2 1/2″",
+    sku: "011385",
+    description: "Brocha 2 1/2″.",
+    priceRetail: 1450,
+    priceWholesale: 1150,
     imageUrl: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800",
-    category: "Herramientas Eléctricas"
+    category: "Brocha, Herramientas"
+  },
+  {
+    id: 'bh-004',
+    name: "Brocha de calidad forceman 3″",
+    sku: "011386",
+    description: "Brocha 3″.",
+    priceRetail: 1260,
+    priceWholesale: 960,
+    imageUrl: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800",
+    category: "Brocha, Herramientas"
+  },
+  {
+    id: 'bh-005',
+    name: "Brocha de calidad forceman 1 1/2″",
+    sku: "011383",
+    description: "Brocha 1 1/2″.",
+    priceRetail: 990,
+    priceWholesale: 720,
+    imageUrl: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800",
+    category: "Brocha, Herramientas"
+  },
+  {
+    id: 'bh-006',
+    name: "Brocha de calidad Forceman 1"",
+    sku: "011382",
+    description: "Brocha 1".",
+    priceRetail: 680,
+    priceWholesale: 480,
+    imageUrl: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800",
+    category: "Brocha, Herramientas"
   },
 
   // --- GASFITERÍA (FONTANERÍA) ---
