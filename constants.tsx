@@ -14,7 +14,7 @@ export const CONTACT_EMAIL = "ventas@fycferreteria.cl";
 // CATEGORÍAS (Terminología Chilena)
 export const CATEGORIES = [
   "Todas",
-  "Herramientas Eléctricas",
+  "Brocha, Herramientas",
   "Gasfitería", // Antes Fontanería
   "Pinturas y Terminaciones",
   "Construcción y Obra Gruesa"
