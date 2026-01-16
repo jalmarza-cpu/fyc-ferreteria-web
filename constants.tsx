@@ -32,7 +32,7 @@ export const PRODUCTS: Product[] = [
     description: "Brocha 4″.",
     priceRetail: 1900,
     priceWholesale: 1620,
-    imageUrl: "/011387-brocha-forceman-4.png",
+    imageUrl: "/011387-brocha-forceman-4.jpg",
     category: "Brocha, Herramientas"
   },
   {
