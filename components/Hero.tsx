@@ -45,7 +45,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-             {/* CAMBIO 1: ETIQUETA INCLUSIVA */}
+             {/* ETIQUETA: Venta a todos */}
              <div className="inline-flex items-center gap-2 mb-4 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 backdrop-blur-sm">
                 <span className="w-2 h-2 rounded-full bg-[#FFD700] animate-pulse"></span>
                 <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-widest">
@@ -53,27 +53,27 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
                 </span>
              </div>
 
-             {/* CAMBIO 2: TÍTULO NUEVO */}
+             {/* TÍTULO: Impacto Visual */}
              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.1] tracking-tighter font-industrial text-white mb-2 drop-shadow-2xl">
-               POTENCIA INDUSTRIAL <br/>
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">PARA TU HOGAR Y OBRA</span>
+               POTENCIA INDUSTRIAL, <br/>
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">ALCANCE FAMILIAR</span>
              </h1>
 
-             {/* CAMBIO 3: SUBTÍTULO NUEVO */}
+             {/* SUBTÍTULO CORTO: La regla de oro */}
              <h2 className="text-xl md:text-2xl text-neutral-300 font-bold uppercase tracking-widest mb-6 flex items-center gap-3">
                <span className="w-8 h-[2px] bg-[#FFD700]"></span>
-               DESDE UNA UNIDAD A PRECIO MAYORISTA
+               PRECIO MAYORISTA DESDE 6 UNIDADES
              </h2>
           </motion.div>
           
-          {/* CAMBIO 4: PÁRRAFO NUEVO */}
+          {/* PÁRRAFO: Tu texto ganador con "Activa" */}
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-base md:text-xl text-neutral-300 font-medium max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6 drop-shadow-lg"
           >
-            La misma calidad que usan los expertos, ahora a tu alcance. Compra desde una unidad con precios mayoristas reales. Cotiza con Factura o Boleta.
+            La misma calidad que usan los expertos, ahora a tu alcance. Disfruta precios competitivos siempre y <span className="text-white font-bold">activa el valor mayorista</span> llevando solo 6 unidades.
           </motion.p>
           
           <motion.div 
