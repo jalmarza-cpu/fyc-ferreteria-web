@@ -21,14 +21,12 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
         <img 
           src="https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/sign/video-webp/animacion-hero-video.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81ZTM0ZjgxOS0wMWJlLTRiY2MtOThiNi1mNDljMzlmZTgyMjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlby13ZWJwL2FuaW1hY2lvbi1oZXJvLXZpZGVvLndlYnAiLCJpYXQiOjE3Njg2MDEyNTgsImV4cCI6MTg1NTAwMTI1OH0.aXrSt6rMa-ldBKlQZhv9gsB-Seuay3eGz1OZzg4zNto"
           alt="Animación Industrial FYC"
-          // Quitamos la opacidad aquí para que el video brille al 100%
           className="w-full h-full object-cover" 
         />
       </div>
 
-      {/* 2. Overlay (Sombra) CORREGIDO - MUCHO MÁS CLARO */}
-      {/* Antes era muy oscuro en el medio (via-black/70). Ahora es mucho más transparente (via-black/20) */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-10"></div>
+      {/* 2. Overlay (Sombra) - Ajustado para leer bien el nuevo texto */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent z-10"></div>
 
       {/* 3. Contenido */}
       <div className="relative z-20 max-w-[1600px] mx-auto w-full px-6 md:px-12 flex items-center h-full">
@@ -47,23 +45,24 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-             {/* Etiqueta Superior */}
+             {/* ETIQUETA NUEVA: Inclusiva */}
              <div className="inline-flex items-center gap-2 mb-4 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 backdrop-blur-sm">
                 <span className="w-2 h-2 rounded-full bg-[#FFD700] animate-pulse"></span>
                 <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-widest">
-                  Stock Disponible 2026
+                  Venta a Empresas y Particulares
                 </span>
              </div>
 
+             {/* TÍTULO NUEVO: Potencia para todos */}
              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.1] tracking-tighter font-industrial text-white mb-2 drop-shadow-2xl">
-               EL SOCIO DE TU OBRA: <br/>
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">PRECIOS MAYORISTAS Y RAPIDEZ</span>
+               POTENCIA INDUSTRIAL <br/>
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">PARA TU HOGAR Y OBRA</span>
              </h1>
 
-             {/* Subtítulo */}
+             {/* SUBTÍTULO NUEVO: Elimina barreras */}
              <h2 className="text-xl md:text-2xl text-neutral-300 font-bold uppercase tracking-widest mb-6 flex items-center gap-3">
                <span className="w-8 h-[2px] bg-[#FFD700]"></span>
-               HERRAMIENTAS Y MATERIALES DE CONSTRUCCIÓN
+               DESDE UNA UNIDAD A PRECIO MAYORISTA
              </h2>
           </motion.div>
           
@@ -73,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-base md:text-xl text-neutral-300 font-medium max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6 drop-shadow-lg"
           >
-            Herramientas y materiales técnicos. Cotiza formalmente con Factura o Boleta en segundos. Despachos a todo Chile.
+            La misma calidad que usan los expertos, ahora a tu alcance. Compra desde una unidad con precios mayoristas reales. Cotiza con Factura o Boleta.
           </motion.p>
           
           <motion.div 
@@ -86,7 +85,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
               onClick={onCatalogClick}
               className="group bg-[#FFD700] text-black px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_40px_rgba(255,215,0,0.6)] font-industrial flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
             >
-              VER CATÁLOGO COMPLETO
+              VER CATÁLOGO
               <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
             </button>
             
