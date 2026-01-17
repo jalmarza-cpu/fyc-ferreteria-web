@@ -25,7 +25,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
         />
       </div>
 
-      {/* 2. Overlay (Sombra) - Ajustado para leer bien el nuevo texto */}
+      {/* 2. Overlay (Sombra) */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent z-10"></div>
 
       {/* 3. Contenido */}
@@ -45,7 +45,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-             {/* ETIQUETA NUEVA: Inclusiva */}
+             {/* CAMBIO 1: ETIQUETA INCLUSIVA */}
              <div className="inline-flex items-center gap-2 mb-4 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 backdrop-blur-sm">
                 <span className="w-2 h-2 rounded-full bg-[#FFD700] animate-pulse"></span>
                 <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-widest">
@@ -53,19 +53,20 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
                 </span>
              </div>
 
-             {/* TÍTULO NUEVO: Potencia para todos */}
+             {/* CAMBIO 2: TÍTULO NUEVO */}
              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.1] tracking-tighter font-industrial text-white mb-2 drop-shadow-2xl">
                POTENCIA INDUSTRIAL <br/>
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">PARA TU HOGAR Y OBRA</span>
              </h1>
 
-             {/* SUBTÍTULO NUEVO: Elimina barreras */}
+             {/* CAMBIO 3: SUBTÍTULO NUEVO */}
              <h2 className="text-xl md:text-2xl text-neutral-300 font-bold uppercase tracking-widest mb-6 flex items-center gap-3">
                <span className="w-8 h-[2px] bg-[#FFD700]"></span>
                DESDE UNA UNIDAD A PRECIO MAYORISTA
              </h2>
           </motion.div>
           
+          {/* CAMBIO 4: PÁRRAFO NUEVO */}
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
