@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Hammer, Droplets, PaintRoller, BrickWall, ArrowRight } from 'lucide-react';
@@ -16,7 +15,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       color: 'bg-yellow-600',
       image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-2',
-      filterKey: 'Herramientas Eléctricas' // Coincide con constants.tsx
+      filterKey: 'Herramientas Eléctricas'
     },
     {
       id: 'gasfiteria',
@@ -25,7 +24,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       color: 'bg-blue-600',
       image: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
-      filterKey: 'Gasfitería' // Coincide con constants.tsx
+      filterKey: 'Gasfitería'
     },
     {
       id: 'pinturas',
@@ -34,7 +33,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       color: 'bg-purple-600',
       image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
-      filterKey: 'Pinturas y Terminaciones' // CORREGIDO: Antes decía solo "Pinturas"
+      filterKey: 'Pinturas y Terminaciones'
     },
     {
       id: 'construccion',
@@ -43,7 +42,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       color: 'bg-orange-600',
       image: 'https://images.unsplash.com/photo-1535732820275-9ffd998cac22?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-1',
-      filterKey: 'Construcción y Obra Gruesa' // CORREGIDO: Antes decía solo "Construcción"
+      filterKey: 'Construcción y Obra Gruesa'
     }
   ];
 
@@ -59,6 +58,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
           </div>
         </div>
 
+        {/* CONTENEDOR GRID */}
         <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[500px]">
           {categories.map((cat, index) => (
             <motion.div
@@ -68,7 +68,9 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
               onClick={() => onSelectCategory(cat.filterKey)}
-              className={`relative group overflow-hidden border border-[#222] cursor-pointer ${cat.className}`}
+              // 👇 AQUÍ ESTÁ EL ARREGLO:
+              // Agregué 'h-64' (altura fija en móvil) y 'md:h-full' (altura automática en PC)
+              className={`relative group overflow-hidden border border-[#222] cursor-pointer h-64 md:h-full ${cat.className}`}
             >
               {/* Background Image */}
               <div className="absolute inset-0">
