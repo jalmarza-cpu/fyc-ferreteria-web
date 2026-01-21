@@ -6,21 +6,21 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'Nosotros', href: '#nosotros' },
 ];
 
-// --- DATOS DE CONTACTO (Aquí agregué lo que faltaba) ---
+// --- DATOS DE CONTACTO ---
 export const CONTACT_PHONE = "56920648577";
 export const CONTACT_PHONE_DISPLAY = "+56 9 2064 8577";
 export const CONTACT_EMAIL = "ventas@fycferreteria.cl";
-export const CONTACT_ADDRESS = "Av. Independencia 1253, Puente Alto"; // ¡Nueva!
-export const CONTACT_MAP_URL = "https://maps.google.com/?q=Av.+Independencia+1253,+Puente+Alto"; // ¡Nueva!
+export const CONTACT_ADDRESS = "Av. Independencia 1253, Puente Alto";
+export const CONTACT_MAP_URL = "https://maps.google.com/?q=Av.+Independencia+1253,+Puente+Alto";
 
-// --- HORARIOS (Aquí agregué lo que faltaba) ---
+// --- HORARIOS ---
 export const BUSINESS_HOURS = [
   { day: "Lunes a Viernes", hours: "08:30 - 20:00 hrs" },
   { day: "Sábados", hours: "09:00 - 18:00 hrs" },
   { day: "Domingos", hours: "10:00 - 14:00 hrs" }
 ];
 
-// CATEGORÍAS (Terminología Chilena)
+// CATEGORÍAS
 export const CATEGORIES = [
   "Todas",
   "Brocha, Herramientas",
@@ -154,7 +154,7 @@ export const PRODUCTS: Product[] = [
     imageUrl: "/productos/011310-Brocha-cafe-de-media.jpg",
     category: "Brocha, Herramientas"
   },
-
+  
   // --- OTROS PRODUCTOS ---
   {
     id: 'ro-001',
