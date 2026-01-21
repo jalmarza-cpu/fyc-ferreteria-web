@@ -103,7 +103,7 @@ export const PRODUCTS: Product[] = [
     description: "Brocha de 1/2″.",
     priceRetail: 500,
     priceWholesale: 300,
-    imageUrl: "/productos/011380-Brocha-de-calidad-Forceman-media,jpg",
+    imageUrl: "/productos/011380-Brocha-de-calidad-Forceman-media.jpg",
     category: "Brocha, Herramientas"
   },
   {
