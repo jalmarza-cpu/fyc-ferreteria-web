@@ -174,7 +174,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                       <span className="text-xl font-black font-industrial text-[#FFD700] leading-none">
                         {formatCLP(product.priceWholesale)}
                       </span>
-                      <span className="text-[9px] text-neutral-500 font-bold ml-1">c/u</span>
+                      <span className="text-[9px] text-neutral-500 font-bold ml-1">c/u (IVA incluido)</span>
                    </div>
                 </div>
               </div>
@@ -279,13 +279,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                        <p className="text-white font-bold text-xl">{formatCLP(product.priceRetail)}</p>
                        <span className="text-[10px] text-green-400 font-semibold mt-1">(IVA incluido)</span>
                     </div>
+                    {/* AQUÍ ESTABA EL ERROR EN EL MODAL */}
                     <div className="bg-[#111] p-4 rounded-xl border border-[#FFD700] bg-[#FFD700]/5 flex flex-col items-center relative overflow-hidden">
                        <div className="absolute top-0 right-0 bg-[#FFD700] text-black text-[8px] font-black px-2 py-0.5 uppercase">
                          Recomendado
                        </div>
                        <span className="text-[10px] text-[#FFD700] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</span>
                        <p className="text-[#FFD700] font-bold text-2xl font-industrial">{formatCLP(product.priceWholesale)}</p>
-                       <span className="text-[9px] text-neutral-500">c/u + IVA</span>
+                       {/* CORREGIDO: Ahora dice IVA incluido */}
+                       <span className="text-[9px] text-neutral-500 font-semibold">c/u (IVA incluido)</span>
                     </div>
                  </div>
 
