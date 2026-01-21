@@ -1,4 +1,3 @@
-
 import { Product, NavLink } from './types';
 
 export const NAV_LINKS: NavLink[] = [
@@ -7,15 +6,25 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'Nosotros', href: '#nosotros' },
 ];
 
+// --- DATOS DE CONTACTO (Aquí agregué lo que faltaba) ---
 export const CONTACT_PHONE = "56920648577";
 export const CONTACT_PHONE_DISPLAY = "+56 9 2064 8577";
 export const CONTACT_EMAIL = "ventas@fycferreteria.cl";
+export const CONTACT_ADDRESS = "Av. Independencia 1253, Puente Alto"; // ¡Nueva!
+export const CONTACT_MAP_URL = "https://maps.google.com/?q=Av.+Independencia+1253,+Puente+Alto"; // ¡Nueva!
+
+// --- HORARIOS (Aquí agregué lo que faltaba) ---
+export const BUSINESS_HOURS = [
+  { day: "Lunes a Viernes", hours: "08:30 - 20:00 hrs" },
+  { day: "Sábados", hours: "09:00 - 18:00 hrs" },
+  { day: "Domingos", hours: "10:00 - 14:00 hrs" }
+];
 
 // CATEGORÍAS (Terminología Chilena)
 export const CATEGORIES = [
   "Todas",
   "Brocha, Herramientas",
-  "Gasfitería", // Antes Fontanería
+  "Gasfitería",
   "Pinturas y Terminaciones",
   "Construcción y Obra Gruesa"
 ];
@@ -79,14 +88,13 @@ export const PRODUCTS: Product[] = [
     id: 'bh-006',
     name: "Brocha de calidad forceman 1″.",
     sku: "011382",
-    description: "Brocha 1″.", // <--- AQUÍ estaba el error, ya lo arreglé con el símbolo ″
+    description: "Brocha 1″.",
     priceRetail: 680,
     priceWholesale: 480,
     imageUrl: "/productos/011382-Brocha-de-calidad-Forceman-1.jpg",
     category: "Brocha, Herramientas"
   },
-
-    {
+  {
     id: 'bh-007',
     name: "Brocha de calidad Forceman 3/4″",
     sku: "011381",
@@ -116,8 +124,7 @@ export const PRODUCTS: Product[] = [
     imageUrl: "/productos/011317-Brocha-cafe-de-4.jpg",
     category: "Brocha, Herramientas"
   },
-
-    {
+  {
     id: 'bh-010',
     name: "Brocha cafe de 3″",
     sku: "011316",
@@ -148,8 +155,8 @@ export const PRODUCTS: Product[] = [
     category: "Brocha, Herramientas"
   },
 
-  // --- RODILLO Y HERRAMIENTAS ---
-    {
+  // --- OTROS PRODUCTOS ---
+  {
     id: 'ro-001',
     name: "Rodillo Chiporro 20cm",
     sku: "011181",
@@ -179,7 +186,7 @@ export const PRODUCTS: Product[] = [
     imageUrl: "https://images.unsplash.com/photo-1547477341-35b8cb46c05d?auto=format&fit=crop&q=80&w=800",
     category: "Construcción y Obra Gruesa"
   },
-    {
+  {
     id: 'co-004',
     name: "Juego de Llaves Combinadas",
     sku: "SET-LLAVES-10",
@@ -190,5 +197,3 @@ export const PRODUCTS: Product[] = [
     category: "Construcción y Obra Gruesa"
   }
 ];
-
-// --- CONSTRUCCIÓN ---
