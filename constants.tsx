@@ -33,7 +33,7 @@ export const CATEGORIES = [
 // BASE DE DATOS DE PRODUCTOS
 // ==========================================
 export const PRODUCTS: Product[] = [
-  // --- BROCHA Y HERRAMIENTAS ---
+  // --- BROCHA FORCEMAN (CALIDAD PREMIUM = 5.0 / 4.9) ---
   {
     id: 'bh-001',
     name: "Brocha de calidad forceman 4″.",
@@ -42,7 +42,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1900,
     priceWholesale: 1620,
     imageUrl: "/productos/011387-brocha-forceman-4-v2.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 5.0
   },
   {
     id: 'bh-002',
@@ -52,7 +53,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1500,
     priceWholesale: 1300,
     imageUrl: "/productos/011386-Brocha-de-calidad-forceman-3.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.9
   },
   {
     id: 'bh-003',
@@ -62,7 +64,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1450,
     priceWholesale: 1150,
     imageUrl: "/productos/011385-Brocha-de-calidad-forceman-2-medio.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.8
   },
   {
     id: 'bh-004',
@@ -72,7 +75,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1260,
     priceWholesale: 960,
     imageUrl: "/productos/011384-Brocha-de-calidad-forceman-2.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 5.0
   },
   {
     id: 'bh-005',
@@ -82,7 +86,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 990,
     priceWholesale: 720,
     imageUrl: "/productos/011383-Brocha-de-calidad-forceman-1-medio.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.7
   },
   {
     id: 'bh-006',
@@ -92,7 +97,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 680,
     priceWholesale: 480,
     imageUrl: "/productos/011382-Brocha-de-calidad-Forceman-1.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.9
   },
   {
     id: 'bh-007',
@@ -102,7 +108,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 730,
     priceWholesale: 430,
     imageUrl: "/productos/011381-Brocha-de-calidad-Forceman-3-cuarto.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.8
   },
   {
     id: 'bh-008',
@@ -112,8 +119,11 @@ export const PRODUCTS: Product[] = [
     priceRetail: 500,
     priceWholesale: 300,
     imageUrl: "/productos/011380-Brocha-de-calidad-Forceman-media.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 5.0
   },
+
+  // --- BROCHAS CAFÉ (ECONÓMICA = 4.4 / 4.5) ---
   {
     id: 'bh-009',
     name: "Brocha cafe de 4″.",
@@ -122,7 +132,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 990,
     priceWholesale: 780,
     imageUrl: "/productos/011317-Brocha-cafe-de-4.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.4 // ⭐ Aquí se notará el cambio
   },
   {
     id: 'bh-010',
@@ -132,7 +143,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 990,
     priceWholesale: 700,
     imageUrl: "/productos/011316-Brocha-cafe-de-3.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.5
   },
   {
     id: 'bh-011',
@@ -142,7 +154,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 990,
     priceWholesale: 600,
     imageUrl: "/productos/011315-Brocha-cafe-de-2.5.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.3
   },
   {
     id: 'bh-012',
@@ -152,7 +165,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 340,
     priceWholesale: 140,
     imageUrl: "/productos/011310-Brocha-cafe-de-media.jpg",
-    category: "Brocha, Herramientas"
+    category: "Brocha, Herramientas",
+    rating: 4.2
   },
   
   // --- OTROS PRODUCTOS ---
@@ -164,7 +178,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2000,
     priceWholesale: 1860,
     imageUrl: "https://images.unsplash.com/photo-1586864387789-628af9de87e3?auto=format&fit=crop&q=80&w=800",
-    category: "Rodillo, Herramientas"
+    category: "Rodillo, Herramientas",
+    rating: 4.7
   },
   {
     id: 'co-002',
@@ -174,7 +189,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 4500,
     priceWholesale: 2990,
     imageUrl: "https://images.unsplash.com/photo-1566937169390-7be4c63b8a0e?auto=format&fit=crop&q=80&w=800",
-    category: "Construcción y Obra Gruesa"
+    category: "Construcción y Obra Gruesa",
+    rating: 4.9
   },
   {
     id: 'co-003',
@@ -184,7 +200,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 5900,
     priceWholesale: 4500,
     imageUrl: "https://images.unsplash.com/photo-1547477341-35b8cb46c05d?auto=format&fit=crop&q=80&w=800",
-    category: "Construcción y Obra Gruesa"
+    category: "Construcción y Obra Gruesa",
+    rating: 5.0
   },
   {
     id: 'co-004',
@@ -194,6 +211,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 18500,
     priceWholesale: 15990,
     imageUrl: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&q=80&w=800",
-    category: "Construcción y Obra Gruesa"
+    category: "Construcción y Obra Gruesa",
+    rating: 4.8
   }
 ];
