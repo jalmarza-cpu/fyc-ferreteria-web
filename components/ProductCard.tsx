@@ -10,12 +10,17 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const addItem = useCartStore(state => state.addItem);
+  
+  // 1. Espectadores aleatorios (Marketing visual)
   const [viewers] = useState(() => Math.floor(Math.random() * (15 - 4 + 1)) + 4);
-  const [rating] = useState(() => (Math.random() * (5 - 4.5) + 4.5).toFixed(1)); // Random rating 4.5 - 5.0
+
+  // 2. RATING REAL (Corrección aplicada: usa el dato de constants.tsx)
+  const rating = product.rating || 5.0;
+
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   
-  // Pricing State Logic
+  // Lógica de Precios
   const [pricingMode, setPricingMode] = useState<'retail' | 'wholesale'>('wholesale');
   const MIN_WHOLESALE_QTY = 6;
 
@@ -27,11 +32,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
     const quantityToAdd = pricingMode === 'wholesale' ? MIN_WHOLESALE_QTY : 1;
     const priceToUse = pricingMode === 'wholesale' ? product.priceWholesale : product.priceRetail;
 
-    // Pasamos el producto completo (incluye SKU)
     addItem(product, quantityToAdd, priceToUse);
     setIsAdded(true);
     
@@ -40,13 +43,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }, 2000);
   };
 
-  // Lock body scroll when modal is open
+  // Bloquear scroll al abrir zoom
   useEffect(() => {
-    if (isZoomOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    if (isZoomOpen) { document.body.style.overflow = 'hidden'; } 
+    else { document.body.style.overflow = ''; }
     return () => { document.body.style.overflow = ''; };
   }, [isZoomOpen]);
 
@@ -54,15 +54,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <>
       <div className="group relative bg-[#0a0a0a] border border-[#222] transition-all duration-300 hover:border-[#FFD700] hover:-translate-y-1 flex flex-col overflow-hidden shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] rounded-xl h-full">
         
-        {/* BADGE SYSTEM: Floating Badges */}
+        {/* ETIQUETAS DE OFERTA */}
         <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start pointer-events-none">
            {savingPercent > 0 && (
              <>
-                {/* Red Sale Badge */}
                 <span className="bg-[#D32F2F] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-md rounded-sm flex items-center gap-1">
                    <Zap className="w-3 h-3 fill-current" /> OFERTA
                 </span>
-                {/* Yellow Discount Badge */}
                 <span className="bg-[#FFD700] text-black px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-md rounded-sm">
                    -{savingPercent}% OFF
                 </span>
@@ -70,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
            )}
         </div>
 
-        {/* Imagen */}
+        {/* IMAGEN */}
         <div 
           className="relative h-48 bg-[#151515] border-b border-[#222] flex items-center justify-center overflow-hidden p-4 cursor-zoom-in"
           onClick={() => setIsZoomOpen(true)}
@@ -91,7 +89,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         </div>
 
-        {/* Cuerpo */}
+        {/* CUERPO */}
         <div className="p-3 flex-grow flex flex-col bg-[#111] relative border-t border-[#222]">
           
           <div className="mb-3">
@@ -104,28 +102,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {product.name}
             </h3>
 
-            {/* --- NUEVO: VISUALIZACIÓN DEL SKU --- */}
+            {/* SKU VISIBLE */}
             <div className="mb-2">
                 <span className="text-[9px] font-mono text-neutral-500 bg-[#1A1A1A] px-1.5 py-0.5 rounded border border-[#333]">
                     SKU: {product.sku}
                 </span>
             </div>
-            {/* ---------------------------------- */}
 
-            {/* SOCIAL RATING: 5 Stars */}
+            {/* ESTRELLAS REALES (Corrección Visual) */}
             <div className="flex items-center gap-1 mb-3">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-[#FFD700] text-[#FFD700]" />
+                  <Star 
+                    key={i} 
+                    className={`w-3 h-3 ${i < Math.round(rating) ? 'fill-[#FFD700] text-[#FFD700]' : 'fill-neutral-800 text-neutral-800'}`} 
+                  />
                 ))}
               </div>
               <span className="text-[10px] text-neutral-500 font-medium">({rating})</span>
             </div>
 
-            {/* --- TIERED PRICING SYSTEM --- */}
+            {/* SISTEMA DE PRECIOS */}
             <div className="flex flex-col gap-2 mt-2">
-              
-              {/* LEVEL 1: Retail (Standard) */}
+              {/* RETAIL */}
               <div 
                 onClick={() => setPricingMode('retail')}
                 className={`flex items-center justify-between px-2 py-1.5 rounded cursor-pointer transition-all border ${
@@ -146,7 +145,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 </div>
               </div>
 
-              {/* LEVEL 2: Wholesale (Incentive) */}
+              {/* MAYORISTA */}
               <div 
                 onClick={() => setPricingMode('wholesale')}
                 className={`relative flex flex-col px-3 py-2 rounded-lg cursor-pointer transition-all border-2 ${
@@ -266,12 +265,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <div className="mt-6 text-center">
                  <h3 className="text-xl font-industrial font-bold text-white uppercase mb-2">{product.name}</h3>
                  
-                 {/* SKU en el Modal también */}
                  <p className="text-xs font-mono text-neutral-500 mb-2">SKU: {product.sku}</p>
 
                  <div className="flex items-center justify-center gap-1 mb-4">
                    {[...Array(5)].map((_, i) => (
-                     <Star key={i} className="w-4 h-4 fill-[#FFD700] text-[#FFD700]" />
+                     <Star key={i} className={`w-4 h-4 ${i < Math.round(rating) ? 'fill-[#FFD700] text-[#FFD700]' : 'fill-neutral-800 text-neutral-800'}`} />
                    ))}
                    <span className="text-xs text-neutral-400 ml-2">({rating}/5.0)</span>
                  </div>
@@ -302,5 +300,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     </>
   );
 };
+
+export default ProductCard;
 
 export default ProductCard;
