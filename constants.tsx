@@ -144,7 +144,7 @@ export const PRODUCTS: Product[] = [
     description: "Brocha cafe de 1/2.",
     priceRetail: 340,
     priceWholesale: 140,
-    imageUrl: "/productos/011310-Brocha-cafe de-media.jpg",
+    imageUrl: "/productos/011310-Brocha-cafe-de-media.jpg",
     category: "Brocha, Herramientas"
   },
 
