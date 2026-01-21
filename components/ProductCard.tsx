@@ -14,7 +14,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   // 1. Espectadores aleatorios (Marketing visual)
   const [viewers] = useState(() => Math.floor(Math.random() * (15 - 4 + 1)) + 4);
 
-  // 2. RATING REAL (Corrección aplicada: usa el dato de constants.tsx)
+  // 2. RATING REAL: Usa la nota de la base de datos o 5.0 si no tiene
   const rating = product.rating || 5.0;
 
   const [isZoomOpen, setIsZoomOpen] = useState(false);
@@ -109,7 +109,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 </span>
             </div>
 
-            {/* ESTRELLAS REALES (Corrección Visual) */}
+            {/* ESTRELLAS REALES */}
             <div className="flex items-center gap-1 mb-3">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
@@ -122,9 +122,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <span className="text-[10px] text-neutral-500 font-medium">({rating})</span>
             </div>
 
-            {/* SISTEMA DE PRECIOS */}
+            {/* PRECIOS */}
             <div className="flex flex-col gap-2 mt-2">
-              {/* RETAIL */}
               <div 
                 onClick={() => setPricingMode('retail')}
                 className={`flex items-center justify-between px-2 py-1.5 rounded cursor-pointer transition-all border ${
@@ -145,7 +144,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 </div>
               </div>
 
-              {/* MAYORISTA */}
               <div 
                 onClick={() => setPricingMode('wholesale')}
                 className={`relative flex flex-col px-3 py-2 rounded-lg cursor-pointer transition-all border-2 ${
@@ -157,150 +155,4 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 <div className="flex justify-between items-center mb-1">
                    <div className="flex items-center gap-1.5">
                       <div className={`w-3 h-3 rounded-full border flex items-center justify-center ${pricingMode === 'wholesale' ? 'border-[#FFD700]' : 'border-neutral-600'}`}>
-                        {pricingMode === 'wholesale' && <div className="w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
-                      </div>
-                      <span className="text-[10px] font-black uppercase text-[#FFD700] tracking-wider">Pack Maestro</span>
-                   </div>
-                   <div className="bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded text-[9px] font-bold flex items-center gap-1 border border-green-500/30">
-                      <TrendingDown className="w-3 h-3" />
-                      Ahorra {formatCLP(savingAmount * MIN_WHOLESALE_QTY)}
-                   </div>
-                </div>
-
-                <div className="flex items-baseline justify-between pl-4">
-                   <div className="flex items-center gap-1 text-xs text-neutral-400">
-                      <Package className="w-3 h-3" />
-                      <span>Lleva <strong className="text-white">{MIN_WHOLESALE_QTY}</strong> x</span>
-                   </div>
-                   <div className="text-right">
-                      <span className="text-xl font-black font-industrial text-[#FFD700] leading-none">
-                        {formatCLP(product.priceWholesale)}
-                      </span>
-                      <span className="text-[9px] text-neutral-500 font-bold ml-1">c/u</span>
-                   </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Botón de Acción */}
-          <div className="mt-auto pt-2">
-            <motion.button 
-              onClick={handleAddToCart}
-              whileTap={{ scale: 0.98 }}
-              className={`w-full py-3 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg group/btn border border-transparent
-                 ${isAdded 
-                   ? 'bg-green-600 text-white' 
-                   : 'bg-[#FFD700] group-hover:bg-[#FFED4D] text-black shadow-md group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'
-                 }`}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {isAdded ? (
-                  <motion.div
-                    key="added"
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center gap-2"
-                  >
-                    <Check className="w-4 h-4" />
-                    <span className="text-xs">¡Listo!</span>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="normal"
-                    initial={{ y: -10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center gap-2"
-                  >
-                    <ShoppingCart className="w-4 h-4" />
-                    <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">
-                        {pricingMode === 'wholesale' 
-                          ? 'AGREGAR PACK' 
-                          : 'AGREGAR'}
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
-          </div>
-        </div>
-      </div>
-
-      {/* Lightbox / Modal de Zoom */}
-      <AnimatePresence>
-        {isZoomOpen && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-8"
-            onClick={() => setIsZoomOpen(false)}
-          >
-            <button 
-              className="absolute top-4 right-4 md:top-8 md:right-8 bg-[#1A1A1A] text-white p-3 rounded-full hover:bg-[#FFD700] hover:text-black transition-colors z-20 border border-[#333]"
-              onClick={() => setIsZoomOpen(false)}
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <motion.div 
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="relative w-full max-w-[600px] flex flex-col bg-[#111] max-h-[85vh] overflow-y-auto rounded-2xl shadow-2xl border border-[#333] my-4"
-                onClick={(e) => e.stopPropagation()}
-            >
-              <div className="bg-[#151515] p-4 md:p-8 rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333] shrink-0">
-                <img 
-                  src={product.imageUrl} 
-                  alt={product.name} 
-                  className="w-full h-64 md:h-96 object-contain bg-transparent"
-                />
-              </div>
-              <div className="mt-6 text-center">
-                 <h3 className="text-xl font-industrial font-bold text-white uppercase mb-2">{product.name}</h3>
-                 
-                 <p className="text-xs font-mono text-neutral-500 mb-2">SKU: {product.sku}</p>
-
-                 <div className="flex items-center justify-center gap-1 mb-4">
-                   {[...Array(5)].map((_, i) => (
-                     <Star key={i} className={`w-4 h-4 ${i < Math.round(rating) ? 'fill-[#FFD700] text-[#FFD700]' : 'fill-neutral-800 text-neutral-800'}`} />
-                   ))}
-                   <span className="text-xs text-neutral-400 ml-2">({rating}/5.0)</span>
-                 </div>
-
-                 <p className="text-neutral-400 max-w-md mx-auto mb-6">{product.description}</p>
-                 
-                 <div className="grid grid-cols-2 gap-4 w-full max-w-md mx-auto">
-                    <div className="bg-[#111] p-4 rounded-xl border border-[#333] flex flex-col items-center">
-                       <span className="text-[10px] text-neutral-400 font-bold uppercase mb-1">Unidad</span>
-                       <p className="text-white font-bold text-xl">{formatCLP(product.priceRetail)}</p>
-                       <span className="text-[10px] text-green-400 font-semibold mt-1">(IVA incluido)</span>
-                    </div>
-                    <div className="bg-[#111] p-4 rounded-xl border border-[#FFD700] bg-[#FFD700]/5 flex flex-col items-center relative overflow-hidden">
-                       <div className="absolute top-0 right-0 bg-[#FFD700] text-black text-[8px] font-black px-2 py-0.5 uppercase">
-                         Recomendado
-                       </div>
-                       <span className="text-[10px] text-[#FFD700] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</span>
-                       <p className="text-[#FFD700] font-bold text-2xl font-industrial">{formatCLP(product.priceWholesale)}</p>
-                       <span className="text-[9px] text-neutral-500">c/u + IVA</span>
-                    </div>
-                 </div>
-
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
-};
-
-export default ProductCard;
-
-export default ProductCard;
+                        {pricingMode === 'wholesale' && <div className="w
