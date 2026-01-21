@@ -1,4 +1,3 @@
-
 export interface Product {
   id: string;
   name: string;
@@ -9,6 +8,7 @@ export interface Product {
   imageUrl: string;
   category: string;
   isLarge?: boolean;
+  rating?: number; // <--- ¡ESTA ES LA LÍNEA CLAVE PARA QUE SE VEAN REALES!
 }
 
 export interface NavLink {
