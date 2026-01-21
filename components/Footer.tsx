@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Clock, ArrowRight, Instagram, Facebook } from 'lucide-react';
-import { CONTACT_PHONE_DISPLAY, CONTACT_EMAIL, CONTACT_ADDRESS, CONTACT_MAP_URL, BUSINESS_HOURS } from './constants';
+import { CONTACT_PHONE_DISPLAY, CONTACT_EMAIL, CONTACT_ADDRESS, CONTACT_MAP_URL, BUSINESS_HOURS } from '../constants';
 import { Link } from 'react-router-dom';
 
 interface FooterProps {
