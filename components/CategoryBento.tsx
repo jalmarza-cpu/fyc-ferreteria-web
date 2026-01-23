@@ -9,41 +9,45 @@ interface CategoryBentoProps {
 
 const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
   
-  // CONFIGURACIÓN DE LAS 4 CAJAS PRINCIPALES
+  // CONFIGURACIÓN DE LAS 4 CAJAS CON NUEVAS IMÁGENES
   const categories = [
     {
       id: 'maquinaria',
-      name: 'Maquinaria', // Nombre Real
-      icon: Hammer, // Usamos Martillo como símbolo de fuerza/maquinaria
+      name: 'Maquinaria',
+      icon: Hammer, 
       color: 'bg-yellow-600',
-      image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800', // Foto Taladro
+      // NUEVA IMAGEN: Betonera/Mezcladora Industrial
+      image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-2',
-      filterKey: 'Maquinaria' // Enlace a tu categoría real
+      filterKey: 'Maquinaria'
     },
     {
       id: 'griferia',
-      name: 'Grifería', // Nombre Real
-      icon: Droplets, // Icono Gota
+      name: 'Grifería',
+      icon: Droplets,
       color: 'bg-blue-600',
-      image: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&q=80&w=600', // Foto Gasfitería
+      // NUEVA IMAGEN: Llave/Grifo moderno
+      image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
       filterKey: 'Grifería'
     },
     {
       id: 'herramientas',
-      name: 'Herramientas', // Nombre Real (Aquí están tus brochas)
-      icon: PaintRoller, // Icono Rodillo (Perfecto para tus brochas)
+      name: 'Herramientas',
+      icon: PaintRoller,
       color: 'bg-purple-600',
-      image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&q=80&w=600', // Foto Pintura
+      // IMAGEN ACTUAL: Brochas y rodillos (Coincide con tu stock actual)
+      image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
       filterKey: 'Herramientas'
     },
     {
       id: 'electricidad',
-      name: 'Electricidad', // Nombre Real
-      icon: Zap, // Icono Rayo
+      name: 'Electricidad',
+      icon: Zap,
       color: 'bg-orange-600',
-      image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800', // Foto Cables/Obra
+      // IMAGEN ACTUAL: Instalación eléctrica en obra
+      image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-1',
       filterKey: 'Electricidad'
     }
