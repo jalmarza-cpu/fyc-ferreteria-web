@@ -14,10 +14,10 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
     {
       id: 'maquinaria',
       name: 'Maquinaria',
-      icon: Hammer, 
+      icon: Hammer, // Mantenemos el icono de martillo como símbolo de fuerza/equipo
       color: 'bg-yellow-600',
-      // --- IMAGEN CORREGIDA: Transpaleta Manual Amarilla ---
-      image: 'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&q=80&w=800',
+      // --- IMAGEN CORRECTA: Taladro de columna / Fresadora ---
+      image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-2',
       filterKey: 'Maquinaria'
     },
@@ -46,8 +46,8 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       name: 'Electricidad',
       icon: Zap,
       color: 'bg-orange-600',
-      // IMAGEN ACTUAL: Instalación eléctrica en obra
-      image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800',
+      // --- IMAGEN CORRECTA: Rollos de cable eléctrico industrial ---
+      image: 'https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-1',
       filterKey: 'Electricidad'
     }
