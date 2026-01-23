@@ -168,50 +168,87 @@ export const PRODUCTS: Product[] = [
     category: "Brocha, Herramientas",
     rating: 4.2
   },
-  
-  // --- OTROS PRODUCTOS ---
-  {
-    id: 'ro-001',
+
+  // --- RODILLO - HERRAMIENTAS
+    {
+    id: 'rh-001',
     name: "Rodillo Chiporro 20cm",
     sku: "011181",
     description: "Rodillo Chiporro 20cm.",
     priceRetail: 2000,
     priceWholesale: 1860,
-    imageUrl: "https://images.unsplash.com/photo-1586864387789-628af9de87e3?auto=format&fit=crop&q=80&w=800",
+    imageUrl: "/productos/011181-Rodillo-Chiporro-20cm.jpg",
     category: "Rodillo, Herramientas",
     rating: 4.7
   },
+
+  // --- MARTILLOS - HERRAMIENTAS  
   {
-    id: 'co-002',
-    name: "Huincha de Medir 5m Profesional",
-    sku: "HUI-005-PRO",
-    description: "Cinta ancha con revestimiento de nylon, punta magnética y freno automático.",
-    priceRetail: 4500,
-    priceWholesale: 2990,
-    imageUrl: "https://images.unsplash.com/photo-1566937169390-7be4c63b8a0e?auto=format&fit=crop&q=80&w=800",
-    category: "Construcción y Obra Gruesa",
+    id: 'mh-001',
+    name: "Martillo Peña forjado 1lb",
+    sku: "070131",
+    description: "Martillo Peña forjado 1lb.",
+    priceRetail: 2100,
+    priceWholesale: 1500,
+    imageUrl: "/productos/070131-Martillo-Peña-forjado-1lb.jpg",
+    category: "Martillo, Herramientas",
     rating: 4.9
   },
   {
-    id: 'co-003',
-    name: "Casco Seguridad Amarillo Tipo I",
-    sku: "CAS-SEG-AMA",
-    description: "Suspensión rachet 4 puntas. Certificación ANSI/ISEA Z89.1.",
-    priceRetail: 5900,
-    priceWholesale: 4500,
-    imageUrl: "https://images.unsplash.com/photo-1547477341-35b8cb46c05d?auto=format&fit=crop&q=80&w=800",
-    category: "Construcción y Obra Gruesa",
+    id: 'mh-002',
+    name: "Martillo Peña forjado 1.5lb",
+    sku: "070129",
+    description: "Martillo Peña forjado 1.5lb.",
+    priceRetail: 4000,
+    priceWholesale: 3750,
+    imageUrl: "/productos/070129-Martillo-Peña-forjado-1.5lb.jpg",
+    category: "Martillo, Herramientas",
     rating: 5.0
   },
   {
-    id: 'co-004',
-    name: "Juego de Llaves Combinadas",
-    sku: "SET-LLAVES-10",
-    description: "Acero Cromo Vanadio. Set de 10 piezas milimétricas.",
-    priceRetail: 18500,
-    priceWholesale: 15990,
-    imageUrl: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&q=80&w=800",
-    category: "Construcción y Obra Gruesa",
+    id: 'mh-003',
+    name: "Martillo mecanico 300g",
+    sku: "070122",
+    description: "Martillo mecanico 300g.",
+    priceRetail: 1990,
+    priceWholesale: 1760,
+    imageUrl: "/productos/070122-Martillo-mecanico-300g.jpg",
+    category: "Martillo, Herramientas",
     rating: 4.8
-  }
+  },
+  {
+    id: 'mh-004',
+    name: "Martillo mecanico 200g",
+    sku: "070121",
+    description: "Martillo mecanico 200g.",
+    priceRetail: 1500,
+    priceWholesale: 1350,
+    imageUrl: "/productos/070121-Martillo-mecanico-200g.jpg",
+    category: "Martillo, Herramientas",
+    rating: 4.8
+  },
+  {
+    id: 'mh-005',
+    name: "Martillo mecanico 100g",
+    sku: "070120",
+    description: "Martillo mecanico 100g.",
+    priceRetail: 1490,
+    priceWholesale: 1190,
+    imageUrl: "/productos/070120-Martillo-mecanico-100g.jpg",
+    category: "Martillo, Herramientas",
+    rating: 4.8
+  },
+  {
+    id: 'mh-006',
+    name: "Martillo con mango de fibra forjado 25mm",
+    sku: "070112",
+    description: "Martillo con mango de fibra forjado 25mm.",
+    priceRetail: 3500,
+    priceWholesale: 3300,
+    imageUrl: "/productos/070112-Martillo-con-mango-de-fibra-forjado-25mm.jpg",
+    category: "Martillo, Herramientas",
+    rating: 4.8
+  },
 ];
+
+// --- OTROS PRODUCTOS ---
