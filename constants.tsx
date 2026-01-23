@@ -306,6 +306,19 @@ export const PRODUCTS: Product[] = [
     category: "Alicate, Herramientas",
     rating: 4.8
   },
+
+  // --- AMARRA - HERRAMIENTAS
+  {
+    id: 'amarh-001',
+    name: "Amarra 150×3.6mm blancas – bolsas",
+    sku: "120300",
+    description: "Amarra 150×3.6mm blancas– bolsas.",
+    priceRetail: 1190,
+    priceWholesale: 900,
+    imageUrl: "/productos/120300-Amarra-150×3.6mm-blancas-bolsas-100u.jpg",
+    category: "Amarra, Herramientas",
+    rating: 4.8
+  },
 ];
 
 
