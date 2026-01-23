@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CATEGORIES } from '../constants';
 import { Filter, SlidersHorizontal, Check } from 'lucide-react';
@@ -28,7 +27,8 @@ const Sidebar: React.FC<SidebarProps> = ({
            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">Categorías</h4>
         </div>
         
-        <ul className="space-y-2">
+        {/* --- AQUÍ ESTÁ EL CAMBIO: SCROLL AGREGADO --- */}
+        <ul className="space-y-2 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
           {CATEGORIES.map((cat) => (
             <li key={cat}>
               <button
@@ -45,9 +45,10 @@ const Sidebar: React.FC<SidebarProps> = ({
             </li>
           ))}
         </ul>
+        {/* --------------------------------------------- */}
       </div>
 
-      {/* Price Filter */}
+      {/* Price Filter (SIN CAMBIOS) */}
       <div className="bg-[#0E0E0E] border border-[#222] p-6 rounded-3xl shadow-xl">
         <div className="flex items-center gap-2 mb-6 pb-4 border-b border-[#222]">
            <SlidersHorizontal className="w-4 h-4 text-[#FFD700]" />
@@ -80,7 +81,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
 
-      {/* Industrial Badge */}
+      {/* Industrial Badge (SIN CAMBIOS) */}
       <div className="p-6 border border-[#222] bg-[#111] flex flex-col items-center justify-center text-center opacity-80 hover:opacity-100 transition-opacity rounded-3xl shadow-lg">
         <div className="w-12 h-12 mb-3 border-2 border-[#FFD700] rounded-full flex items-center justify-center text-[#FFD700] font-industrial font-bold text-lg shadow-[0_0_15px_rgba(255,215,0,0.2)]">
             OK
