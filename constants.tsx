@@ -249,6 +249,64 @@ export const PRODUCTS: Product[] = [
     category: "Martillo, Herramientas",
     rating: 4.8
   },
+
+  // --- ALICATE - HERRAMIENTAS  
+  {
+    id: 'alich-001',
+    name: "Alicate Cortante 8″",
+    sku: "070346",
+    description: "Alicate Cortante 8″.",
+    priceRetail: 2500,
+    priceWholesale: 2250,
+    imageUrl: "/productos/070346-Alicate Cortante-8.jpg",
+    category: "Alicate, Herramientas",
+    rating: 4.8
+  },
+  {
+    id: 'alich-002',
+    name: "Alicate Ford 8″",
+    sku: "070323",
+    description: "Alicate Ford 8″.",
+    priceRetail: 2500,
+    priceWholesale: 2170,
+    imageUrl: "/productos/070323-Alicate-Ford-8.jpg",
+    category: "Alicate, Herramientas",
+    rating: 4.8
+  },
+  {
+    id: 'alich-003',
+    name: "Alicate Multiuso HS7004",
+    sku: "070360",
+    description: "Alicate Multiuso HS7004.",
+    priceRetail: 2500,
+    priceWholesale: 2170,
+    imageUrl: "/productos/070360-Alicate-Multiuso-HS7004.jpg",
+    category: "Alicate, Herramientas",
+    rating: 4.8
+  },
+  {
+    id: 'alich-004',
+    name: "Alicate Universal 6″",
+    sku: "070360",
+    description: "Alicate Universal 6″.",
+    priceRetail: 2000,
+    priceWholesale: 1800,
+    imageUrl: "/productos/070340-Alicate-Universal-6.jpg",
+    category: "Alicate, Herramientas",
+    rating: 4.8
+  },
+  {
+    id: 'alich-005',
+    name: "Alicate Universal 7″",
+    sku: "070341",
+    description: "Alicate Universal 7″.",
+    priceRetail: 2900,
+    priceWholesale: 2400,
+    imageUrl: "/productos/070341-Alicate-Universal-7.jpg",
+    category: "Alicate, Herramientas",
+    rating: 4.8
+  },
 ];
+
 
 // --- OTROS PRODUCTOS ---
