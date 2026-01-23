@@ -9,15 +9,15 @@ interface CategoryBentoProps {
 
 const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
   
-  // CONFIGURACIÓN DE LAS 4 CAJAS CON NUEVAS IMÁGENES
+  // CONFIGURACIÓN DE LAS 4 CAJAS PRINCIPALES
   const categories = [
     {
       id: 'maquinaria',
       name: 'Maquinaria',
       icon: Hammer, 
       color: 'bg-yellow-600',
-      // NUEVA IMAGEN: Betonera/Mezcladora Industrial
-      image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800',
+      // NUEVA IMAGEN: Transpaleta Manual (Ideal para ferretería)
+      image: 'https://images.unsplash.com/photo-1616422285623-13ff0162193c?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-2',
       filterKey: 'Maquinaria'
     },
@@ -26,7 +26,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       name: 'Grifería',
       icon: Droplets,
       color: 'bg-blue-600',
-      // NUEVA IMAGEN: Llave/Grifo moderno
+      // IMAGEN ACTUAL: Llave/Grifo moderno
       image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
       filterKey: 'Grifería'
@@ -36,7 +36,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       name: 'Herramientas',
       icon: PaintRoller,
       color: 'bg-purple-600',
-      // IMAGEN ACTUAL: Brochas y rodillos (Coincide con tu stock actual)
+      // IMAGEN ACTUAL: Brochas y rodillos
       image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
       filterKey: 'Herramientas'
