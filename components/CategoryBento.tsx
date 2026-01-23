@@ -16,8 +16,8 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       name: 'Maquinaria',
       icon: Hammer, 
       color: 'bg-yellow-600',
-      // NUEVA IMAGEN: Transpaleta Manual (Ideal para ferretería)
-      image: 'https://images.unsplash.com/photo-1616422285623-13ff0162193c?auto=format&fit=crop&q=80&w=800',
+      // --- IMAGEN CORREGIDA: Transpaleta Manual Amarilla ---
+      image: 'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-2',
       filterKey: 'Maquinaria'
     },
