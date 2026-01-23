@@ -20,20 +20,29 @@ export const BUSINESS_HOURS = [
   { day: "Domingos", hours: "10:00 - 14:00 hrs" }
 ];
 
-// CATEGORÍAS
+// ==========================================
+// CATEGORÍAS (LISTA OFICIAL DEL PROVEEDOR)
+// ==========================================
 export const CATEGORIES = [
   "Todas",
-  "Brocha, Herramientas",
-  "Gasfitería",
-  "Pinturas y Terminaciones",
-  "Construcción y Obra Gruesa"
+  "Basurero",
+  "Canalización",
+  "Cielo falso",
+  "Cintas",
+  "Electricidad",
+  "Extractores de Aire",
+  "Grifería",
+  "Herramientas", // <--- AQUÍ ESTÁ TODO TU STOCK ACTUAL
+  "Iluminación LED",
+  "Maquinaria",
+  "Selladora"
 ];
 
 // ==========================================
 // BASE DE DATOS DE PRODUCTOS
 // ==========================================
 export const PRODUCTS: Product[] = [
-  // --- BROCHA FORCEMAN (CALIDAD PREMIUM = 5.0 / 4.9) ---
+  // --- BROCHA FORCEMAN (Categoría: Herramientas) ---
   {
     id: 'bh-001',
     name: "Brocha de calidad forceman 4″.",
@@ -42,7 +51,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1900,
     priceWholesale: 1620,
     imageUrl: "/productos/011387-brocha-forceman-4-v2.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 5.0
   },
   {
@@ -53,7 +62,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1500,
     priceWholesale: 1300,
     imageUrl: "/productos/011386-Brocha-de-calidad-forceman-3.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 4.9
   },
   {
@@ -64,7 +73,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1450,
     priceWholesale: 1150,
     imageUrl: "/productos/011385-Brocha-de-calidad-forceman-2-medio.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -75,7 +84,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1260,
     priceWholesale: 960,
     imageUrl: "/productos/011384-Brocha-de-calidad-forceman-2.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 5.0
   },
   {
@@ -86,7 +95,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 990,
     priceWholesale: 720,
     imageUrl: "/productos/011383-Brocha-de-calidad-forceman-1-medio.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 4.7
   },
   {
@@ -97,7 +106,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 680,
     priceWholesale: 480,
     imageUrl: "/productos/011382-Brocha-de-calidad-Forceman-1.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 4.9
   },
   {
@@ -108,7 +117,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 730,
     priceWholesale: 430,
     imageUrl: "/productos/011381-Brocha-de-calidad-Forceman-3-cuarto.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -119,11 +128,11 @@ export const PRODUCTS: Product[] = [
     priceRetail: 500,
     priceWholesale: 300,
     imageUrl: "/productos/011380-Brocha-de-calidad-Forceman-media.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 5.0
   },
 
-  // --- BROCHAS CAFÉ (ECONÓMICA = 4.4 / 4.5) ---
+  // --- BROCHAS CAFÉ (Categoría: Herramientas) ---
   {
     id: 'bh-009',
     name: "Brocha cafe de 4″.",
@@ -132,8 +141,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 990,
     priceWholesale: 780,
     imageUrl: "/productos/011317-Brocha-cafe-de-4.jpg",
-    category: "Brocha, Herramientas",
-    rating: 4.4 // ⭐ Aquí se notará el cambio
+    category: "Herramientas",
+    rating: 4.4
   },
   {
     id: 'bh-010',
@@ -143,7 +152,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 990,
     priceWholesale: 700,
     imageUrl: "/productos/011316-Brocha-cafe-de-3.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 4.5
   },
   {
@@ -154,7 +163,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 990,
     priceWholesale: 600,
     imageUrl: "/productos/011315-Brocha-cafe-de-2.5.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 4.3
   },
   {
@@ -165,12 +174,12 @@ export const PRODUCTS: Product[] = [
     priceRetail: 340,
     priceWholesale: 140,
     imageUrl: "/productos/011310-Brocha-cafe-de-media.jpg",
-    category: "Brocha, Herramientas",
+    category: "Herramientas",
     rating: 4.2
   },
 
-  // --- RODILLO - HERRAMIENTAS
-    {
+  // --- RODILLO (Categoría: Herramientas) ---
+  {
     id: 'rh-001',
     name: "Rodillo Chiporro 20cm",
     sku: "011181",
@@ -178,11 +187,11 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2000,
     priceWholesale: 1860,
     imageUrl: "/productos/011181-Rodillo-Chiporro-20cm.jpg",
-    category: "Rodillo, Herramientas",
+    category: "Herramientas",
     rating: 4.7
   },
 
-  // --- MARTILLOS - HERRAMIENTAS  
+  // --- MARTILLOS (Categoría: Herramientas) ---
   {
     id: 'mh-001',
     name: "Martillo Peña forjado 1lb",
@@ -191,7 +200,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2100,
     priceWholesale: 1500,
     imageUrl: "/productos/070131-Martillo-Peña-forjado-1lb.jpg",
-    category: "Martillo, Herramientas",
+    category: "Herramientas",
     rating: 4.9
   },
   {
@@ -202,7 +211,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 4000,
     priceWholesale: 3750,
     imageUrl: "/productos/070129-Martillo-Peña-forjado-1.5lb.jpg",
-    category: "Martillo, Herramientas",
+    category: "Herramientas",
     rating: 5.0
   },
   {
@@ -213,7 +222,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1990,
     priceWholesale: 1760,
     imageUrl: "/productos/070122-Martillo-mecanico-300g.jpg",
-    category: "Martillo, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -224,7 +233,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1500,
     priceWholesale: 1350,
     imageUrl: "/productos/070121-Martillo-mecanico-200g.jpg",
-    category: "Martillo, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -235,7 +244,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1490,
     priceWholesale: 1190,
     imageUrl: "/productos/070120-Martillo-mecanico-100g.jpg",
-    category: "Martillo, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -246,11 +255,11 @@ export const PRODUCTS: Product[] = [
     priceRetail: 3500,
     priceWholesale: 3300,
     imageUrl: "/productos/070112-Martillo-con-mango-de-fibra-forjado-25mm.jpg",
-    category: "Martillo, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
 
-  // --- ALICATE - HERRAMIENTAS  
+  // --- ALICATES (Categoría: Herramientas) ---
   {
     id: 'alich-001',
     name: "Alicate Cortante 8″",
@@ -259,7 +268,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2500,
     priceWholesale: 2250,
     imageUrl: "/productos/070346-Alicate Cortante-8.jpg",
-    category: "Alicate, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -270,7 +279,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2500,
     priceWholesale: 2170,
     imageUrl: "/productos/070323-Alicate-Ford-8.jpg",
-    category: "Alicate, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -281,7 +290,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2500,
     priceWholesale: 2170,
     imageUrl: "/productos/070360-Alicate-Multiuso-HS7004.jpg",
-    category: "Alicate, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -292,7 +301,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2000,
     priceWholesale: 1800,
     imageUrl: "/productos/070340-Alicate-Universal-6.jpg",
-    category: "Alicate, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
   {
@@ -303,11 +312,11 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2900,
     priceWholesale: 2400,
     imageUrl: "/productos/070341-Alicate-Universal-7.jpg",
-    category: "Alicate, Herramientas",
+    category: "Herramientas",
     rating: 4.8
   },
 
-  // --- AMARRA - HERRAMIENTAS
+  // --- AMARRAS (Categoría: Herramientas) ---
   {
     id: 'amarh-001',
     name: "Amarra 150×3.6mm blancas – bolsas",
@@ -316,10 +325,8 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1190,
     priceWholesale: 900,
     imageUrl: "/productos/120300-Amarra-150×3.6mm-blancas-bolsas-100u.jpg",
-    category: "Amarra, Herramientas",
+    // Lo asigno a Herramientas para que no desaparezca, ya que no tienes Insumos
+    category: "Herramientas", 
     rating: 4.8
   },
 ];
-
-
-// --- OTROS PRODUCTOS ---
