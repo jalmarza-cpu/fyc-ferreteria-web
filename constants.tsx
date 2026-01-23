@@ -329,4 +329,5 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas", 
     rating: 4.8
   },
+  
 ];
