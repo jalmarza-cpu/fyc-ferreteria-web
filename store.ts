@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 import { CONTACT_PHONE } from './constants';
 
@@ -11,6 +10,16 @@ export interface CartItem {
   image?: string;
 }
 
+interface CustomerData {
+  name: string;
+  phone: string;
+  address?: string;
+  region?: string;
+  rut?: string;
+  razonSocial?: string;
+  giro?: string;
+}
+
 interface CartStore {
   items: CartItem[];
   isOpen: boolean;
@@ -20,7 +29,7 @@ interface CartStore {
   updateQuantity: (id: string, delta: number) => void;
   getTotal: () => number;
   clearCart: () => void;
-  checkout: () => void;
+  checkout: (customerData: CustomerData, docType: string) => Promise<void>;
 }
 
 const formatPrice = (val: number) => 
@@ -33,7 +42,6 @@ export const useCartStore = create<CartStore>((set, get) => ({
   
   addItem: (product, quantity = 1, priceOverride) => set((state) => {
     const existing = state.items.find(i => i.id === product.id);
-    // El precio a usar es el override si existe, sino el precio mayorista por defecto del producto
     const finalPrice = priceOverride !== undefined ? priceOverride : product.priceWholesale;
 
     if (existing) {
@@ -42,7 +50,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
           i.id === product.id ? { 
             ...i, 
             quantity: i.quantity + quantity,
-            price: finalPrice // Actualizamos el precio al último seleccionado por el usuario
+            price: finalPrice
           } : i
         ),
         isOpen: true
@@ -82,20 +90,66 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
   clearCart: () => set({ items: [] }),
 
-  checkout: () => {
+  checkout: async (customerData, docType) => {
     const { items, getTotal } = get();
     if (items.length === 0) return;
 
-    // Mensaje de Pedido Optimizado
-    let message = "Hola F y C Spa, envío mi pedido web:\n\n";
+    // 1. Formateo del mensaje (Compatible con WhatsApp y Evolution API)
+    let message = `*SOLICITUD DE PEDIDO / COTIZACIÓN*\n`;
+    message += `--------------------------------\n`;
+    message += `📋 *DOCUMENTO:* ${docType === 'factura' ? 'FACTURA' : 'BOLETA'}\n`;
+    message += `👤 *CLIENTE:* ${customerData.name}\n`;
+    message += `📱 *TEL:* ${customerData.phone}\n`;
     
+    if (customerData.address) {
+        message += `📍 *DESPACHO:* ${customerData.address}${customerData.region ? `, ${customerData.region}` : ''}\n`;
+    }
+
+    if (docType === 'factura') {
+      message += `--------------------------------\n`;
+      message += `🏢 *DATOS FACTURACIÓN*\n`;
+      message += `RUT: ${customerData.rut}\n`;
+      message += `RAZÓN: ${customerData.razonSocial}\n`;
+      if (customerData.giro) message += `GIRO: ${customerData.giro}\n`;
+    }
+
+    message += `--------------------------------\n`;
+    message += `🛒 *DETALLE DEL PEDIDO*\n`;
     items.forEach(item => {
-      message += `${item.quantity}x ${item.name}\n`;
+      message += `▪ ${item.quantity}x ${item.name}\n   SKU: ${item.sku} | $${new Intl.NumberFormat('es-CL').format(item.price * item.quantity)}\n`;
     });
     
-    message += `\n*TOTAL A PAGAR: ${formatPrice(getTotal())}*\n\nQuedo atento a los datos de pago y despacho.`;
-    
-    // Usamos encodeURIComponent para asegurar que los saltos de línea y caracteres especiales se procesen bien
+    message += `--------------------------------\n`;
+    message += `💰 *TOTAL A PAGAR: ${formatPrice(getTotal())}*\n`;
+    message += `--------------------------------\n`;
+    message += `Quedo atento a la confirmación de stock y datos de transferencia.`;
+
+    // 2. Envío Silencioso vía Webhook a n8n (Evolution API Ready)
+    const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://localhost:5678/webhook/pedido-fyc';
+    const payload = {
+      // Campos Nativos Webhook FYC
+      customer: customerData,
+      documentType: docType,
+      items: items,
+      total: getTotal(),
+      date: new Date().toISOString(),
+      
+      // EVOLUTION API READY FIELDS
+      number: customerData.phone,
+      text: message
+    };
+
+    try {
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.warn("Aviso n8n (puede ignorarse si está offline):", err)); 
+    } catch (error) {
+      console.warn("Fallo al enviar a n8n:", error);
+    }
+
+    // 3. Redirección Cliente a WhatsApp Web/App
     const url = `https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   }

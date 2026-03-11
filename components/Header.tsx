@@ -1,5 +1,5 @@
+
 import React from 'react';
-import { Link } from 'react-router-dom'; // <--- IMPORTANTE: Importamos Link
 import { ShoppingCart, Search, Phone, Mail, Menu } from 'lucide-react';
 import { CONTACT_PHONE_DISPLAY, CONTACT_EMAIL } from '../constants';
 import { useCartStore } from '../store';
@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
 
   return (
     <header className="sticky top-0 z-50 w-full shadow-2xl">
-      {/* 1. Top Bar - Contact Info (TU DISEÑO ORIGINAL SE MANTIENE) */}
+      {/* 1. Top Bar - Contact Info */}
       <div className="bg-[#111111] text-gray-400 py-2 px-4 border-b border-[#222] text-[10px] md:text-xs font-medium tracking-wide">
         <div className="max-w-[1600px] mx-auto flex justify-between items-center">
           <div className="flex items-center gap-6">
@@ -53,21 +53,13 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
             <button onClick={onMenuClick} className="lg:hidden text-white hover:text-[#FFD700] transition-colors">
               <Menu className="w-6 h-6" />
             </button>
-            
-            {/* --- AQUÍ ESTÁ EL CAMBIO: LOGO CON LINK A INICIO --- */}
-            <Link 
-              to="/" 
-              className="flex flex-col leading-none select-none cursor-pointer group" // Agregué 'group' para efectos hover si quieres
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            >
+            <div className="flex flex-col leading-none select-none cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <div className="flex items-center gap-1">
                 <span className="font-industrial text-3xl md:text-4xl text-white font-black tracking-tighter">F<span className="text-[#FFD700]">y</span>C</span>
                 <span className="font-industrial text-xl md:text-2xl text-white font-bold tracking-tight mt-1">SPA</span>
               </div>
-              <span className="text-[8px] md:text-[9px] text-neutral-500 font-black uppercase tracking-[0.3em] pl-1 group-hover:text-white transition-colors">Soluciones en Ferretería</span>
-            </Link>
-            {/* -------------------------------------------------- */}
-
+              <span className="text-[8px] md:text-[9px] text-neutral-500 font-black uppercase tracking-[0.3em] pl-1">Soluciones en Ferretería</span>
+            </div>
           </div>
 
           {/* Search Bar (Desktop) */}
@@ -93,13 +85,13 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
           <div className="flex items-center gap-6">
             <div className="hidden md:flex flex-col items-end text-right">
               <span className="text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-0.5">Cotizar Ahora</span>
-              <a href={`https://wa.me/56920648577`} target="_blank" rel="noreferrer" className="text-white text-xs font-bold hover:text-[#FFD700] transition-colors flex items-center gap-1">
+              <a href="https://wa.me/56920648577?text=Hola,%20necesito%20una%20cotización." target="_blank" rel="noopener noreferrer" className="text-white text-xs font-bold hover:text-[#FFD700] transition-colors flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                 WhatsApp Directo
               </a>
             </div>
 
-            {/* --- BOTÓN DE CARRITO (TU DISEÑO ORIGINAL) --- */}
+            {/* --- BOTÓN DE CARRITO (PALETA CORPORATIVA) --- */}
             <button 
               onClick={toggleCart} 
               className="relative group flex items-center gap-3 bg-[#FFD700] hover:bg-[#FFED4D] text-black pl-1.5 pr-5 py-1.5 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.4)]"
@@ -111,17 +103,19 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
               
               {/* Precio Total */}
               <div className="flex flex-col items-start">
-                  <span className="text-[9px] uppercase font-black text-neutral-800 leading-none tracking-wider mb-0.5">Mi Carro</span>
-                  <span className="text-base font-black tracking-tighter leading-none">{formatPriceHeader(totalPrice)}</span>
+                 <span className="text-[9px] uppercase font-black text-neutral-800 leading-none tracking-wider mb-0.5">Mi Carro</span>
+                 <span className="text-base font-black tracking-tighter leading-none">{formatPriceHeader(totalPrice)}</span>
               </div>
 
               {/* Badge Flotante (Contador) */}
-              <AnimatePresence>
+              <AnimatePresence mode="popLayout">
                 {totalItems > 0 && (
                   <motion.span 
+                    key={totalItems}
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
                     className="absolute -top-2 -right-2 bg-black text-[#FFD700] text-[10px] font-black w-6 h-6 flex items-center justify-center rounded-full border-2 border-[#1A1A1A] shadow-md"
                   >
                     {totalItems}

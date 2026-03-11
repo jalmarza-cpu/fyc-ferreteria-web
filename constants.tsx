@@ -1,3 +1,4 @@
+
 import { Product, NavLink } from './types';
 
 export const NAV_LINKS: NavLink[] = [
@@ -6,328 +7,180 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'Nosotros', href: '#nosotros' },
 ];
 
-// --- DATOS DE CONTACTO ---
 export const CONTACT_PHONE = "56920648577";
 export const CONTACT_PHONE_DISPLAY = "+56 9 2064 8577";
 export const CONTACT_EMAIL = "ventas@fycferreteria.cl";
-export const CONTACT_ADDRESS = "Av. Independencia 1253, Puente Alto";
-export const CONTACT_MAP_URL = "https://maps.google.com/?q=Av.+Independencia+1253,+Puente+Alto";
 
-// --- HORARIOS ---
-export const BUSINESS_HOURS = [
-  { day: "Lunes a Viernes", hours: "08:30 - 20:00 hrs" },
-  { day: "Sábados", hours: "09:00 - 18:00 hrs" },
-  { day: "Domingos", hours: "10:00 - 14:00 hrs" }
-];
-
-// ==========================================
-// CATEGORÍAS (LISTA OFICIAL DEL PROVEEDOR)
-// ==========================================
+// CATEGORÍAS (Terminología Chilena)
 export const CATEGORIES = [
   "Todas",
-  "Basurero",
-  "Canalización",
-  "Cielo falso",
-  "Cintas",
-  "Electricidad",
-  "Extractores de Aire",
-  "Grifería",
-  "Herramientas", // <--- AQUÍ ESTÁ TODO TU STOCK ACTUAL
-  "Iluminación LED",
-  "Maquinaria",
-  "Selladora"
+  "Herramientas Eléctricas",
+  "Gasfitería", // Antes Fontanería
+  "Pinturas y Terminaciones",
+  "Construcción y Obra Gruesa"
 ];
 
 // ==========================================
 // BASE DE DATOS DE PRODUCTOS
 // ==========================================
 export const PRODUCTS: Product[] = [
-  // --- BROCHA FORCEMAN (Categoría: Herramientas) ---
+  // --- ALICATES ---
   {
-    id: 'bh-001',
-    name: "Brocha de calidad forceman 4″.",
-    sku: "011387",
-    description: "Brocha 4″.",
-    priceRetail: 1900,
-    priceWholesale: 1620,
-    imageUrl: "/productos/011387-brocha-forceman-4-v2.jpg",
-    category: "Herramientas",
-    rating: 5.0
-  },
-  {
-    id: 'bh-002',
-    name: "Brocha de calidad forceman 3″.",
-    sku: "011386",
-    description: "Brocha 3″.",
-    priceRetail: 1500,
-    priceWholesale: 1300,
-    imageUrl: "/productos/011386-Brocha-de-calidad-forceman-3.jpg",
-    category: "Herramientas",
-    rating: 4.9
-  },
-  {
-    id: 'bh-003',
-    name: "Brocha de calidad forceman 2 1/2″.",
-    sku: "011385",
-    description: "Brocha 2 1/2″.",
-    priceRetail: 1450,
-    priceWholesale: 1150,
-    imageUrl: "/productos/011385-Brocha-de-calidad-forceman-2-medio.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-  {
-    id: 'bh-004',
-    name: "Brocha de calidad forceman 2″.",
-    sku: "011384",
-    description: "Brocha 2″.",
-    priceRetail: 1260,
-    priceWholesale: 960,
-    imageUrl: "/productos/011384-Brocha-de-calidad-forceman-2.jpg",
-    category: "Herramientas",
-    rating: 5.0
-  },
-  {
-    id: 'bh-005',
-    name: "Brocha de calidad forceman 1 1/2″.",
-    sku: "011383",
-    description: "Brocha 1 1/2″.",
-    priceRetail: 990,
-    priceWholesale: 720,
-    imageUrl: "/productos/011383-Brocha-de-calidad-forceman-1-medio.jpg",
-    category: "Herramientas",
-    rating: 4.7
-  },
-  {
-    id: 'bh-006',
-    name: "Brocha de calidad forceman 1″.",
-    sku: "011382",
-    description: "Brocha 1″.",
-    priceRetail: 680,
-    priceWholesale: 480,
-    imageUrl: "/productos/011382-Brocha-de-calidad-Forceman-1.jpg",
-    category: "Herramientas",
-    rating: 4.9
-  },
-  {
-    id: 'bh-007',
-    name: "Brocha de calidad Forceman 3/4″",
-    sku: "011381",
-    description: "Brocha 3/4″.",
-    priceRetail: 730,
-    priceWholesale: 430,
-    imageUrl: "/productos/011381-Brocha-de-calidad-Forceman-3-cuarto.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-  {
-    id: 'bh-008',
-    name: "Brocha de calidad Forceman 1/2″",
-    sku: "011380",
-    description: "Brocha de 1/2″.",
-    priceRetail: 500,
-    priceWholesale: 300,
-    imageUrl: "/productos/011380-Brocha-de-calidad-Forceman-media.jpg",
-    category: "Herramientas",
-    rating: 5.0
-  },
-
-  // --- BROCHAS CAFÉ (Categoría: Herramientas) ---
-  {
-    id: 'bh-009',
-    name: "Brocha cafe de 4″.",
-    sku: "011317",
-    description: "Brocha cafe de 4″.",
-    priceRetail: 990,
-    priceWholesale: 780,
-    imageUrl: "/productos/011317-Brocha-cafe-de-4.jpg",
-    category: "Herramientas",
-    rating: 4.4
-  },
-  {
-    id: 'bh-010',
-    name: "Brocha cafe de 3″",
-    sku: "011316",
-    description: "Brocha cafe de 3″.",
-    priceRetail: 990,
-    priceWholesale: 700,
-    imageUrl: "/productos/011316-Brocha-cafe-de-3.jpg",
-    category: "Herramientas",
-    rating: 4.5
-  },
-  {
-    id: 'bh-011',
-    name: "Brocha cafe de 2.5″",
-    sku: "011315",
-    description: "Brocha cafe de 2.5″.",
-    priceRetail: 990,
-    priceWholesale: 600,
-    imageUrl: "/productos/011315-Brocha-cafe-de-2.5.jpg",
-    category: "Herramientas",
-    rating: 4.3
-  },
-  {
-    id: 'bh-012',
-    name: "Brocha cafe de 1/2",
-    sku: "011310",
-    description: "Brocha cafe de 1/2.",
-    priceRetail: 340,
-    priceWholesale: 140,
-    imageUrl: "/productos/011310-Brocha-cafe-de-media.jpg",
-    category: "Herramientas",
-    rating: 4.2
-  },
-
-  // --- RODILLO (Categoría: Herramientas) ---
-  {
-    id: 'rh-001',
-    name: "Rodillo Chiporro 20cm",
-    sku: "011181",
-    description: "Rodillo Chiporro 20cm.",
-    priceRetail: 2000,
-    priceWholesale: 1860,
-    imageUrl: "/productos/011181-Rodillo-Chiporro-20cm.jpg",
-    category: "Herramientas",
-    rating: 4.7
-  },
-
-  // --- MARTILLOS (Categoría: Herramientas) ---
-  {
-    id: 'mh-001',
-    name: "Martillo Peña forjado 1lb",
-    sku: "070131",
-    description: "Martillo Peña forjado 1lb.",
-    priceRetail: 2100,
-    priceWholesale: 1500,
-    imageUrl: "/productos/070131-Martillo-Peña-forjado-1lb.jpg",
-    category: "Herramientas",
-    rating: 4.9
-  },
-  {
-    id: 'mh-002',
-    name: "Martillo Peña forjado 1.5lb",
-    sku: "070129",
-    description: "Martillo Peña forjado 1.5lb.",
-    priceRetail: 4000,
-    priceWholesale: 3750,
-    imageUrl: "/productos/070129-Martillo-Peña-forjado-1.5lb.jpg",
-    category: "Herramientas",
-    rating: 5.0
-  },
-  {
-    id: 'mh-003',
-    name: "Martillo mecanico 300g",
-    sku: "070122",
-    description: "Martillo mecanico 300g.",
-    priceRetail: 1990,
-    priceWholesale: 1760,
-    imageUrl: "/productos/070122-Martillo-mecanico-300g.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-  {
-    id: 'mh-004',
-    name: "Martillo mecanico 200g",
-    sku: "070121",
-    description: "Martillo mecanico 200g.",
-    priceRetail: 1500,
-    priceWholesale: 1350,
-    imageUrl: "/productos/070121-Martillo-mecanico-200g.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-  {
-    id: 'mh-005',
-    name: "Martillo mecanico 100g",
-    sku: "070120",
-    description: "Martillo mecanico 100g.",
-    priceRetail: 1490,
-    priceWholesale: 1190,
-    imageUrl: "/productos/070120-Martillo-mecanico-100g.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-  {
-    id: 'mh-006',
-    name: "Martillo con mango de fibra forjado 25mm",
-    sku: "070112",
-    description: "Martillo con mango de fibra forjado 25mm.",
-    priceRetail: 3500,
-    priceWholesale: 3300,
-    imageUrl: "/productos/070112-Martillo-con-mango-de-fibra-forjado-25mm.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-
-  // --- ALICATES (Categoría: Herramientas) ---
-  {
-    id: 'alich-001',
-    name: "Alicate Cortante 8″",
-    sku: "070346",
-    description: "Alicate Cortante 8″.",
-    priceRetail: 2500,
-    priceWholesale: 2250,
-    imageUrl: "/productos/070346-Alicate Cortante-8.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-  {
-    id: 'alich-002',
-    name: "Alicate Ford 8″",
+    id: 'prod-001',
+    name: "Alicate Ford 8\"",
     sku: "070323",
-    description: "Alicate Ford 8″.",
-    priceRetail: 2500,
-    priceWholesale: 2170,
-    imageUrl: "/productos/070323-Alicate-Ford-8.jpg",
-    category: "Herramientas",
-    rating: 4.8
+    description: "Alicate tipo Ford de 8 pulgadas, alta resistencia y agarre.",
+    priceRetail: 9500,
+    priceWholesale: 7200,
+    imageUrl: "Alicates/070323-Alicate-Ford-8.jpg",
+    category: "Herramientas Manuales"
   },
   {
-    id: 'alich-003',
-    name: "Alicate Multiuso HS7004",
-    sku: "070360",
-    description: "Alicate Multiuso HS7004.",
-    priceRetail: 2500,
-    priceWholesale: 2170,
-    imageUrl: "/productos/070360-Alicate-Multiuso-HS7004.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-  {
-    id: 'alich-004',
-    name: "Alicate Universal 6″",
-    sku: "070360",
-    description: "Alicate Universal 6″.",
-    priceRetail: 2000,
-    priceWholesale: 1800,
-    imageUrl: "/productos/070340-Alicate-Universal-6.jpg",
-    category: "Herramientas",
-    rating: 4.8
-  },
-  {
-    id: 'alich-005',
-    name: "Alicate Universal 7″",
-    sku: "070341",
-    description: "Alicate Universal 7″.",
+    id: 'prod-002',
+    name: "Alicate Universal 7\"",
+    sku: "070340",
+    description: "Alicate universal de acero forjado Cromo Vanadio ideal para múltiples tareas.",
     priceRetail: 2900,
-    priceWholesale: 2400,
-    imageUrl: "/productos/070341-Alicate-Universal-7.jpg",
-    category: "Herramientas",
-    rating: 4.8
+    priceWholesale: 2100,
+    imageUrl: "Alicates/070340-Alicate-Universal-6.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: 'prod-003',
+    name: "Alicate Cortante 8\"",
+    sku: "070346",
+    description: "Alicate de corte diagonal reforzado para cortes precisos en obra.",
+    priceRetail: 9900,
+    priceWholesale: 7800,
+    imageUrl: "Alicates/070346-Alicate Cortante-8.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: 'prod-004',
+    name: "Alicate Multiuso HS-7004",
+    sku: "070360",
+    description: "Alicate pelacables multifuncional crimpeador profesional.",
+    priceRetail: 12500,
+    priceWholesale: 9900,
+    imageUrl: "Alicates/070360-Alicate-Multiuso-HS7004.jpg",
+    category: "Herramientas Manuales"
   },
 
-  // --- AMARRAS (Categoría: Herramientas) ---
+  // --- AMARRAS ---
   {
-    id: 'amarh-001',
-    name: "Amarra 150×3.6mm blancas – bolsas",
+    id: 'prod-005',
+    name: "Amarra Plástica 150×3.6mm Blancas (Bolsa 100u)",
     sku: "120300",
-    description: "Amarra 150×3.6mm blancas– bolsas.",
-    priceRetail: 1190,
-    priceWholesale: 900,
-    imageUrl: "/productos/120300-Amarra-150×3.6mm-blancas-bolsas-100u.jpg",
-    // Lo asigno a Herramientas para que no desaparezca, ya que no tienes Insumos
-    category: "Herramientas", 
-    rating: 4.8
+    description: "Pack de 100 amarras de nylon de alta resistencia a la tensión.",
+    priceRetail: 1500,
+    priceWholesale: 990,
+    imageUrl: "Amarras/120300-Amarra-150×3.6mm-blancas-bolsas-100u.jpg",
+    category: "Fijaciones"
   },
-  
+
+  // --- BROCHAS ---
+  {
+    id: 'prod-006',
+    name: "Brocha Café 1/2\"",
+    sku: "011310",
+    description: "Brocha de cerdas mixtas, tamaño media pulgada. Ideal para detalles.",
+    priceRetail: 340,
+    priceWholesale: 250,
+    imageUrl: "Brochas/011310-Brocha-cafe-de-media.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-006b',
+    name: "Brocha Café 2.5\"",
+    sku: "011315",
+    description: "Brocha de cerdas mixtas, 2.5 pulgadas. Mayor cobertura.",
+    priceRetail: 990,
+    priceWholesale: 790,
+    imageUrl: "Brochas/011315-Brocha-cafe-de-2.5.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-006c',
+    name: "Brocha Café 3\"",
+    sku: "011316",
+    description: "Brocha de cerdas mixtas, 3 pulgadas. Ideal superficies medianas.",
+    priceRetail: 990,
+    priceWholesale: 790,
+    imageUrl: "Brochas/011316-Brocha-cafe-de-3.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-006d',
+    name: "Brocha Café 4\"",
+    sku: "011317",
+    description: "Brocha de cerdas mixtas, 4 pulgadas. Máximo rendimiento.",
+    priceRetail: 990,
+    priceWholesale: 790,
+    imageUrl: "Brochas/011317-Brocha-cafe-de-4.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-007',
+    name: "Brocha Forceman 3\"",
+    sku: "011386",
+    description: "Brocha calidad profesional Forceman. Especial pintura de precisión.",
+    priceRetail: 1500,
+    priceWholesale: 1200,
+    imageUrl: "Brochas/011386-Brocha-de-calidad-forceman-3.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-008',
+    name: "Brocha Forceman 4\" V2",
+    sku: "011387",
+    description: "Brocha ultra ancha de 4 pulgadas para alto rendimiento y cobertura.",
+    priceRetail: 1900,
+    priceWholesale: 1500,
+    imageUrl: "Brochas/011387-brocha-forceman-4-v2.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+
+  // --- MARTILLOS ---
+  {
+    id: 'prod-009',
+    name: "Martillo Fibra Forjado 25mm",
+    sku: "070112",
+    description: "Martillo carpintero con mango de fibra de vidrio y cabeza forjada.",
+    priceRetail: 6900,
+    priceWholesale: 5500,
+    imageUrl: "Martillos/070112-Martillo-con-mango-de-fibra-forjado-25mm.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: 'prod-010',
+    name: "Martillo Mecánico 300g",
+    sku: "070122",
+    description: "Martillo tipo mecánico de 300 gramos, balance y durabilidad garantizados.",
+    priceRetail: 4500,
+    priceWholesale: 3200,
+    imageUrl: "Martillos/070122-Martillo-mecanico-300g.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: 'prod-011',
+    name: "Martillo Peña Forjado 1.5 LB",
+    sku: "070129",
+    description: "Martillo de peña 24oz americano, forjado en acero de alto impacto.",
+    priceRetail: 7500,
+    priceWholesale: 5900,
+    imageUrl: "Martillos/070129-Martillo-Pena-forjado-1ymedialb.jpg",
+    category: "Herramientas Manuales"
+  },
+
+  // --- RODILLOS ---
+  {
+    id: 'prod-012',
+    name: "Rodillo Chiporro Natural 20cm",
+    sku: "011181",
+    description: "Rodillo de alto poder cubritivo natural para superficies rugosas y estucos.",
+    priceRetail: 3900,
+    priceWholesale: 2800,
+    imageUrl: "Rodillos/011181-Rodillo-Chiporro-20cm.jpg",
+    category: "Pinturas y Terminaciones"
+  }
 ];

@@ -13,78 +13,77 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
   return (
     <section 
       id="inicio" 
-      className="relative h-[600px] md:h-[700px] w-full flex items-center overflow-hidden border-b border-[#222] bg-[#050505] scroll-mt-32"
+      className="h-[600px] md:h-[700px] w-full flex items-center overflow-hidden border-b border-[#111] bg-[#050505] relative scroll-mt-32 shadow-[0_10px_50px_rgba(0,0,0,0.8)]"
     >
-      
-      {/* 1. Fondo Animado (WEBP) de Supabase */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/sign/video-webp/animacion-hero-video.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81ZTM0ZjgxOS0wMWJlLTRiY2MtOThiNi1mNDljMzlmZTgyMjciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlby13ZWJwL2FuaW1hY2lvbi1oZXJvLXZpZGVvLndlYnAiLCJpYXQiOjE3Njg2MDEyNTgsImV4cCI6MTg1NTAwMTI1OH0.aXrSt6rMa-ldBKlQZhv9gsB-Seuay3eGz1OZzg4zNto"
-          alt="Animación Industrial FYC"
-          className="w-full h-full object-cover" 
+      {/* Supabase Storage HTML5 Video Container */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden opacity-100">
+        <video 
+          /* URL Oficial 720p - Innobate World Standard */
+          src="https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public/video-webp/video%20Logo%20full%20realismo%20720.mp4" 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
 
-      {/* 2. Overlay (Sombra) */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent z-10"></div>
+      {/* Zero-Weight Overlay: Máximo realismo del video, pero protegiendo legibilidad del texto */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/10 to-transparent z-0 pointer-events-none"></div>
 
-      {/* 3. Contenido */}
-      <div className="relative z-20 max-w-[1600px] mx-auto w-full px-6 md:px-12 flex items-center h-full">
-        
-        {/* Barra Amarilla Decorativa */}
+      <div className="relative z-10 max-w-[1600px] mx-auto w-full px-6 md:px-12 flex items-center h-full">
+        {/* Barra Amarilla Decorativa (Acento Amarillo Neón Real) */}
         <motion.div 
           initial={{ height: 0 }}
           animate={{ height: '60%' }}
           transition={{ duration: 1, ease: "circOut" }}
-          className="w-2 md:w-4 bg-[#FFD700] absolute left-0 md:left-12 top-0 shadow-[0_0_30px_rgba(255,215,0,0.4)] rounded-b-lg hidden md:block"
+          className="w-2 md:w-3 bg-[#FFD700] absolute left-0 md:left-12 top-[20%] shadow-[0_0_20px_#FFD700,0_0_40px_#FFD700] rounded-r-lg"
         ></motion.div>
 
-        <div className="flex flex-col max-w-3xl ml-0 md:ml-16 mt-12 md:mt-0">
+        <div className="flex flex-col max-w-3xl ml-4 md:ml-16 mt-12 md:mt-0">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-             {/* ETIQUETA: Venta a todos */}
-             <div className="inline-flex items-center gap-2 mb-4 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 backdrop-blur-sm">
-                <span className="w-2 h-2 rounded-full bg-[#FFD700] animate-pulse"></span>
-                <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-widest">
-                  Venta a Empresas y Particulares
+             {/* Etiqueta Superior */}
+             <div className="inline-flex items-center gap-2 mb-6 bg-black/40 border border-[#FFD700] rounded-full px-5 py-2 backdrop-blur-md shadow-[0_0_15px_#FFD700]">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#FFD700] shadow-[0_0_10px_#FFD700,0_0_20px_#FFD700] animate-pulse"></span>
+                <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] drop-shadow-[0_0_5px_#FFD700]">
+                  Stock Disponible 2026
                 </span>
              </div>
 
-             {/* TÍTULO: Impacto Visual */}
-             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.1] tracking-tighter font-industrial text-white mb-2 drop-shadow-2xl">
-               POTENCIA INDUSTRIAL, <br/>
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFE55C]">ALCANCE FAMILIAR</span>
+             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.05] tracking-tighter font-industrial text-white mb-4 drop-shadow-2xl">
+               EL SOCIO DE <br className="hidden md:block" /> TU OBRA: <br/>
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFE55C] to-[#FFF1AB] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">MAYORISTAS Y RAPIDEZ</span>
              </h1>
 
-             {/* SUBTÍTULO CORTO: La regla de oro */}
-             <h2 className="text-xl md:text-2xl text-neutral-300 font-bold uppercase tracking-widest mb-6 flex items-center gap-3">
-               <span className="w-8 h-[2px] bg-[#FFD700]"></span>
-               PRECIO MAYORISTA DESDE 6 UNIDADES
+             <h2 className="text-lg md:text-2xl text-white font-bold uppercase tracking-[0.15em] mb-8 flex items-center gap-4 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+               <span className="w-12 h-[2px] bg-[#FFD700] shadow-[0_0_15px_#FFD700]"></span>
+               HERRAMIENTAS Y MATERIALES
              </h2>
           </motion.div>
           
-          {/* PÁRRAFO: Tu texto ganador con "Activa" */}
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-base md:text-xl text-neutral-300 font-medium max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6 drop-shadow-lg"
+            className="text-base md:text-xl text-white font-semibold max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6 backdrop-blur-sm bg-black/30 p-4 rounded-r-2xl drop-shadow-xl"
           >
-            La misma calidad que usan los expertos, ahora a tu alcance. Disfruta precios competitivos siempre y <span className="text-white font-bold">activa el valor mayorista</span> llevando solo 6 unidades.
+            Suministros técnicos para la construcción. Cotiza formalmente con Factura o Boleta en segundos. Despachos a todo Chile.
           </motion.p>
           
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-5"
           >
             <button 
               onClick={onCatalogClick}
-              className="group bg-[#FFD700] text-black px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_40px_rgba(255,215,0,0.6)] font-industrial flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
+              className="group bg-[#FFD700] text-black px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_0_20px_#FFD700] hover:shadow-[0_0_40px_#FFD700,0_0_60px_#FFD700] font-industrial flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
             >
               VER CATÁLOGO
               <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
@@ -92,9 +91,9 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             
             <button 
               onClick={toggleCart}
-              className="group bg-transparent border border-white/30 text-white px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white/10 transition-all backdrop-blur-sm rounded-full w-full sm:w-auto flex items-center justify-center"
+              className="group bg-black/40 border border-[#FFD700]/50 text-white px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-[#FFD700]/20 hover:border-[#FFD700] transition-all backdrop-blur-md rounded-full w-full sm:w-auto flex items-center justify-center shadow-[0_0_15px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_#FFD700]"
             >
-              Cotizar Lista
+              Envía tu Lista
             </button>
           </motion.div>
         </div>

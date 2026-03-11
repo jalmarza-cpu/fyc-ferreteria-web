@@ -14,7 +14,7 @@ import ProductCard from './components/ProductCard';
 import Sidebar from './components/Sidebar';
 import CategoryBento from './components/CategoryBento';
 import About from './components/About';
-import Testimonials from './components/Testimonials';
+import Maestros from './components/Maestros';
 // Legal Pages Import
 import { ShippingPolicy, ReturnsPolicy, TermsAndConditions } from './components/LegalPages';
 
@@ -127,7 +127,7 @@ const ScrollToTopButton = () => {
 
 // --- CART DRAWER ---
 const CartDrawer = () => {
-  const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal } = useCartStore();
+  const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal, checkout } = useCartStore();
   const [step, setStep] = useState<'cart' | 'checkout'>('cart');
   const [docType, setDocType] = useState<'boleta' | 'factura'>('boleta');
   
@@ -174,37 +174,7 @@ const CartDrawer = () => {
         }
     }
 
-    let message = `*SOLICITUD DE PEDIDO / COTIZACIÓN*\n`;
-    message += `--------------------------------\n`;
-    message += `📋 *DOCUMENTO:* ${docType === 'factura' ? 'FACTURA' : 'BOLETA'}\n`;
-    message += `👤 *CLIENTE:* ${formData.name}\n`;
-    message += `📱 *TEL:* ${formData.phone}\n`;
-    
-    if (formData.address) {
-        message += `📍 *DESPACHO:* ${formData.address}${formData.region ? `, ${formData.region}` : ''}\n`;
-    }
-
-    if (docType === 'factura') {
-      message += `--------------------------------\n`;
-      message += `🏢 *DATOS FACTURACIÓN*\n`;
-      message += `RUT: ${formData.rut}\n`;
-      message += `RAZÓN: ${formData.razonSocial}\n`;
-      if (formData.giro) message += `GIRO: ${formData.giro}\n`;
-    }
-
-    message += `--------------------------------\n`;
-    message += `🛒 *DETALLE DEL PEDIDO*\n`;
-    items.forEach(item => {
-      message += `▪ ${item.quantity}x ${item.name}\n   SKU: ${item.sku} | $${new Intl.NumberFormat('es-CL').format(item.price * item.quantity)}\n`;
-    });
-    
-    message += `--------------------------------\n`;
-    message += `💰 *TOTAL A PAGAR: ${formatPrice(currentTotal)}*\n`;
-    message += `--------------------------------\n`;
-    message += `Quedo atento a la confirmación de stock y datos de transferencia.`;
-
-    const url = `https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    checkout(formData, docType);
   };
 
   return (
@@ -395,7 +365,7 @@ const Home = ({
 
   const handleBentoCategorySelect = (cat: string) => {
     setCategory(cat);
-    const grid = document.getElementById('catalogo');
+    const grid = document.getElementById('productos');
     grid?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -405,7 +375,7 @@ const Home = ({
         {category === 'Todas' && !searchTerm && (
         <>
             <Hero onCatalogClick={() => {
-                const grid = document.getElementById('catalogo');
+                const grid = document.getElementById('productos');
                 grid?.scrollIntoView({ behavior: 'smooth' });
             }} />
             <CategoryBento onSelectCategory={handleBentoCategorySelect} />
@@ -415,7 +385,7 @@ const Home = ({
 
         {/* Catalog Section */}
         <div className="bg-[#111] border-t border-[#222]">
-        <div id="catalogo" className="max-w-[1600px] mx-auto px-6 py-16 md:py-24 scroll-mt-32">
+        <div id="productos" className="max-w-[1600px] mx-auto px-6 py-16 md:py-24 scroll-mt-32">
             <div className="flex flex-col lg:flex-row gap-12 items-start">
             
             {/* Desktop Sidebar (Sticky) */}
@@ -473,7 +443,7 @@ const Home = ({
             </div>
         </div>
         </div>
-        <Testimonials />
+        <Maestros />
     </>
   );
 };
