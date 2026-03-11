@@ -55,7 +55,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
                 </span>
              </div>
 
-             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.05] tracking-tighter font-industrial text-white mb-4 drop-shadow-2xl">
+             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.05] tracking-tighter font-industrial text-white mb-3 md:mb-4 drop-shadow-2xl">
                EL SOCIO DE <br className="hidden md:block" /> TU OBRA: <br/>
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFE55C] to-[#FFF1AB] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">MAYORISTAS Y RAPIDEZ</span>
              </h1>

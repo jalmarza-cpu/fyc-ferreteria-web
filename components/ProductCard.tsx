@@ -262,11 +262,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Image Container - Dark Mode */}
-              <div className="bg-[#151515] p-4 md:p-8 rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333]">
+              <div className="bg-[#151515] p-2 md:p-4 rounded-t-2xl md:rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333] mb-4 md:mb-6 flex justify-center items-center h-[35vh] max-h-[35vh]">
                 <img 
                   src={getProductImageUrl(product.name, product.imageUrl)} 
                   alt={product.name} 
-                  className="w-full h-full object-contain max-h-[60vh]"
+                  className="w-full h-full object-contain"
                   onError={(e) => {
                      const target = e.target as HTMLImageElement;
                      if (!target.src.includes('logo-fyc.png')) { 
@@ -275,38 +275,68 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   }}
                 />
               </div>
-              <div className="mt-6 text-center">
-                 <h3 className="text-xl font-industrial font-bold text-white uppercase mb-2">{product.name}</h3>
+
+              {/* Contenedor de Información con Scroll Opcional */}
+              <div className="w-full max-w-[600px] bg-[#0A0A0A] md:bg-transparent rounded-b-2xl md:rounded-none px-4 pb-4 md:px-0 md:pb-0 text-center flex-1 overflow-y-auto custom-scrollbar">
+                 <h3 className="text-xl md:text-2xl font-industrial font-bold text-white uppercase mb-2">{product.name}</h3>
                  
-                 <div className="flex items-center justify-center gap-1 mb-4">
+                 <div className="flex items-center justify-center gap-1 mb-2">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-[#FFD700] text-[#FFD700]" />
                     ))}
                     <span className="text-xs text-neutral-400 ml-2">({rating}/5.0)</span>
                  </div>
 
-                 <p className="text-neutral-400 max-w-md mx-auto mb-6">{product.description}</p>
+                 <p className="text-sm text-neutral-400 max-w-md mx-auto mb-4">{product.description}</p>
                  
                  {/* Visualización de Precios en Modal */}
-                 <div className="grid grid-cols-2 gap-4 w-full max-w-md mx-auto">
+                 <div className="grid grid-cols-2 gap-3 w-full max-w-md mx-auto mb-6">
                     {/* Retail Modal */}
-                    <div className="bg-[#111] p-4 rounded-xl border border-[#333] flex flex-col items-center">
-                       <span className="text-[10px] text-neutral-400 font-bold uppercase mb-1">Unidad</span>
-                       <p className="text-white font-bold text-xl">{formatCLP(product.priceRetail)}</p>
-                       <span className="text-[10px] text-green-400 font-semibold mt-1">(IVA incluido)</span>
+                    <div 
+                      onClick={() => setPricingMode('retail')}
+                      className={`p-3 rounded-xl border flex flex-col items-center cursor-pointer transition-colors ${pricingMode === 'retail' ? 'border-white bg-[#1a1a1a]' : 'border-[#333] bg-[#111] hover:border-[#555]'}`}
+                    >
+                       <span className="text-[10px] text-neutral-400 font-bold uppercase mb-1">1 Unidad</span>
+                       <p className={`font-bold text-lg md:text-xl font-industrial ${pricingMode === 'retail' ? 'text-white' : 'text-neutral-300'}`}>{formatCLP(product.priceRetail)}</p>
+                       <span className="text-[9px] text-green-400 font-semibold mt-1">(IVA incluido)</span>
                     </div>
                     
                     {/* Wholesale Modal */}
-                    <div className="bg-[#111] p-4 rounded-xl border border-[#FFD700] bg-[#FFD700]/5 flex flex-col items-center relative overflow-hidden">
-                       <div className="absolute top-0 right-0 bg-[#FFD700] text-black text-[8px] font-black px-2 py-0.5 uppercase">
+                    <div 
+                      onClick={() => setPricingMode('wholesale')}
+                      className={`p-3 rounded-xl border flex flex-col items-center relative overflow-hidden cursor-pointer transition-colors ${pricingMode === 'wholesale' ? 'border-[#FFD700] bg-[#FFD700]/10 shadow-[0_0_15px_rgba(255,215,0,0.15)]' : 'border-[#333] bg-[#111] hover:border-[#FFD700]/50'}`}
+                    >
+                       <div className="absolute top-0 right-0 bg-[#FFD700] text-black text-[8px] font-black px-1.5 py-0.5 uppercase">
                           Recomendado
                        </div>
                        <span className="text-[10px] text-[#FFD700] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</span>
-                       <p className="text-[#FFD700] font-bold text-2xl font-industrial">{formatCLP(product.priceWholesale)}</p>
+                       <p className={`font-bold text-xl md:text-2xl font-industrial ${pricingMode === 'wholesale' ? 'text-[#FFD700]' : 'text-[#FFD700]/80'}`}>{formatCLP(product.priceWholesale)}</p>
                        <span className="text-[9px] text-neutral-500">c/u + IVA</span>
                     </div>
                  </div>
 
+                 {/* Botones de Acción */}
+                 <div className="flex flex-col gap-3 w-full max-w-md mx-auto mt-auto pb-4">
+                    <button 
+                      onClick={handleAddToCart}
+                      className={`w-full py-3.5 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg ${isAdded ? 'bg-green-600 text-white' : 'bg-[#FFD700] hover:bg-[#FFED4D] text-black shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
+                    >
+                      {isAdded ? (
+                        <><Check className="w-5 h-5" /> ¡Agregado al Pack!</>
+                      ) : (
+                        <><ShoppingCart className="w-5 h-5" /> Agregar al Carro</>
+                      )}
+                    </button>
+
+                    <a
+                      href={`https://wa.me/56920648577?text=${encodeURIComponent(`¡Hola FYC! Me interesa el [${product.name}] (SKU: ${product.sku}). ¿Tienen stock? Mi pedido es por [${pricingMode === 'wholesale' ? MIN_WHOLESALE_QTY : 1}] unidades.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 px-4 font-bold uppercase text-[11px] tracking-wider transition-all flex items-center justify-center gap-2 rounded border border-[#25D366] text-[#25D366] hover:bg-[#25D366]/10"
+                    >
+                      WHATSAPP RÁPIDO
+                    </a>
+                 </div>
               </div>
             </motion.div>
           </motion.div>

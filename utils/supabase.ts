@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { createClient } from '@supabase/supabase-js';
 
 export const SUPABASE_BASE_URL = "https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public";
