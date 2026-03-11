@@ -7,10 +7,19 @@ COPY . .
 RUN npm run build
 
 # Producción
-FROM node:20-alpine
-WORKDIR /app
-RUN npm install -g serve
-COPY --from=builder /app/dist ./dist
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Configuración Nginx para SPA (React Router)
+RUN echo 'server { \
+    listen 80; \
+    server_name _; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-CMD /bin/sh -c 'echo "SERVIDOR ACTIVO EN PUERTO 80" && serve -s dist -l 80'
+CMD ["nginx", "-g", "daemon off;"]
