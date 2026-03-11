@@ -44,7 +44,7 @@ export const getProductImageUrl = (productName: string, imagePath?: string) => {
 
 /**
  * Equivalente de Maestros para la sección Testimonios (Efecto Neón)
- * Busca estricto dentro del bucket video-webp/maestros/
+ * Busca estricto dentro del bucket maestros/Testimonios/
  */
 export const getMaestroImageUrl = (maestroName: string, imagePath?: string) => {
   if (imagePath && imagePath.startsWith('http')) return imagePath;
@@ -52,7 +52,8 @@ export const getMaestroImageUrl = (maestroName: string, imagePath?: string) => {
   // Archivo directo desde constantes (Ej: Cliente-1-Matias-Canto.jpg)
   if (imagePath) {
     // Romper cache forzadamente
-    return `${SUPABASE_BASE_URL}/video-webp/maestros/${imagePath}?v=innobate2`;
+    // En supabase el bucket es 'maestros' y la carpeta es 'Testimonios'
+    return `${SUPABASE_BASE_URL}/maestros/Testimonios/${imagePath}?v=innobate3`;
   }
 
   // Respaldo neutro si no hay imagen
