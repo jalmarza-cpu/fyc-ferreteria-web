@@ -1,4 +1,11 @@
+import { createClient } from '@supabase/supabase-js';
+
 export const SUPABASE_BASE_URL = "https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public";
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co";
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 /**
  * Normaliza textos quitando tildes y caracteres especiales
