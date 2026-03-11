@@ -2,7 +2,9 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+# Resolver bug the npm / rollup en Alpine Linux
+RUN npm install @rollup/rollup-linux-x64-musl
+RUN npm ci
 COPY . .
 RUN npm run build
 
