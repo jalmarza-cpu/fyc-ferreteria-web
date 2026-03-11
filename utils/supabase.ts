@@ -48,14 +48,14 @@ export const getProductImageUrl = (productName: string, imagePath?: string) => {
  */
 export const getMaestroImageUrl = (maestroName: string, imagePath?: string) => {
   if (imagePath && imagePath.startsWith('http')) return imagePath;
-  
+
   // Archivo directo desde constantes (Ej: Cliente-1-Matias-Canto.jpg)
-  if (imagePath && imagePath.includes('.')) {
-    return `${SUPABASE_BASE_URL}/video-webp/maestros/${imagePath}?v=innobate1`;
+  if (imagePath) {
+    // Romper cache forzadamente
+    return `${SUPABASE_BASE_URL}/video-webp/maestros/${imagePath}?v=innobate2`;
   }
 
-  // Respaldo crudo
-  const firstWord = maestroName.split(' ')[0];
-  const autoFile = `${slugify(firstWord)}.jpg`;
-  return `${SUPABASE_BASE_URL}/video-webp/maestros/${autoFile}?v=innobate1`;
+  // Respaldo neutro si no hay imagen
+  const encodedName = encodeURIComponent(maestroName || 'M');
+  return `https://ui-avatars.com/api/?name=${encodedName}&background=FFD700&color=0A0A0A&size=200&bold=true`;
 };
