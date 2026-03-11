@@ -10,7 +10,7 @@ export const NAV_LINKS: NavLink[] = [
 export const CONTACT_PHONE = "56920648577";
 export const CONTACT_PHONE_DISPLAY = "+56 9 2064 8577";
 export const CONTACT_EMAIL = "ventas@fycferreteria.cl";
-export const CONTACT_ADDRESS = "San Antonio 427, Local 125, Santiago Centro";
+export const CONTACT_ADDRESS = "Av. Independencia 1253, Puente Alto, Santiago, Región Metropolitana";
 export const CONTACT_MAP_URL = "https://goo.gl/maps/Q3uBZYgN6e73mX1K6";
 export const BUSINESS_HOURS = [
   { day: "Lunes a Viernes", hours: "09:30 - 18:30" },
