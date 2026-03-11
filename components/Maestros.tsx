@@ -103,7 +103,7 @@ const Maestros = () => {
              </span>
           </div>
           <h2 className="text-3xl md:text-5xl font-industrial font-black text-white uppercase tracking-tight mb-4">
-            Maestros que confían <span className="text-[#FFD700] drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">en FyC</span>
+            Únete a los jefes de obra <span className="text-[#FFD700] drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">más eficientes de Chile</span>
           </h2>
           <p className="text-neutral-400 max-w-2xl mx-auto text-sm md:text-base uppercase tracking-wider font-bold">
             No lo decimos nosotros, lo dicen quienes construyen.

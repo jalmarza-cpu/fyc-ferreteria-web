@@ -56,8 +56,8 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
              </div>
 
              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.05] tracking-tighter font-industrial text-white mb-3 md:mb-4 drop-shadow-2xl">
-               EL SOCIO DE <br className="hidden md:block" /> TU OBRA: <br/>
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFE55C] to-[#FFF1AB] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">MAYORISTAS Y RAPIDEZ</span>
+               QUE TU OBRA NUNCA <br className="hidden md:block" /> SE DETENGA POR <br/>
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFE55C] to-[#FFF1AB] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">FALTA DE MATERIALES.</span>
              </h1>
 
              <h2 className="text-lg md:text-2xl text-white font-bold uppercase tracking-[0.15em] mb-8 flex items-center gap-4 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
@@ -72,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-base md:text-xl text-white font-semibold max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6 backdrop-blur-sm bg-black/30 p-4 rounded-r-2xl drop-shadow-xl"
           >
-            Suministros técnicos para la construcción. Cotiza formalmente con Factura o Boleta en segundos. Despachos a todo Chile.
+            Evita retrasos y multas. Asegura tus insumos con stock real, facturación inmediata y despacho exprés.
           </motion.p>
           
           <motion.div 
@@ -85,7 +85,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
               onClick={onCatalogClick}
               className="group bg-[#FFD700] text-black px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_0_20px_#FFD700] hover:shadow-[0_0_40px_#FFD700,0_0_60px_#FFD700] font-industrial flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
             >
-              VER CATÁLOGO
+              Cotizar mi lista (Es rápido)
               <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
             </button>
             
@@ -93,7 +93,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
               onClick={toggleCart}
               className="group bg-black/40 border border-[#FFD700]/50 text-white px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-[#FFD700]/20 hover:border-[#FFD700] transition-all backdrop-blur-md rounded-full w-full sm:w-auto flex items-center justify-center shadow-[0_0_15px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_#FFD700]"
             >
-              Envía tu Lista
+              Resolver por WhatsApp
             </button>
           </motion.div>
         </div>

@@ -41,7 +41,7 @@ const About = () => {
               className="space-y-6 text-neutral-400 text-sm md:text-base leading-relaxed"
             >
               <p className="font-medium text-white border-l-4 border-[#FFD700] pl-6 py-1">
-                En <strong className="text-white">F y C Spa</strong>, entendemos la regla de oro: <span className="text-[#FFD700]">una obra no puede detenerse</span>. 
+                Sabemos que en la construcción, el tiempo es dinero. No te vendemos suministros; te entregamos tranquilidad. Tú enfócate en construir, nosotros del resto.
               </p>
               
               {/* Fusión de la Misión del Cliente */}

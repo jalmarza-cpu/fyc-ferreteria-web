@@ -146,6 +146,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                    <span className="text-base font-bold text-white font-industrial">{formatCLP(product.priceRetail)}</span>
                    {/* VAT Label: Green, Semi-Bold, Larger (Accessiblity Update) */}
                    <span className="text-xs text-green-400 font-semibold tracking-wide">(IVA incluido)</span>
+                   <span className="text-[9px] text-[#FFD700] font-bold uppercase mt-0.5">Stock real - Despacho hoy</span>
                 </div>
               </div>
 
@@ -184,6 +185,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                         {formatCLP(product.priceWholesale)}
                       </span>
                       <span className="text-[9px] text-neutral-500 font-bold ml-1">c/u</span>
+                      <div className="text-[9px] text-green-400 font-bold tracking-widest uppercase mt-1">Stock real - Despacho hoy</div>
                    </div>
                 </div>
               </div>
