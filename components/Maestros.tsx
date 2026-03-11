@@ -14,6 +14,36 @@ interface Maestro {
   highlight: string;
 }
 
+const FALLBACK_MAESTROS: Maestro[] = [
+  {
+    id: 1,
+    name: "Matías Canto",
+    role: "Jefe de Obra",
+    originalImage: "https://ui-avatars.com/api/?name=Matias+Canto&background=FFD700&color=0A0A0A&size=200&bold=true",
+    imagePath: "Cliente-1-Matias-Canto.jpg",
+    quote: "Pedí alicates y llegaron al día siguiente a la obra con la factura lista. Excelente servicio.",
+    highlight: "Rapidez Extrema"
+  },
+  {
+    id: 2,
+    name: "Axel Cabrera",
+    role: "Contratista General",
+    originalImage: "https://ui-avatars.com/api/?name=Axel+Cabrera&background=FFD700&color=0A0A0A&size=200&bold=true",
+    imagePath: "Cliente-2-Axel-Cabrera.jpeg",
+    quote: "Cotización formal rápida. Los precios mayoristas son reales, se nota el ahorro en el total final.",
+    highlight: "Precio Justo"
+  },
+  {
+    id: 3,
+    name: "Héctor El Maestro",
+    role: "Pintor Profesional",
+    originalImage: "https://ui-avatars.com/api/?name=Hector+El+Maestro&background=FFD700&color=0A0A0A&size=200&bold=true",
+    imagePath: "Cliente-3-Hector-El-maestro.jpeg",
+    quote: "Necesitaba asesoría para un proyecto grande y me atendieron por WhatsApp de maravilla.",
+    highlight: "Calidad Industrial"
+  }
+];
+
 const Maestros = () => {
   const [maestrosData, setMaestrosData] = useState<Maestro[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,14 +68,16 @@ const Maestros = () => {
              quote: item.quote || item.comentario || item.testimonio || '',
              highlight: item.highlight || item.destacado || 'Cliente Verificado',
              imagePath: item.imagePath || item.imagen || item.image || undefined,
-             originalImage: item.originalImage || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
+             originalImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name || item.nombre || 'M')}&background=FFD700&color=0A0A0A&size=200&bold=true`
           }));
           setMaestrosData(mappedData);
         } else {
-           console.log("No se encontraron testimonios en Supabase.");
+           console.log("No se encontraron testimonios en Supabase. Aplicando Fallback de Seguridad.");
+           setMaestrosData(FALLBACK_MAESTROS);
         }
       } catch (error) {
-        console.error("Error obteniendo testimonios de Supabase:", error);
+        console.error("Error obteniendo testimonios de Supabase, activando protección:", error);
+        setMaestrosData(FALLBACK_MAESTROS);
       } finally {
         setLoading(false);
       }
