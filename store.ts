@@ -138,7 +138,8 @@ export const useCartStore = create<CartStore>((set, get) => ({
       
       // EVOLUTION API READY FIELDS
       number: customerData.phone,
-      text: message
+      text: message,
+      source: 'F Y C Soluciones Ferreteras - Checkout Completo'
     };
 
     try {
@@ -170,6 +171,29 @@ export const useCartStore = create<CartStore>((set, get) => ({
     message += `💰 *TOTAL ESTIMADO: ${formatPrice(getTotal())}*\n`;
     message += `--------------------------------\n`;
     message += `Hola, necesito confirmar stock y factibilidad de envío para estos insumos.`;
+
+    // Envío Silencioso vía Webhook a n8n (Espejo Innobate)
+    const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://24.199.110.9:5678/webhook/pedido-fyc';
+    const payload = {
+      customer: { name: 'Cotización Rápida', phone: 'WhatsApp' },
+      documentType: 'cotizacion',
+      items: items,
+      total: getTotal(),
+      date: new Date().toISOString(),
+      number: CONTACT_PHONE,
+      text: message,
+      source: 'F Y C Soluciones Ferreteras - Quick Checkout'
+    };
+
+    try {
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.warn("Aviso n8n:", err)); 
+    } catch (error) {
+      console.warn("Fallo al enviar a n8n:", error);
+    }
 
     const url = `https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
