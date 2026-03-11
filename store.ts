@@ -125,7 +125,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
     message += `Quedo atento a la confirmación de stock y datos de transferencia.`;
 
     // 2. Envío Silencioso vía Webhook a n8n (Evolution API Ready)
-    const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://localhost:5678/webhook/pedido-fyc';
+    const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://24.199.110.9:5678/webhook/pedido-fyc';
     const payload = {
       // Campos Nativos Webhook FYC
       customer: customerData,
