@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck, FileText, Receipt, User, Building2, MapPin, Phone, ArrowLeft, Send } from 'lucide-react';
 import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE } from './constants';
 import { useCartStore } from './store';
+import { getProductImageUrl } from './utils/supabase';
 
 // Imports from specialized components
 import Header from './components/Header';
@@ -127,7 +128,7 @@ const ScrollToTopButton = () => {
 
 // --- CART DRAWER ---
 const CartDrawer = () => {
-  const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal, checkout } = useCartStore();
+  const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal, checkout, quickCheckout } = useCartStore();
   const [step, setStep] = useState<'cart' | 'checkout'>('cart');
   const [docType, setDocType] = useState<'boleta' | 'factura'>('boleta');
   
@@ -207,7 +208,7 @@ const CartDrawer = () => {
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto bg-[#0A0A0A]">
+            <div className="flex-1 overflow-y-auto bg-[#0A0A0A] custom-scrollbar">
               {step === 'cart' && (
                   <div className="p-5 space-y-4">
                     {items.length === 0 ? (
@@ -218,8 +219,18 @@ const CartDrawer = () => {
                     ) : (
                         items.map(item => (
                         <motion.div layout key={item.id} className="flex gap-4 border-b border-[#222] pb-4 last:border-0">
-                            <div className="w-20 h-20 bg-white rounded border border-[#333] overflow-hidden p-2 flex-shrink-0">
-                               <img src={item.image || "https://placehold.co/100"} alt="" className="w-full h-full object-contain mix-blend-multiply" />
+                            <div className="w-20 h-20 bg-[#151515] rounded border border-[#333] overflow-hidden p-2 flex-shrink-0 flex items-center justify-center">
+                               <img 
+                                 src={item.image ? getProductImageUrl(item.name, item.image) : "https://placehold.co/100"} 
+                                 alt={item.name} 
+                                 className="w-full h-full object-contain"
+                                 onError={(e) => {
+                                   const target = e.target as HTMLImageElement;
+                                   if (!target.src.includes('logo-fyc.png')) { 
+                                       target.src = '/logo-fyc.png'; 
+                                   }
+                                 }}
+                               />
                             </div>
                             <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
                                 <div className="flex justify-between items-start gap-2">
@@ -227,7 +238,7 @@ const CartDrawer = () => {
                                         <h4 className="text-xs font-bold text-white uppercase leading-tight mb-1 line-clamp-2">{item.name}</h4>
                                         <p className="text-[10px] text-[#FFD700] font-bold tracking-wider">SKU: {item.sku}</p>
                                     </div>
-                                    <button onClick={() => removeItem(item.id)} className="text-neutral-600 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                                    <button onClick={() => removeItem(item.id)} className="text-neutral-600 hover:text-[#D32F2F] transition-colors"><Trash2 className="w-4 h-4" /></button>
                                 </div>
                                 <div className="flex items-center justify-between mt-2">
                                     <div className="flex items-center bg-[#151515] rounded border border-[#333] h-7">
@@ -330,16 +341,21 @@ const CartDrawer = () => {
                 </div>
                 <div className="space-y-3">
                     {step === 'cart' ? (
-                        <button onClick={() => setStep('checkout')} className="w-full py-4 bg-[#FFD700] hover:bg-white text-black font-black text-xs uppercase tracking-[0.15em] rounded transition-all shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_rgba(255,215,0,0.4)] flex items-center justify-center gap-2">
-                            Continuar Compra <ArrowRight className="w-4 h-4" />
-                        </button>
+                        <>
+                           <button onClick={quickCheckout} className="w-full py-4 bg-[#25D366] hover:bg-[#20b858] text-white font-black text-xs uppercase tracking-[0.1em] rounded transition-all shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] flex items-center justify-center gap-2">
+                               <Send className="w-4 h-4" /> Cotizar Rápido por WhatsApp
+                           </button>
+                           <button onClick={() => setStep('checkout')} className="w-full py-3 bg-transparent border border-[#333] hover:border-[#FFD700] text-neutral-300 hover:text-white font-bold text-[10px] uppercase tracking-wider rounded transition-colors flex items-center justify-center gap-2">
+                               Solicitar Factura Pyme <ArrowRight className="w-3 h-3" />
+                           </button>
+                        </>
                     ) : (
                         <button onClick={handleWhatsAppCheckout} className="w-full py-4 bg-green-600 hover:bg-green-500 text-white font-black text-xs uppercase tracking-[0.15em] rounded transition-all shadow-[0_0_20px_rgba(22,163,74,0.3)] hover:shadow-[0_0_30px_rgba(22,163,74,0.5)] flex items-center justify-center gap-2">
-                            <Send className="w-4 h-4" /> Enviar Pedido / Cotizar
+                            <Send className="w-4 h-4" /> Enviar Pedido Formal
                         </button>
                     )}
                     {step === 'cart' && (
-                         <button onClick={toggleCart} className="w-full py-3 bg-transparent border border-[#333] hover:border-[#FFD700] text-neutral-400 hover:text-[#FFD700] font-bold text-[10px] uppercase tracking-wider rounded transition-colors">
+                         <button onClick={toggleCart} className="w-full py-3 bg-transparent text-neutral-500 hover:text-[#FFD700] font-bold text-[10px] uppercase tracking-wider rounded transition-colors underline decoration-neutral-700 underline-offset-4 hidden">
                             Seguir Viendo Productos
                         </button>
                     )}

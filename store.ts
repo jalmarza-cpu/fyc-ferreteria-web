@@ -31,6 +31,7 @@ interface CartStore {
   getTotal: () => number;
   clearCart: () => void;
   checkout: (customerData: CustomerData, docType: string) => Promise<void>;
+  quickCheckout: () => void;
 }
 
 const formatPrice = (val: number) => 
@@ -151,6 +152,25 @@ export const useCartStore = create<CartStore>((set, get) => ({
     }
 
     // 3. Redirección Cliente a WhatsApp Web/App
+    const url = `https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  },
+
+  quickCheckout: () => {
+    const { items, getTotal } = get();
+    if (items.length === 0) return;
+
+    let message = `*SOLICITUD DE COTIZACIÓN - FYC*\n`;
+    message += `--------------------------------\n`;
+    message += `🛒 *DETALLE DEL PEDIDO*\n`;
+    items.forEach(item => {
+      message += `▪ ${item.quantity}x ${item.name}\n   SKU: ${item.sku} | $${new Intl.NumberFormat('es-CL').format(item.price * item.quantity)}\n`;
+    });
+    message += `--------------------------------\n`;
+    message += `💰 *TOTAL ESTIMADO: ${formatPrice(getTotal())}*\n`;
+    message += `--------------------------------\n`;
+    message += `Hola, necesito confirmar stock y factibilidad de envío para estos insumos.`;
+
     const url = `https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   }
