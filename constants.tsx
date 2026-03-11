@@ -81,7 +81,7 @@ export const PRODUCTS: Product[] = [
     description: "Pack de 100 amarras de nylon de alta resistencia a la tensión.",
     priceRetail: 1500,
     priceWholesale: 990,
-    imageUrl: "Amarras/120300-Amarra-150×3.6mm-blancas-bolsas-100u.jpg",
+    imageUrl: "Amarras/120300-Amarra-150x3.6mm-blancas-bolsas-100u.jpg",
     category: "Fijaciones"
   },
 
