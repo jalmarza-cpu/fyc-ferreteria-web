@@ -12,5 +12,5 @@ WORKDIR /app
 RUN npm install -g serve
 COPY --from=builder /app/dist ./dist
 
-EXPOSE 3000
-CMD ["serve", "-s", "dist", "-l", "3000"]
+EXPOSE 80
+CMD /bin/sh -c 'echo "SERVIDOR ACTIVO EN PUERTO 80" && serve -s dist -l 80'
