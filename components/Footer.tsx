@@ -116,7 +116,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         {/* BARRA INFERIOR */}
         <div className="border-t border-[#222] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-          <p>© 2026 FYC Ferretería SpA. Todos los derechos reservados.</p>
+          <p>© 2026 FYC Ferretería Industrial SpA. Todos los derechos reservados.</p>
           <div className="flex gap-6">
             <span className="flex items-center gap-2 text-neutral-500">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
