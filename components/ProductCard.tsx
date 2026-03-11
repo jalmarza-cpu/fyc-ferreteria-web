@@ -15,6 +15,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [viewers] = useState(() => Math.floor(Math.random() * (15 - 4 + 1)) + 4);
   const [rating] = useState(() => (Math.random() * (5 - 4.5) + 4.5).toFixed(1)); // Random rating 4.5 - 5.0
   const [isZoomOpen, setIsZoomOpen] = useState(false);
+  const [isImageFullscreen, setIsImageFullscreen] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   
   // Pricing State Logic
@@ -262,11 +263,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Image Container - Dark Mode */}
-              <div className="bg-[#151515] p-2 md:p-4 rounded-t-2xl md:rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333] mb-4 md:mb-6 flex justify-center items-center h-[35vh] max-h-[35vh]">
+              <div 
+                className="group/img bg-[#151515] p-2 md:p-4 rounded-t-2xl md:rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333] mb-4 md:mb-6 flex justify-center items-center h-[35vh] max-h-[35vh] relative cursor-zoom-in"
+                onClick={() => setIsImageFullscreen(true)}
+              >
                 <img 
+                  loading="lazy"
                   src={getProductImageUrl(product.name, product.imageUrl)} 
                   alt={product.name} 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-500 ease-out"
                   onError={(e) => {
                      const target = e.target as HTMLImageElement;
                      if (!target.src.includes('logo-fyc.png')) { 
@@ -274,6 +279,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                      }
                   }}
                 />
+                <div className="absolute inset-0 bg-black/0 group-hover/img:bg-[rgba(0,0,0,0.4)] transition-colors duration-300 flex items-center justify-center opacity-0 group-hover/img:opacity-100">
+                   <div className="bg-black/90 text-white py-2 px-4 rounded-full backdrop-blur-md shadow-2xl flex items-center gap-2 border border-[#333]">
+                     <ZoomIn className="w-5 h-5 text-[#FFD700]" />
+                     <span className="text-[10px] font-black tracking-[0.2em]">PANTALLA COMPLETA</span>
+                   </div>
+                </div>
               </div>
 
               {/* Contenedor de Información con Scroll Opcional */}
@@ -338,6 +349,45 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     </a>
                  </div>
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* --- VISOR DE ALTA RESOLUCIÓN PANTALLA COMPLETA --- */}
+      <AnimatePresence>
+        {isImageFullscreen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-md flex items-center justify-center overflow-auto"
+            onClick={() => setIsImageFullscreen(false)}
+          >
+            <button 
+              className="absolute top-4 right-4 md:top-8 md:right-8 bg-[#111] text-white p-3 rounded-full hover:bg-[#D32F2F] hover:text-white transition-colors z-[210] border border-[#333] shadow-lg"
+              onClick={(e) => { e.stopPropagation(); setIsImageFullscreen(false); }}
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <motion.div
+               initial={{ scale: 0.9, opacity: 0 }}
+               animate={{ scale: 1, opacity: 1 }}
+               exit={{ scale: 0.9, opacity: 0 }}
+               transition={{ type: "spring", damping: 25, stiffness: 300 }}
+               className="w-full h-full flex items-center justify-center p-2 md:p-12 cursor-zoom-out"
+            >
+               <img 
+                 src={getProductImageUrl(product.name, product.imageUrl) + "&quality=highres"} 
+                 alt={product.name} 
+                 className="max-w-full max-h-full object-contain pointer-events-auto"
+                 style={{ touchAction: 'pinch-zoom' }}
+                 onClick={(e) => e.stopPropagation()}
+                 onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (!target.src.includes('logo-fyc.png')) { target.src = '/logo-fyc.png'; }
+                 }}
+               />
             </motion.div>
           </motion.div>
         )}
