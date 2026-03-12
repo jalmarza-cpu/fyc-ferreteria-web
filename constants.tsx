@@ -26,6 +26,7 @@ export const CATEGORIES = [
   "Fijaciones",
   "Pinturas y Terminaciones",
   "Electricidad",
+  "Gasfitería",
   "Medición",
   "Revestimiento"
 ];
@@ -283,6 +284,16 @@ export const PRODUCTS: Product[] = [
     category: "Medición"
   },
   {
+    id: 'prod-016b',
+    name: "Nivel Aluminio 48\" Profesional",
+    sku: "011081",
+    description: "Nivel de aluminio profesional de 48 pulgadas, alta exactitud para obras.",
+    priceRetail: 5550,
+    priceWholesale: 5250,
+    imageUrl: "Medicion/011081.jpg",
+    category: "Medición"
+  },
+  {
     id: 'prod-017',
     name: "Nivel de Aluminio 24 Pulgadas",
     sku: "040153",
@@ -291,6 +302,28 @@ export const PRODUCTS: Product[] = [
     priceWholesale: 5900,
     imageUrl: "Medicion/040153.jpg",
     category: "Medición"
+  },
+  
+  // --- HERRAMIENTAS ADICIONALES ---
+  {
+    id: 'prod-027',
+    name: "Prensa F 80x500mm Reforzada",
+    sku: "010834",
+    description: "Prensa tipo F reforzada tamaño 80x500mm. Ideal para carpintería pesada.",
+    priceRetail: 18500,
+    priceWholesale: 18000,
+    imageUrl: "Herramientas/010834.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: 'prod-028',
+    name: "Plana Punta Cuadrada 8\"",
+    sku: "011733",
+    description: "Plana albañil de punta cuadrada 8 pulgadas para terminaciones perfectas.",
+    priceRetail: 2000,
+    priceWholesale: 1880,
+    imageUrl: "Herramientas/011733.jpg",
+    category: "Herramientas Manuales"
   },
 
   // --- REVESTIMIENTO Y TERMINACIONES ---
@@ -333,5 +366,47 @@ export const PRODUCTS: Product[] = [
     priceWholesale: 16990,
     imageUrl: "Revestimiento/metal-siding.jpg",
     category: "Pinturas y Terminaciones"
+  },
+
+  // --- GASFITERÍA ---
+  {
+    id: 'prod-022',
+    name: "Llave Combinación Lavaplatos 30492",
+    sku: "030686",
+    description: "Llave de combinación para lavaplatos. Diseño clásico de alta durabilidad.",
+    priceRetail: 17900,
+    priceWholesale: 17500,
+    imageUrl: "Gasfiteria/030686.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: 'prod-023',
+    name: "Llave Lavaplatos Monomando 30940",
+    sku: "030683",
+    description: "Llave monomando para lavaplatos. Diseño moderno y fácil uso.",
+    priceRetail: 19500,
+    priceWholesale: 18900,
+    imageUrl: "Gasfiteria/030683.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: 'prod-024',
+    name: "Llave Tina Monomando 30495",
+    sku: "030681",
+    description: "Llave monomando para tina con transferencia para ducha.",
+    priceRetail: 22990,
+    priceWholesale: 22200,
+    imageUrl: "Gasfiteria/030681.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: 'prod-025',
+    name: "Llave Monomando Ducha 30496",
+    sku: "030682",
+    description: "Llave monomando exclusivo para ducha. Excelente control térmico.",
+    priceRetail: 19960,
+    priceWholesale: 19460,
+    imageUrl: "Gasfiteria/030682.jpg",
+    category: "Gasfitería"
   }
 ];

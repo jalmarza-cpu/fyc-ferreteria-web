@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 // Usamos iconos seguros que ya tenías y agregamos Zap, Layers, Ruler
-import { Hammer, Ruler, Layers, Zap, ArrowRight, PaintRoller } from 'lucide-react';
+import { Hammer, Ruler, Layers, Zap, ArrowRight, PaintRoller, Wrench } from 'lucide-react';
 
 interface CategoryBentoProps {
   onSelectCategory: (category: string) => void;
@@ -30,13 +30,13 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       filterKey: 'Medición'
     },
     {
-      id: 'herramientas',
-      name: 'Herramientas',
-      icon: Hammer,
-      color: 'bg-purple-600',
-      image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&q=80&w=600',
+      id: 'gasfiteria',
+      name: 'Gasfitería',
+      icon: Wrench,
+      color: 'bg-teal-600',
+      image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
-      filterKey: 'Herramientas Manuales'
+      filterKey: 'Gasfitería'
     },
     {
       id: 'electricidad',
