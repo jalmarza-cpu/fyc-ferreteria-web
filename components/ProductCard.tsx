@@ -105,9 +105,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="p-3 flex-grow flex flex-col bg-[#111] relative border-t border-[#222]">
           
           <div className="mb-3">
-            <div className="flex items-center gap-1.5 mb-1">
-               <span className="w-1 h-1 bg-[#FFD700] rounded-full"></span>
-               <p className="text-[9px] text-neutral-400 font-bold uppercase tracking-widest truncate">{product.category}</p>
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-1.5">
+                 <span className="w-1 h-1 bg-[#FFD700] rounded-full"></span>
+                 <p className="text-[9px] text-neutral-400 font-bold uppercase tracking-widest truncate">{product.category}</p>
+              </div>
+              <span className="text-[9px] text-neutral-500 font-mono font-bold tracking-widest px-1.5 py-0.5 border border-[#333] rounded uppercase">SKU: {product.sku}</span>
             </div>
             
             <h3 className="text-sm font-bold text-white uppercase font-industrial leading-none mb-1 group-hover:text-[#FFD700] transition-colors line-clamp-2 h-[2.5em]">
