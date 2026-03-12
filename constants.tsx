@@ -22,13 +22,12 @@ export const BUSINESS_HOURS = [
 export const CATEGORIES = [
   "Todas",
   "Herramientas Manuales",
-  "Herramientas Eléctricas",
+  "Maquinaria",
   "Fijaciones",
-  "Pinturas y Terminaciones",
+  "Revestimientos",
   "Electricidad",
   "Gasfitería",
-  "Medición",
-  "Revestimiento"
+  "Medición"
 ];
 
 // ==========================================
@@ -41,8 +40,8 @@ export const PRODUCTS: Product[] = [
     name: "Alicate Ford 8\"",
     sku: "070323",
     description: "Alicate tipo Ford de 8 pulgadas, alta resistencia y agarre.",
-    priceRetail: 9500,
-    priceWholesale: 7200,
+    priceRetail: 2500,
+    priceWholesale: 2170,
     imageUrl: "Alicates/070323-Alicate-Ford-8.jpg",
     category: "Herramientas Manuales"
   },
@@ -51,8 +50,8 @@ export const PRODUCTS: Product[] = [
     name: "Alicate Universal 7\"",
     sku: "070340",
     description: "Alicate universal de acero forjado Cromo Vanadio ideal para múltiples tareas.",
-    priceRetail: 2900,
-    priceWholesale: 2100,
+    priceRetail: 2000,
+    priceWholesale: 1800,
     imageUrl: "Alicates/070340-Alicate-Universal-6.jpg",
     category: "Herramientas Manuales"
   },
@@ -61,8 +60,8 @@ export const PRODUCTS: Product[] = [
     name: "Alicate Cortante 8\"",
     sku: "070346",
     description: "Alicate de corte diagonal reforzado para cortes precisos en obra.",
-    priceRetail: 9900,
-    priceWholesale: 7800,
+    priceRetail: 2500,
+    priceWholesale: 2250,
     imageUrl: "Alicates/070346-Alicate Cortante-8.jpg",
     category: "Herramientas Manuales"
   },
@@ -71,8 +70,8 @@ export const PRODUCTS: Product[] = [
     name: "Alicate Multiuso HS-7004",
     sku: "070360",
     description: "Alicate pelacables multifuncional crimpeador profesional.",
-    priceRetail: 12500,
-    priceWholesale: 9900,
+    priceRetail: 3000,
+    priceWholesale: 2700,
     imageUrl: "Alicates/070360-Alicate-Multiuso-HS7004.jpg",
     category: "Herramientas Manuales"
   },
@@ -83,8 +82,8 @@ export const PRODUCTS: Product[] = [
     name: "Amarra Plástica 150×3.6mm Blancas (Bolsa 100u)",
     sku: "120300",
     description: "Pack de 100 amarras de nylon de alta resistencia a la tensión.",
-    priceRetail: 1500,
-    priceWholesale: 990,
+    priceRetail: 1190,
+    priceWholesale: 900,
     imageUrl: "Amarras/120300-Amarra-150x3.6mm-blancas-bolsas-100u.jpg",
     category: "Fijaciones"
   },
@@ -96,9 +95,9 @@ export const PRODUCTS: Product[] = [
     sku: "011310",
     description: "Brocha de cerdas mixtas, tamaño media pulgada. Ideal para detalles.",
     priceRetail: 340,
-    priceWholesale: 250,
+    priceWholesale: 140,
     imageUrl: "Brochas/011310-Brocha-cafe-de-media.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-006b',
@@ -106,9 +105,9 @@ export const PRODUCTS: Product[] = [
     sku: "011315",
     description: "Brocha de cerdas mixtas, 2.5 pulgadas. Mayor cobertura.",
     priceRetail: 990,
-    priceWholesale: 790,
+    priceWholesale: 600,
     imageUrl: "Brochas/011315-Brocha-cafe-de-2.5.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-006c',
@@ -116,9 +115,9 @@ export const PRODUCTS: Product[] = [
     sku: "011316",
     description: "Brocha de cerdas mixtas, 3 pulgadas. Ideal superficies medianas.",
     priceRetail: 990,
-    priceWholesale: 790,
+    priceWholesale: 700,
     imageUrl: "Brochas/011316-Brocha-cafe-de-3.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-006d',
@@ -126,9 +125,9 @@ export const PRODUCTS: Product[] = [
     sku: "011317",
     description: "Brocha de cerdas mixtas, 4 pulgadas. Máximo rendimiento.",
     priceRetail: 990,
-    priceWholesale: 790,
+    priceWholesale: 780,
     imageUrl: "Brochas/011317-Brocha-cafe-de-4.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-007',
@@ -136,9 +135,9 @@ export const PRODUCTS: Product[] = [
     sku: "011386",
     description: "Brocha calidad profesional Forceman. Especial pintura de precisión.",
     priceRetail: 1500,
-    priceWholesale: 1200,
+    priceWholesale: 1300,
     imageUrl: "Brochas/011386-Brocha-de-calidad-forceman-3.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-008',
@@ -146,9 +145,9 @@ export const PRODUCTS: Product[] = [
     sku: "011387",
     description: "Brocha ultra ancha de 4 pulgadas para alto rendimiento y cobertura.",
     priceRetail: 1900,
-    priceWholesale: 1500,
+    priceWholesale: 1300,
     imageUrl: "Brochas/011387-brocha-forceman-4-v2.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
 
   // --- MARTILLOS ---
@@ -157,8 +156,8 @@ export const PRODUCTS: Product[] = [
     name: "Martillo Fibra Forjado 25mm",
     sku: "070112",
     description: "Martillo carpintero con mango de fibra de vidrio y cabeza forjada.",
-    priceRetail: 6900,
-    priceWholesale: 5500,
+    priceRetail: 3500,
+    priceWholesale: 3300,
     imageUrl: "Martillos/070112-Martillo-con-mango-de-fibra-forjado-25mm.jpg",
     category: "Herramientas Manuales"
   },
@@ -167,8 +166,8 @@ export const PRODUCTS: Product[] = [
     name: "Martillo Mecánico 300g",
     sku: "070122",
     description: "Martillo tipo mecánico de 300 gramos, balance y durabilidad garantizados.",
-    priceRetail: 4500,
-    priceWholesale: 3200,
+    priceRetail: 1990,
+    priceWholesale: 1760,
     imageUrl: "Martillos/070122-Martillo-mecanico-300g.jpg",
     category: "Herramientas Manuales"
   },
@@ -177,8 +176,8 @@ export const PRODUCTS: Product[] = [
     name: "Martillo Peña Forjado 1.5 LB",
     sku: "070129",
     description: "Martillo de peña 24oz americano, forjado en acero de alto impacto.",
-    priceRetail: 7500,
-    priceWholesale: 5900,
+    priceRetail: 4000,
+    priceWholesale: 3750,
     imageUrl: "Martillos/070129-Martillo-Pena-forjado-1ymedialb.jpg",
     category: "Herramientas Manuales"
   },
@@ -189,10 +188,10 @@ export const PRODUCTS: Product[] = [
     name: "Rodillo Chiporro Natural 20cm",
     sku: "011181",
     description: "Rodillo de alto poder cubritivo natural para superficies rugosas y estucos.",
-    priceRetail: 3900,
-    priceWholesale: 2800,
+    priceRetail: 2000,
+    priceWholesale: 1860,
     imageUrl: "Rodillos/011181-Rodillo-Chiporro-20cm.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
 
   // --- ILUMINACIÓN ---
@@ -335,7 +334,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 23000,
     priceWholesale: 20890,
     imageUrl: "Revestimiento/LH7020.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-019',
@@ -345,7 +344,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 25000,
     priceWholesale: 17990,
     imageUrl: "Revestimiento/1671.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-020',
@@ -355,7 +354,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 17890,
     priceWholesale: 16890,
     imageUrl: "Revestimiento/osb-11.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-021',
@@ -365,7 +364,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 18990,
     priceWholesale: 16990,
     imageUrl: "Revestimiento/metal-siding.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-021b',
@@ -375,7 +374,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 18990,
     priceWholesale: 16990,
     imageUrl: "Revestimiento/metal-siding-madera.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-021c',
@@ -385,7 +384,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 18990,
     priceWholesale: 16990,
     imageUrl: "Revestimiento/metal-siding-blanco.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-021d',
@@ -395,7 +394,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2700,
     priceWholesale: 2500,
     imageUrl: "Revestimiento/silicona-estructural.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
   {
     id: 'prod-021e',
@@ -405,7 +404,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 2990,
     priceWholesale: 2600,
     imageUrl: "Revestimiento/esquineros-uniones.jpg",
-    category: "Pinturas y Terminaciones"
+    category: "Revestimientos"
   },
 
   // --- GASFITERÍA ---
@@ -459,7 +458,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 450000,
     priceWholesale: 425000,
     imageUrl: "HerramientasElectricas/010156.jpg",
-    category: "Herramientas Eléctricas"
+    category: "Maquinaria"
   },
   {
     id: 'prod-030',
@@ -469,7 +468,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 210000,
     priceWholesale: 195000,
     imageUrl: "HerramientasElectricas/010152.jpg",
-    category: "Herramientas Eléctricas"
+    category: "Maquinaria"
   },
   {
     id: 'prod-031',
@@ -479,7 +478,7 @@ export const PRODUCTS: Product[] = [
     priceRetail: 135000,
     priceWholesale: 128000,
     imageUrl: "HerramientasElectricas/011500.jpg",
-    category: "Herramientas Eléctricas"
+    category: "Maquinaria"
   },
 
   // --- ELECTRICIDAD DE CONTROL ---
@@ -524,5 +523,425 @@ export const PRODUCTS: Product[] = [
     priceWholesale: 1850,
     imageUrl: "Seguridad/090344.jpg",
     category: "Herramientas Manuales"
-  }
+  },
+  {
+    id: "prod-100",
+    name: "Amarra 200x3.6mm blancas bolsas 100u",
+    sku: "120301",
+    description: "Amarra 200x3.6mm blancas bolsas 100u para uso profesional.",
+    priceRetail: 1390,
+    priceWholesale: 1190,
+    imageUrl: "Fijaciones/120301.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-101",
+    name: "Amarra 250x3.6mm blancas bolsas 100u",
+    sku: "120302",
+    description: "Amarra 250x3.6mm blancas bolsas 100u para uso profesional.",
+    priceRetail: 1690,
+    priceWholesale: 1490,
+    imageUrl: "Fijaciones/120302.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-102",
+    name: "Amarra 300x3.6mm blancas bolsas 100u",
+    sku: "120303",
+    description: "Amarra 300x3.6mm blancas bolsas 100u para uso profesional.",
+    priceRetail: 2150,
+    priceWholesale: 1950,
+    imageUrl: "Fijaciones/120303.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-103",
+    name: "Amarra 350x4.8mm blancas bolsas 100u",
+    sku: "120304",
+    description: "Amarra 350x4.8mm blancas bolsas 100u para uso profesional.",
+    priceRetail: 3350,
+    priceWholesale: 3150,
+    imageUrl: "Fijaciones/120304.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-104",
+    name: "Amarra 400x4.8mm blancas bolsas 100u",
+    sku: "120305",
+    description: "Amarra 400x4.8mm blancas bolsas 100u para uso profesional.",
+    priceRetail: 4300,
+    priceWholesale: 3900,
+    imageUrl: "Fijaciones/120305.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-105",
+    name: "Amarra 500x4.8mm blancas bolsas 100u",
+    sku: "120306",
+    description: "Amarra 500x4.8mm blancas bolsas 100u para uso profesional.",
+    priceRetail: 4550,
+    priceWholesale: 4350,
+    imageUrl: "Fijaciones/120306.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-106",
+    name: "Set de mechas DG-W802 8pcs",
+    sku: "130620",
+    description: "Set de mechas DG-W802 8pcs para uso profesional.",
+    priceRetail: 2000,
+    priceWholesale: 2000,
+    imageUrl: "Herramientas Manuales/130620.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-107",
+    name: "Set de mechas DG-W502 5pcs",
+    sku: "130621",
+    description: "Set de mechas DG-W502 5pcs para uso profesional.",
+    priceRetail: 1550,
+    priceWholesale: 1350,
+    imageUrl: "Herramientas Manuales/130621.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-108",
+    name: "Set de brocas paleta 10-25mm 6pcs",
+    sku: "130636",
+    description: "Set de brocas paleta 10-25mm 6pcs para uso profesional.",
+    priceRetail: 2750,
+    priceWholesale: 2550,
+    imageUrl: "Herramientas Manuales/130636.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-109",
+    name: "Set de brocas para concreto M802 8pcs",
+    sku: "130670",
+    description: "Set de brocas para concreto M802 8pcs para uso profesional.",
+    priceRetail: 1180,
+    priceWholesale: 980,
+    imageUrl: "Herramientas Manuales/130670.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-110",
+    name: "Set de brocas para concreto M501 5pcs",
+    sku: "130671",
+    description: "Set de brocas para concreto M501 5pcs para uso profesional.",
+    priceRetail: 880,
+    priceWholesale: 680,
+    imageUrl: "Herramientas Manuales/130671.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-111",
+    name: "Set de brocas para concreto M502 5pcs",
+    sku: "130672",
+    description: "Set de brocas para concreto M502 5pcs para uso profesional.",
+    priceRetail: 1030,
+    priceWholesale: 830,
+    imageUrl: "Herramientas Manuales/130672.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-112",
+    name: "Set de brocas HSS 1-10mm 19pcs",
+    sku: "130675",
+    description: "Set de brocas HSS 1-10mm 19pcs para uso profesional.",
+    priceRetail: 6130,
+    priceWholesale: 5930,
+    imageUrl: "Herramientas Manuales/130675.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-113",
+    name: "Huincha aisladora 3/4\\\" 10YD",
+    sku: "160301",
+    description: "Huincha aisladora 3/4\\\" 10YD para uso profesional.",
+    priceRetail: 950,
+    priceWholesale: 750,
+    imageUrl: "Fijaciones/160301.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-114",
+    name: "Maskitape 18mm x 35mm",
+    sku: "160305",
+    description: "Maskitape 18mm x 35mm para uso profesional.",
+    priceRetail: 830,
+    priceWholesale: 630,
+    imageUrl: "Fijaciones/160305.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-115",
+    name: "Maskitape 36mm x 35mm",
+    sku: "160307",
+    description: "Maskitape 36mm x 35mm para uso profesional.",
+    priceRetail: 1400,
+    priceWholesale: 1200,
+    imageUrl: "Fijaciones/160307.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-116",
+    name: "Maskitape 48mm x 35mm",
+    sku: "160308",
+    description: "Maskitape 48mm x 35mm para uso profesional.",
+    priceRetail: 1790,
+    priceWholesale: 1590,
+    imageUrl: "Fijaciones/160308.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-117",
+    name: "Huincha de Embalaje 48x100mm",
+    sku: "160352",
+    description: "Huincha de Embalaje 48x100mm para uso profesional.",
+    priceRetail: 1590,
+    priceWholesale: 1390,
+    imageUrl: "Fijaciones/160352.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-118",
+    name: "Brocha de 2 1/2\\\"",
+    sku: "011385",
+    description: "Brocha de 2 1/2\\\" para uso profesional.",
+    priceRetail: 1450,
+    priceWholesale: 1150,
+    imageUrl: "Revestimientos/011385.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-119",
+    name: "Brocha de 2\\\"",
+    sku: "011384",
+    description: "Brocha de 2\\\" para uso profesional.",
+    priceRetail: 1260,
+    priceWholesale: 960,
+    imageUrl: "Revestimientos/011384.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-120",
+    name: "Brocha de 1 1/2\\\"",
+    sku: "011383",
+    description: "Brocha de 1 1/2\\\" para uso profesional.",
+    priceRetail: 990,
+    priceWholesale: 720,
+    imageUrl: "Revestimientos/011383.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-121",
+    name: "Brocha de 1\\\"",
+    sku: "011382",
+    description: "Brocha de 1\\\" para uso profesional.",
+    priceRetail: 680,
+    priceWholesale: 480,
+    imageUrl: "Revestimientos/011382.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-122",
+    name: "Brocha de 3/4\\\"",
+    sku: "011381",
+    description: "Brocha de 3/4\\\" para uso profesional.",
+    priceRetail: 730,
+    priceWholesale: 430,
+    imageUrl: "Revestimientos/011381.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-123",
+    name: "Brocha de 1/2\\\"",
+    sku: "011380",
+    description: "Brocha de 1/2\\\" para uso profesional.",
+    priceRetail: 500,
+    priceWholesale: 300,
+    imageUrl: "Revestimientos/011380.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-124",
+    name: "Martillo Peña forjado 1.lb",
+    sku: "070131",
+    description: "Martillo Peña forjado 1.lb para uso profesional.",
+    priceRetail: 2500,
+    priceWholesale: 2250,
+    imageUrl: "Herramientas Manuales/070131.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-125",
+    name: "Martillo mecánico 200g",
+    sku: "070121",
+    description: "Martillo mecánico 200g para uso profesional.",
+    priceRetail: 1500,
+    priceWholesale: 1350,
+    imageUrl: "Herramientas Manuales/070121.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-126",
+    name: "Martillo mecánico 100g",
+    sku: "07012",
+    description: "Martillo mecánico 100g para uso profesional.",
+    priceRetail: 1490,
+    priceWholesale: 1190,
+    imageUrl: "Herramientas Manuales/07012.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-127",
+    name: "Alicate Universal 7\\\"",
+    sku: "070341",
+    description: "Alicate Universal 7\\\" para uso profesional.",
+    priceRetail: 2900,
+    priceWholesale: 2400,
+    imageUrl: "Herramientas Manuales/070341.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-128",
+    name: "Set de destornillador",
+    sku: "011018",
+    description: "Set de destornillador para uso profesional.",
+    priceRetail: 4650,
+    priceWholesale: 4350,
+    imageUrl: "Herramientas Manuales/011018.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-129",
+    name: "Set de punta 23031B / 31 piezas",
+    sku: "011035",
+    description: "Set de punta 23031B / 31 piezas para uso profesional.",
+    priceRetail: 6950,
+    priceWholesale: 6750,
+    imageUrl: "Herramientas Manuales/011035.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-130",
+    name: "Set de punta AX-21023B / 23 piezas",
+    sku: "011031",
+    description: "Set de punta AX-21023B / 23 piezas para uso profesional.",
+    priceRetail: 4650,
+    priceWholesale: 4350,
+    imageUrl: "Herramientas Manuales/011031.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-131",
+    name: "Set de punta AX-23018B / 18 piezas",
+    sku: "011032",
+    description: "Set de punta AX-23018B / 18 piezas para uso profesional.",
+    priceRetail: 4580,
+    priceWholesale: 4280,
+    imageUrl: "Herramientas Manuales/011032.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-132",
+    name: "Set de punta AX-23021 / 21 piezas",
+    sku: "011033",
+    description: "Set de punta AX-23021 / 21 piezas para uso profesional.",
+    priceRetail: 5550,
+    priceWholesale: 5250,
+    imageUrl: "Herramientas Manuales/011033.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-133",
+    name: "Set de punta AX-23031 / 31 piezas",
+    sku: "011034",
+    description: "Set de punta AX-23031 / 31 piezas para uso profesional.",
+    priceRetail: 5000,
+    priceWholesale: 4880,
+    imageUrl: "Herramientas Manuales/011034.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-134",
+    name: "Set de punta AX-24067 / 67 piezas",
+    sku: "011037",
+    description: "Set de punta AX-24067 / 67 piezas para uso profesional.",
+    priceRetail: 4650,
+    priceWholesale: 4350,
+    imageUrl: "Herramientas Manuales/011037.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-135",
+    name: "Set de punta AX-25016 / 16 piezas",
+    sku: "011038",
+    description: "Set de punta AX-25016 / 16 piezas para uso profesional.",
+    priceRetail: 5550,
+    priceWholesale: 5250,
+    imageUrl: "Herramientas Manuales/011038.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-136",
+    name: "Set de punta PJN-99149 / 10 piezas",
+    sku: "011023",
+    description: "Set de punta PJN-99149 / 10 piezas para uso profesional.",
+    priceRetail: 1350,
+    priceWholesale: 1050,
+    imageUrl: "Herramientas Manuales/011023.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-137",
+    name: "Set de punta PJN-99154 / 14 piezas",
+    sku: "011024",
+    description: "Set de punta PJN-99154 / 14 piezas para uso profesional.",
+    priceRetail: 1500,
+    priceWholesale: 1200,
+    imageUrl: "Herramientas Manuales/011024.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-138",
+    name: "Set de punta WS-1085 / 32 piezas",
+    sku: "011030",
+    description: "Set de punta WS-1085 / 32 piezas para uso profesional.",
+    priceRetail: 5550,
+    priceWholesale: 5250,
+    imageUrl: "Herramientas Manuales/011030.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-139",
+    name: "Set de puntas DS-70311 / 29 piezas",
+    sku: "011021",
+    description: "Set de puntas DS-70311 / 29 piezas para uso profesional.",
+    priceRetail: 5550,
+    priceWholesale: 5250,
+    imageUrl: "Herramientas Manuales/011021.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-140",
+    name: "Set de puntas DS-70334 / 33 piezas",
+    sku: "011022",
+    description: "Set de puntas DS-70334 / 33 piezas para uso profesional.",
+    priceRetail: 6050,
+    priceWholesale: 5850,
+    imageUrl: "Herramientas Manuales/011022.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-141",
+    name: "Set destornillador 6 piezas",
+    sku: "011001",
+    description: "Set destornillador 6 piezas para uso profesional.",
+    priceRetail: 3300,
+    priceWholesale: 3000,
+    imageUrl: "Herramientas Manuales/011001.jpg",
+    category: "Herramientas Manuales"
+  },
 ];

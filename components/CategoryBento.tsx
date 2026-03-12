@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 // Usamos iconos seguros que ya tenías y agregamos Zap, Layers, Ruler
-import { Hammer, Ruler, Layers, Zap, ArrowRight, PaintRoller, Wrench } from 'lucide-react';
+import { Hammer, Ruler, Layers, Zap, ArrowRight, PaintRoller, Wrench, HardHat } from 'lucide-react';
 
 interface CategoryBentoProps {
   onSelectCategory: (category: string) => void;
@@ -17,8 +17,17 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       icon: Layers,
       color: 'bg-emerald-600',
       image: 'https://images.unsplash.com/photo-1581404179788-0ceeee65abac?auto=format&fit=crop&q=80&w=800',
-      className: 'md:col-span-2 md:row-span-2',
-      filterKey: 'Pinturas y Terminaciones'
+      className: 'md:col-span-2 md:row-span-1',
+      filterKey: 'Revestimientos'
+    },
+    {
+      id: 'maquinaria',
+      name: 'Maquinaria',
+      icon: HardHat,
+      color: 'bg-yellow-600',
+      image: 'https://images.unsplash.com/photo-1621516091485-64906f9479e0?auto=format&fit=crop&q=80&w=800',
+      className: 'md:col-span-2 md:row-span-1',
+      filterKey: 'Maquinaria'
     },
     {
       id: 'medicion',
