@@ -99,6 +99,7 @@ const About = () => {
                 {/* Image Decorator */}
                 <div className="relative rounded-2xl overflow-hidden h-full min-h-[160px] sm:mt-8">
                     <img 
+                        loading="lazy"
                         src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600" 
                         alt="Trabajador de construcción" 
                         className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-500"

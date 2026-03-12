@@ -43,7 +43,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
     },
     {
       id: 'electricidad',
-      name: 'Electricidad',
+      name: 'Electricidad e Iluminación',
       icon: Zap,
       color: 'bg-orange-600',
       // --- IMAGEN CORRECTA: Rollos de cable eléctrico industrial ---
@@ -80,6 +80,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
               {/* Background Image */}
               <div className="absolute inset-0">
                 <img 
+                  loading="lazy"
                   src={cat.image} 
                   alt={cat.name} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"

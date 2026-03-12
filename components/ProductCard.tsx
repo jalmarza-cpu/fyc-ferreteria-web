@@ -54,7 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <>
-      <div className="group relative bg-[#0a0a0a] border border-[#222] transition-all duration-300 hover:border-[#FFD700] hover:-translate-y-1 flex flex-col overflow-hidden shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] rounded-xl h-full">
+      <div className="group relative bg-[#0a0a0a] border border-[#222] transition-all duration-300 hover:border-[#FFD700]/50 hover:-translate-y-1 flex flex-col overflow-hidden shadow-md hover:shadow-[0_8px_30px_rgba(255,215,0,0.1)] rounded-xl h-full">
         
         {/* BADGE SYSTEM: Floating Badges */}
         <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start pointer-events-none">
@@ -74,13 +74,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* Imagen - Updated for Better Visibility on Dark Mode */}
         <div 
-          className="relative h-48 bg-[#151515] border-b border-[#222] flex items-center justify-center overflow-hidden p-4 cursor-zoom-in"
+          className="relative aspect-square w-full bg-[#151515] border-b border-[#222] flex items-center justify-center overflow-hidden p-4 cursor-zoom-in"
           onClick={() => setIsZoomOpen(true)}
         >
           <img
+            loading="lazy"
             src={getProductImageUrl(product.name, product.imageUrl)}
             alt={product.name}
-            className="w-full h-full object-contain group-hover:scale-105 group-hover:brightness-110 transition-all duration-500 ease-out"
+            className="w-full h-full object-contain group-hover:scale-105 group-hover:brightness-110 transition-transform duration-500 ease-out"
             onError={(e) => {
                const target = e.target as HTMLImageElement;
                // Fallback just in case the image hasn't uploaded yet
@@ -180,8 +181,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                       <Package className="w-3 h-3" />
                       <span>Lleva <strong className="text-white">{MIN_WHOLESALE_QTY}</strong> x</span>
                    </div>
-                   <div className="text-right">
-                      <span className="text-xl font-black font-industrial text-[#FFD700] leading-none">
+                   <div className="text-right flex flex-col items-end">
+                      <span className="text-[22px] font-black font-industrial text-[#0a0a0a] bg-[#FFD700] px-2 py-0.5 rounded leading-none shadow-sm">
                         {formatCLP(product.priceWholesale)}
                       </span>
                       <span className="text-[9px] text-neutral-500 font-bold ml-1">c/u</span>
