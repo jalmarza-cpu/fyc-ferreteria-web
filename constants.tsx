@@ -3810,4 +3810,115 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoTerceros2/SIDING-GO.jpg",
     category: "Revestimientos"
   },
+
+  {
+    id: "prod-800",
+    name: "Piso Flotante LH7049",
+    sku: "LH7049",
+    description: "Piso Flotante LH7049 de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 21890,
+    priceWholesale: 20890,
+    imageUrl: "CatalogoTerceros2/LH7049.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-801",
+    name: "Piso Flotante LH7101",
+    sku: "LH7101",
+    description: "Piso Flotante LH7101 de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 21890,
+    priceWholesale: 20890,
+    imageUrl: "CatalogoTerceros2/LH7101.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-802",
+    name: "Piso Flotante LH7114",
+    sku: "LH7114",
+    description: "Piso Flotante LH7114 de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 21890,
+    priceWholesale: 20890,
+    imageUrl: "CatalogoTerceros2/LH7114.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-803",
+    name: "Piso Flotante LH7146",
+    sku: "LH7146",
+    description: "Piso Flotante LH7146 de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 21890,
+    priceWholesale: 20890,
+    imageUrl: "CatalogoTerceros2/LH7146.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-804",
+    name: "Piso Flotante LH7198",
+    sku: "LH7198",
+    description: "Piso Flotante LH7198 de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 21890,
+    priceWholesale: 20890,
+    imageUrl: "CatalogoTerceros2/LH7198.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-805",
+    name: "Piso Flotante LH7374",
+    sku: "LH7374",
+    description: "Piso Flotante LH7374 de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 21890,
+    priceWholesale: 20890,
+    imageUrl: "CatalogoTerceros2/LH7374.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-806",
+    name: "Piso Flotante LH7375",
+    sku: "LH7375",
+    description: "Piso Flotante LH7375 de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 21890,
+    priceWholesale: 20890,
+    imageUrl: "CatalogoTerceros2/LH7375.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-807",
+    name: "Piso Flotante LH7794",
+    sku: "LH7794",
+    description: "Piso Flotante LH7794 de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 21890,
+    priceWholesale: 20890,
+    imageUrl: "CatalogoTerceros2/LH7794.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-808",
+    name: "Malla Electrosoldada Galv 1G 3.8mm 1.85x3mts",
+    sku: "MALLA-1G",
+    description: "Malla Electrosoldada Galv 1G 3.8mm 1.85x3mts de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 17790,
+    priceWholesale: 17790,
+    imageUrl: "CatalogoTerceros2/MALLA-1G.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-809",
+    name: "PANEL CIELO PVC BLANCO 250x3800mm",
+    sku: "CIELO-PVC-B",
+    description: "PANEL CIELO PVC BLANCO 250x3800mm de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 5990,
+    priceWholesale: 5990,
+    imageUrl: "CatalogoTerceros2/CIELO-PVC-B.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-810",
+    name: "CIELO PVC Blanco Vetas Madera 10 250X3800mm",
+    sku: "CIELO-PVC-BM",
+    description: "CIELO PVC Blanco Vetas Madera 10 250X3800mm de alta durabilidad y excelente acabo constructivo.",
+    priceRetail: 5990,
+    priceWholesale: 5990,
+    imageUrl: "CatalogoTerceros2/CIELO-PVC-BM.jpg",
+    category: "Revestimientos"
+  },
 ];
