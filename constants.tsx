@@ -293,16 +293,16 @@ export const PRODUCTS: Product[] = [
     category: "Medición"
   },
 
-  // --- REVESTIMIENTO ---
+  // --- REVESTIMIENTO Y TERMINACIONES ---
   {
     id: 'prod-018',
-    name: "Piso Flotante Alto Tráfico",
+    name: "Piso Flotante Serie LH Alto Tráfico",
     sku: "LH7020",
-    description: "Piso flotante resistente al desgaste, ideal para proyectos habitacionales y comerciales.",
-    priceRetail: 12990,
-    priceWholesale: 9500,
+    description: "Piso flotante resistente al desgaste, Serie LH, ideal para proyectos habitacionales y comerciales.",
+    priceRetail: 23000,
+    priceWholesale: 20890,
     imageUrl: "Revestimiento/LH7020.jpg",
-    category: "Revestimiento"
+    category: "Pinturas y Terminaciones"
   },
   {
     id: 'prod-019',
@@ -312,6 +312,26 @@ export const PRODUCTS: Product[] = [
     priceRetail: 25000,
     priceWholesale: 17990,
     imageUrl: "Revestimiento/1671.jpg",
-    category: "Revestimiento"
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-020',
+    name: "Planchas OSB 11.1mm",
+    sku: "OSB-11.1",
+    description: "Planchas OSB estructurales de 11.1mm para ampliaciones y tabiquería general.",
+    priceRetail: 17890,
+    priceWholesale: 16890,
+    imageUrl: "Revestimiento/osb-11.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-021',
+    name: "Metal Siding Gris",
+    sku: "SIDING-GRIS",
+    description: "Revestimiento de metal siding en color gris. Excelente resistencia al exterior.",
+    priceRetail: 18990,
+    priceWholesale: 16990,
+    imageUrl: "Revestimiento/metal-siding.jpg",
+    category: "Pinturas y Terminaciones"
   }
 ];

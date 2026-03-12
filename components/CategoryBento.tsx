@@ -13,12 +13,12 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
   const categories = [
     {
       id: 'revestimiento',
-      name: 'Revestimiento',
+      name: 'Terminaciones',
       icon: Layers,
       color: 'bg-emerald-600',
       image: 'https://images.unsplash.com/photo-1581404179788-0ceeee65abac?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-2',
-      filterKey: 'Revestimiento'
+      filterKey: 'Pinturas y Terminaciones'
     },
     {
       id: 'medicion',
