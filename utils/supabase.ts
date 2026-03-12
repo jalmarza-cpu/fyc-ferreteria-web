@@ -39,19 +39,16 @@ export const getProductImageUrl = (productName: string, imagePath?: string) => {
     return imagePath;
   }
   
-  // WPO: Supabase Image Transformation API - Forzar WebP y compresión
-  const RENDER_BASE_URL = SUPABASE_BASE_URL.replace('/object/public', '/render/image/public');
-  const WPO_PARAMS = "?width=600&quality=80&format=webp";
-
+  // Regresamos al endpoint standard ya que Image Transformation no está activado
   // Mapeo Estricto desde Constants
   if (imagePath && imagePath.includes('.')) {
-    return `${RENDER_BASE_URL}/productos/${imagePath}${WPO_PARAMS}`;
+    return `${SUPABASE_BASE_URL}/productos/${imagePath}?v=innobate1`;
   }
 
   // Auto-Mapeo mágico de caída libre (por si no hay foto)
   const firstWord = productName.split(' ')[0];
   const autoFile = `${slugify(firstWord)}.webp`;
-  return `${RENDER_BASE_URL}/productos/${autoFile}${WPO_PARAMS}`;
+  return `${SUPABASE_BASE_URL}/productos/${autoFile}?v=innobate1`;
 };
 
 /**
