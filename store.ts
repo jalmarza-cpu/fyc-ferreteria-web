@@ -25,12 +25,15 @@ interface CustomerData {
 interface CartStore {
   items: CartItem[];
   isOpen: boolean;
+  stockWarnings: string[];
   toggleCart: () => void;
   addItem: (product: any, quantity?: number, price?: number) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, delta: number) => void;
   getTotal: () => number;
   clearCart: () => void;
+  clearStockWarnings: () => void;
+  validateCartStock: () => Promise<void>;
   checkout: (customerData: CustomerData, docType: string) => Promise<void>;
   quickCheckout: () => Promise<void>;
 }
@@ -41,6 +44,7 @@ const formatPrice = (val: number) =>
 export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
   isOpen: false,
+  stockWarnings: [],
   toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
   
   addItem: (product, quantity = 1, priceOverride) => set((state) => {
@@ -92,6 +96,30 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
 
   clearCart: () => set({ items: [] }),
+  
+  clearStockWarnings: () => set({ stockWarnings: [] }),
+
+  validateCartStock: async () => {
+    const { items, removeItem } = get();
+    if (items.length === 0) return;
+    try {
+      const skus = items.map(i => i.sku);
+      const { data } = await supabase.from('productos').select('sku, name, in_stock').in('sku', skus);
+      if (data && data.length > 0) {
+        for (const item of items) {
+          const remote = data.find(d => d.sku === item.sku);
+          if (remote && remote.in_stock === false) {
+            removeItem(item.id);
+            set((state) => ({ 
+              stockWarnings: [...state.stockWarnings, `ITEM ELIMINADO POR FALTA DE STOCK: ${item.name}`] 
+            }));
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("Fallo validación estricta de stock", err);
+    }
+  },
 
   checkout: async (customerData, docType) => {
     const { items, getTotal } = get();

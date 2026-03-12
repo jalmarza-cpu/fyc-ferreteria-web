@@ -129,7 +129,7 @@ const ScrollToTopButton = () => {
 
 // --- CART DRAWER ---
 const CartDrawer = () => {
-  const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal, checkout, quickCheckout } = useCartStore();
+  const { items, isOpen, toggleCart, removeItem, updateQuantity, getTotal, checkout, quickCheckout, validateCartStock, stockWarnings, clearStockWarnings } = useCartStore();
   const [step, setStep] = useState<'cart' | 'checkout'>('cart');
   const [docType, setDocType] = useState<'boleta' | 'factura'>('boleta');
   
@@ -152,8 +152,11 @@ const CartDrawer = () => {
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => setStep('cart'), 300);
+      setTimeout(() => clearStockWarnings(), 300);
     } else {
       document.body.style.overflow = 'hidden';
+      // Validación Estricta en Vivo al Abrir el Carrito
+      validateCartStock();
     }
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
@@ -212,6 +215,23 @@ const CartDrawer = () => {
             <div className="flex-1 overflow-y-auto bg-[#0A0A0A] custom-scrollbar">
               {step === 'cart' && (
                   <div className="p-5 space-y-4">
+                    
+                    {/* Renderización de Alertas de Stock (Si N8N o Subapase lo agotaron) */}
+                    <AnimatePresence>
+                      {stockWarnings.map((warning, idx) => (
+                        <motion.div 
+                          key={idx} 
+                          initial={{ opacity: 0, height: 0 }} 
+                          animate={{ opacity: 1, height: 'auto' }} 
+                          exit={{ opacity: 0, height: 0 }}
+                          className="bg-[#D32F2F]/10 border border-[#D32F2F]/50 p-3 rounded-xl flex items-start gap-2 shadow-lg mb-2"
+                        >
+                          <AlertCircle className="w-5 h-5 text-[#D32F2F] flex-shrink-0" />
+                          <p className="text-xs text-red-400 font-black uppercase tracking-wider">{warning}</p>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+
                     {items.length === 0 ? (
                         <div className="h-[50vh] flex flex-col items-center justify-center text-neutral-600">
                         <ShoppingCart className="w-16 h-16 mb-4 opacity-20" />
@@ -511,6 +531,8 @@ const AppContent = () => {
       .on('postgres_changes', { event: '*', schema: 'public', table: 'productos' }, (payload) => {
         // Al ocurrir un cambio, forzamos refetch para sincronizar
         fetchSupabaseProducts();
+        // Validamos el estado del carro en caso de tener el item agotado
+        useCartStore.getState().validateCartStock();
       })
       .subscribe();
 
