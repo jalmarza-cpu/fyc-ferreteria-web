@@ -3779,4 +3779,35 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoTerceros2/160182.jpg",
     category: "Electricidad"
   },
+
+  {
+    id: "prod-700",
+    name: "Planchas OSB 11.1x2.44x1.22",
+    sku: "OSB-111",
+    description: "Planchas OSB 11.1x2.44x1.22 de terminación industrial y alta calidad.",
+    priceRetail: 17890,
+    priceWholesale: 16890,
+    imageUrl: "CatalogoTerceros2/OSB-111.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-701",
+    name: "Metal Siding Gris Madera Clara",
+    sku: "SIDING-GMC",
+    description: "Metal Siding Gris Madera Clara de terminación industrial y alta calidad.",
+    priceRetail: 17990,
+    priceWholesale: 16990,
+    imageUrl: "CatalogoTerceros2/SIDING-GMC.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-702",
+    name: "Metal Siding Gris Oscuro",
+    sku: "SIDING-GO",
+    description: "Metal Siding Gris Oscuro de terminación industrial y alta calidad.",
+    priceRetail: 17990,
+    priceWholesale: 16990,
+    imageUrl: "CatalogoTerceros2/SIDING-GO.jpg",
+    category: "Revestimientos"
+  },
 ];
