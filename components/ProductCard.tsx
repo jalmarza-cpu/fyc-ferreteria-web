@@ -24,6 +24,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   useEffect(() => {
     let isMounted = true;
+    
+    // 1. Sync from prop (App's Realtime connection)
+    setLiveStock(product.inStock !== false);
+
+    // 2. Extra fetch to be 100% sure on individual load
     const fetchStock = async () => {
       try {
         const { data, error } = await supabase.from('productos').select('in_stock').eq('sku', product.sku).single();
@@ -33,8 +38,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       } catch (err) {}
     };
     fetchStock();
-    return () => { isMounted = false; };
-  }, [product.sku]);
+
+    // 3. Suscripción directa a Producto Individual (Doble protección)
+    const channel = supabase.channel(`card_${product.sku}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'productos', filter: `sku=eq.${product.sku}` }, (payload) => {
+         if (isMounted && payload.new) {
+            setLiveStock((payload.new as any).in_stock !== false);
+         }
+      })
+      .subscribe();
+
+    return () => { 
+        isMounted = false; 
+        supabase.removeChannel(channel);
+    };
+  }, [product.sku, product.inStock]);
   
   // Pricing State Logic
   const [pricingMode, setPricingMode] = useState<'retail' | 'wholesale'>('wholesale');

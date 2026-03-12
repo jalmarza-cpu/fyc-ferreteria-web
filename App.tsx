@@ -505,11 +505,18 @@ const AppContent = () => {
     };
     fetchSupabaseProducts();
     
-    // Intervalo para mantener sincronización en vivo cada 30 segundos
-    const interval = setInterval(fetchSupabaseProducts, 30000);
+    // Suscripción Realtime a Supabase Postgres
+    const channel = supabase
+      .channel('productos_realtime')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'productos' }, (payload) => {
+        // Al ocurrir un cambio, forzamos refetch para sincronizar
+        fetchSupabaseProducts();
+      })
+      .subscribe();
+
     return () => { 
         isMounted = false; 
-        clearInterval(interval);
+        supabase.removeChannel(channel);
     };
   }, []);
 
