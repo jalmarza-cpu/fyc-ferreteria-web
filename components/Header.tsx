@@ -62,6 +62,14 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
             </div>
           </div>
 
+          {/* Navigation Links (Desktop) */}
+          <nav className="hidden xl:flex items-center gap-6 mx-4">
+            <a href="/#inicio" className="text-[11px] font-black uppercase tracking-widest text-white hover:text-[#FFD700] transition-colors">Inicio</a>
+            <a href="/#nosotros" className="text-[11px] font-black uppercase tracking-widest text-[#999] hover:text-[#FFD700] transition-colors">Nosotros</a>
+            <a href="/#productos" className="text-[11px] font-black uppercase tracking-widest text-[#999] hover:text-[#FFD700] transition-colors">Catálogo</a>
+            <a href="/#maestros" className="text-[11px] font-black uppercase tracking-widest text-[#999] hover:text-[#FFD700] transition-colors">Maestros</a>
+          </nav>
+
           {/* Search Bar (Desktop) */}
           <div className="hidden lg:flex flex-1 max-w-2xl relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">

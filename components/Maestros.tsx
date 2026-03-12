@@ -87,7 +87,7 @@ const Maestros = () => {
   }, []);
 
   return (
-    <section className="py-20 bg-[#0A0A0A] border-t border-[#222] relative overflow-hidden">
+    <section id="maestros" className="py-20 bg-[#0A0A0A] border-t border-[#222] relative overflow-hidden scroll-mt-32">
       
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-1 bg-gradient-to-r from-transparent via-[#FFD700]/50 to-transparent shadow-[0_0_20px_#FFD700]"></div>
