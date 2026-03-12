@@ -18,6 +18,7 @@ import About from './components/About';
 import Maestros from './components/Maestros';
 // Legal Pages Import
 import { ShippingPolicy, ReturnsPolicy, TermsAndConditions } from './components/LegalPages';
+import AdminDashboard from './components/AdminDashboard';
 
 // --- UTILS ---
 const formatPrice = (val: number) => 
@@ -539,6 +540,7 @@ const AppContent = () => {
             <Route path="/despachos" element={<ShippingPolicy onBack={() => {}} />} />
             <Route path="/devoluciones" element={<ReturnsPolicy onBack={() => {}} />} />
             <Route path="/terminos" element={<TermsAndConditions onBack={() => {}} />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Routes>
 
       </main>

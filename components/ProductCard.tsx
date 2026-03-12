@@ -80,7 +80,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <img
             loading="lazy"
             src={getProductImageUrl(product.name, product.imageUrl)}
-            alt={product.name}
+            alt={`${product.name} - SKU: ${product.sku}`}
             className="w-full h-full object-contain group-hover:scale-105 group-hover:brightness-110 transition-transform duration-500 ease-out"
             onError={(e) => {
                const target = e.target as HTMLImageElement;
@@ -201,15 +201,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <div className="mt-auto pt-2">
             <motion.button 
               onClick={handleAddToCart}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: product.inStock === false ? 1 : 0.98 }}
+              disabled={product.inStock === false}
               className={`w-full py-3 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg group/btn border border-transparent
-                 ${isAdded 
-                   ? 'bg-green-600 text-white' 
-                   : 'bg-[#FFD700] group-hover:bg-[#FFED4D] text-black shadow-md group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'
+                 ${product.inStock === false
+                   ? 'bg-[#151515] text-neutral-600 cursor-not-allowed border-[#333]'
+                   : isAdded 
+                     ? 'bg-green-600 text-white' 
+                     : 'bg-[#FFD700] group-hover:bg-[#FFED4D] text-black shadow-md group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'
                  }`}
             >
               <AnimatePresence mode="wait" initial={false}>
-                {isAdded ? (
+                {product.inStock === false ? (
+                  <motion.div
+                    key="oos"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2"
+                  >
+                    <X className="w-4 h-4" />
+                    <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">AGOTADO</span>
+                  </motion.div>
+                ) : isAdded ? (
                   <motion.div
                     key="added"
                     initial={{ y: 10, opacity: 0 }}
@@ -276,7 +290,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 <img 
                   loading="lazy"
                   src={getProductImageUrl(product.name, product.imageUrl)} 
-                  alt={product.name} 
+                  alt={`${product.name} - SKU: ${product.sku}`} 
                   className="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-500 ease-out"
                   onError={(e) => {
                      const target = e.target as HTMLImageElement;
@@ -295,7 +309,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
               {/* Contenedor de Información con Scroll Opcional */}
               <div className="w-full max-w-[600px] bg-[#0A0A0A] md:bg-transparent rounded-b-2xl md:rounded-none px-4 pb-4 md:px-0 md:pb-0 text-center flex-1 overflow-y-auto custom-scrollbar">
-                 <h3 className="text-xl md:text-2xl font-industrial font-bold text-white uppercase mb-2">{product.name}</h3>
+                 <h1 className="text-xl md:text-2xl font-industrial font-bold text-white uppercase mb-2">{product.name}</h1>
                  
                  <div className="flex items-center justify-center gap-1 mb-2">
                     {[...Array(5)].map((_, i) => (
@@ -306,6 +320,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
                  <p className="text-sm text-neutral-400 max-w-md mx-auto mb-4">{product.description}</p>
                  
+                 <h2 className="sr-only">Precios y Opciones de Compra</h2>
+
                  {/* Visualización de Precios en Modal */}
                  <div className="grid grid-cols-2 gap-3 w-full max-w-md mx-auto mb-6">
                     {/* Retail Modal */}
@@ -313,7 +329,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                       onClick={() => setPricingMode('retail')}
                       className={`p-3 rounded-xl border flex flex-col items-center cursor-pointer transition-colors ${pricingMode === 'retail' ? 'border-white bg-[#1a1a1a]' : 'border-[#333] bg-[#111] hover:border-[#555]'}`}
                     >
-                       <span className="text-[10px] text-neutral-400 font-bold uppercase mb-1">1 Unidad</span>
+                       <h3 className="text-[10px] text-neutral-400 font-bold uppercase mb-1">1 Unidad</h3>
                        <p className={`font-bold text-lg md:text-xl font-industrial ${pricingMode === 'retail' ? 'text-white' : 'text-neutral-300'}`}>{formatCLP(product.priceRetail)}</p>
                        <span className="text-[9px] text-green-400 font-semibold mt-1">(IVA incluido)</span>
                     </div>
@@ -326,7 +342,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                        <div className="absolute top-0 right-0 bg-[#FFD700] text-black text-[8px] font-black px-1.5 py-0.5 uppercase">
                           Recomendado
                        </div>
-                       <span className="text-[10px] text-[#FFD700] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</span>
+                       <h3 className="text-[10px] text-[#FFD700] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</h3>
                        <p className={`font-bold text-xl md:text-2xl font-industrial ${pricingMode === 'wholesale' ? 'text-[#FFD700]' : 'text-[#FFD700]/80'}`}>{formatCLP(product.priceWholesale)}</p>
                        <span className="text-[9px] text-neutral-500">c/u + IVA</span>
                     </div>
@@ -336,9 +352,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                  <div className="flex flex-col gap-3 w-full max-w-md mx-auto mt-auto pb-4">
                     <button 
                       onClick={handleAddToCart}
-                      className={`w-full py-3.5 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg ${isAdded ? 'bg-green-600 text-white' : 'bg-[#FFD700] hover:bg-[#FFED4D] text-black shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
+                      disabled={product.inStock === false}
+                      className={`w-full py-3.5 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg 
+                        ${product.inStock === false ? 'bg-[#151515] text-neutral-600 cursor-not-allowed border border-[#333]' : 
+                          isAdded ? 'bg-green-600 text-white' : 'bg-[#FFD700] hover:bg-[#FFED4D] text-black shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
                     >
-                      {isAdded ? (
+                      {product.inStock === false ? (
+                        <><X className="w-5 h-5" /> Producto Agotado</>
+                      ) : isAdded ? (
                         <><Check className="w-5 h-5" /> ¡Agregado al Pack!</>
                       ) : (
                         <><ShoppingCart className="w-5 h-5" /> Agregar al Carro</>
@@ -385,7 +406,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             >
                <img 
                  src={getProductImageUrl(product.name, product.imageUrl) + "&quality=highres"} 
-                 alt={product.name} 
+                 alt={`${product.name} - SKU: ${product.sku}`} 
                  className="max-w-full max-h-full object-contain pointer-events-auto"
                  style={{ touchAction: 'pinch-zoom' }}
                  onClick={(e) => e.stopPropagation()}

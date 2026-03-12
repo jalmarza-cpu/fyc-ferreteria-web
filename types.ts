@@ -8,7 +8,8 @@ export interface Product {
   imageUrl: string;
   category: string;
   isLarge?: boolean;
-  rating?: number; // <--- ¡ESTA ES LA LÍNEA NUEVA QUE FALTA!
+  rating?: number;
+  inStock?: boolean;
 }
 
 export interface NavLink {

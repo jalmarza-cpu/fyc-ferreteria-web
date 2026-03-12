@@ -40,7 +40,7 @@ export const getProductImageUrl = (productName: string, imagePath?: string) => {
 
   // Auto-Mapeo mágico de caída libre
   const firstWord = productName.split(' ')[0];
-  const autoFile = `${slugify(firstWord)}.jpg`;
+  const autoFile = `${slugify(firstWord)}.webp`;
   return `${SUPABASE_BASE_URL}/productos/${autoFile}?v=innobate1`;
 };
 
