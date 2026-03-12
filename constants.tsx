@@ -2577,4 +2577,605 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoExtra2/130156.jpg",
     category: "Maquinaria"
   },
+
+  {
+    id: "prod-500",
+    name: "Ampolleta Led 12w 3500k",
+    sku: "160815",
+    description: "Ampolleta Led 12w 3500k de alto rendimiento industrial.",
+    priceRetail: 1680,
+    priceWholesale: 1380,
+    imageUrl: "CatalogoTerceros2/160815.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-501",
+    name: "Ampolleta Led 5w 6500k-3500k",
+    sku: "160810-160811",
+    description: "Ampolleta Led 5w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 1300,
+    priceWholesale: 1000,
+    imageUrl: "CatalogoTerceros2/160810-160811.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-502",
+    name: "Ampolleta Led 7w 6500k",
+    sku: "160832",
+    description: "Ampolleta Led 7w 6500k de alto rendimiento industrial.",
+    priceRetail: 1390,
+    priceWholesale: 1090,
+    imageUrl: "CatalogoTerceros2/160832.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-503",
+    name: "Ampolleta Led 9w 6500k-3500k",
+    sku: "160812-160813",
+    description: "Ampolleta Led 9w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 1490,
+    priceWholesale: 1190,
+    imageUrl: "CatalogoTerceros2/160812-160813.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-504",
+    name: "Ampolleta Led GU-10 5w 6500k-3500k",
+    sku: "160836-160837",
+    description: "Ampolleta Led GU-10 5w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 1800,
+    priceWholesale: 1500,
+    imageUrl: "CatalogoTerceros2/160836-160837.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-505",
+    name: "Ampolleta Led M-T 20w 6500k-3500k",
+    sku: "160841-160842",
+    description: "Ampolleta Led M-T 20w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 2890,
+    priceWholesale: 2590,
+    imageUrl: "CatalogoTerceros2/160841-160842.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-506",
+    name: "Ampolleta Led M-T 28w 6500k-3500k E27",
+    sku: "160843-160844",
+    description: "Ampolleta Led M-T 28w 6500k-3500k E27 de alto rendimiento industrial.",
+    priceRetail: 3790,
+    priceWholesale: 3490,
+    imageUrl: "CatalogoTerceros2/160843-160844.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-507",
+    name: "Ampolleta Led M-T 36w 6500k-3500k E27",
+    sku: "160845-160846",
+    description: "Ampolleta Led M-T 36w 6500k-3500k E27 de alto rendimiento industrial.",
+    priceRetail: 4690,
+    priceWholesale: 4190,
+    imageUrl: "CatalogoTerceros2/160845-160846.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-508",
+    name: "Ampolleta Led M-T 45w 6500k-3500k E27",
+    sku: "160847-160848",
+    description: "Ampolleta Led M-T 45w 6500k-3500k E27 de alto rendimiento industrial.",
+    priceRetail: 5500,
+    priceWholesale: 5300,
+    imageUrl: "CatalogoTerceros2/160847-160848.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-509",
+    name: "Ampolleta Tubular Led 100w E-40",
+    sku: "160027",
+    description: "Ampolleta Tubular Led 100w E-40 de alto rendimiento industrial.",
+    priceRetail: 28490,
+    priceWholesale: 28190,
+    imageUrl: "CatalogoTerceros2/160027.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-510",
+    name: "Campa Policarbonato con Gancho E27 12\\\"",
+    sku: "140250",
+    description: "Campa Policarbonato con Gancho E27 12\\\" de alto rendimiento industrial.",
+    priceRetail: 18150,
+    priceWholesale: 17850,
+    imageUrl: "CatalogoTerceros2/140250.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-511",
+    name: "Campa Policarbonato con Gancho E27 22\\\"",
+    sku: "140257",
+    description: "Campa Policarbonato con Gancho E27 22\\\" de alto rendimiento industrial.",
+    priceRetail: 28490,
+    priceWholesale: 28190,
+    imageUrl: "CatalogoTerceros2/140257.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-512",
+    name: "Foco Led ZH-COB0252 25w 6500K-3500K",
+    sku: "120926-120927",
+    description: "Foco Led ZH-COB0252 25w 6500K-3500K de alto rendimiento industrial.",
+    priceRetail: 8550,
+    priceWholesale: 8250,
+    imageUrl: "CatalogoTerceros2/120926-120927.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-513",
+    name: "Foco Led ZH-COB052 5w 6500K-3500K",
+    sku: "120900-120700",
+    description: "Foco Led ZH-COB052 5w 6500K-3500K de alto rendimiento industrial.",
+    priceRetail: 6000,
+    priceWholesale: 5750,
+    imageUrl: "CatalogoTerceros2/120900-120700.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-514",
+    name: "Foco Led ZH-TD3 3w 6500-3500K",
+    sku: "120800-120801",
+    description: "Foco Led ZH-TD3 3w 6500-3500K de alto rendimiento industrial.",
+    priceRetail: 1270,
+    priceWholesale: 970,
+    imageUrl: "CatalogoTerceros2/120800-120801.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-515",
+    name: "Foco Led ZH-TD4 4w 6500-3500K",
+    sku: "120802-120803",
+    description: "Foco Led ZH-TD4 4w 6500-3500K de alto rendimiento industrial.",
+    priceRetail: 1720,
+    priceWholesale: 1420,
+    imageUrl: "CatalogoTerceros2/120802-120803.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-516",
+    name: "Foco Led ZH-TD7 7w 6500-3500K",
+    sku: "120808-120809",
+    description: "Foco Led ZH-TD7 7w 6500-3500K de alto rendimiento industrial.",
+    priceRetail: 2500,
+    priceWholesale: 2240,
+    imageUrl: "CatalogoTerceros2/120808-120809.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-517",
+    name: "Lampara Estaca LEd 3w blanca",
+    sku: "120028",
+    description: "Lampara Estaca LEd 3w blanca de alto rendimiento industrial.",
+    priceRetail: 7720,
+    priceWholesale: 7420,
+    imageUrl: "CatalogoTerceros2/120028.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-518",
+    name: "Lampara Estaca LEd 3w Negra",
+    sku: "120029",
+    description: "Lampara Estaca LEd 3w Negra de alto rendimiento industrial.",
+    priceRetail: 7720,
+    priceWholesale: 7420,
+    imageUrl: "CatalogoTerceros2/120029.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-519",
+    name: "Lampara Led de piscina RGB 12v 12w",
+    sku: "120029-PISCINA",
+    description: "Lampara Led de piscina RGB 12v 12w de alto rendimiento industrial.",
+    priceRetail: 55000,
+    priceWholesale: 54600,
+    imageUrl: "CatalogoTerceros2/120029-PISCINA.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-520",
+    name: "Lampara Led de piscina RGB 12v 15w",
+    sku: "150003",
+    description: "Lampara Led de piscina RGB 12v 15w de alto rendimiento industrial.",
+    priceRetail: 57900,
+    priceWholesale: 57600,
+    imageUrl: "CatalogoTerceros2/150003.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-521",
+    name: "Lampara Led de piscina RGB 12v 18w",
+    sku: "150004",
+    description: "Lampara Led de piscina RGB 12v 18w de alto rendimiento industrial.",
+    priceRetail: 59700,
+    priceWholesale: 59400,
+    imageUrl: "CatalogoTerceros2/150004.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-522",
+    name: "Lampara Led de piscina RGB 12v 24w",
+    sku: "150005",
+    description: "Lampara Led de piscina RGB 12v 24w de alto rendimiento industrial.",
+    priceRetail: 69900,
+    priceWholesale: 69600,
+    imageUrl: "CatalogoTerceros2/150005.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-523",
+    name: "Lampara Led de piscina RGB 12v 6w",
+    sku: "120920-120921-PISCINA",
+    description: "Lampara Led de piscina RGB 12v 6w de alto rendimiento industrial.",
+    priceRetail: 42500,
+    priceWholesale: 42000,
+    imageUrl: "CatalogoTerceros2/120920-120921-PISCINA.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-524",
+    name: "Campana led multipunto 180w",
+    sku: "160136",
+    description: "Campana led multipunto 180w de alto rendimiento industrial.",
+    priceRetail: 31550,
+    priceWholesale: 31250,
+    imageUrl: "CatalogoTerceros2/160136.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-525",
+    name: "Campana Ufo Led 100w N°2",
+    sku: "120479",
+    description: "Campana Ufo Led 100w N°2 de alto rendimiento industrial.",
+    priceRetail: 24670,
+    priceWholesale: 24370,
+    imageUrl: "CatalogoTerceros2/120479.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-526",
+    name: "Campana Ufo Led 150w N°2",
+    sku: "120480",
+    description: "Campana Ufo Led 150w N°2 de alto rendimiento industrial.",
+    priceRetail: 34000,
+    priceWholesale: 33750,
+    imageUrl: "CatalogoTerceros2/120480.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-527",
+    name: "Campana Ufo Led 200w",
+    sku: "120478",
+    description: "Campana Ufo Led 200w de alto rendimiento industrial.",
+    priceRetail: 67390,
+    priceWholesale: 66940,
+    imageUrl: "CatalogoTerceros2/120478.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-528",
+    name: "Campana Ufo Led 200w N°2",
+    sku: "120481",
+    description: "Campana Ufo Led 200w N°2 de alto rendimiento industrial.",
+    priceRetail: 45000,
+    priceWholesale: 43750,
+    imageUrl: "CatalogoTerceros2/120481.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-529",
+    name: "Campana Ufo N°1 Led 100w",
+    sku: "120482",
+    description: "Campana Ufo N°1 Led 100w de alto rendimiento industrial.",
+    priceRetail: 30000,
+    priceWholesale: 28500,
+    imageUrl: "CatalogoTerceros2/120482.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-530",
+    name: "Campana Ufo N°1 Led 150w",
+    sku: "120483",
+    description: "Campana Ufo N°1 Led 150w de alto rendimiento industrial.",
+    priceRetail: 45000,
+    priceWholesale: 43750,
+    imageUrl: "CatalogoTerceros2/120483.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-531",
+    name: "Canoa acrilica con tubo led 1x18w",
+    sku: "040231",
+    description: "Canoa acrilica con tubo led 1x18w de alto rendimiento industrial.",
+    priceRetail: 9990,
+    priceWholesale: 4390,
+    imageUrl: "CatalogoTerceros2/040231.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-532",
+    name: "Canoa acrilica con tubo led 2x18w",
+    sku: "040230",
+    description: "Canoa acrilica con tubo led 2x18w de alto rendimiento industrial.",
+    priceRetail: 13630,
+    priceWholesale: 13330,
+    imageUrl: "CatalogoTerceros2/040230.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-533",
+    name: "Canoa T5 28w con tubo amarillo",
+    sku: "120140",
+    description: "Canoa T5 28w con tubo amarillo de alto rendimiento industrial.",
+    priceRetail: 5460,
+    priceWholesale: 5160,
+    imageUrl: "CatalogoTerceros2/120140.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-534",
+    name: "Canoa T5 28w con tubo Azul",
+    sku: "120143",
+    description: "Canoa T5 28w con tubo Azul de alto rendimiento industrial.",
+    priceRetail: 5460,
+    priceWholesale: 5160,
+    imageUrl: "CatalogoTerceros2/120143.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-535",
+    name: "Canoa T5 28w con tubo Negro",
+    sku: "120144",
+    description: "Canoa T5 28w con tubo Negro de alto rendimiento industrial.",
+    priceRetail: 5730,
+    priceWholesale: 5430,
+    imageUrl: "CatalogoTerceros2/120144.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-536",
+    name: "Canoa T5 28w con tubo rojo",
+    sku: "120141",
+    description: "Canoa T5 28w con tubo rojo de alto rendimiento industrial.",
+    priceRetail: 5460,
+    priceWholesale: 5160,
+    imageUrl: "CatalogoTerceros2/120141.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-537",
+    name: "Canoa T5 28w con tubo verde",
+    sku: "120142",
+    description: "Canoa T5 28w con tubo verde de alto rendimiento industrial.",
+    priceRetail: 5460,
+    priceWholesale: 5160,
+    imageUrl: "CatalogoTerceros2/120142.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-538",
+    name: "Canoa T5 con Tubo Led compacto 16w 6500k",
+    sku: "120142-LED",
+    description: "Canoa T5 con Tubo Led compacto 16w 6500k de alto rendimiento industrial.",
+    priceRetail: 6580,
+    priceWholesale: 6280,
+    imageUrl: "CatalogoTerceros2/120142-LED.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-539",
+    name: "Tubo Led 18W 6500k",
+    sku: "160804",
+    description: "Tubo Led 18W 6500k de alto rendimiento industrial.",
+    priceRetail: 2600,
+    priceWholesale: 2300,
+    imageUrl: "CatalogoTerceros2/160804.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-540",
+    name: "Tubo Led 9W 6500k",
+    sku: "160805",
+    description: "Tubo Led 9W 6500k de alto rendimiento industrial.",
+    priceRetail: 2300,
+    priceWholesale: 2000,
+    imageUrl: "CatalogoTerceros2/160805.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-541",
+    name: "Foco Embutido led 5w 6500k-3500k",
+    sku: "120051-120056",
+    description: "Foco Embutido led 5w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 3000,
+    priceWholesale: 2700,
+    imageUrl: "CatalogoTerceros2/120051-120056.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-542",
+    name: "Foco Embutido led 9w 6500k-3500k",
+    sku: "120053-120058",
+    description: "Foco Embutido led 9w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 3870,
+    priceWholesale: 3570,
+    imageUrl: "CatalogoTerceros2/120053-120058.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-543",
+    name: "Foco Led TH-003 3w 3500K",
+    sku: "120700",
+    description: "Foco Led TH-003 3w 3500K de alto rendimiento industrial.",
+    priceRetail: 5550,
+    priceWholesale: 5250,
+    imageUrl: "CatalogoTerceros2/120700.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-544",
+    name: "Foco Led TH-009 9w 6500K-3500K",
+    sku: "120094-120703",
+    description: "Foco Led TH-009 9w 6500K-3500K de alto rendimiento industrial.",
+    priceRetail: 8900,
+    priceWholesale: 8700,
+    imageUrl: "CatalogoTerceros2/120094-120703.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-545",
+    name: "Foco Led TH-012 12w 6500K-3500K",
+    sku: "120095-120705",
+    description: "Foco Led TH-012 12w 6500K-3500K de alto rendimiento industrial.",
+    priceRetail: 10450,
+    priceWholesale: 10150,
+    imageUrl: "CatalogoTerceros2/120095-120705.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-546",
+    name: "Foco Led ZH-COB0102 10w 6500k-3500k",
+    sku: "120906-120907",
+    description: "Foco Led ZH-COB0102 10w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 7300,
+    priceWholesale: 7000,
+    imageUrl: "CatalogoTerceros2/120906-120907.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-547",
+    name: "Foco Led ZH-COB0202 20w 6500k-3500k",
+    sku: "120920-120921",
+    description: "Foco Led ZH-COB0202 20w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 7000,
+    priceWholesale: 6750,
+    imageUrl: "CatalogoTerceros2/120920-120921.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-548",
+    name: "Maquina para Desgrano de Choclo",
+    sku: "130218",
+    description: "Maquina para Desgrano de Choclo de alto rendimiento industrial.",
+    priceRetail: 350000,
+    priceWholesale: 328000,
+    imageUrl: "CatalogoTerceros2/130218.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-549",
+    name: "Maquina para Moler Grano blando",
+    sku: "011419",
+    description: "Maquina para Moler Grano blando de alto rendimiento industrial.",
+    priceRetail: 285000,
+    priceWholesale: 281750,
+    imageUrl: "CatalogoTerceros2/011419.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-550",
+    name: "Maquina para Moler Granos",
+    sku: "130219",
+    description: "Maquina para Moler Granos de alto rendimiento industrial.",
+    priceRetail: 450000,
+    priceWholesale: 420000,
+    imageUrl: "CatalogoTerceros2/130219.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-551",
+    name: "Transpaleta 2000KG NO 1",
+    sku: "TRANSPALETA",
+    description: "Transpaleta 2000KG NO 1 de alto rendimiento industrial.",
+    priceRetail: 260000,
+    priceWholesale: 253000,
+    imageUrl: "CatalogoTerceros2/TRANSPALETA.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-552",
+    name: "Alta eficiencia 1x18 sobrepuesta",
+    sku: "160416",
+    description: "Alta eficiencia 1x18 sobrepuesta de alto rendimiento industrial.",
+    priceRetail: 8500,
+    priceWholesale: 8000,
+    imageUrl: "CatalogoTerceros2/160416.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-553",
+    name: "Alta eficiencia 2 x 18 w Sobrepuesto",
+    sku: "160414",
+    description: "Alta eficiencia 2 x 18 w Sobrepuesto de alto rendimiento industrial.",
+    priceRetail: 24300,
+    priceWholesale: 23800,
+    imageUrl: "CatalogoTerceros2/160414.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-554",
+    name: "Alta eficiencia 2x9 sobrepuesta",
+    sku: "160400",
+    description: "Alta eficiencia 2x9 sobrepuesta de alto rendimiento industrial.",
+    priceRetail: 17390,
+    priceWholesale: 16890,
+    imageUrl: "CatalogoTerceros2/160400.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-555",
+    name: "Alta Eficiencia 3x18 sobrepuesta",
+    sku: "160400-3X18",
+    description: "Alta Eficiencia 3x18 sobrepuesta de alto rendimiento industrial.",
+    priceRetail: 35500,
+    priceWholesale: 35000,
+    imageUrl: "CatalogoTerceros2/160400-3X18.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-556",
+    name: "Ampolleta Champiñon Led 100w E-27",
+    sku: "160026",
+    description: "Ampolleta Champiñon Led 100w E-27 de alto rendimiento industrial.",
+    priceRetail: 28490,
+    priceWholesale: 28190,
+    imageUrl: "CatalogoTerceros2/160026.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-557",
+    name: "Ampolleta Champiñon Led 150w E-27",
+    sku: "160027",
+    description: "Ampolleta Champiñon Led 150w E-27 de alto rendimiento industrial.",
+    priceRetail: 32170,
+    priceWholesale: 31870,
+    imageUrl: "CatalogoTerceros2/160027.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-558",
+    name: "Ampolleta Champiñon Led 50w E-27",
+    sku: "160025",
+    description: "Ampolleta Champiñon Led 50w E-27 de alto rendimiento industrial.",
+    priceRetail: 15170,
+    priceWholesale: 14870,
+    imageUrl: "CatalogoTerceros2/160025.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-559",
+    name: "Ampolleta Led 10w 6500k-3500k",
+    sku: "160840-160839",
+    description: "Ampolleta Led 10w 6500k-3500k de alto rendimiento industrial.",
+    priceRetail: 1490,
+    priceWholesale: 1190,
+    imageUrl: "CatalogoTerceros2/160840-160839.jpg",
+    category: "Electricidad"
+  },
 ];
