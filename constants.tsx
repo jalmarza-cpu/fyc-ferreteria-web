@@ -3178,4 +3178,605 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoTerceros2/160840-160839.jpg",
     category: "Electricidad"
   },
+
+  {
+    id: "prod-600",
+    name: "Lampara Led de piscina RGB 12v 9w",
+    sku: "150001",
+    description: "Lampara Led de piscina RGB 12v 9w de alto estándar de instalación.",
+    priceRetail: 47000,
+    priceWholesale: 46800,
+    imageUrl: "CatalogoTerceros2/150001.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-601",
+    name: "Lampara tortuga JM-FC62 blanca",
+    sku: "160176",
+    description: "Lampara tortuga JM-FC62 blanca de alto estándar de instalación.",
+    priceRetail: 6000,
+    priceWholesale: 5800,
+    imageUrl: "CatalogoTerceros2/160176.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-602",
+    name: "Lampara tortuga JM-FC62 Negro",
+    sku: "160178",
+    description: "Lampara tortuga JM-FC62 Negro de alto estándar de instalación.",
+    priceRetail: 6000,
+    priceWholesale: 5800,
+    imageUrl: "CatalogoTerceros2/160178.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-603",
+    name: "Lampara tortuga JM-FC63 Negro",
+    sku: "160179",
+    description: "Lampara tortuga JM-FC63 Negro de alto estándar de instalación.",
+    priceRetail: 6000,
+    priceWholesale: 5800,
+    imageUrl: "CatalogoTerceros2/160179.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-604",
+    name: "Lampara Tortuga redonda Led 12w",
+    sku: "120070",
+    description: "Lampara Tortuga redonda Led 12w de alto estándar de instalación.",
+    priceRetail: 16550,
+    priceWholesale: 16250,
+    imageUrl: "CatalogoTerceros2/120070.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-605",
+    name: "Plafon con sensor de 18w 6500k",
+    sku: "120280",
+    description: "Plafon con sensor de 18w 6500k de alto estándar de instalación.",
+    priceRetail: 10800,
+    priceWholesale: 10500,
+    imageUrl: "CatalogoTerceros2/120280.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-606",
+    name: "Plafon con sensor de 24w 6500k",
+    sku: "120281",
+    description: "Plafon con sensor de 24w 6500k de alto estándar de instalación.",
+    priceRetail: 13600,
+    priceWholesale: 13300,
+    imageUrl: "CatalogoTerceros2/120281.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-607",
+    name: "Plafon cuadrado Led 12w 6500k",
+    sku: "120272",
+    description: "Plafon cuadrado Led 12w 6500k de alto estándar de instalación.",
+    priceRetail: 6000,
+    priceWholesale: 5740,
+    imageUrl: "CatalogoTerceros2/120272.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-608",
+    name: "Plafon cuadrado Led 18w 6500k",
+    sku: "120274",
+    description: "Plafon cuadrado Led 18w 6500k de alto estándar de instalación.",
+    priceRetail: 8000,
+    priceWholesale: 7700,
+    imageUrl: "CatalogoTerceros2/120274.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-609",
+    name: "Plafon cuadrado Led 24w 6500k",
+    sku: "120276",
+    description: "Plafon cuadrado Led 24w 6500k de alto estándar de instalación.",
+    priceRetail: 9990,
+    priceWholesale: 9660,
+    imageUrl: "CatalogoTerceros2/120276.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-610",
+    name: "Plafon cuadrado Led 6w 6500k",
+    sku: "120276-6W",
+    description: "Plafon cuadrado Led 6w 6500k de alto estándar de instalación.",
+    priceRetail: 4500,
+    priceWholesale: 4200,
+    imageUrl: "CatalogoTerceros2/120276-6W.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-611",
+    name: "Lampara de Emergencia TD-269S",
+    sku: "160260",
+    description: "Lampara de Emergencia TD-269S de alto estándar de instalación.",
+    priceRetail: 28990,
+    priceWholesale: 28350,
+    imageUrl: "CatalogoTerceros2/160260.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-612",
+    name: "Lampara Hermetica 2x18 N°1",
+    sku: "160603",
+    description: "Lampara Hermetica 2x18 N°1 de alto estándar de instalación.",
+    priceRetail: 9320,
+    priceWholesale: 8920,
+    imageUrl: "CatalogoTerceros2/160603.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-613",
+    name: "Lampara Hermetica 2x18 N°2",
+    sku: "160603-N2",
+    description: "Lampara Hermetica 2x18 N°2 de alto estándar de instalación.",
+    priceRetail: 10990,
+    priceWholesale: 10710,
+    imageUrl: "CatalogoTerceros2/160603-N2.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-614",
+    name: "Panel Led 120 x 60 80w Sobrepuesto",
+    sku: "120083",
+    description: "Panel Led 120 x 60 80w Sobrepuesto de alto estándar de instalación.",
+    priceRetail: 50900,
+    priceWholesale: 50600,
+    imageUrl: "CatalogoTerceros2/120083.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-615",
+    name: "Panel Led 120x30 48w embutido",
+    sku: "120090",
+    description: "Panel Led 120x30 48w embutido de alto estándar de instalación.",
+    priceRetail: 23990,
+    priceWholesale: 23550,
+    imageUrl: "CatalogoTerceros2/120090.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-616",
+    name: "Panel Led 120x60 80w embutido",
+    sku: "120082",
+    description: "Panel Led 120x60 80w embutido de alto estándar de instalación.",
+    priceRetail: 41990,
+    priceWholesale: 41770,
+    imageUrl: "CatalogoTerceros2/120082.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-617",
+    name: "Panel LED 60x60 48W embutido",
+    sku: "120097",
+    description: "Panel LED 60x60 48W embutido de alto estándar de instalación.",
+    priceRetail: 17550,
+    priceWholesale: 17250,
+    imageUrl: "CatalogoTerceros2/120097.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-618",
+    name: "Panel Led 60x60 sobrepuesto 48w 6500K",
+    sku: "120097-SOBRE",
+    description: "Panel Led 60x60 sobrepuesto 48w 6500K de alto estándar de instalación.",
+    priceRetail: 21990,
+    priceWholesale: 21750,
+    imageUrl: "CatalogoTerceros2/120097-SOBRE.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-619",
+    name: "Proyector LED multipunto 100w",
+    sku: "120449",
+    description: "Proyector LED multipunto 100w de alto estándar de instalación.",
+    priceRetail: 18500,
+    priceWholesale: 18200,
+    imageUrl: "CatalogoTerceros2/120449.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-620",
+    name: "Proyector LED multipunto 10w",
+    sku: "120440",
+    description: "Proyector LED multipunto 10w de alto estándar de instalación.",
+    priceRetail: 3600,
+    priceWholesale: 3300,
+    imageUrl: "CatalogoTerceros2/120440.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-621",
+    name: "Proyector LED multipunto 150w",
+    sku: "120450",
+    description: "Proyector LED multipunto 150w de alto estándar de instalación.",
+    priceRetail: 27700,
+    priceWholesale: 27300,
+    imageUrl: "CatalogoTerceros2/120450.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-622",
+    name: "Proyector LED multipunto 200w",
+    sku: "120451",
+    description: "Proyector LED multipunto 200w de alto estándar de instalación.",
+    priceRetail: 52990,
+    priceWholesale: 52650,
+    imageUrl: "CatalogoTerceros2/120451.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-623",
+    name: "Proyector LED multipunto 20w",
+    sku: "120441",
+    description: "Proyector LED multipunto 20w de alto estándar de instalación.",
+    priceRetail: 4940,
+    priceWholesale: 4640,
+    imageUrl: "CatalogoTerceros2/120441.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-624",
+    name: "Proyector LED multipunto 300w",
+    sku: "120452",
+    description: "Proyector LED multipunto 300w de alto estándar de instalación.",
+    priceRetail: 67800,
+    priceWholesale: 67500,
+    imageUrl: "CatalogoTerceros2/120452.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-625",
+    name: "Proyector LED multipunto 30w",
+    sku: "120442",
+    description: "Proyector LED multipunto 30w de alto estándar de instalación.",
+    priceRetail: 6580,
+    priceWholesale: 5530,
+    imageUrl: "CatalogoTerceros2/120442.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-626",
+    name: "Proyector LED multipunto 50w",
+    sku: "120443",
+    description: "Proyector LED multipunto 50w de alto estándar de instalación.",
+    priceRetail: 8420,
+    priceWholesale: 8120,
+    imageUrl: "CatalogoTerceros2/120443.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-627",
+    name: "Proyector Led Multipunto con sensor de movimiento 10w",
+    sku: "120444",
+    description: "Proyector Led Multipunto con sensor de movimiento 10w de alto estándar de instalación.",
+    priceRetail: 7000,
+    priceWholesale: 6750,
+    imageUrl: "CatalogoTerceros2/120444.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-628",
+    name: "Proyector Led Multipunto con sensor de movimiento 20w",
+    sku: "120445",
+    description: "Proyector Led Multipunto con sensor de movimiento 20w de alto estándar de instalación.",
+    priceRetail: 7800,
+    priceWholesale: 7500,
+    imageUrl: "CatalogoTerceros2/120445.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-629",
+    name: "Proyector Led Multipunto con sensor de movimiento 30w",
+    sku: "120446",
+    description: "Proyector Led Multipunto con sensor de movimiento 30w de alto estándar de instalación.",
+    priceRetail: 9000,
+    priceWholesale: 8770,
+    imageUrl: "CatalogoTerceros2/120446.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-630",
+    name: "Proyector Led Multipunto con sensor de movimiento 50w",
+    sku: "120446-50",
+    description: "Proyector Led Multipunto con sensor de movimiento 50w de alto estándar de instalación.",
+    priceRetail: 10560,
+    priceWholesale: 10260,
+    imageUrl: "CatalogoTerceros2/120446-50.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-631",
+    name: "Adaptador simple 10A",
+    sku: "159984",
+    description: "Adaptador simple 10A de alto estándar de instalación.",
+    priceRetail: 2000,
+    priceWholesale: 1800,
+    imageUrl: "CatalogoTerceros2/159984.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-632",
+    name: "Alargador 3mts SL2714",
+    sku: "159988",
+    description: "Alargador 3mts SL2714 de alto estándar de instalación.",
+    priceRetail: 7000,
+    priceWholesale: 6800,
+    imageUrl: "CatalogoTerceros2/159988.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-633",
+    name: "Cable cordon 2x1.5 100MTS",
+    sku: "040102",
+    description: "Cable cordon 2x1.5 100MTS de alto estándar de instalación.",
+    priceRetail: 154700,
+    priceWholesale: 153000,
+    imageUrl: "CatalogoTerceros2/040102.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-634",
+    name: "Cable cordon de 3x2.5 100MTS",
+    sku: "040102-3x2.5",
+    description: "Cable cordon de 3x2.5 100MTS de alto estándar de instalación.",
+    priceRetail: 185640,
+    priceWholesale: 180000,
+    imageUrl: "CatalogoTerceros2/040102-3x2.5.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-635",
+    name: "Cable paralelo 2x20 Negro",
+    sku: "040113",
+    description: "Cable paralelo 2x20 Negro de alto estándar de instalación.",
+    priceRetail: 52000,
+    priceWholesale: 50000,
+    imageUrl: "CatalogoTerceros2/040113.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-636",
+    name: "Caja Chuqui para canaletas",
+    sku: "159940",
+    description: "Caja Chuqui para canaletas de alto estándar de instalación.",
+    priceRetail: 1460,
+    priceWholesale: 1160,
+    imageUrl: "CatalogoTerceros2/159940.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-637",
+    name: "Caja Estanca 100x100x7",
+    sku: "160009",
+    description: "Caja Estanca 100x100x7 de alto estándar de instalación.",
+    priceRetail: 2690,
+    priceWholesale: 2390,
+    imageUrl: "CatalogoTerceros2/160009.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-638",
+    name: "Caja Estanca 150x150x70",
+    sku: "160010",
+    description: "Caja Estanca 150x150x70 de alto estándar de instalación.",
+    priceRetail: 4570,
+    priceWholesale: 4270,
+    imageUrl: "CatalogoTerceros2/160010.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-639",
+    name: "Caja Estanca 80x80x50",
+    sku: "160008",
+    description: "Caja Estanca 80x80x50 de alto estándar de instalación.",
+    priceRetail: 1530,
+    priceWholesale: 1230,
+    imageUrl: "CatalogoTerceros2/160008.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-640",
+    name: "Caja Estanca 85x85x50",
+    sku: "160007",
+    description: "Caja Estanca 85x85x50 de alto estándar de instalación.",
+    priceRetail: 1700,
+    priceWholesale: 1400,
+    imageUrl: "CatalogoTerceros2/160007.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-641",
+    name: "Campana Timbre 3\\\"",
+    sku: "140300",
+    description: "Campana Timbre 3\\\" de alto estándar de instalación.",
+    priceRetail: 7000,
+    priceWholesale: 6800,
+    imageUrl: "CatalogoTerceros2/140300.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-642",
+    name: "Campana Timbre 4\\\"",
+    sku: "140301",
+    description: "Campana Timbre 4\\\" de alto estándar de instalación.",
+    priceRetail: 8000,
+    priceWholesale: 7800,
+    imageUrl: "CatalogoTerceros2/140301.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-643",
+    name: "Campana Timbre 6\\\"",
+    sku: "140302",
+    description: "Campana Timbre 6\\\" de alto estándar de instalación.",
+    priceRetail: 13000,
+    priceWholesale: 12800,
+    imageUrl: "CatalogoTerceros2/140302.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-644",
+    name: "Campana Timbre 8\\\"",
+    sku: "140303",
+    description: "Campana Timbre 8\\\" de alto estándar de instalación.",
+    priceRetail: 16000,
+    priceWholesale: 15800,
+    imageUrl: "CatalogoTerceros2/140303.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-645",
+    name: "Canoa para tubo led 1x18",
+    sku: "160220",
+    description: "Canoa para tubo led 1x18 de alto estándar de instalación.",
+    priceRetail: 2370,
+    priceWholesale: 2070,
+    imageUrl: "CatalogoTerceros2/160220.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-646",
+    name: "Enchufe hembra volante 16A",
+    sku: "159973",
+    description: "Enchufe hembra volante 16A de alto estándar de instalación.",
+    priceRetail: 2000,
+    priceWholesale: 1500,
+    imageUrl: "CatalogoTerceros2/159973.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-647",
+    name: "Enchufe macho plano 16A",
+    sku: "159970",
+    description: "Enchufe macho plano 16A de alto estándar de instalación.",
+    priceRetail: 2000,
+    priceWholesale: 1490,
+    imageUrl: "CatalogoTerceros2/159970.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-648",
+    name: "Enchufe macho volante 2p 10A",
+    sku: "159970-2P",
+    description: "Enchufe macho volante 2p 10A de alto estándar de instalación.",
+    priceRetail: 1500,
+    priceWholesale: 990,
+    imageUrl: "CatalogoTerceros2/159970-2P.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-649",
+    name: "Enchufe macho volante 3p 10A",
+    sku: "159961",
+    description: "Enchufe macho volante 3p 10A de alto estándar de instalación.",
+    priceRetail: 1500,
+    priceWholesale: 1200,
+    imageUrl: "CatalogoTerceros2/159961.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-650",
+    name: "Enchufe Triple Con Interruptor SL1048",
+    sku: "159985",
+    description: "Enchufe Triple Con Interruptor SL1048 de alto estándar de instalación.",
+    priceRetail: 3900,
+    priceWholesale: 3500,
+    imageUrl: "CatalogoTerceros2/159985.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-651",
+    name: "Gabinete metálico 1 puerta 300x200x150",
+    sku: "160230",
+    description: "Gabinete metálico 1 puerta 300x200x150 de alto estándar de instalación.",
+    priceRetail: 19000,
+    priceWholesale: 18700,
+    imageUrl: "CatalogoTerceros2/160230.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-652",
+    name: "Gabinete metálico 1 puerta 400x300x200",
+    sku: "160231",
+    description: "Gabinete metálico 1 puerta 400x300x200 de alto estándar de instalación.",
+    priceRetail: 32900,
+    priceWholesale: 32600,
+    imageUrl: "CatalogoTerceros2/160231.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-653",
+    name: "Gabinete metálico 1 puerta 500x400x200",
+    sku: "160232",
+    description: "Gabinete metálico 1 puerta 500x400x200 de alto estándar de instalación.",
+    priceRetail: 46900,
+    priceWholesale: 46400,
+    imageUrl: "CatalogoTerceros2/160232.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-654",
+    name: "Gabinete metálico 1 puerta 600x500x200",
+    sku: "160233",
+    description: "Gabinete metálico 1 puerta 600x500x200 de alto estándar de instalación.",
+    priceRetail: 55600,
+    priceWholesale: 55000,
+    imageUrl: "CatalogoTerceros2/160233.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-655",
+    name: "Interruptor Doble 9/15 10A-250V",
+    sku: "159951",
+    description: "Interruptor Doble 9/15 10A-250V de alto estándar de instalación.",
+    priceRetail: 2100,
+    priceWholesale: 1800,
+    imageUrl: "CatalogoTerceros2/159951.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-656",
+    name: "Interruptor doble 9/15 10A-250V Embutido",
+    sku: "159967",
+    description: "Interruptor doble 9/15 10A-250V Embutido de alto estándar de instalación.",
+    priceRetail: 2000,
+    priceWholesale: 1700,
+    imageUrl: "CatalogoTerceros2/159967.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-657",
+    name: "Interruptor simple 9/12 10A embutido",
+    sku: "159966",
+    description: "Interruptor simple 9/12 10A embutido de alto estándar de instalación.",
+    priceRetail: 2000,
+    priceWholesale: 1500,
+    imageUrl: "CatalogoTerceros2/159966.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-658",
+    name: "Interruptor simple 9/12 10A Sobrepuesto",
+    sku: "159950",
+    description: "Interruptor simple 9/12 10A Sobrepuesto de alto estándar de instalación.",
+    priceRetail: 1590,
+    priceWholesale: 1290,
+    imageUrl: "CatalogoTerceros2/159950.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-659",
+    name: "Remarcador monofasico 220v 10(20)a 50hz Ip51",
+    sku: "160182",
+    description: "Remarcador monofasico 220v 10(20)a 50hz Ip51 de alto estándar de instalación.",
+    priceRetail: 11000,
+    priceWholesale: 10700,
+    imageUrl: "CatalogoTerceros2/160182.jpg",
+    category: "Electricidad"
+  },
 ];
