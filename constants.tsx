@@ -1986,4 +1986,595 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoTerceros/010823.jpg",
     category: "Herramientas Manuales"
   },
+
+  {
+    id: "prod-400",
+    name: "Sacaclavos 12\\\"",
+    sku: "070080",
+    description: "Sacaclavos 12\\\" de alta durabilidad.",
+    priceRetail: 1990,
+    priceWholesale: 1650,
+    imageUrl: "CatalogoExtra2/070080.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-401",
+    name: "Sacaclavos 18\\\"",
+    sku: "070081",
+    description: "Sacaclavos 18\\\" de alta durabilidad.",
+    priceRetail: 2990,
+    priceWholesale: 2700,
+    imageUrl: "CatalogoExtra2/070081.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-402",
+    name: "Serrucho de ebanista 10\\\"",
+    sku: "011747",
+    description: "Serrucho de ebanista 10\\\" de alta durabilidad.",
+    priceRetail: 1500,
+    priceWholesale: 1000,
+    imageUrl: "CatalogoExtra2/011747.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-403",
+    name: "Serrucho de ebanista 8\\\"",
+    sku: "011746",
+    description: "Serrucho de ebanista 8\\\" de alta durabilidad.",
+    priceRetail: 1000,
+    priceWholesale: 850,
+    imageUrl: "CatalogoExtra2/011746.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-404",
+    name: "Serrucho 22\\\"",
+    sku: "011742",
+    description: "Serrucho 22\\\" de alta durabilidad.",
+    priceRetail: 2990,
+    priceWholesale: 2550,
+    imageUrl: "CatalogoExtra2/011742.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-405",
+    name: "Serrucho 24\\\"",
+    sku: "011742",
+    description: "Serrucho 24\\\" de alta durabilidad.",
+    priceRetail: 3500,
+    priceWholesale: 3000,
+    imageUrl: "CatalogoExtra2/011742.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-406",
+    name: "Tarugo Tipo Fisher 10mm",
+    sku: "070473",
+    description: "Tarugo Tipo Fisher 10mm de alta durabilidad.",
+    priceRetail: 5000,
+    priceWholesale: 4800,
+    imageUrl: "CatalogoExtra2/070473.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-407",
+    name: "Tarugo Tipo Fisher 5mm",
+    sku: "070470",
+    description: "Tarugo Tipo Fisher 5mm de alta durabilidad.",
+    priceRetail: 4000,
+    priceWholesale: 3750,
+    imageUrl: "CatalogoExtra2/070470.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-408",
+    name: "Tarugo Tipo Fisher 6mm",
+    sku: "070471",
+    description: "Tarugo Tipo Fisher 6mm de alta durabilidad.",
+    priceRetail: 4680,
+    priceWholesale: 4380,
+    imageUrl: "CatalogoExtra2/070471.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-409",
+    name: "Tarugo Tipo Fisher 8mm",
+    sku: "070471",
+    description: "Tarugo Tipo Fisher 8mm de alta durabilidad.",
+    priceRetail: 4720,
+    priceWholesale: 4420,
+    imageUrl: "CatalogoExtra2/070471.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-410",
+    name: "Goma para llave 1/2\\\"- 5/8\\\"",
+    sku: "030641",
+    description: "Goma para llave 1/2\\\"- 5/8\\\" de alta durabilidad.",
+    priceRetail: 2000,
+    priceWholesale: 1700,
+    imageUrl: "CatalogoExtra2/030641.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-411",
+    name: "Llave lavamano muro 20cm 30493",
+    sku: "03068",
+    description: "Llave lavamano muro 20cm 30493 de alta durabilidad.",
+    priceRetail: 15900,
+    priceWholesale: 15400,
+    imageUrl: "CatalogoExtra2/03068.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-412",
+    name: "Llave Combinacion Lavaplatos 30492",
+    sku: "030686",
+    description: "Llave Combinacion Lavaplatos 30492 de alta durabilidad.",
+    priceRetail: 17900,
+    priceWholesale: 17500,
+    imageUrl: "CatalogoExtra2/030686.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-413",
+    name: "Llave de jardin BQA036 con hilo",
+    sku: "030602",
+    description: "Llave de jardin BQA036 con hilo de alta durabilidad.",
+    priceRetail: 5900,
+    priceWholesale: 5500,
+    imageUrl: "CatalogoExtra2/030602.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-414",
+    name: "Llave de jardin Gal.518 con hilo",
+    sku: "030600",
+    description: "Llave de jardin Gal.518 con hilo de alta durabilidad.",
+    priceRetail: 3500,
+    priceWholesale: 2800,
+    imageUrl: "CatalogoExtra2/030600.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-415",
+    name: "Llave lavamano muro 15cm 30494",
+    sku: "030684",
+    description: "Llave lavamano muro 15cm 30494 de alta durabilidad.",
+    priceRetail: 16990,
+    priceWholesale: 16660,
+    imageUrl: "CatalogoExtra2/030684.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-416",
+    name: "Llave lavamano muro 20cm 30493",
+    sku: "030685",
+    description: "Llave lavamano muro 20cm 30493 de alta durabilidad.",
+    priceRetail: 19500,
+    priceWholesale: 18900,
+    imageUrl: "CatalogoExtra2/030685.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-417",
+    name: "Llave Lavamanos par simple 30403",
+    sku: "030688",
+    description: "Llave Lavamanos par simple 30403 de alta durabilidad.",
+    priceRetail: 15900,
+    priceWholesale: 15400,
+    imageUrl: "CatalogoExtra2/030688.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-418",
+    name: "Llave lavaplatos monomando 30940",
+    sku: "030683",
+    description: "Llave lavaplatos monomando 30940 de alta durabilidad.",
+    priceRetail: 19500,
+    priceWholesale: 18900,
+    imageUrl: "CatalogoExtra2/030683.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-419",
+    name: "Llave monomando 35mm 30401",
+    sku: "030680",
+    description: "Llave monomando 35mm 30401 de alta durabilidad.",
+    priceRetail: 15990,
+    priceWholesale: 15200,
+    imageUrl: "CatalogoExtra2/030680.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-420",
+    name: "Llave monomando ducha 30496",
+    sku: "030682",
+    description: "Llave monomando ducha 30496 de alta durabilidad.",
+    priceRetail: 19960,
+    priceWholesale: 19460,
+    imageUrl: "CatalogoExtra2/030682.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-421",
+    name: "tubo flexible para ducha 1.5m",
+    sku: "030681",
+    description: "tubo flexible para ducha 1.5m de alta durabilidad.",
+    priceRetail: 2500,
+    priceWholesale: 1950,
+    imageUrl: "CatalogoExtra2/030681.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-422",
+    name: "Ducha Telefono",
+    sku: "030687",
+    description: "Ducha Telefono de alta durabilidad.",
+    priceRetail: 1990,
+    priceWholesale: 1660,
+    imageUrl: "CatalogoExtra2/030687.jpg",
+    category: "Gasfitería"
+  },
+  {
+    id: "prod-423",
+    name: "Candado dorado 32mm",
+    sku: "010187",
+    description: "Candado dorado 32mm de alta durabilidad.",
+    priceRetail: 1500,
+    priceWholesale: 1000,
+    imageUrl: "CatalogoExtra2/010187.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-424",
+    name: "Candado dorado 38mm",
+    sku: "010188",
+    description: "Candado dorado 38mm de alta durabilidad.",
+    priceRetail: 1700,
+    priceWholesale: 1200,
+    imageUrl: "CatalogoExtra2/010188.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-425",
+    name: "Carretilla 85L",
+    sku: "030600",
+    description: "Carretilla 85L de alta durabilidad.",
+    priceRetail: 60000,
+    priceWholesale: 58500,
+    imageUrl: "CatalogoExtra2/030600.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-426",
+    name: "Tuberia Conduit PVC 25x1.5x3000mm",
+    sku: "011570",
+    description: "Tuberia Conduit PVC 25x1.5x3000mm de alta durabilidad.",
+    priceRetail: 2000,
+    priceWholesale: 1550,
+    imageUrl: "CatalogoExtra2/011570.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-427",
+    name: "Tuberia Conduit PVC 16x1.4x3000mm",
+    sku: "011570",
+    description: "Tuberia Conduit PVC 16x1.4x3000mm de alta durabilidad.",
+    priceRetail: 1100,
+    priceWholesale: 780,
+    imageUrl: "CatalogoExtra2/011570.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-428",
+    name: "Tuberia Conduit PVC 20x1.5x3000mm",
+    sku: "011572",
+    description: "Tuberia Conduit PVC 20x1.5x3000mm de alta durabilidad.",
+    priceRetail: 1500,
+    priceWholesale: 1000,
+    imageUrl: "CatalogoExtra2/011572.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-429",
+    name: "Tuberia EMT 20mm x 1.2mm",
+    sku: "011500",
+    description: "Tuberia EMT 20mm x 1.2mm de alta durabilidad.",
+    priceRetail: 3500,
+    priceWholesale: 2950,
+    imageUrl: "CatalogoExtra2/011500.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-430",
+    name: "Tuberia EMT 25mm x 1.2mm",
+    sku: "011501",
+    description: "Tuberia EMT 25mm x 1.2mm de alta durabilidad.",
+    priceRetail: 5900,
+    priceWholesale: 5500,
+    imageUrl: "CatalogoExtra2/011501.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-431",
+    name: "Tuberia EMT 32mm x 1.2mm",
+    sku: "011502",
+    description: "Tuberia EMT 32mm x 1.2mm de alta durabilidad.",
+    priceRetail: 6900,
+    priceWholesale: 6600,
+    imageUrl: "CatalogoExtra2/011502.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: "prod-432",
+    name: "Yegua azul extensible 250kilos",
+    sku: "010479",
+    description: "Yegua azul extensible 250kilos de alta durabilidad.",
+    priceRetail: 47500,
+    priceWholesale: 46800,
+    imageUrl: "CatalogoExtra2/010479.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-433",
+    name: "Yegua roja con ruedas 250 kilos",
+    sku: "010479",
+    description: "Yegua roja con ruedas 250 kilos de alta durabilidad.",
+    priceRetail: 44550,
+    priceWholesale: 43550,
+    imageUrl: "CatalogoExtra2/010479.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-434",
+    name: "Basurero pvc 120L Gris",
+    sku: "010251",
+    description: "Basurero pvc 120L Gris de alta durabilidad.",
+    priceRetail: 37800,
+    priceWholesale: 37800,
+    imageUrl: "CatalogoExtra2/010251.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-435",
+    name: "Basurero pvc 240L Verde",
+    sku: "010251",
+    description: "Basurero pvc 240L Verde de alta durabilidad.",
+    priceRetail: 52700,
+    priceWholesale: 52700,
+    imageUrl: "CatalogoExtra2/010251.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-436",
+    name: "Bomba de piscina SUPB100 0.75KW",
+    sku: "011419",
+    description: "Bomba de piscina SUPB100 0.75KW de alta durabilidad.",
+    priceRetail: 166750,
+    priceWholesale: 166750,
+    imageUrl: "CatalogoExtra2/011419.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-437",
+    name: "Bomba de piscina SWIM050 0.75KW",
+    sku: "011420",
+    description: "Bomba de piscina SWIM050 0.75KW de alta durabilidad.",
+    priceRetail: 159850,
+    priceWholesale: 159850,
+    imageUrl: "CatalogoExtra2/011420.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-438",
+    name: "Compresor de aire de 2 HP 200 litros",
+    sku: "130162",
+    description: "Compresor de aire de 2 HP 200 litros de alta durabilidad.",
+    priceRetail: 471500,
+    priceWholesale: 471500,
+    imageUrl: "CatalogoExtra2/130162.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-439",
+    name: "Fresador con taladro ZAY7045FG",
+    sku: "130230",
+    description: "Fresador con taladro ZAY7045FG de alta durabilidad.",
+    priceRetail: 2600000,
+    priceWholesale: 2600000,
+    imageUrl: "CatalogoExtra2/130230.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-440",
+    name: "Frezador con traladro ZAY7032FG",
+    sku: "130229",
+    description: "Frezador con traladro ZAY7032FG de alta durabilidad.",
+    priceRetail: 2490000,
+    priceWholesale: 2490000,
+    imageUrl: "CatalogoExtra2/130229.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-441",
+    name: "Gata Caiman 2T",
+    sku: "130129",
+    description: "Gata Caiman 2T de alta durabilidad.",
+    priceRetail: 30000,
+    priceWholesale: 27000,
+    imageUrl: "CatalogoExtra2/130129.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-442",
+    name: "Gata Caiman 3T",
+    sku: "130132",
+    description: "Gata Caiman 3T de alta durabilidad.",
+    priceRetail: 93000,
+    priceWholesale: 89000,
+    imageUrl: "CatalogoExtra2/130132.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-443",
+    name: "Gata Caiman 3T Larga",
+    sku: "130131",
+    description: "Gata Caiman 3T Larga de alta durabilidad.",
+    priceRetail: 173000,
+    priceWholesale: 166750,
+    imageUrl: "CatalogoExtra2/130131.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-444",
+    name: "Gata Tijera 1.5T",
+    sku: "130091",
+    description: "Gata Tijera 1.5T de alta durabilidad.",
+    priceRetail: 13500,
+    priceWholesale: 12800,
+    imageUrl: "CatalogoExtra2/130091.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-445",
+    name: "Gata Tijera 1T",
+    sku: "130090",
+    description: "Gata Tijera 1T de alta durabilidad.",
+    priceRetail: 13000,
+    priceWholesale: 11050,
+    imageUrl: "CatalogoExtra2/130090.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-446",
+    name: "Maquina de Madera MQ443A",
+    sku: "13002",
+    description: "Maquina de Madera MQ443A de alta durabilidad.",
+    priceRetail: 1341000,
+    priceWholesale: 1341000,
+    imageUrl: "CatalogoExtra2/13002.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-447",
+    name: "Prensa Hidraulica 30T con Manometro",
+    sku: "130145",
+    description: "Prensa Hidraulica 30T con Manometro de alta durabilidad.",
+    priceRetail: 530000,
+    priceWholesale: 518000,
+    imageUrl: "CatalogoExtra2/130145.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-448",
+    name: "Prensa Hidraulica 50T con Manometro",
+    sku: "130146",
+    description: "Prensa Hidraulica 50T con Manometro de alta durabilidad.",
+    priceRetail: 1092500,
+    priceWholesale: 1092500,
+    imageUrl: "CatalogoExtra2/130146.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-449",
+    name: "Tecle Pluma Doble 2T",
+    sku: "130196",
+    description: "Tecle Pluma Doble 2T de alta durabilidad.",
+    priceRetail: 235000,
+    priceWholesale: 229500,
+    imageUrl: "CatalogoExtra2/130196.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-450",
+    name: "Molino Forrajero FZ500",
+    sku: "130212",
+    description: "Molino Forrajero FZ500 de alta durabilidad.",
+    priceRetail: 799750,
+    priceWholesale: 799750,
+    imageUrl: "CatalogoExtra2/130212.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-451",
+    name: "Plato para Torno de 3 patitas 10\\\"",
+    sku: "130238",
+    description: "Plato para Torno de 3 patitas 10\\\" de alta durabilidad.",
+    priceRetail: 227000,
+    priceWholesale: 224000,
+    imageUrl: "CatalogoExtra2/130238.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-452",
+    name: "Plato para Torno de 3 patitas 4\\\"",
+    sku: "130235",
+    description: "Plato para Torno de 3 patitas 4\\\" de alta durabilidad.",
+    priceRetail: 85000,
+    priceWholesale: 80500,
+    imageUrl: "CatalogoExtra2/130235.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-453",
+    name: "Plato para Torno de 3 patitas 6\\\"",
+    sku: "130235",
+    description: "Plato para Torno de 3 patitas 6\\\" de alta durabilidad.",
+    priceRetail: 135000,
+    priceWholesale: 132000,
+    imageUrl: "CatalogoExtra2/130235.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-454",
+    name: "Plato para Torno de 3 patitas 8\\\"",
+    sku: "130237",
+    description: "Plato para Torno de 3 patitas 8\\\" de alta durabilidad.",
+    priceRetail: 155500,
+    priceWholesale: 149500,
+    imageUrl: "CatalogoExtra2/130237.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-455",
+    name: "PORTPOWER SD0202 10T",
+    sku: "130152",
+    description: "PORTPOWER SD0202 10T de alta durabilidad.",
+    priceRetail: 195000,
+    priceWholesale: 190000,
+    imageUrl: "CatalogoExtra2/130152.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-456",
+    name: "Prensa Hidraulica 20T",
+    sku: "130142",
+    description: "Prensa Hidraulica 20T de alta durabilidad.",
+    priceRetail: 275500,
+    priceWholesale: 264500,
+    imageUrl: "CatalogoExtra2/130142.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-457",
+    name: "Prensa Hidraulica 20T con Manometro",
+    sku: "130143",
+    description: "Prensa Hidraulica 20T con Manometro de alta durabilidad.",
+    priceRetail: 420000,
+    priceWholesale: 402500,
+    imageUrl: "CatalogoExtra2/130143.jpg",
+    category: "Maquinaria"
+  },
+  {
+    id: "prod-458",
+    name: "Prensa Hidraulica 30T",
+    sku: "130156",
+    description: "Prensa Hidraulica 30T de alta durabilidad.",
+    priceRetail: 450000,
+    priceWholesale: 443000,
+    imageUrl: "CatalogoExtra2/130156.jpg",
+    category: "Maquinaria"
+  },
 ];
