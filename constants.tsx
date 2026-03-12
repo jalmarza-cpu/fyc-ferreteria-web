@@ -21,10 +21,13 @@ export const BUSINESS_HOURS = [
 // CATEGORÍAS (Terminología Chilena)
 export const CATEGORIES = [
   "Todas",
+  "Herramientas Manuales",
   "Herramientas Eléctricas",
-  "Gasfitería", // Antes Fontanería
+  "Fijaciones",
   "Pinturas y Terminaciones",
-  "Construcción y Obra Gruesa"
+  "Electricidad",
+  "Medición",
+  "Revestimiento"
 ];
 
 // ==========================================
@@ -189,5 +192,81 @@ export const PRODUCTS: Product[] = [
     priceWholesale: 2800,
     imageUrl: "Rodillos/011181-Rodillo-Chiporro-20cm.jpg",
     category: "Pinturas y Terminaciones"
+  },
+
+  // --- ILUMINACIÓN ---
+  {
+    id: 'prod-013',
+    name: "Foco Proyector LED 150w",
+    sku: "160027",
+    description: "Proyector LED de alta potencia 150W para iluminación de exteriores y obras.",
+    priceRetail: 29900,
+    priceWholesale: 22500,
+    imageUrl: "Iluminacion/160027.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: 'prod-014',
+    name: "Foco UFO LED Industrial 100w",
+    sku: "120482",
+    description: "Foco UFO 100W, alta eficiencia lumínica para galpones e industria.",
+    priceRetail: 35000,
+    priceWholesale: 24900,
+    imageUrl: "Iluminacion/120482.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: 'prod-015',
+    name: "Proyector LED de Obra",
+    sku: "160100",
+    description: "Proyector compacto y resistente para múltiples usos en construcción.",
+    priceRetail: 18000,
+    priceWholesale: 12500,
+    imageUrl: "Iluminacion/160100.jpg",
+    category: "Electricidad"
+  },
+
+  // --- MEDICIÓN ---
+  {
+    id: 'prod-016',
+    name: "Nivel de Aluminio 48 Pulgadas",
+    sku: "040156",
+    description: "Nivel de aluminio profesional de 48\" con burbujas de alta visibilidad.",
+    priceRetail: 12500,
+    priceWholesale: 8500,
+    imageUrl: "Medicion/040156.jpg",
+    category: "Medición"
+  },
+  {
+    id: 'prod-017',
+    name: "Nivel de Aluminio 24 Pulgadas",
+    sku: "040153",
+    description: "Nivel de aluminio compacto de 24\", resistente y preciso para trabajos rápidos.",
+    priceRetail: 8900,
+    priceWholesale: 5900,
+    imageUrl: "Medicion/040153.jpg",
+    category: "Medición"
+  },
+
+  // --- REVESTIMIENTO ---
+  {
+    id: 'prod-018',
+    name: "Piso Flotante Alto Tráfico",
+    sku: "LH7020",
+    description: "Piso flotante resistente al desgaste, ideal para proyectos habitacionales y comerciales.",
+    priceRetail: 12990,
+    priceWholesale: 9500,
+    imageUrl: "Revestimiento/LH7020.jpg",
+    category: "Revestimiento"
+  },
+  {
+    id: 'prod-019',
+    name: "Plancha UV Tipo Mármol",
+    sku: "1671",
+    description: "Plancha con recubrimiento UV decorativa, elegante y fácil de instalar.",
+    priceRetail: 25000,
+    priceWholesale: 17990,
+    imageUrl: "Revestimiento/1671.jpg",
+    category: "Revestimiento"
   }
 ];

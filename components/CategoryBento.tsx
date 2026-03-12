@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-// Usamos iconos seguros que ya tenías y agregamos Zap (Rayo) para electricidad
-import { Hammer, Droplets, PaintRoller, Zap, ArrowRight } from 'lucide-react';
+// Usamos iconos seguros que ya tenías y agregamos Zap, Layers, Ruler
+import { Hammer, Ruler, Layers, Zap, ArrowRight, PaintRoller } from 'lucide-react';
 
 interface CategoryBentoProps {
   onSelectCategory: (category: string) => void;
@@ -12,34 +12,31 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
   // CONFIGURACIÓN DE LAS 4 CAJAS PRINCIPALES
   const categories = [
     {
-      id: 'maquinaria',
-      name: 'Maquinaria',
-      icon: Hammer, // Mantenemos el icono de martillo como símbolo de fuerza/equipo
-      color: 'bg-yellow-600',
-      // --- IMAGEN CORRECTA: Taladro de columna / Fresadora ---
-      image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800',
+      id: 'revestimiento',
+      name: 'Revestimiento',
+      icon: Layers,
+      color: 'bg-emerald-600',
+      image: 'https://images.unsplash.com/photo-1581404179788-0ceeee65abac?auto=format&fit=crop&q=80&w=800',
       className: 'md:col-span-2 md:row-span-2',
-      filterKey: 'Maquinaria'
+      filterKey: 'Revestimiento'
     },
     {
-      id: 'griferia',
-      name: 'Grifería',
-      icon: Droplets,
+      id: 'medicion',
+      name: 'Medición',
+      icon: Ruler,
       color: 'bg-blue-600',
-      // IMAGEN ACTUAL: Llave/Grifo moderno
-      image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600',
+      image: 'https://images.unsplash.com/photo-1542483815-b77ebdb24bf6?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
-      filterKey: 'Grifería'
+      filterKey: 'Medición'
     },
     {
       id: 'herramientas',
       name: 'Herramientas',
-      icon: PaintRoller,
+      icon: Hammer,
       color: 'bg-purple-600',
-      // IMAGEN ACTUAL: Brochas y rodillos
       image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&q=80&w=600',
       className: 'md:col-span-1 md:row-span-1',
-      filterKey: 'Herramientas'
+      filterKey: 'Herramientas Manuales'
     },
     {
       id: 'electricidad',
