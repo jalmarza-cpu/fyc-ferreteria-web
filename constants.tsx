@@ -195,34 +195,79 @@ export const PRODUCTS: Product[] = [
   },
 
   // --- ILUMINACIÓN ---
+  // Ampolletas de Alta Potencia
   {
     id: 'prod-013',
-    name: "Foco Proyector LED 150w",
+    name: "Ampolleta de Alta Potencia 150w",
     sku: "160027",
-    description: "Proyector LED de alta potencia 150W para iluminación de exteriores y obras.",
-    priceRetail: 29900,
-    priceWholesale: 22500,
+    description: "Ampolleta LED de alta potencia 150W para máxima iluminación en exteriores y obras.",
+    priceRetail: 32170,
+    priceWholesale: 31870,
     imageUrl: "Iluminacion/160027.jpg",
     category: "Electricidad"
   },
+  {
+    id: 'prod-013b',
+    name: "Ampolleta de Alta Potencia 100w",
+    sku: "160026",
+    description: "Ampolleta LED de alta potencia 100W, eficiente y duradera.",
+    priceRetail: 16500,
+    priceWholesale: 15500,
+    imageUrl: "Iluminacion/160026.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: 'prod-013c',
+    name: "Ampolleta de Alta Potencia 80w",
+    sku: "160025",
+    description: "Ampolleta LED de 80W, excelente relación consumo e iluminación.",
+    priceRetail: 11500,
+    priceWholesale: 10500,
+    imageUrl: "Iluminacion/160025.jpg",
+    category: "Electricidad"
+  },
+
+  // Iluminación Industrial (UFO)
   {
     id: 'prod-014',
     name: "Foco UFO LED Industrial 100w",
     sku: "120482",
     description: "Foco UFO 100W, alta eficiencia lumínica para galpones e industria.",
-    priceRetail: 35000,
-    priceWholesale: 24900,
+    priceRetail: 30000,
+    priceWholesale: 28500,
     imageUrl: "Iluminacion/120482.jpg",
     category: "Electricidad"
   },
   {
+    id: 'prod-014b',
+    name: "Foco UFO LED Industrial 200w",
+    sku: "120483",
+    description: "Foco UFO 200W, máxima potencia para iluminación de grandes superficies.",
+    priceRetail: 45000,
+    priceWholesale: 42000,
+    imageUrl: "Iluminacion/120483.jpg",
+    category: "Electricidad"
+  },
+
+  // Proyectores LED
+  {
     id: 'prod-015',
-    name: "Proyector LED de Obra",
+    name: "Proyector LED 100w c/sensor",
     sku: "160100",
-    description: "Proyector compacto y resistente para múltiples usos en construcción.",
-    priceRetail: 18000,
+    description: "Proyector de 100W con sensor de movimiento, ideal para seguridad y exteriores.",
+    priceRetail: 13500,
     priceWholesale: 12500,
     imageUrl: "Iluminacion/160100.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: 'prod-015b',
+    name: "Proyector LED 50w c/sensor",
+    sku: "160098",
+    description: "Proyector de 50W con sensor de movimiento automático, compacto y eficiente.",
+    priceRetail: 9500,
+    priceWholesale: 8500,
+    imageUrl: "Iluminacion/160098.jpg",
     category: "Electricidad"
   },
 
