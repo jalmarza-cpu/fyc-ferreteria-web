@@ -4,7 +4,7 @@ import { Product } from '../types';
 import { useCartStore } from '../store';
 import { Eye, ShoppingCart, ZoomIn, X, Check, Star, Zap, TrendingDown, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getProductImageUrl } from '../utils/supabase';
+import { getProductImageUrl, supabase } from '../utils/supabase';
 
 interface ProductCardProps {
   product: Product;
@@ -18,6 +18,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isImageFullscreen, setIsImageFullscreen] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   
+  // Real-time Stock State
+  const [liveStock, setLiveStock] = useState<boolean>(product.inStock !== false);
+  const [checkingStock, setCheckingStock] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchStock = async () => {
+      try {
+        const { data, error } = await supabase.from('productos').select('in_stock').eq('sku', product.sku).single();
+        if (!error && data && isMounted) {
+          setLiveStock(data.in_stock !== false);
+        }
+      } catch (err) {}
+    };
+    fetchStock();
+    return () => { isMounted = false; };
+  }, [product.sku]);
+  
   // Pricing State Logic
   const [pricingMode, setPricingMode] = useState<'retail' | 'wholesale'>('wholesale');
   const MIN_WHOLESALE_QTY = 6;
@@ -28,9 +46,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const formatCLP = (val: number) => 
     new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(val);
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
     e.stopPropagation();
     
+    // Verificación Crítica Just-in-Time
+    setCheckingStock(true);
+    try {
+      const { data, error } = await supabase.from('productos').select('in_stock').eq('sku', product.sku).single();
+      if (!error && data && data.in_stock === false) {
+        setLiveStock(false);
+        setCheckingStock(false);
+        return; // Detiene la adición si se agotó en la base de datos central
+      }
+    } catch (err) {}
+    setCheckingStock(false);
+
     const quantityToAdd = pricingMode === 'wholesale' ? MIN_WHOLESALE_QTY : 1;
     const priceToUse = pricingMode === 'wholesale' ? product.priceWholesale : product.priceRetail;
 
@@ -199,61 +229,60 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           {/* Botón de Acción */}
           <div className="mt-auto pt-2">
-            <motion.button 
-              onClick={handleAddToCart}
-              whileTap={{ scale: product.inStock === false ? 1 : 0.98 }}
-              disabled={product.inStock === false}
-              className={`w-full py-3 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg group/btn border border-transparent
-                 ${product.inStock === false
-                   ? 'bg-[#151515] text-neutral-600 cursor-not-allowed border-[#333]'
-                   : isAdded 
-                     ? 'bg-green-600 text-white' 
-                     : 'bg-[#FFD700] group-hover:bg-[#FFED4D] text-black shadow-md group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'
-                 }`}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {product.inStock === false ? (
-                  <motion.div
-                    key="oos"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center gap-2"
-                  >
-                    <X className="w-4 h-4" />
-                    <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">AGOTADO</span>
-                  </motion.div>
-                ) : isAdded ? (
-                  <motion.div
-                    key="added"
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center gap-2"
-                  >
-                    <Check className="w-4 h-4" />
-                    <span className="text-xs">¡Listo!</span>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="normal"
-                    initial={{ y: -10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center gap-2"
-                  >
-                    <ShoppingCart className="w-4 h-4" />
-                    <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">
-                       {pricingMode === 'wholesale' 
-                          ? 'AGREGAR PACK' 
-                          : 'AGREGAR'}
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+            {!liveStock ? (
+              <div className="w-full py-3 px-4 font-black uppercase tracking-wider bg-[#151515] text-neutral-500 border border-[#333] flex items-center justify-center gap-2 rounded shadow-inner">
+                 <X className="w-4 h-4 text-red-500/50" />
+                 <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">SIN STOCK TEMPORAL</span>
+              </div>
+            ) : (
+              <motion.button 
+                onClick={handleAddToCart}
+                whileTap={{ scale: checkingStock ? 1 : 0.98 }}
+                disabled={checkingStock}
+                className={`w-full py-3 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg group/btn border border-transparent
+                   ${checkingStock
+                     ? 'bg-neutral-800 text-neutral-500 cursor-wait'
+                     : isAdded 
+                       ? 'bg-green-600 text-white' 
+                       : 'bg-[#FFD700] group-hover:bg-[#FFED4D] text-black shadow-md group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'
+                   }`}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  {checkingStock ? (
+                    <motion.div
+                      key="checking"
+                      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                      className="flex items-center gap-2"
+                    >
+                      <Zap className="w-4 h-4 animate-pulse" />
+                      <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">VERIFICANDO...</span>
+                    </motion.div>
+                  ) : isAdded ? (
+                    <motion.div
+                      key="added"
+                      initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center gap-2"
+                    >
+                      <Check className="w-4 h-4" />
+                      <span className="text-xs">¡Listo!</span>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="normal"
+                      initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center gap-2"
+                    >
+                      <ShoppingCart className="w-4 h-4" />
+                      <span className="text-xs md:text-xs lg:text-[11px] xl:text-xs">
+                         {pricingMode === 'wholesale' ? 'AGREGAR PACK' : 'AGREGAR'}
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            )}
           </div>
         </div>
       </div>
@@ -350,21 +379,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
                  {/* Botones de Acción */}
                  <div className="flex flex-col gap-3 w-full max-w-md mx-auto mt-auto pb-4">
-                    <button 
-                      onClick={handleAddToCart}
-                      disabled={product.inStock === false}
-                      className={`w-full py-3.5 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg 
-                        ${product.inStock === false ? 'bg-[#151515] text-neutral-600 cursor-not-allowed border border-[#333]' : 
-                          isAdded ? 'bg-green-600 text-white' : 'bg-[#FFD700] hover:bg-[#FFED4D] text-black shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
-                    >
-                      {product.inStock === false ? (
-                        <><X className="w-5 h-5" /> Producto Agotado</>
-                      ) : isAdded ? (
-                        <><Check className="w-5 h-5" /> ¡Agregado al Pack!</>
-                      ) : (
-                        <><ShoppingCart className="w-5 h-5" /> Agregar al Carro</>
-                      )}
-                    </button>
+                    {!liveStock ? (
+                       <div className="w-full py-3.5 px-4 font-black uppercase tracking-wider bg-[#151515] text-neutral-500 border border-[#333] flex items-center justify-center gap-2 rounded shadow-inner">
+                          <X className="w-5 h-5 text-red-500/50" />
+                          <span>SIN STOCK TEMPORAL</span>
+                       </div>
+                    ) : (
+                      <button 
+                        onClick={handleAddToCart}
+                        disabled={checkingStock}
+                        className={`w-full py-3.5 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg 
+                          ${checkingStock ? 'bg-neutral-800 text-neutral-500 cursor-wait' : 
+                            isAdded ? 'bg-green-600 text-white' : 'bg-[#FFD700] hover:bg-[#FFED4D] text-black shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
+                      >
+                        {checkingStock ? (
+                          <><Zap className="w-5 h-5 animate-pulse" /> Verificando Stock</>
+                        ) : isAdded ? (
+                          <><Check className="w-5 h-5" /> ¡Agregado al Pack!</>
+                        ) : (
+                          <><ShoppingCart className="w-5 h-5" /> Agregar al Carro</>
+                        )}
+                      </button>
+                    )}
 
                     <a
                       href={`https://wa.me/56920648577?text=${encodeURIComponent(`¡Hola FYC! Me interesa el [${product.name}] (SKU: ${product.sku}). ¿Tienen stock? Mi pedido es por [${pricingMode === 'wholesale' ? MIN_WHOLESALE_QTY : 1}] unidades.`)}`}

@@ -57,6 +57,10 @@ const AdminDashboard = () => {
         // Fallback silently if table doesn't exist yet for prototype purposes
       }
 
+      // Asegurar retardo de 800ms para que Supabase guarde y replique en todos sus nodos
+      // Evita condición de carrera donde el Webhook limpia la caché antes de que DB actualice.
+      await new Promise(resolve => setTimeout(resolve, 800));
+
       // 2. Disparar Webhook de Purga de Caché (n8n u otro)
       const WEBHOOK_URL = import.meta.env.VITE_N8N_PURGE_WEBHOOK || 'https://n8n.innobate.cl/webhook/fyc-purge-cache';
       
