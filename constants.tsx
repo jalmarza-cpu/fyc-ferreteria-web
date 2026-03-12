@@ -944,4 +944,485 @@ export const PRODUCTS: Product[] = [
     imageUrl: "Herramientas Manuales/011001.jpg",
     category: "Herramientas Manuales"
   },
+
+  {
+    id: "prod-200",
+    name: "Escuadra de acero 12\\\"",
+    sku: "011143",
+    description: "Escuadra de acero 12\\\" de excelente calidad profesional.",
+    priceRetail: 2340,
+    priceWholesale: 2040,
+    imageUrl: "CatalogoExtra/011143.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-201",
+    name: "escuadra de acero 6\\\"",
+    sku: "011140",
+    description: "escuadra de acero 6\\\" de excelente calidad profesional.",
+    priceRetail: 1050,
+    priceWholesale: 850,
+    imageUrl: "CatalogoExtra/011140.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-202",
+    name: "Escuadra repisa 4x5",
+    sku: "010925",
+    description: "Escuadra repisa 4x5 de excelente calidad profesional.",
+    priceRetail: 790,
+    priceWholesale: 490,
+    imageUrl: "CatalogoExtra/010925.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-203",
+    name: "Escuadra repisa 5x6",
+    sku: "011161",
+    description: "Escuadra repisa 5x6 de excelente calidad profesional.",
+    priceRetail: 810,
+    priceWholesale: 510,
+    imageUrl: "CatalogoExtra/011161.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-204",
+    name: "Espatula de 1 1/2\\\"",
+    sku: "011161",
+    description: "Espatula de 1 1/2\\\" de excelente calidad profesional.",
+    priceRetail: 980,
+    priceWholesale: 680,
+    imageUrl: "CatalogoExtra/011161.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-205",
+    name: "Espatula de 1\\\"",
+    sku: "011160",
+    description: "Espatula de 1\\\" de excelente calidad profesional.",
+    priceRetail: 800,
+    priceWholesale: 500,
+    imageUrl: "CatalogoExtra/011160.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-206",
+    name: "Espatula de 2 1/2\\\"",
+    sku: "011163",
+    description: "Espatula de 2 1/2\\\" de excelente calidad profesional.",
+    priceRetail: 1150,
+    priceWholesale: 850,
+    imageUrl: "CatalogoExtra/011163.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-207",
+    name: "Espatula de 2",
+    sku: "011162",
+    description: "Espatula de 2 de excelente calidad profesional.",
+    priceRetail: 1070,
+    priceWholesale: 770,
+    imageUrl: "CatalogoExtra/011162.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-208",
+    name: "Espatula de 3\\\"",
+    sku: "011164",
+    description: "Espatula de 3\\\" de excelente calidad profesional.",
+    priceRetail: 1240,
+    priceWholesale: 940,
+    imageUrl: "CatalogoExtra/011164.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-209",
+    name: "Espatula de 4\\\"",
+    sku: "011165",
+    description: "Espatula de 4\\\" de excelente calidad profesional.",
+    priceRetail: 1320,
+    priceWholesale: 1020,
+    imageUrl: "CatalogoExtra/011165.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-210",
+    name: "Espatula de 5\\\"",
+    sku: "011165",
+    description: "Espatula de 5\\\" de excelente calidad profesional.",
+    priceRetail: 1570,
+    priceWholesale: 1270,
+    imageUrl: "CatalogoExtra/011165.jpg",
+    category: "Revestimientos"
+  },
+  {
+    id: "prod-211",
+    name: "Extractor de poleas 3\\\"",
+    sku: "010660",
+    description: "Extractor de poleas 3\\\" de excelente calidad profesional.",
+    priceRetail: 4800,
+    priceWholesale: 4500,
+    imageUrl: "CatalogoExtra/010660.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-212",
+    name: "Set destornillador estrella 2 piezas",
+    sku: "011004",
+    description: "Set destornillador estrella 2 piezas de excelente calidad profesional.",
+    priceRetail: 1390,
+    priceWholesale: 1090,
+    imageUrl: "CatalogoExtra/011004.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-213",
+    name: "Set destornillador Pin 5 piezas",
+    sku: "011003",
+    description: "Set destornillador Pin 5 piezas de excelente calidad profesional.",
+    priceRetail: 3300,
+    priceWholesale: 3000,
+    imageUrl: "CatalogoExtra/011003.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-214",
+    name: "Set destornillador relojero 6 piezas",
+    sku: "011003",
+    description: "Set destornillador relojero 6 piezas de excelente calidad profesional.",
+    priceRetail: 1200,
+    priceWholesale: 900,
+    imageUrl: "CatalogoExtra/011003.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-215",
+    name: "set destornillados JG070",
+    sku: "011003",
+    description: "set destornillados JG070 de excelente calidad profesional.",
+    priceRetail: 1800,
+    priceWholesale: 1100,
+    imageUrl: "CatalogoExtra/011003.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-216",
+    name: "Disco de Corte para Fierro 115mm",
+    sku: "140140",
+    description: "Disco de Corte para Fierro 115mm de excelente calidad profesional.",
+    priceRetail: 1000,
+    priceWholesale: 830,
+    imageUrl: "CatalogoExtra/140140.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-217",
+    name: "Disco de Corte para Fierro 180mm",
+    sku: "140141",
+    description: "Disco de Corte para Fierro 180mm de excelente calidad profesional.",
+    priceRetail: 1790,
+    priceWholesale: 1490,
+    imageUrl: "CatalogoExtra/140141.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-218",
+    name: "Disco Diamon Especial 115mm",
+    sku: "070429",
+    description: "Disco Diamon Especial 115mm de excelente calidad profesional.",
+    priceRetail: 3300,
+    priceWholesale: 3000,
+    imageUrl: "CatalogoExtra/070429.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-219",
+    name: "Disco Diamon Mojado 180mm",
+    sku: "070436",
+    description: "Disco Diamon Mojado 180mm de excelente calidad profesional.",
+    priceRetail: 4790,
+    priceWholesale: 4490,
+    imageUrl: "CatalogoExtra/070436.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-220",
+    name: "Disco Dn Seco 115mm",
+    sku: "070430",
+    description: "Disco Dn Seco 115mm de excelente calidad profesional.",
+    priceRetail: 4000,
+    priceWholesale: 3750,
+    imageUrl: "CatalogoExtra/070430.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-221",
+    name: "Hoja sierra circular 4-1/2\\\" 18 Dientes",
+    sku: "140110",
+    description: "Hoja sierra circular 4-1/2\\\" 18 Dientes de excelente calidad profesional.",
+    priceRetail: 4000,
+    priceWholesale: 3740,
+    imageUrl: "CatalogoExtra/140110.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-222",
+    name: "Hoja sierra circular 4-1/2\\\" 24 Dientes",
+    sku: "140111",
+    description: "Hoja sierra circular 4-1/2\\\" 24 Dientes de excelente calidad profesional.",
+    priceRetail: 4000,
+    priceWholesale: 3740,
+    imageUrl: "CatalogoExtra/140111.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-223",
+    name: "Hoja sierra circular 9\\\" 24 Dientes",
+    sku: "140114",
+    description: "Hoja sierra circular 9\\\" 24 Dientes de excelente calidad profesional.",
+    priceRetail: 7000,
+    priceWholesale: 6740,
+    imageUrl: "CatalogoExtra/140114.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-224",
+    name: "Barre Hojas Extensible R121",
+    sku: "070198",
+    description: "Barre Hojas Extensible R121 de excelente calidad profesional.",
+    priceRetail: 3500,
+    priceWholesale: 3000,
+    imageUrl: "CatalogoExtra/070198.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-225",
+    name: "Barre Hojas R112A",
+    sku: "070199",
+    description: "Barre Hojas R112A de excelente calidad profesional.",
+    priceRetail: 5550,
+    priceWholesale: 2250,
+    imageUrl: "CatalogoExtra/070199.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-226",
+    name: "Horqueta F111.",
+    sku: "070190",
+    description: "Horqueta F111. de excelente calidad profesional.",
+    priceRetail: 6230,
+    priceWholesale: 5930,
+    imageUrl: "CatalogoExtra/070190.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-227",
+    name: "Rastrillo R103-140D Rojo",
+    sku: "070197",
+    description: "Rastrillo R103-140D Rojo de excelente calidad profesional.",
+    priceRetail: 2550,
+    priceWholesale: 2250,
+    imageUrl: "CatalogoExtra/070197.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-228",
+    name: "Tijera De Jardin 8\\\"",
+    sku: "070244",
+    description: "Tijera De Jardin 8\\\" de excelente calidad profesional.",
+    priceRetail: 2780,
+    priceWholesale: 2480,
+    imageUrl: "CatalogoExtra/070244.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-229",
+    name: "Tijera de pasto SK606 12\\\"",
+    sku: "070249",
+    description: "Tijera de pasto SK606 12\\\" de excelente calidad profesional.",
+    priceRetail: 6830,
+    priceWholesale: 6530,
+    imageUrl: "CatalogoExtra/070249.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-230",
+    name: "Tijera De Uva 8\\\"",
+    sku: "070243",
+    description: "Tijera De Uva 8\\\" de excelente calidad profesional.",
+    priceRetail: 2550,
+    priceWholesale: 2250,
+    imageUrl: "CatalogoExtra/070243.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-231",
+    name: "Tijeras de Lata Avion 10",
+    sku: "070253",
+    description: "Tijeras de Lata Avion 10 de excelente calidad profesional.",
+    priceRetail: 4000,
+    priceWholesale: 3750,
+    imageUrl: "CatalogoExtra/070253.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-232",
+    name: "Tijeras De Podar 10\\\"",
+    sku: "070253",
+    description: "Tijeras De Podar 10\\\" de excelente calidad profesional.",
+    priceRetail: 4750,
+    priceWholesale: 4350,
+    imageUrl: "CatalogoExtra/070253.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-233",
+    name: "Llave Francesa 12\\\"",
+    sku: "010413",
+    description: "Llave Francesa 12\\\" de excelente calidad profesional.",
+    priceRetail: 6600,
+    priceWholesale: 6300,
+    imageUrl: "CatalogoExtra/010413.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-234",
+    name: "Llave Francesa 18\\\"",
+    sku: "010415",
+    description: "Llave Francesa 18\\\" de excelente calidad profesional.",
+    priceRetail: 22800,
+    priceWholesale: 22500,
+    imageUrl: "CatalogoExtra/010415.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-235",
+    name: "Llave Francesa 6\\\"",
+    sku: "010410",
+    description: "Llave Francesa 6\\\" de excelente calidad profesional.",
+    priceRetail: 2100,
+    priceWholesale: 1800,
+    imageUrl: "CatalogoExtra/010410.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-236",
+    name: "Extractor de poleas 4\\\"",
+    sku: "010661",
+    description: "Extractor de poleas 4\\\" de excelente calidad profesional.",
+    priceRetail: 5650,
+    priceWholesale: 5250,
+    imageUrl: "CatalogoExtra/010661.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-237",
+    name: "Extractor de poleas 6\\\"",
+    sku: "010662",
+    description: "Extractor de poleas 6\\\" de excelente calidad profesional.",
+    priceRetail: 7000,
+    priceWholesale: 6750,
+    imageUrl: "CatalogoExtra/010662.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-238",
+    name: "Extractor de poleas 8\\\"",
+    sku: "010662",
+    description: "Extractor de poleas 8\\\" de excelente calidad profesional.",
+    priceRetail: 7600,
+    priceWholesale: 7200,
+    imageUrl: "CatalogoExtra/010662.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-239",
+    name: "Formon suelto 1- 1/5\\\"",
+    sku: "070093",
+    description: "Formon suelto 1- 1/5\\\" de excelente calidad profesional.",
+    priceRetail: 3600,
+    priceWholesale: 3300,
+    imageUrl: "CatalogoExtra/070093.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-240",
+    name: "Set de formon 4 piezas",
+    sku: "070093",
+    description: "Set de formon 4 piezas de excelente calidad profesional.",
+    priceRetail: 7650,
+    priceWholesale: 7350,
+    imageUrl: "CatalogoExtra/070093.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-241",
+    name: "Guante albañil goma",
+    sku: "011",
+    description: "Guante albañil goma de excelente calidad profesional.",
+    priceRetail: 1580,
+    priceWholesale: 1280,
+    imageUrl: "CatalogoExtra/011.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-242",
+    name: "Guante de goma para aseo",
+    sku: "011667",
+    description: "Guante de goma para aseo de excelente calidad profesional.",
+    priceRetail: 780,
+    priceWholesale: 380,
+    imageUrl: "CatalogoExtra/011667.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-243",
+    name: "Guante Pigmentado",
+    sku: "011659",
+    description: "Guante Pigmentado de excelente calidad profesional.",
+    priceRetail: 700,
+    priceWholesale: 360,
+    imageUrl: "CatalogoExtra/011659.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-244",
+    name: "Guantes de cuero",
+    sku: "011663",
+    description: "Guantes de cuero de excelente calidad profesional.",
+    priceRetail: 4000,
+    priceWholesale: 3750,
+    imageUrl: "CatalogoExtra/011663.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-245",
+    name: "Guantes de goma azul",
+    sku: "011661",
+    description: "Guantes de goma azul de excelente calidad profesional.",
+    priceRetail: 1320,
+    priceWholesale: 1020,
+    imageUrl: "CatalogoExtra/011661.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-246",
+    name: "Guantes de goma negra",
+    sku: "011662",
+    description: "Guantes de goma negra de excelente calidad profesional.",
+    priceRetail: 750,
+    priceWholesale: 450,
+    imageUrl: "CatalogoExtra/011662.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-247",
+    name: "Guantes de goma verde",
+    sku: "011662",
+    description: "Guantes de goma verde de excelente calidad profesional.",
+    priceRetail: 750,
+    priceWholesale: 450,
+    imageUrl: "CatalogoExtra/011662.jpg",
+    category: "Herramientas Manuales"
+  },
 ];
