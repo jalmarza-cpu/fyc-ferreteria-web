@@ -408,5 +408,81 @@ export const PRODUCTS: Product[] = [
     priceWholesale: 19460,
     imageUrl: "Gasfiteria/030682.jpg",
     category: "Gasfitería"
+  },
+
+  // --- HERRAMIENTAS ELÉCTRICAS Y MAQUINARIA ---
+  {
+    id: 'prod-029',
+    name: "Compresor de Aire 200L (3HP)",
+    sku: "010156",
+    description: "Compresor de aire industrial 200 Litros 3HP para múltiples aplicaciones pesadas.",
+    priceRetail: 450000,
+    priceWholesale: 425000,
+    imageUrl: "HerramientasElectricas/010156.jpg",
+    category: "Herramientas Eléctricas"
+  },
+  {
+    id: 'prod-030',
+    name: "Compresor de Aire 100L (2.5HP)",
+    sku: "010152",
+    description: "Compresor de aire 100 Litros 2.5HP, versatilidad y potencia móvil.",
+    priceRetail: 210000,
+    priceWholesale: 195000,
+    imageUrl: "HerramientasElectricas/010152.jpg",
+    category: "Herramientas Eléctricas"
+  },
+  {
+    id: 'prod-031',
+    name: "Prensa Hidráulica 20 Ton",
+    sku: "011500",
+    description: "Prensa hidráulica robusta de 20 toneladas para trabajo en maestranza.",
+    priceRetail: 135000,
+    priceWholesale: 128000,
+    imageUrl: "HerramientasElectricas/011500.jpg",
+    category: "Herramientas Eléctricas"
+  },
+
+  // --- ELECTRICIDAD DE CONTROL ---
+  {
+    id: 'prod-032',
+    name: "Tablero Eléctrico Embutido 36 Módulos",
+    sku: "160505",
+    description: "Tablero eléctrico de embutir de 36 módulos, amplio espacio para cableado.",
+    priceRetail: 18900,
+    priceWholesale: 17500,
+    imageUrl: "Electricidad/160505.jpg",
+    category: "Electricidad"
+  },
+  {
+    id: 'prod-033',
+    name: "Tablero Eléctrico Sobreponer 24 Módulos",
+    sku: "160502",
+    description: "Tablero eléctrico de sobreponer 24 módulos para instalaciones superficiales.",
+    priceRetail: 14500,
+    priceWholesale: 13200,
+    imageUrl: "Electricidad/160502.jpg",
+    category: "Electricidad"
+  },
+
+  // --- FIJACIONES Y SEGURIDAD ---
+  {
+    id: 'prod-034',
+    name: "Kit Tarugos y Tornillos (100 unid)",
+    sku: "080012",
+    description: "Kit multipropósito de fijaciones. 100 unidades combinadas de tarugos y tornillos.",
+    priceRetail: 2500,
+    priceWholesale: 1990,
+    imageUrl: "Fijaciones/080012.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: 'prod-035',
+    name: "Guante Cabritilla Premium",
+    sku: "090344",
+    description: "Guantes de cabritilla premium. Protección y tacto para trabajos de construcción.",
+    priceRetail: 2200,
+    priceWholesale: 1850,
+    imageUrl: "Seguridad/090344.jpg",
+    category: "Herramientas Manuales"
   }
 ];
