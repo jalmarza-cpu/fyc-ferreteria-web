@@ -1425,4 +1425,565 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoExtra/011662.jpg",
     category: "Herramientas Manuales"
   },
+
+  {
+    id: "prod-300",
+    name: "Prensa F 60x500",
+    sku: "010826",
+    description: "Prensa F 60x500 resistente y duradero.",
+    priceRetail: 13990,
+    priceWholesale: 13500,
+    imageUrl: "CatalogoTerceros/010826.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-301",
+    name: "Prensa F 80x250",
+    sku: "010829",
+    description: "Prensa F 80x250 resistente y duradero.",
+    priceRetail: 19500,
+    priceWholesale: 14250,
+    imageUrl: "CatalogoTerceros/010829.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-302",
+    name: "Prensa F 80x300",
+    sku: "010830",
+    description: "Prensa F 80x300 resistente y duradero.",
+    priceRetail: 15500,
+    priceWholesale: 15000,
+    imageUrl: "CatalogoTerceros/010830.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-303",
+    name: "Prensa F 80x500",
+    sku: "010834",
+    description: "Prensa F 80x500 resistente y duradero.",
+    priceRetail: 18500,
+    priceWholesale: 18000,
+    imageUrl: "CatalogoTerceros/010834.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-304",
+    name: "Prensa F 80x600",
+    sku: "010836",
+    description: "Prensa F 80x600 resistente y duradero.",
+    priceRetail: 20750,
+    priceWholesale: 20250,
+    imageUrl: "CatalogoTerceros/010836.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-305",
+    name: "Prensa F 80x700",
+    sku: "010838",
+    description: "Prensa F 80x700 resistente y duradero.",
+    priceRetail: 23750,
+    priceWholesale: 23250,
+    imageUrl: "CatalogoTerceros/010838.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-306",
+    name: "Prensa F 50x150",
+    sku: "010809",
+    description: "Prensa F 50x150 resistente y duradero.",
+    priceRetail: 4000,
+    priceWholesale: 3750,
+    imageUrl: "CatalogoTerceros/010809.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-307",
+    name: "Prensa F 50x200",
+    sku: "010810",
+    description: "Prensa F 50x200 resistente y duradero.",
+    priceRetail: 4900,
+    priceWholesale: 4500,
+    imageUrl: "CatalogoTerceros/010810.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-308",
+    name: "Prensa F 50x250",
+    sku: "010811",
+    description: "Prensa F 50x250 resistente y duradero.",
+    priceRetail: 6500,
+    priceWholesale: 6000,
+    imageUrl: "CatalogoTerceros/010811.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-309",
+    name: "Prensa G 2\\\"",
+    sku: "010838",
+    description: "Prensa G 2\\\" resistente y duradero.",
+    priceRetail: 1500,
+    priceWholesale: 1130,
+    imageUrl: "CatalogoTerceros/010838.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-310",
+    name: "Regla de acero 12\\\"",
+    sku: "011900",
+    description: "Regla de acero 12\\\" resistente y duradero.",
+    priceRetail: 1990,
+    priceWholesale: 1500,
+    imageUrl: "CatalogoTerceros/011900.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-311",
+    name: "Regla de acero 24\\\"",
+    sku: "011900",
+    description: "Regla de acero 24\\\" resistente y duradero.",
+    priceRetail: 3600,
+    priceWholesale: 3300,
+    imageUrl: "CatalogoTerceros/011900.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-312",
+    name: "Llave Francesa 8\\\"",
+    sku: "010410",
+    description: "Llave Francesa 8\\\" resistente y duradero.",
+    priceRetail: 3000,
+    priceWholesale: 2700,
+    imageUrl: "CatalogoTerceros/010410.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-313",
+    name: "Llave pipa 10mm",
+    sku: "010021",
+    description: "Llave pipa 10mm resistente y duradero.",
+    priceRetail: 1440,
+    priceWholesale: 1140,
+    imageUrl: "CatalogoTerceros/010021.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-314",
+    name: "Llave pipa 11mm",
+    sku: "010022",
+    description: "Llave pipa 11mm resistente y duradero.",
+    priceRetail: 1790,
+    priceWholesale: 1330,
+    imageUrl: "CatalogoTerceros/010022.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-315",
+    name: "Llave pipa 12mm",
+    sku: "010023",
+    description: "Llave pipa 12mm resistente y duradero.",
+    priceRetail: 1820,
+    priceWholesale: 1520,
+    imageUrl: "CatalogoTerceros/010023.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-316",
+    name: "Llave pipa 13mm",
+    sku: "010024",
+    description: "Llave pipa 13mm resistente y duradero.",
+    priceRetail: 2000,
+    priceWholesale: 1720,
+    imageUrl: "CatalogoTerceros/010024.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-317",
+    name: "Llave pipa 14mm",
+    sku: "010025",
+    description: "Llave pipa 14mm resistente y duradero.",
+    priceRetail: 2200,
+    priceWholesale: 1900,
+    imageUrl: "CatalogoTerceros/010025.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-318",
+    name: "Llave pipa 15mm",
+    sku: "010026",
+    description: "Llave pipa 15mm resistente y duradero.",
+    priceRetail: 2390,
+    priceWholesale: 2090,
+    imageUrl: "CatalogoTerceros/010026.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-319",
+    name: "Llave pipa 19mm",
+    sku: "010028",
+    description: "Llave pipa 19mm resistente y duradero.",
+    priceRetail: 2870,
+    priceWholesale: 2570,
+    imageUrl: "CatalogoTerceros/010028.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-320",
+    name: "Llave pipa 8mm",
+    sku: "010028",
+    description: "Llave pipa 8mm resistente y duradero.",
+    priceRetail: 1260,
+    priceWholesale: 960,
+    imageUrl: "CatalogoTerceros/010028.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-321",
+    name: "Napoleon de 12\\\"",
+    sku: "011769",
+    description: "Napoleon de 12\\\" resistente y duradero.",
+    priceRetail: 4790,
+    priceWholesale: 4490,
+    imageUrl: "CatalogoTerceros/011769.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-322",
+    name: "Napoleon de 14\\\"",
+    sku: "011771",
+    description: "Napoleon de 14\\\" resistente y duradero.",
+    priceRetail: 5790,
+    priceWholesale: 5390,
+    imageUrl: "CatalogoTerceros/011771.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-323",
+    name: "Napoleon de 24\\\"",
+    sku: "011773",
+    description: "Napoleon de 24\\\" resistente y duradero.",
+    priceRetail: 10390,
+    priceWholesale: 10090,
+    imageUrl: "CatalogoTerceros/011773.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-324",
+    name: "Napoleon de 30\\\"",
+    sku: "011773",
+    description: "Napoleon de 30\\\" resistente y duradero.",
+    priceRetail: 14550,
+    priceWholesale: 14250,
+    imageUrl: "CatalogoTerceros/011773.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-325",
+    name: "Nivel Aluminio 10\\\"",
+    sku: "011071",
+    description: "Nivel Aluminio 10\\\" resistente y duradero.",
+    priceRetail: 1740,
+    priceWholesale: 1340,
+    imageUrl: "CatalogoTerceros/011071.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-326",
+    name: "Nivel aluminio 14\\\"",
+    sku: "011073",
+    description: "Nivel aluminio 14\\\" resistente y duradero.",
+    priceRetail: 2250,
+    priceWholesale: 1950,
+    imageUrl: "CatalogoTerceros/011073.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-327",
+    name: "Nivel aluminio 16\\\"",
+    sku: "011074",
+    description: "Nivel aluminio 16\\\" resistente y duradero.",
+    priceRetail: 3000,
+    priceWholesale: 2700,
+    imageUrl: "CatalogoTerceros/011074.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-328",
+    name: "Nivel aluminio 18\\\"",
+    sku: "011075",
+    description: "Nivel aluminio 18\\\" resistente y duradero.",
+    priceRetail: 3500,
+    priceWholesale: 3000,
+    imageUrl: "CatalogoTerceros/011075.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-329",
+    name: "Nivel aluminio 20\\\"",
+    sku: "011076",
+    description: "Nivel aluminio 20\\\" resistente y duradero.",
+    priceRetail: 3500,
+    priceWholesale: 3300,
+    imageUrl: "CatalogoTerceros/011076.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-330",
+    name: "Nivel aluminio 20\\\" con iman",
+    sku: "011085",
+    description: "Nivel aluminio 20\\\" con iman resistente y duradero.",
+    priceRetail: 4500,
+    priceWholesale: 4200,
+    imageUrl: "CatalogoTerceros/011085.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-331",
+    name: "Nivel aluminio 22\\\"",
+    sku: "011077",
+    description: "Nivel aluminio 22\\\" resistente y duradero.",
+    priceRetail: 4000,
+    priceWholesale: 3750,
+    imageUrl: "CatalogoTerceros/011077.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-332",
+    name: "Nivel aluminio 24\\\"",
+    sku: "011078",
+    description: "Nivel aluminio 24\\\" resistente y duradero.",
+    priceRetail: 4350,
+    priceWholesale: 4050,
+    imageUrl: "CatalogoTerceros/011078.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-333",
+    name: "Nivel aluminio 24\\\" con iman",
+    sku: "011087",
+    description: "Nivel aluminio 24\\\" con iman resistente y duradero.",
+    priceRetail: 5550,
+    priceWholesale: 5250,
+    imageUrl: "CatalogoTerceros/011087.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-334",
+    name: "Nivel aluminio 26\\\"",
+    sku: "011079",
+    description: "Nivel aluminio 26\\\" resistente y duradero.",
+    priceRetail: 4800,
+    priceWholesale: 4500,
+    imageUrl: "CatalogoTerceros/011079.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-335",
+    name: "Nivel aluminio 26\\\" con iman",
+    sku: "011088",
+    description: "Nivel aluminio 26\\\" con iman resistente y duradero.",
+    priceRetail: 6000,
+    priceWholesale: 5700,
+    imageUrl: "CatalogoTerceros/011088.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-336",
+    name: "Nivel aluminio 48\\\"",
+    sku: "011081",
+    description: "Nivel aluminio 48\\\" resistente y duradero.",
+    priceRetail: 5550,
+    priceWholesale: 5250,
+    imageUrl: "CatalogoTerceros/011081.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-337",
+    name: "Nivel topedo 9\\\"",
+    sku: "011081",
+    description: "Nivel topedo 9\\\" resistente y duradero.",
+    priceRetail: 2550,
+    priceWholesale: 2250,
+    imageUrl: "CatalogoTerceros/011081.jpg",
+    category: "Medición"
+  },
+  {
+    id: "prod-338",
+    name: "Pasadores para ventana 3\\\"",
+    sku: "030312",
+    description: "Pasadores para ventana 3\\\" resistente y duradero.",
+    priceRetail: 380,
+    priceWholesale: 180,
+    imageUrl: "CatalogoTerceros/030312.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-339",
+    name: "Pasadores para ventana 4\\\"",
+    sku: "030313",
+    description: "Pasadores para ventana 4\\\" resistente y duradero.",
+    priceRetail: 390,
+    priceWholesale: 190,
+    imageUrl: "CatalogoTerceros/030313.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-340",
+    name: "Pasadores para ventana 5\\\"",
+    sku: "030314",
+    description: "Pasadores para ventana 5\\\" resistente y duradero.",
+    priceRetail: 470,
+    priceWholesale: 270,
+    imageUrl: "CatalogoTerceros/030314.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-341",
+    name: "Pasadores para ventana 6\\\"",
+    sku: "030315",
+    description: "Pasadores para ventana 6\\\" resistente y duradero.",
+    priceRetail: 490,
+    priceWholesale: 290,
+    imageUrl: "CatalogoTerceros/030315.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-342",
+    name: "Pasadores para ventana 8\\\"",
+    sku: "030315",
+    description: "Pasadores para ventana 8\\\" resistente y duradero.",
+    priceRetail: 560,
+    priceWholesale: 360,
+    imageUrl: "CatalogoTerceros/030315.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-343",
+    name: "Plana con punta cuadrada 5\\\"",
+    sku: "011730",
+    description: "Plana con punta cuadrada 5\\\" resistente y duradero.",
+    priceRetail: 1370,
+    priceWholesale: 1170,
+    imageUrl: "CatalogoTerceros/011730.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-344",
+    name: "Plana con punta cuadrada 6\\\"",
+    sku: "011731",
+    description: "Plana con punta cuadrada 6\\\" resistente y duradero.",
+    priceRetail: 1580,
+    priceWholesale: 1280,
+    imageUrl: "CatalogoTerceros/011731.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-345",
+    name: "Plana con punta cuadrada 7\\\"",
+    sku: "011732",
+    description: "Plana con punta cuadrada 7\\\" resistente y duradero.",
+    priceRetail: 1950,
+    priceWholesale: 1650,
+    imageUrl: "CatalogoTerceros/011732.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-346",
+    name: "Plana con punta cuadrada 8\\\"",
+    sku: "011733",
+    description: "Plana con punta cuadrada 8\\\" resistente y duradero.",
+    priceRetail: 2000,
+    priceWholesale: 1880,
+    imageUrl: "CatalogoTerceros/011733.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-347",
+    name: "Plana con punta redonda 5\\\"",
+    sku: "011734",
+    description: "Plana con punta redonda 5\\\" resistente y duradero.",
+    priceRetail: 1330,
+    priceWholesale: 1130,
+    imageUrl: "CatalogoTerceros/011734.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-348",
+    name: "Plana con punta redonda 6\\\"",
+    sku: "011735",
+    description: "Plana con punta redonda 6\\\" resistente y duradero.",
+    priceRetail: 1580,
+    priceWholesale: 1280,
+    imageUrl: "CatalogoTerceros/011735.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-349",
+    name: "Plana con punta redonda 7\\\"",
+    sku: "011736",
+    description: "Plana con punta redonda 7\\\" resistente y duradero.",
+    priceRetail: 1720,
+    priceWholesale: 1420,
+    imageUrl: "CatalogoTerceros/011736.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-350",
+    name: "Plana con punta redonda 8\\\"",
+    sku: "011736",
+    description: "Plana con punta redonda 8\\\" resistente y duradero.",
+    priceRetail: 2000,
+    priceWholesale: 1880,
+    imageUrl: "CatalogoTerceros/011736.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-351",
+    name: "Prensa esquina 4\\\"",
+    sku: "010870",
+    description: "Prensa esquina 4\\\" resistente y duradero.",
+    priceRetail: 4900,
+    priceWholesale: 4500,
+    imageUrl: "CatalogoTerceros/010870.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-352",
+    name: "Pasadores para ventana 5\\\"",
+    sku: "010808",
+    description: "Pasadores para ventana 5\\\" resistente y duradero.",
+    priceRetail: 3000,
+    priceWholesale: 2850,
+    imageUrl: "CatalogoTerceros/010808.jpg",
+    category: "Fijaciones"
+  },
+  {
+    id: "prod-353",
+    name: "Prensa F 60x200",
+    sku: "010820",
+    description: "Prensa F 60x200 resistente y duradero.",
+    priceRetail: 9990,
+    priceWholesale: 9750,
+    imageUrl: "CatalogoTerceros/010820.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-354",
+    name: "Prensa F 60x250",
+    sku: "010821",
+    description: "Prensa F 60x250 resistente y duradero.",
+    priceRetail: 10990,
+    priceWholesale: 10500,
+    imageUrl: "CatalogoTerceros/010821.jpg",
+    category: "Herramientas Manuales"
+  },
+  {
+    id: "prod-355",
+    name: "Prensa F 60x300",
+    sku: "010823",
+    description: "Prensa F 60x300 resistente y duradero.",
+    priceRetail: 12500,
+    priceWholesale: 12000,
+    imageUrl: "CatalogoTerceros/010823.jpg",
+    category: "Herramientas Manuales"
+  },
 ];
