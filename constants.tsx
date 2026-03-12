@@ -367,6 +367,46 @@ export const PRODUCTS: Product[] = [
     imageUrl: "Revestimiento/metal-siding.jpg",
     category: "Pinturas y Terminaciones"
   },
+  {
+    id: 'prod-021b',
+    name: "Metal Siding Madera",
+    sku: "SIDING-MADERA",
+    description: "Revestimiento de metal siding tipo madera. Terminación estética y duradera.",
+    priceRetail: 18990,
+    priceWholesale: 16990,
+    imageUrl: "Revestimiento/metal-siding-madera.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-021c',
+    name: "Metal Siding Blanco",
+    sku: "SIDING-BLANCO",
+    description: "Revestimiento de metal siding en color blanco. Ilumina tus fachadas.",
+    priceRetail: 18990,
+    priceWholesale: 16990,
+    imageUrl: "Revestimiento/metal-siding-blanco.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-021d',
+    name: "Silicona Estructural 995A",
+    sku: "SIL-995A",
+    description: "Silicona estructural 995A de alto rendimiento para sellados profesionales.",
+    priceRetail: 2700,
+    priceWholesale: 2500,
+    imageUrl: "Revestimiento/silicona-estructural.jpg",
+    category: "Pinturas y Terminaciones"
+  },
+  {
+    id: 'prod-021e',
+    name: "Esquineros y Uniones Siding",
+    sku: "ESQ-UN",
+    description: "Esquineros y uniones para instalación perfecta de Metal Siding.",
+    priceRetail: 2990,
+    priceWholesale: 2600,
+    imageUrl: "Revestimiento/esquineros-uniones.jpg",
+    category: "Pinturas y Terminaciones"
+  },
 
   // --- GASFITERÍA ---
   {
