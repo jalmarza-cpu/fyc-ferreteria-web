@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck, FileText, Receipt, User, Building2, MapPin, Phone, ArrowLeft, Send } from 'lucide-react';
 import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE } from './constants';
 import { useCartStore } from './store';
-import { getProductImageUrl } from './utils/supabase';
+import { supabase, getProductImageUrl } from './utils/supabase';
 
 // Imports from specialized components
 import Header from './components/Header';
@@ -475,19 +475,53 @@ const AppContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Price filter logic
   const maxProductPrice = Math.max(...PRODUCTS.map(p => p.priceRetail));
   const [maxPrice, setMaxPrice] = useState(maxProductPrice);
+  const [liveProducts, setLiveProducts] = useState(PRODUCTS);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchSupabaseProducts = async () => {
+      try {
+        const { data, error } = await supabase.from('productos').select('*');
+        if (data && data.length > 0 && isMounted) {
+          setLiveProducts(prev => {
+            return prev.map(p => {
+              const remote = data.find(d => d.sku === p.sku);
+              if (remote) {
+                return { 
+                  ...p, 
+                  inStock: remote.in_stock !== false, 
+                  priceWholesale: remote.price_wholesale || p.priceWholesale 
+                };
+              }
+              return p;
+            });
+          });
+        }
+      } catch (err) {
+        console.warn('Supabase fetch error, fallback to constants', err);
+      }
+    };
+    fetchSupabaseProducts();
+    
+    // Intervalo para mantener sincronización en vivo cada 30 segundos
+    const interval = setInterval(fetchSupabaseProducts, 30000);
+    return () => { 
+        isMounted = false; 
+        clearInterval(interval);
+    };
+  }, []);
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter(p => {
+    return liveProducts.filter(p => {
       const matchCat = category === 'Todas' || p.category === category;
       const matchSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          p.sku.includes(searchTerm);
+                          p.sku.toLowerCase().includes(searchTerm.toLowerCase());
       const matchPrice = p.priceWholesale <= maxPrice;
       return matchCat && matchSearch && matchPrice;
     });
-  }, [category, searchTerm, maxPrice]);
+  }, [category, searchTerm, maxPrice, liveProducts]);
 
   // Handle Search Redirection
   const handleSearchChange = (term: string) => {

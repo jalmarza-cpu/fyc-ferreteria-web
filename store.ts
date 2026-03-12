@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 import { create } from 'zustand';
 import { CONTACT_PHONE } from './constants';
+import { supabase } from './utils/supabase';
 
 export interface CartItem {
   id: string;
@@ -31,7 +32,7 @@ interface CartStore {
   getTotal: () => number;
   clearCart: () => void;
   checkout: (customerData: CustomerData, docType: string) => Promise<void>;
-  quickCheckout: () => void;
+  quickCheckout: () => Promise<void>;
 }
 
 const formatPrice = (val: number) => 
@@ -96,6 +97,23 @@ export const useCartStore = create<CartStore>((set, get) => ({
     const { items, getTotal } = get();
     if (items.length === 0) return;
 
+    // VALIDACIÓN DE STOCK EN VIVO
+    try {
+      const skus = items.map(i => i.sku);
+      const { data } = await supabase.from('productos').select('sku, name, in_stock').in('sku', skus);
+      if (data && data.length > 0) {
+        for (const item of items) {
+          const remote = data.find(d => d.sku === item.sku);
+          if (remote && remote.in_stock === false) {
+            alert(`Lo sentimos, el producto "${item.name}" acaba de agotarse y ya no está disponible.`);
+            return; // Bloqueamos el flujo
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("Fallo validación estricta de stock, proceeding...", err);
+    }
+
     // 1. Formateo del mensaje (Compatible con WhatsApp y Evolution API)
     let message = `*SOLICITUD DE PEDIDO / COTIZACIÓN*\n`;
     message += `--------------------------------\n`;
@@ -157,9 +175,26 @@ export const useCartStore = create<CartStore>((set, get) => ({
     window.open(url, '_blank');
   },
 
-  quickCheckout: () => {
+  quickCheckout: async () => {
     const { items, getTotal } = get();
     if (items.length === 0) return;
+
+    // VALIDACIÓN DE STOCK EN VIVO
+    try {
+      const skus = items.map(i => i.sku);
+      const { data } = await supabase.from('productos').select('sku, name, in_stock').in('sku', skus);
+      if (data && data.length > 0) {
+        for (const item of items) {
+          const remote = data.find(d => d.sku === item.sku);
+          if (remote && remote.in_stock === false) {
+            alert(`Lo sentimos, el producto "${item.name}" acaba de agotarse y ya no está disponible.`);
+            return; // Bloqueamos el flujo
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("Fallo validación estricta de stock, proceeding...", err);
+    }
 
     let message = `*SOLICITUD DE COTIZACIÓN - FYC*\n`;
     message += `--------------------------------\n`;
