@@ -18,7 +18,8 @@ import About from './components/About';
 import Maestros from './components/Maestros';
 // Legal Pages Import
 import { ShippingPolicy, ReturnsPolicy, TermsAndConditions } from './components/LegalPages';
-import AdminDashboard from './components/AdminDashboard';
+// Code Splitting (Lazy-Loading pesado para el bundle principal)
+const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 
 // --- UTILS ---
 const formatPrice = (val: number) => 
@@ -400,6 +401,14 @@ const Home = ({
     setSidebarOpen 
   }: any) => {
 
+  // WPO: State for Lazy Loading products (DOM size reduction)
+  const [visibleCount, setVisibleCount] = useState(12);
+
+  // Reset pagination on filter change
+  useEffect(() => {
+    setVisibleCount(12);
+  }, [category, searchTerm, maxPrice]);
+
   const handleBentoCategorySelect = (cat: string) => {
     setCategory(cat);
     const grid = document.getElementById('productos');
@@ -461,11 +470,24 @@ const Home = ({
 
                 {/* Grid */}
                 {filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    {filteredProducts.map((product: any) => (
-                    <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                      {filteredProducts.slice(0, visibleCount).map((product: any) => (
+                        <ProductCard key={product.id} product={product} />
+                      ))}
+                  </div>
+                  
+                  {visibleCount < filteredProducts.length && (
+                    <div className="mt-12 flex justify-center">
+                      <button 
+                        onClick={() => setVisibleCount(v => v + 12)}
+                        className="bg-[#1A1A1A] hover:bg-[#FFD700] text-white hover:text-black border border-[#333] hover:border-[#FFD700] px-10 py-5 rounded-full text-sm font-black uppercase tracking-widest transition-all shadow-xl"
+                      >
+                        Cargar Más Herramientas ({filteredProducts.length - visibleCount} restantes)
+                      </button>
+                    </div>
+                  )}
+                </>
                 ) : (
                 <div className="min-h-[400px] flex flex-col items-center justify-center text-neutral-500 border border-[#222] border-dashed rounded-2xl bg-[#0E0E0E] p-12 text-center">
                     <AlertCircle className="w-16 h-16 mb-4 text-neutral-700" />
@@ -603,7 +625,14 @@ const AppContent = () => {
             <Route path="/despachos" element={<ShippingPolicy onBack={() => {}} />} />
             <Route path="/devoluciones" element={<ReturnsPolicy onBack={() => {}} />} />
             <Route path="/terminos" element={<TermsAndConditions onBack={() => {}} />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route 
+                path="/admin-dashboard" 
+                element={
+                    <React.Suspense fallback={<div className="min-h-screen bg-[#050505] text-white flex justify-center items-center font-industrial text-xl uppercase animate-pulse">Cargando Módulo Administrativo...</div>}>
+                         <AdminDashboard />
+                    </React.Suspense>
+                } 
+            />
         </Routes>
 
       </main>
