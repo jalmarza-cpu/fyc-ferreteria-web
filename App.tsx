@@ -404,9 +404,23 @@ const Home = ({
   // WPO: State for Lazy Loading products (DOM size reduction)
   const [visibleCount, setVisibleCount] = useState(12);
 
-  // Reset pagination on filter change
+  // Focus Navigation & Reset pagination on filter change
   useEffect(() => {
     setVisibleCount(12);
+    
+    // Solo forzamos el scroll suave a la parrilla si no estamos en carga inicial silenciosa
+    const timer = setTimeout(() => {
+      const grid = document.getElementById('productos');
+      if (grid) {
+        // Obtenemos un offset superior considerando barras de navegación estáticas (Desktop/Mobile)
+        const y = grid.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [category, searchTerm, maxPrice]);
 
   const handleBentoCategorySelect = (cat: string) => {
