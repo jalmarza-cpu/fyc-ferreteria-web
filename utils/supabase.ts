@@ -2,6 +2,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 export const SUPABASE_BASE_URL = "https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public";
+export const BASE_IMAGE_URL = "https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public/productos";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co";
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || "sb_publishable_2ne2YbHvV04Hvi-d96LJqg_sgHJ87CI";
@@ -40,27 +41,34 @@ export const getProductImageUrl = (productName: string, imagePath?: string) => {
   if (!imagePath) {
     const firstWord = productName.split(' ')[0];
     const autoFile = `${slugify(firstWord)}.webp`;
-    return `${SUPABASE_BASE_URL}/productos/${autoFile}?v=innobate1`;
+    return `${BASE_IMAGE_URL}/${autoFile}?v=innobate1`;
   }
 
+  // 1. URLs Externas Directas
   if (imagePath.startsWith('http')) {
     return imagePath;
   }
 
-  // Soporte para el nuevo sistema de subida (uploads/xxx.jpg)
+  // 2. Sistema de Subida Moderno (uploads/)
   if (imagePath.startsWith('uploads/')) {
-    return `${SUPABASE_BASE_URL}/productos/${imagePath}?v=innobate1`;
+    return `${BASE_IMAGE_URL}/${imagePath}?v=innobate1`;
   }
 
-  // Mapeo Estricto desde Constants o rutas de archivos directas
+  // 3. Catálogo Legacy / Subcarpetas (CatalogoTerceros2, Alicates, Martillos, etc.)
+  // Si la ruta ya incluye el nombre de una carpeta (contiene '/')
+  if (imagePath.includes('/')) {
+    return `${BASE_IMAGE_URL}/${imagePath}?v=innobate1`;
+  }
+
+  // 4. Archivo en Raíz de Bucket (ej: taladro.jpg)
   if (imagePath.includes('.')) {
-    return `${SUPABASE_BASE_URL}/productos/${imagePath}?v=innobate1`;
+    return `${BASE_IMAGE_URL}/${imagePath}?v=innobate1`;
   }
 
-  // Auto-Mapeo mágico de caída libre (por si no hay foto)
+  // 5. Fallback Mágico (Auto-mapeo por nombre)
   const firstWord = productName.split(' ')[0];
   const autoFile = `${slugify(firstWord)}.webp`;
-  return `${SUPABASE_BASE_URL}/productos/${autoFile}?v=innobate1`;
+  return `${BASE_IMAGE_URL}/${autoFile}?v=innobate1`;
 };
 
 /**
