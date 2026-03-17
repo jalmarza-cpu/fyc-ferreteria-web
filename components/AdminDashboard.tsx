@@ -175,7 +175,8 @@ const AdminDashboard = () => {
   const isNoImage = (url) => {
     if (!url) return true;
     const lower = url.toLowerCase();
-    if (lower.startsWith('http') || lower.startsWith('uploads/')) return false;
+    // Es una imagen válida si empieza con http, uploads/ o tiene una extensión de archivo (.jpg, .png, etc.)
+    if (lower.startsWith('http') || lower.startsWith('uploads/') || url.includes('.')) return false;
     return true;
   };
 
