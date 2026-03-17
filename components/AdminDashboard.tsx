@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase, supabaseAdmin, getProductImageUrl } from '../utils/supabase';
-import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, Edit, Upload, Trash2, ExternalLink, FilterX } from 'lucide-react';
+import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, ExternalLink, FilterX } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -400,7 +400,7 @@ const AdminDashboard = () => {
         </button>
 
         <button onClick={() => setActiveFilter('no_image')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'no_image' ? 'border-yellow-600 ring-1 ring-yellow-900/50' : 'border-[#222] border-l-yellow-600/50 hover:border-yellow-900'}`}>
-          <div className={`p-3 rounded-lg transition ${activeFilter === 'no_image' ? 'bg-yellow-600 text-black' : 'bg-yellow-950/20 text-yellow-500'}`}><ImageIcon size={18} /></div>
+          <div className={`p-3 rounded-lg transition ${activeFilter === 'no_image' ? 'bg-yellow-600 text-black' : 'bg-yellow-950/20 text-yellow-500'}`}><CameraOff size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Sin Foto</p>
             <p className="text-xl font-black text-yellow-500 leading-none mt-1">{productos.filter(p => isNoImage(p.url_imagen)).length}</p>
@@ -470,13 +470,16 @@ const AdminDashboard = () => {
                 <tr key={p.id} className={`transition group ${!p.en_stock ? 'bg-red-900/[0.03]' : 'hover:bg-zinc-900/40'}`}>
                   <td className="p-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 bg-black rounded-lg border border-[#222] overflow-hidden flex-shrink-0 flex items-center justify-center relative">
-                        {p.url_imagen ? (
+                      <div className="w-14 h-14 bg-zinc-950 rounded-lg border border-[#222] overflow-hidden flex-shrink-0 flex items-center justify-center relative">
+                        {!isNoImage(p.url_imagen) ? (
                           <img src={getProductImageUrl(p.nombre, p.url_imagen)} alt={p.nombre} className="w-full h-full object-cover" />
                         ) : (
-                          <ImageIcon size={18} className="text-zinc-800" />
+                          <div className="flex flex-col items-center gap-1 opacity-40">
+                            <CameraOff size={14} className="text-neutral-500" />
+                            <span className="text-[7px] font-black uppercase tracking-tighter text-neutral-500">Sin Imagen</span>
+                          </div>
                         )}
-                        {!p.url_imagen && <div className="absolute top-0 right-0 w-2 h-2 bg-yellow-500 rounded-full border border-black animate-pulse"></div>}
+                        {isNoImage(p.url_imagen) && <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-yellow-500/80 rounded-full border border-black animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>}
                       </div>
                       <div>
                         <div className={`font-black uppercase text-xs leading-tight max-w-sm truncate ${!p.en_stock ? 'text-red-400' : 'text-zinc-100'}`}>
