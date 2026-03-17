@@ -37,14 +37,23 @@ export const slugify = (text: string) => {
  * Mapeo por SKU (Ley de Hierro): [SKU]-[Nombre].jpg 
  */
 export const getProductImageUrl = (productName: string, imagePath?: string) => {
-  if (imagePath && imagePath.startsWith('http')) {
-    // Fallback de seguridad para imágenes crudas sin hosting de base
+  if (!imagePath) {
+    const firstWord = productName.split(' ')[0];
+    const autoFile = `${slugify(firstWord)}.webp`;
+    return `${SUPABASE_BASE_URL}/productos/${autoFile}?v=innobate1`;
+  }
+
+  if (imagePath.startsWith('http')) {
     return imagePath;
   }
 
-  // Regresamos al endpoint standard ya que Image Transformation no está activado
-  // Mapeo Estricto desde Constants
-  if (imagePath && imagePath.includes('.')) {
+  // Soporte para el nuevo sistema de subida (uploads/xxx.jpg)
+  if (imagePath.startsWith('uploads/')) {
+    return `${SUPABASE_BASE_URL}/productos/${imagePath}?v=innobate1`;
+  }
+
+  // Mapeo Estricto desde Constants o rutas de archivos directas
+  if (imagePath.includes('.')) {
     return `${SUPABASE_BASE_URL}/productos/${imagePath}?v=innobate1`;
   }
 

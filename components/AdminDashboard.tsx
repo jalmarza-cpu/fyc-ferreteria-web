@@ -157,7 +157,14 @@ const AdminDashboard = () => {
   const isNoImage = (url) => {
     if (!url) return true;
     const lower = url.toLowerCase();
-    return lower === '' || lower.includes('placeholder') || lower.includes('default');
+
+    // Si es una URL completa o un path de uploads, es válida
+    if (lower.startsWith('http') || lower.startsWith('uploads/')) {
+      return false;
+    }
+
+    // Cualquier otra cosa (como rutas locales, placeholders o texto suelto) se considera "Sin Foto"
+    return true;
   };
 
   const filtered = productos.filter(p => {
