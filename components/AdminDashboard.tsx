@@ -3,10 +3,13 @@ import { supabase, supabaseAdmin, getProductImageUrl } from '../utils/supabase';
 import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, Edit, Upload, Trash2, ExternalLink, FilterX } from 'lucide-react';
 
 const AdminDashboard = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'out_of_stock', 'in_stock', 'no_image'
+  const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [updatingId, setUpdatingId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -28,8 +31,25 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    fetchProductos();
+    const authStatus = sessionStorage.getItem('fyc_admin_auth');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+      fetchProductos();
+    } else {
+      setLoading(false);
+    }
   }, []);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (password === 'fyc2026') {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('fyc_admin_auth', 'true');
+      fetchProductos();
+    } else {
+      alert('Clave incorrecta');
+    }
+  };
 
   const fetchProductos = async () => {
     setLoading(true);
@@ -96,7 +116,6 @@ const AdminDashboard = () => {
     e.preventDefault();
     setIsSaving(true);
 
-    // Preparation for Supabase
     const payload = {
       sku: formData.sku,
       nombre: formData.nombre,
@@ -153,17 +172,10 @@ const AdminDashboard = () => {
     }
   };
 
-  // Improved Logic for "Sin Foto"
   const isNoImage = (url) => {
     if (!url) return true;
     const lower = url.toLowerCase();
-
-    // Si es una URL completa o un path de uploads, es válida
-    if (lower.startsWith('http') || lower.startsWith('uploads/')) {
-      return false;
-    }
-
-    // Cualquier otra cosa (como rutas locales, placeholders o texto suelto) se considera "Sin Foto"
+    if (lower.startsWith('http') || lower.startsWith('uploads/')) return false;
     return true;
   };
 
@@ -176,8 +188,40 @@ const AdminDashboard = () => {
     if (activeFilter === 'in_stock') matchesFilter = p.en_stock;
     if (activeFilter === 'no_image') matchesFilter = isNoImage(p.url_imagen);
 
-    return matchesSearch && matchesFilter;
+    const matchesCategory = selectedCategory === 'Todas' || p.categoria === selectedCategory;
+
+    return matchesSearch && matchesFilter && matchesCategory;
   });
+
+  if (!isAuthenticated && !loading) return (
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#222] rounded-2xl p-8 shadow-2xl">
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
+            <Package size={40} className="text-black" />
+          </div>
+          <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Acceso Restringido</h2>
+          <p className="text-xs text-neutral-500 font-bold uppercase tracking-widest mt-2">Panel Administrativo F&C</p>
+        </div>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="block text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-2">Contraseña del Sistema</label>
+            <input
+              autoFocus
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full bg-[#111] border border-[#333] focus:border-yellow-500 rounded-xl py-4 px-4 text-center text-xl font-black tracking-[0.5em] outline-none transition-all text-white"
+              placeholder="••••••"
+            />
+          </div>
+          <button type="submit" className="w-full bg-yellow-500 text-black py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-yellow-400 transition-all shadow-[0_0_20px_rgba(234,179,8,0.2)]">
+            ENTRAR AL SISTEMA
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 
   if (loading) return (
     <div className="p-8 bg-black min-h-screen text-white flex flex-col items-center justify-center">
@@ -188,7 +232,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="p-4 md:p-8 bg-[#050505] text-white min-h-screen font-sans relative">
-
       {/* MODAL FORM */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -202,7 +245,6 @@ const AdminDashboard = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* IMAGE SECTION - PROMINENT */}
               <div className="bg-[#111] p-4 rounded-xl border border-dashed border-[#333]">
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="w-full md:w-40 h-40 bg-black rounded-lg border border-[#222] overflow-hidden flex items-center justify-center relative group">
@@ -233,12 +275,11 @@ const AdminDashboard = () => {
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                         className="bg-[#222] hover:bg-[#333] text-white p-2.5 rounded-lg transition border border-[#444]"
-                        title="Subir desde mi PC"
                       >
                         <Upload size={20} />
                       </button>
                     </div>
-                    <p className="text-[10px] text-zinc-500 italic">Puedes pegar un path de Supabase (uploads/xxx), una URL de proveedor, o subir una nueva.</p>
+                    <p className="text-[10px] text-zinc-500 italic">Rutas de Supabase (uploads/xxx) o URLs externas.</p>
                     <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
                   </div>
                 </div>
@@ -247,11 +288,11 @@ const AdminDashboard = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">SKU Requerido</label>
-                  <input required value={formData.sku} onChange={e => setFormData({ ...formData, sku: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold" placeholder="011387" />
+                  <input required value={formData.sku} onChange={e => setFormData({ ...formData, sku: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold" />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Nombre Comercial</label>
-                  <input required value={formData.nombre} onChange={e => setFormData({ ...formData, nombre: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold" placeholder='Brocha Profesional 4"' />
+                  <input required value={formData.nombre} onChange={e => setFormData({ ...formData, nombre: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold" />
                 </div>
               </div>
 
@@ -269,7 +310,7 @@ const AdminDashboard = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Categoría de Catálogo</label>
-                  <select value={formData.categoria} onChange={e => setFormData({ ...formData, categoria: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white">
+                  <select value={formData.categoria} onChange={e => setFormData({ ...formData, categoria: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold">
                     <option>Herramientas Manuales</option>
                     <option>Revestimientos</option>
                     <option>Fijaciones</option>
@@ -311,7 +352,7 @@ const AdminDashboard = () => {
           <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-1 flex items-center gap-3 text-balance">
             <Package className="text-yellow-500 hidden sm:block" /> Centro de <span className="text-yellow-500">Control</span>
           </h1>
-          <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em]">Inventario Real Time | F&C Soluciones Ferreteras</p>
+          <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em]">Inventario Maestro | F&C Soluciones Ferreteras</p>
         </div>
 
         <div className="flex flex-col sm:flex-row w-full md:w-auto gap-3">
@@ -319,7 +360,7 @@ const AdminDashboard = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
             <input
               type="text"
-              placeholder="BUSCAR POR SKU O NOMBRE..."
+              placeholder="BUSCAR SKU O NOMBRE..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-[#111] border border-[#333] focus:border-yellow-500 rounded-lg py-3 pl-10 pr-4 text-[10px] font-black uppercase transition-all outline-none"
@@ -342,10 +383,7 @@ const AdminDashboard = () => {
 
       {/* STATS MINI BAR - INTERACTIVE FILTERS */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
-        <button
-          onClick={() => setActiveFilter('all')}
-          className={`bg-[#0A0A0A] border p-4 rounded-xl flex items-center gap-4 transition text-left group ${activeFilter === 'all' ? 'border-zinc-100 ring-1 ring-zinc-500' : 'border-[#222] hover:border-zinc-700'}`}
-        >
+        <button onClick={() => setActiveFilter('all')} className={`bg-[#0A0A0A] border p-4 rounded-xl flex items-center gap-4 transition text-left group ${activeFilter === 'all' ? 'border-zinc-100 ring-1 ring-zinc-500' : 'border-[#222] hover:border-zinc-700'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'all' ? 'bg-zinc-100 text-black' : 'bg-zinc-900 text-zinc-400'}`}><Package size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Total SKU</p>
@@ -353,10 +391,7 @@ const AdminDashboard = () => {
           </div>
         </button>
 
-        <button
-          onClick={() => setActiveFilter('out_of_stock')}
-          className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'out_of_stock' ? 'border-red-600 ring-1 ring-red-900/50' : 'border-[#222] border-l-red-600/50 hover:border-red-900'}`}
-        >
+        <button onClick={() => setActiveFilter('out_of_stock')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'out_of_stock' ? 'border-red-600 ring-1 ring-red-900/50' : 'border-[#222] border-l-red-600/50 hover:border-red-900'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'out_of_stock' ? 'bg-red-600 text-white' : 'bg-red-950/20 text-red-500'}`}><AlertTriangle size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Agotados</p>
@@ -364,10 +399,7 @@ const AdminDashboard = () => {
           </div>
         </button>
 
-        <button
-          onClick={() => setActiveFilter('no_image')}
-          className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'no_image' ? 'border-yellow-600 ring-1 ring-yellow-900/50' : 'border-[#222] border-l-yellow-600/50 hover:border-yellow-900'}`}
-        >
+        <button onClick={() => setActiveFilter('no_image')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'no_image' ? 'border-yellow-600 ring-1 ring-yellow-900/50' : 'border-[#222] border-l-yellow-600/50 hover:border-yellow-900'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'no_image' ? 'bg-yellow-600 text-black' : 'bg-yellow-950/20 text-yellow-500'}`}><ImageIcon size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Sin Foto</p>
@@ -375,10 +407,7 @@ const AdminDashboard = () => {
           </div>
         </button>
 
-        <button
-          onClick={() => setActiveFilter('in_stock')}
-          className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'in_stock' ? 'border-green-600 ring-1 ring-green-900/50' : 'border-[#222] border-l-green-600/50 hover:border-green-900'}`}
-        >
+        <button onClick={() => setActiveFilter('in_stock')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'in_stock' ? 'border-green-600 ring-1 ring-green-900/50' : 'border-[#222] border-l-green-600/50 hover:border-green-900'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'in_stock' ? 'bg-green-600 text-white' : 'bg-green-950/20 text-green-500'}`}><CheckCircle size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">En Stock</p>
@@ -386,26 +415,41 @@ const AdminDashboard = () => {
           </div>
         </button>
 
-        <button
-          onClick={() => { setActiveFilter('all'); setSearchTerm(''); }}
-          className="bg-zinc-900 hover:bg-zinc-800 p-4 rounded-xl flex items-center justify-center gap-3 transition group col-span-2 lg:col-span-1"
-        >
+        <button onClick={() => { setActiveFilter('all'); setSearchTerm(''); setSelectedCategory('Todas'); }} className="bg-zinc-900 hover:bg-zinc-800 p-4 rounded-xl flex items-center justify-center gap-3 transition group col-span-2 lg:col-span-1">
           <FilterX className="text-zinc-500 group-hover:text-white transition" size={18} />
-          <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-white">Ver Todos</span>
+          <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-white">Limpiar</span>
         </button>
       </div>
 
-      {/* FILTER ACTIVE BADGE */}
-      {activeFilter !== 'all' && (
+      {/* FILTER ACTIVE BADGE & CATEGORY SELECTOR */}
+      <div className="mb-6 flex flex-wrap items-center gap-4">
+        <div className="flex-1 flex gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+          {['Todas', 'Herramientas Manuales', 'Revestimientos', 'Fijaciones', 'Electricidad', 'Pinturas', 'Soldadura', 'Gasfitería', 'Seguridad', 'Adhesivos'].map(cat => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest whitespace-nowrap transition-all border
+                ${selectedCategory === cat
+                  ? 'bg-yellow-500 text-black border-yellow-500'
+                  : 'bg-[#111] text-neutral-500 border-[#222] hover:border-neutral-700'}`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {(activeFilter !== 'all' || selectedCategory !== 'Todas') && (
         <div className="mb-4 flex items-center gap-2">
-          <span className="text-[10px] font-black uppercase text-neutral-500">Filtrando por:</span>
+          <span className="text-[10px] font-black uppercase text-neutral-500">Filtrando:</span>
           <div className="bg-yellow-500/10 border border-yellow-500/20 px-3 py-1 rounded-full flex items-center gap-2">
             <span className="text-[9px] font-black text-yellow-500 uppercase tracking-widest">
-              {activeFilter === 'out_of_stock' && 'Productos Agotados'}
-              {activeFilter === 'in_stock' && 'Productos Disponibles'}
-              {activeFilter === 'no_image' && 'Productos sin Imagen'}
+              {activeFilter === 'out_of_stock' && 'Agotados'}
+              {activeFilter === 'in_stock' && 'En Stock'}
+              {activeFilter === 'no_image' && 'Sin Imagen'}
+              {selectedCategory !== 'Todas' && ` | ${selectedCategory}`}
             </span>
-            <button onClick={() => setActiveFilter('all')} className="text-yellow-500 hover:text-white"><X size={12} /></button>
+            <button onClick={() => { setActiveFilter('all'); setSelectedCategory('Todas'); }} className="text-yellow-500 hover:text-white"><X size={12} /></button>
           </div>
         </div>
       )}
@@ -432,7 +476,7 @@ const AdminDashboard = () => {
                         ) : (
                           <ImageIcon size={18} className="text-zinc-800" />
                         )}
-                        {!p.url_imagen && <div className="absolute top-0 right-0 w-2 h-2 bg-yellow-500 rounded-full border border-black animate-pulse" title="Sin Foto"></div>}
+                        {!p.url_imagen && <div className="absolute top-0 right-0 w-2 h-2 bg-yellow-500 rounded-full border border-black animate-pulse"></div>}
                       </div>
                       <div>
                         <div className={`font-black uppercase text-xs leading-tight max-w-sm truncate ${!p.en_stock ? 'text-red-400' : 'text-zinc-100'}`}>
@@ -440,7 +484,9 @@ const AdminDashboard = () => {
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
                           <span className="text-[9px] font-black text-yellow-500/80 bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/20 tracking-widest">SKU: {p.sku}</span>
-                          <span className="text-[9px] font-bold text-neutral-600 uppercase tracking-tighter">{p.categoria}</span>
+                          <button onClick={() => setSelectedCategory(p.categoria)} className="text-[9px] font-black text-neutral-500 hover:text-yellow-500 uppercase tracking-tighter bg-transparent border-none p-0 transition-colors">
+                            {p.categoria}
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -456,8 +502,8 @@ const AdminDashboard = () => {
                           const val = parseInt(e.target.value);
                           if (val !== p.precio_mayorista) {
                             setUpdatingId(p.id + 'mayorista');
-                            const { error } = await supabaseAdmin.from('productos').update({ precio_mayorista: val }).eq('id', p.id);
-                            if (!error) setProductos(productos.map(prod => prod.id === p.id ? { ...prod, precio_mayorista: val } : prod));
+                            await supabaseAdmin.from('productos').update({ precio_mayorista: val }).eq('id', p.id);
+                            setProductos(productos.map(prod => prod.id === p.id ? { ...prod, precio_mayorista: val } : prod));
                             setUpdatingId(null);
                           }
                         }}
@@ -475,8 +521,8 @@ const AdminDashboard = () => {
                           const val = parseInt(e.target.value);
                           if (val !== p.precio_detalle) {
                             setUpdatingId(p.id + 'detalle');
-                            const { error } = await supabaseAdmin.from('productos').update({ precio_detalle: val }).eq('id', p.id);
-                            if (!error) setProductos(productos.map(prod => prod.id === p.id ? { ...prod, precio_detalle: val } : prod));
+                            await supabaseAdmin.from('productos').update({ precio_detalle: val }).eq('id', p.id);
+                            setProductos(productos.map(prod => prod.id === p.id ? { ...prod, precio_detalle: val } : prod));
                             setUpdatingId(null);
                           }
                         }}
@@ -485,11 +531,8 @@ const AdminDashboard = () => {
                   </td>
                   <td className="p-6">
                     <div className="flex flex-col gap-2">
-                      <button
-                        onClick={() => openEditModal(p)}
-                        className="w-full bg-[#111] hover:bg-[#222] border border-[#333] text-white py-2 rounded-lg text-[8px] font-black tracking-[0.2em] flex items-center justify-center gap-2 transition"
-                      >
-                        <Edit size={10} /> EDITAR FICHA
+                      <button onClick={() => openEditModal(p)} className="w-full bg-[#111] hover:bg-[#222] border border-[#333] text-white py-2 rounded-lg text-[8px] font-black tracking-[0.2em] flex items-center justify-center gap-2 transition">
+                        <Edit size={10} /> EDITAR
                       </button>
                       <button
                         onClick={() => updateQuickStock(p.id, p.en_stock)}
@@ -499,8 +542,8 @@ const AdminDashboard = () => {
                             : 'bg-red-600/10 border-red-600 text-red-500 animate-pulse'
                           }`}
                       >
-                        {updatingId === p.id + 'stock' ? <Save className="animate-spin" size={12} /> : (p.en_stock ? <CheckCircle size={10} /> : <AlertTriangle size={10} />)}
-                        {p.en_stock ? 'DISPONIBLE' : 'AGOTADO'}
+                        {updatingId === p.id + 'stock' ? <Save className="animate-spin" size={10} /> : (p.en_stock ? <CheckCircle size={10} /> : <AlertTriangle size={10} />)}
+                        {p.en_stock ? 'EN STOCK' : 'AGOTADO'}
                       </button>
                     </div>
                   </td>
@@ -511,8 +554,8 @@ const AdminDashboard = () => {
           {filtered.length === 0 && (
             <div className="p-20 text-center flex flex-col items-center">
               <Search className="w-16 h-16 text-zinc-900 mb-4" />
-              <p className="text-neutral-600 font-black uppercase tracking-[0.3em] text-xs">Sin coincidencias para los filtros aplicados</p>
-              <button onClick={() => { setActiveFilter('all'); setSearchTerm(''); }} className="mt-4 text-yellow-500 hover:text-white text-[10px] font-black uppercase underline tracking-widest">Reiniciar búsqueda</button>
+              <p className="text-neutral-600 font-black uppercase tracking-[0.3em] text-xs">Sin coincidencias</p>
+              <button onClick={() => { setActiveFilter('all'); setSearchTerm(''); setSelectedCategory('Todas'); }} className="mt-4 text-yellow-500 hover:text-white text-[10px] font-black uppercase underline tracking-widest">Reiniciar filtros</button>
             </div>
           )}
         </div>
