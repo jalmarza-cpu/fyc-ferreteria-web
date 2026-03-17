@@ -38,31 +38,23 @@ export const slugify = (text: string) => {
  * Mapeo por SKU (Ley de Hierro): [SKU]-[Nombre].jpg 
  */
 export const getProductImageUrl = (productName: string, imagePath?: string, sku?: string) => {
-  // 1. Prioridad Máxima: Si tenemos SKU, buscar por SKU (Ignora carpetas)
+  // 1. URLs Externas Directas (Mandan sobre todo)
+  if (imagePath?.startsWith('http')) {
+    return imagePath;
+  }
+
+  // 2. Sistema de Subida Moderno (uploads/)
+  if (imagePath?.startsWith('uploads/')) {
+    return `${BASE_IMAGE_URL}/${imagePath}?v=innobate_upd`;
+  }
+
+  // 3. Búsqueda por SKU (Si existe el SKU, intentamos cargar la foto local)
   if (sku) {
     return `${BASE_IMAGE_URL}/${sku}.jpg?v=innobate_sku`;
   }
 
-  if (!imagePath) {
-    const firstWord = productName.split(' ')[0];
-    const autoFile = `${slugify(firstWord)}.webp`;
-    return `${BASE_IMAGE_URL}/${autoFile}?v=innobate1`;
-  }
-
-  // 2. URLs Externas Directas
-  if (imagePath.startsWith('http')) {
-    return imagePath;
-  }
-
-  // 3. Sistema de Subida Moderno (uploads/)
-  if (imagePath.startsWith('uploads/')) {
-    return `${BASE_IMAGE_URL}/${imagePath}?v=innobate1`;
-  }
-
-  // 4. Si la ruta tiene el SKU integrado (Limpieza de ruta)
-  // Ej: "Alicates/070346-Alicate.jpg" -> "070346-Alicate.jpg"
-  const fileName = imagePath.includes('/') ? imagePath.split('/').pop() : imagePath;
-  return `${BASE_IMAGE_URL}/${fileName}?v=innobate1`;
+  // 4. Si no hay SKU ni ruta de nube, devolvemos el logo o un placeholder controlado
+  return '/logo-fyc.png';
 };
 
 /**
