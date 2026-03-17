@@ -547,8 +547,11 @@ const AppContent = () => {
               if (remote) {
                 return { 
                   ...p, 
-                  inStock: remote.in_stock !== false, 
-                  priceWholesale: remote.price_wholesale || p.priceWholesale 
+                  inStock: remote.en_stock !== false, 
+                  priceWholesale: remote.precio_mayorista || p.priceWholesale,
+                  priceRetail: remote.precio_detalle || p.priceRetail,
+                  isVisible: remote.estado_visibilidad !== false,
+                  imageUrl: remote.url_imagen || p.imageUrl
                 };
               }
               return p;
@@ -580,6 +583,9 @@ const AppContent = () => {
 
   const filteredProducts = useMemo(() => {
     return liveProducts.filter(p => {
+      // Ocultar de la web si isVisible es false
+      if (p.isVisible === false) return false;
+
       const matchCat = category === 'Todas' || p.category === category;
       const matchSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           p.sku.toLowerCase().includes(searchTerm.toLowerCase());

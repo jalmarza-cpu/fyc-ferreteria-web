@@ -10,6 +10,7 @@ export interface Product {
   isLarge?: boolean;
   rating?: number;
   inStock?: boolean;
+  isVisible?: boolean;
 }
 
 export interface NavLink {

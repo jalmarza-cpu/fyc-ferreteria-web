@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ShoppingCart, Search, Phone, Mail, Menu } from 'lucide-react';
-import { CONTACT_PHONE_DISPLAY, CONTACT_EMAIL } from '../constants';
+import { CONTACT_PHONE_DISPLAY, CONTACT_EMAIL, CONTACT_PHONE } from '../constants';
 import { useCartStore } from '../store';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrice = getTotal();
 
-  const formatPriceHeader = (val: number) => 
+  const formatPriceHeader = (val: number) =>
     new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(val);
 
   return (
@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
       {/* 2. Main Header */}
       <div className="bg-[#0A0A0A]/95 backdrop-blur-md border-b border-[#222] py-4 px-4 md:px-8">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-4 md:gap-12">
-          
+
           {/* Logo & Mobile Menu */}
           <div className="flex items-center gap-4">
             <button onClick={onMenuClick} className="lg:hidden text-white hover:text-[#FFD700] transition-colors">
@@ -93,32 +93,32 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
           <div className="flex items-center gap-6">
             <div className="hidden md:flex flex-col items-end text-right">
               <span className="text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-0.5">Cotizar Ahora</span>
-              <a href="https://wa.me/56920648577?text=Hola,%20necesito%20una%20cotización." target="_blank" rel="noopener noreferrer" className="text-white text-xs font-bold hover:text-[#FFD700] transition-colors flex items-center gap-1">
+              <a href={`https://wa.me/${CONTACT_PHONE}?text=Hola,%20necesito%20una%20cotización.`} target="_blank" rel="noopener noreferrer" className="text-white text-xs font-bold hover:text-[#FFD700] transition-colors flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                 WhatsApp Directo
               </a>
             </div>
 
             {/* --- BOTÓN DE CARRITO (PALETA CORPORATIVA) --- */}
-            <button 
-              onClick={toggleCart} 
+            <button
+              onClick={toggleCart}
               className="relative group flex items-center gap-3 bg-[#FFD700] hover:bg-[#FFED4D] text-black pl-1.5 pr-5 py-1.5 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.4)]"
             >
               {/* Círculo Negro con Ícono Amarillo */}
               <div className="bg-black text-[#FFD700] w-9 h-9 rounded-full flex items-center justify-center shadow-sm border border-[#333] group-hover:border-[#FFD700] transition-colors">
                 <ShoppingCart className="w-4 h-4 fill-current" />
               </div>
-              
+
               {/* Precio Total */}
               <div className="flex flex-col items-start">
-                 <span className="text-[9px] uppercase font-black text-neutral-800 leading-none tracking-wider mb-0.5">Mi Carro</span>
-                 <span className="text-base font-black tracking-tighter leading-none">{formatPriceHeader(totalPrice)}</span>
+                <span className="text-[9px] uppercase font-black text-neutral-800 leading-none tracking-wider mb-0.5">Mi Carro</span>
+                <span className="text-base font-black tracking-tighter leading-none">{formatPriceHeader(totalPrice)}</span>
               </div>
 
               {/* Badge Flotante (Contador) */}
               <AnimatePresence mode="popLayout">
                 {totalItems > 0 && (
-                  <motion.span 
+                  <motion.span
                     key={totalItems}
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
@@ -136,14 +136,14 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
 
         {/* Mobile Search (Visible only on mobile) */}
         <div className="lg:hidden mt-4 relative">
-           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-           <input 
-             type="text" 
-             value={searchTerm}
-             onChange={(e) => onSearchChange(e.target.value)}
-             placeholder="BUSCAR..." 
-             className="w-full bg-[#151515] border border-[#333] py-3 pl-10 text-xs text-white uppercase font-bold outline-none focus:border-[#FFD700]"
-           />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="BUSCAR..."
+            className="w-full bg-[#151515] border border-[#333] py-3 pl-10 text-xs text-white uppercase font-bold outline-none focus:border-[#FFD700]"
+          />
         </div>
       </div>
     </header>

@@ -38,7 +38,7 @@ interface CartStore {
   quickCheckout: () => Promise<void>;
 }
 
-const formatPrice = (val: number) => 
+const formatPrice = (val: number) =>
   new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(val);
 
 export const useCartStore = create<CartStore>((set, get) => ({
@@ -46,16 +46,16 @@ export const useCartStore = create<CartStore>((set, get) => ({
   isOpen: false,
   stockWarnings: [],
   toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
-  
+
   addItem: (product, quantity = 1, priceOverride) => set((state) => {
     const existing = state.items.find(i => i.id === product.id);
     const finalPrice = priceOverride !== undefined ? priceOverride : product.priceWholesale;
 
     if (existing) {
       return {
-        items: state.items.map(i => 
-          i.id === product.id ? { 
-            ...i, 
+        items: state.items.map(i =>
+          i.id === product.id ? {
+            ...i,
             quantity: i.quantity + quantity,
             price: finalPrice
           } : i
@@ -70,7 +70,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         sku: product.sku,
         price: finalPrice,
         quantity: quantity,
-        image: product.imageUrl || product.image 
+        image: product.imageUrl || product.image
       }],
       isOpen: true
     };
@@ -96,7 +96,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
 
   clearCart: () => set({ items: [] }),
-  
+
   clearStockWarnings: () => set({ stockWarnings: [] }),
 
   validateCartStock: async () => {
@@ -104,14 +104,14 @@ export const useCartStore = create<CartStore>((set, get) => ({
     if (items.length === 0) return;
     try {
       const skus = items.map(i => i.sku);
-      const { data } = await supabase.from('productos').select('sku, name, in_stock').in('sku', skus);
+      const { data } = await supabase.from('productos').select('sku, nombre, en_stock').in('sku', skus);
       if (data && data.length > 0) {
         for (const item of items) {
           const remote = data.find(d => d.sku === item.sku);
-          if (remote && remote.in_stock === false) {
+          if (remote && remote.en_stock === false) {
             removeItem(item.id);
-            set((state) => ({ 
-              stockWarnings: [...state.stockWarnings, `ITEM ELIMINADO POR FALTA DE STOCK: ${item.name}`] 
+            set((state) => ({
+              stockWarnings: [...state.stockWarnings, `ITEM ELIMINADO POR FALTA DE STOCK: ${item.name}`]
             }));
           }
         }
@@ -128,11 +128,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
     // VALIDACIÓN DE STOCK EN VIVO
     try {
       const skus = items.map(i => i.sku);
-      const { data } = await supabase.from('productos').select('sku, name, in_stock').in('sku', skus);
+      const { data } = await supabase.from('productos').select('sku, nombre, en_stock').in('sku', skus);
       if (data && data.length > 0) {
         for (const item of items) {
           const remote = data.find(d => d.sku === item.sku);
-          if (remote && remote.in_stock === false) {
+          if (remote && remote.en_stock === false) {
             alert(`Lo sentimos, el producto "${item.name}" acaba de agotarse y ya no está disponible.`);
             return; // Bloqueamos el flujo
           }
@@ -148,9 +148,9 @@ export const useCartStore = create<CartStore>((set, get) => ({
     message += `📋 *DOCUMENTO:* ${docType === 'factura' ? 'FACTURA' : 'BOLETA'}\n`;
     message += `👤 *CLIENTE:* ${customerData.name}\n`;
     message += `📱 *TEL:* ${customerData.phone}\n`;
-    
+
     if (customerData.address) {
-        message += `📍 *DESPACHO:* ${customerData.address}${customerData.region ? `, ${customerData.region}` : ''}\n`;
+      message += `📍 *DESPACHO:* ${customerData.address}${customerData.region ? `, ${customerData.region}` : ''}\n`;
     }
 
     if (docType === 'factura') {
@@ -164,9 +164,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
     message += `--------------------------------\n`;
     message += `🛒 *DETALLE DEL PEDIDO*\n`;
     items.forEach(item => {
-      message += `▪ ${item.quantity}x ${item.name}\n   SKU: ${item.sku} | $${new Intl.NumberFormat('es-CL').format(item.price * item.quantity)}\n`;
+      const unitPrice = new Intl.NumberFormat('es-CL').format(item.price);
+      const subtotal = new Intl.NumberFormat('es-CL').format(item.price * item.quantity);
+      message += `▪ ${item.quantity}x ${item.name}\n   SKU: ${item.sku} | $${unitPrice} c/u | Subtotal: $${subtotal}\n`;
     });
-    
+
     message += `--------------------------------\n`;
     message += `💰 *TOTAL A PAGAR: ${formatPrice(getTotal())}*\n`;
     message += `--------------------------------\n`;
@@ -181,7 +183,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       items: items,
       total: getTotal(),
       date: new Date().toISOString(),
-      
+
       // EVOLUTION API READY FIELDS
       number: customerData.phone,
       text: message,
@@ -193,7 +195,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(err => console.warn("Aviso n8n (puede ignorarse si está offline):", err)); 
+      }).catch(err => console.warn("Aviso n8n (puede ignorarse si está offline):", err));
     } catch (error) {
       console.warn("Fallo al enviar a n8n:", error);
     }
@@ -210,11 +212,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
     // VALIDACIÓN DE STOCK EN VIVO
     try {
       const skus = items.map(i => i.sku);
-      const { data } = await supabase.from('productos').select('sku, name, in_stock').in('sku', skus);
+      const { data } = await supabase.from('productos').select('sku, nombre, en_stock').in('sku', skus);
       if (data && data.length > 0) {
         for (const item of items) {
           const remote = data.find(d => d.sku === item.sku);
-          if (remote && remote.in_stock === false) {
+          if (remote && remote.en_stock === false) {
             alert(`Lo sentimos, el producto "${item.name}" acaba de agotarse y ya no está disponible.`);
             return; // Bloqueamos el flujo
           }
@@ -224,16 +226,18 @@ export const useCartStore = create<CartStore>((set, get) => ({
       console.warn("Fallo validación estricta de stock, proceeding...", err);
     }
 
-    let message = `*SOLICITUD DE COTIZACIÓN - FYC*\n`;
+    let message = `*SOLICITUD DE COTIZACIÓN RÁPIDA - FYC*\n`;
     message += `--------------------------------\n`;
     message += `🛒 *DETALLE DEL PEDIDO*\n`;
     items.forEach(item => {
-      message += `▪ ${item.quantity}x ${item.name}\n   SKU: ${item.sku} | $${new Intl.NumberFormat('es-CL').format(item.price * item.quantity)}\n`;
+      const unitPrice = new Intl.NumberFormat('es-CL').format(item.price);
+      const subtotal = new Intl.NumberFormat('es-CL').format(item.price * item.quantity);
+      message += `▪ ${item.quantity}x ${item.name}\n   SKU: ${item.sku} | $${unitPrice} c/u | Subtotal: $${subtotal}\n`;
     });
     message += `--------------------------------\n`;
     message += `💰 *TOTAL ESTIMADO: ${formatPrice(getTotal())}*\n`;
     message += `--------------------------------\n`;
-    message += `Hola, necesito confirmar stock y factibilidad de envío para estos insumos.`;
+    message += `Hola, me interesa confirmar la disponibilidad de estos productos y el costo de envío.`;
 
     // Envío Silencioso vía Webhook a n8n (Espejo Innobate)
     const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://24.199.110.9:5678/webhook/pedido-fyc';
@@ -253,7 +257,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(err => console.warn("Aviso n8n:", err)); 
+      }).catch(err => console.warn("Aviso n8n:", err));
     } catch (error) {
       console.warn("Fallo al enviar a n8n:", error);
     }
