@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase, supabaseAdmin, getProductImageUrl } from '../utils/supabase';
-import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, Edit, Upload, Trash2, ExternalLink } from 'lucide-react';
+import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, Edit, Upload, Trash2, ExternalLink, FilterX } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'out_of_stock', 'in_stock', 'no_image'
   const [updatingId, setUpdatingId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -152,10 +153,24 @@ const AdminDashboard = () => {
     }
   };
 
-  const filtered = productos.filter(p =>
-    (p.nombre || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (p.sku || '').toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Improved Logic for "Sin Foto"
+  const isNoImage = (url) => {
+    if (!url) return true;
+    const lower = url.toLowerCase();
+    return lower === '' || lower.includes('placeholder') || lower.includes('default');
+  };
+
+  const filtered = productos.filter(p => {
+    const matchesSearch = (p.nombre || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (p.sku || '').toLowerCase().includes(searchTerm.toLowerCase());
+
+    let matchesFilter = true;
+    if (activeFilter === 'out_of_stock') matchesFilter = !p.en_stock;
+    if (activeFilter === 'in_stock') matchesFilter = p.en_stock;
+    if (activeFilter === 'no_image') matchesFilter = isNoImage(p.url_imagen);
+
+    return matchesSearch && matchesFilter;
+  });
 
   if (loading) return (
     <div className="p-8 bg-black min-h-screen text-white flex flex-col items-center justify-center">
@@ -222,7 +237,6 @@ const AdminDashboard = () => {
                 </div>
               </div>
 
-              {/* BASIC DATA */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">SKU Requerido</label>
@@ -234,7 +248,6 @@ const AdminDashboard = () => {
                 </div>
               </div>
 
-              {/* PRICES */}
               <div className="grid grid-cols-2 gap-4 bg-yellow-500/5 p-4 rounded-xl border border-yellow-500/10">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-yellow-600 uppercase ml-1">Precio Mayorista ($)</label>
@@ -246,7 +259,6 @@ const AdminDashboard = () => {
                 </div>
               </div>
 
-              {/* CATEGORY & STOCK */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Categoría de Catálogo</label>
@@ -289,10 +301,10 @@ const AdminDashboard = () => {
       {/* HEADER & CONTROLS */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 bg-[#0A0A0A] p-6 rounded-2xl border border-[#222]">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-1 flex items-center gap-3">
-            <Package className="text-yellow-500" /> Centro de <span className="text-yellow-500">Control</span>
+          <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-1 flex items-center gap-3 text-balance">
+            <Package className="text-yellow-500 hidden sm:block" /> Centro de <span className="text-yellow-500">Control</span>
           </h1>
-          <p className="text-xs text-neutral-500 font-bold uppercase tracking-widest">Inventario Maestro F&C Soluciones Ferreteras</p>
+          <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em]">Inventario Real Time | F&C Soluciones Ferreteras</p>
         </div>
 
         <div className="flex flex-col sm:flex-row w-full md:w-auto gap-3">
@@ -303,50 +315,93 @@ const AdminDashboard = () => {
               placeholder="BUSCAR POR SKU O NOMBRE..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#111] border border-[#333] focus:border-yellow-500 rounded-lg py-2.5 pl-10 pr-4 text-xs font-bold uppercase transition-all outline-none"
+              className="w-full bg-[#111] border border-[#333] focus:border-yellow-500 rounded-lg py-3 pl-10 pr-4 text-[10px] font-black uppercase transition-all outline-none"
             />
+            {searchTerm && (
+              <button onClick={() => setSearchTerm('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white">
+                <X size={14} />
+              </button>
+            )}
           </div>
 
           <button
             onClick={openCreateModal}
-            className="bg-yellow-500 text-black px-6 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest hover:bg-yellow-400 transition shadow-[0_0_15px_rgba(234,179,8,0.3)] flex items-center justify-center gap-2"
+            className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-black text-[10px] uppercase tracking-widest hover:bg-yellow-400 transition shadow-[0_0_15px_rgba(234,179,8,0.3)] flex items-center justify-center gap-2"
           >
-            <Plus className="w-4 h-4" /> Nuevo Producto
+            <Plus className="w-4 h-4" /> Nuevo SKU
           </button>
         </div>
       </div>
 
-      {/* STATS MINI BAR */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-[#0A0A0A] border border-[#222] p-4 rounded-xl flex items-center gap-4">
-          <div className="p-3 bg-zinc-900 rounded-lg text-zinc-400"><Package size={20} /></div>
+      {/* STATS MINI BAR - INTERACTIVE FILTERS */}
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
+        <button
+          onClick={() => setActiveFilter('all')}
+          className={`bg-[#0A0A0A] border p-4 rounded-xl flex items-center gap-4 transition text-left group ${activeFilter === 'all' ? 'border-zinc-100 ring-1 ring-zinc-500' : 'border-[#222] hover:border-zinc-700'}`}
+        >
+          <div className={`p-3 rounded-lg transition ${activeFilter === 'all' ? 'bg-zinc-100 text-black' : 'bg-zinc-900 text-zinc-400'}`}><Package size={18} /></div>
           <div>
-            <p className="text-[10px] text-neutral-500 font-black uppercase">Total SKU</p>
+            <p className="text-[9px] text-neutral-500 font-black uppercase">Total SKU</p>
             <p className="text-xl font-black text-white leading-none mt-1">{productos.length}</p>
           </div>
-        </div>
-        <div className="bg-[#0A0A0A] border border-[#222] p-4 rounded-xl border-l-4 border-l-red-600 flex items-center gap-4">
-          <div className="p-3 bg-red-950/20 rounded-lg text-red-500"><AlertTriangle size={20} /></div>
+        </button>
+
+        <button
+          onClick={() => setActiveFilter('out_of_stock')}
+          className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'out_of_stock' ? 'border-red-600 ring-1 ring-red-900/50' : 'border-[#222] border-l-red-600/50 hover:border-red-900'}`}
+        >
+          <div className={`p-3 rounded-lg transition ${activeFilter === 'out_of_stock' ? 'bg-red-600 text-white' : 'bg-red-950/20 text-red-500'}`}><AlertTriangle size={18} /></div>
           <div>
-            <p className="text-[10px] text-neutral-500 font-black uppercase">Agotados</p>
+            <p className="text-[9px] text-neutral-500 font-black uppercase">Agotados</p>
             <p className="text-xl font-black text-red-500 leading-none mt-1">{productos.filter(p => !p.en_stock).length}</p>
           </div>
-        </div>
-        <div className="bg-[#0A0A0A] border border-[#222] p-4 rounded-xl border-l-4 border-l-yellow-600 flex items-center gap-4">
-          <div className="p-3 bg-yellow-950/20 rounded-lg text-yellow-500"><ImageIcon size={20} /></div>
+        </button>
+
+        <button
+          onClick={() => setActiveFilter('no_image')}
+          className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'no_image' ? 'border-yellow-600 ring-1 ring-yellow-900/50' : 'border-[#222] border-l-yellow-600/50 hover:border-yellow-900'}`}
+        >
+          <div className={`p-3 rounded-lg transition ${activeFilter === 'no_image' ? 'bg-yellow-600 text-black' : 'bg-yellow-950/20 text-yellow-500'}`}><ImageIcon size={18} /></div>
           <div>
-            <p className="text-[10px] text-neutral-500 font-black uppercase">Sin Foto</p>
-            <p className="text-xl font-black text-yellow-500 leading-none mt-1">{productos.filter(p => !p.url_imagen).length}</p>
+            <p className="text-[9px] text-neutral-500 font-black uppercase">Sin Foto</p>
+            <p className="text-xl font-black text-yellow-500 leading-none mt-1">{productos.filter(p => isNoImage(p.url_imagen)).length}</p>
           </div>
-        </div>
-        <div className="bg-[#0A0A0A] border border-[#222] p-4 rounded-xl border-l-4 border-l-green-600 flex items-center gap-4">
-          <div className="p-3 bg-green-950/20 rounded-lg text-green-500"><CheckCircle size={20} /></div>
+        </button>
+
+        <button
+          onClick={() => setActiveFilter('in_stock')}
+          className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'in_stock' ? 'border-green-600 ring-1 ring-green-900/50' : 'border-[#222] border-l-green-600/50 hover:border-green-900'}`}
+        >
+          <div className={`p-3 rounded-lg transition ${activeFilter === 'in_stock' ? 'bg-green-600 text-white' : 'bg-green-950/20 text-green-500'}`}><CheckCircle size={18} /></div>
           <div>
-            <p className="text-[10px] text-neutral-500 font-black uppercase">En Stock</p>
+            <p className="text-[9px] text-neutral-500 font-black uppercase">En Stock</p>
             <p className="text-xl font-black text-green-500 leading-none mt-1">{productos.filter(p => p.en_stock).length}</p>
           </div>
-        </div>
+        </button>
+
+        <button
+          onClick={() => { setActiveFilter('all'); setSearchTerm(''); }}
+          className="bg-zinc-900 hover:bg-zinc-800 p-4 rounded-xl flex items-center justify-center gap-3 transition group col-span-2 lg:col-span-1"
+        >
+          <FilterX className="text-zinc-500 group-hover:text-white transition" size={18} />
+          <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-white">Ver Todos</span>
+        </button>
       </div>
+
+      {/* FILTER ACTIVE BADGE */}
+      {activeFilter !== 'all' && (
+        <div className="mb-4 flex items-center gap-2">
+          <span className="text-[10px] font-black uppercase text-neutral-500">Filtrando por:</span>
+          <div className="bg-yellow-500/10 border border-yellow-500/20 px-3 py-1 rounded-full flex items-center gap-2">
+            <span className="text-[9px] font-black text-yellow-500 uppercase tracking-widest">
+              {activeFilter === 'out_of_stock' && 'Productos Agotados'}
+              {activeFilter === 'in_stock' && 'Productos Disponibles'}
+              {activeFilter === 'no_image' && 'Productos sin Imagen'}
+            </span>
+            <button onClick={() => setActiveFilter('all')} className="text-yellow-500 hover:text-white"><X size={12} /></button>
+          </div>
+        </div>
+      )}
 
       <div className="bg-[#0A0A0A] rounded-2xl border border-[#222] overflow-hidden shadow-2xl">
         <div className="overflow-x-auto custom-scrollbar">
@@ -364,15 +419,16 @@ const AdminDashboard = () => {
                 <tr key={p.id} className={`transition group ${!p.en_stock ? 'bg-red-900/[0.03]' : 'hover:bg-zinc-900/40'}`}>
                   <td className="p-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 bg-black rounded-lg border border-[#222] overflow-hidden flex-shrink-0 flex items-center justify-center">
+                      <div className="w-14 h-14 bg-black rounded-lg border border-[#222] overflow-hidden flex-shrink-0 flex items-center justify-center relative">
                         {p.url_imagen ? (
                           <img src={getProductImageUrl(p.nombre, p.url_imagen)} alt={p.nombre} className="w-full h-full object-cover" />
                         ) : (
                           <ImageIcon size={18} className="text-zinc-800" />
                         )}
+                        {!p.url_imagen && <div className="absolute top-0 right-0 w-2 h-2 bg-yellow-500 rounded-full border border-black animate-pulse" title="Sin Foto"></div>}
                       </div>
                       <div>
-                        <div className={`font-black uppercase text-sm leading-tight max-w-sm truncate ${!p.en_stock ? 'text-red-400' : 'text-zinc-100'}`}>
+                        <div className={`font-black uppercase text-xs leading-tight max-w-sm truncate ${!p.en_stock ? 'text-red-400' : 'text-zinc-100'}`}>
                           {p.nombre}
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
@@ -424,13 +480,13 @@ const AdminDashboard = () => {
                     <div className="flex flex-col gap-2">
                       <button
                         onClick={() => openEditModal(p)}
-                        className="w-full bg-[#111] hover:bg-[#222] border border-[#333] text-white py-1.5 rounded-lg text-[9px] font-black tracking-[0.2em] flex items-center justify-center gap-2 transition"
+                        className="w-full bg-[#111] hover:bg-[#222] border border-[#333] text-white py-2 rounded-lg text-[8px] font-black tracking-[0.2em] flex items-center justify-center gap-2 transition"
                       >
-                        <Edit size={12} /> EDITAR FICHA
+                        <Edit size={10} /> EDITAR FICHA
                       </button>
                       <button
                         onClick={() => updateQuickStock(p.id, p.en_stock)}
-                        className={`w-full py-1.5 rounded-lg text-[9px] font-black tracking-[0.2em] transition flex items-center justify-center gap-2 border 
+                        className={`w-full py-2 rounded-lg text-[8px] font-black tracking-[0.2em] transition flex items-center justify-center gap-2 border 
                           ${p.en_stock
                             ? 'bg-green-600/5 border-green-600/30 text-green-500 hover:bg-green-600 hover:text-white'
                             : 'bg-red-600/10 border-red-600 text-red-500 animate-pulse'
@@ -448,7 +504,8 @@ const AdminDashboard = () => {
           {filtered.length === 0 && (
             <div className="p-20 text-center flex flex-col items-center">
               <Search className="w-16 h-16 text-zinc-900 mb-4" />
-              <p className="text-neutral-600 font-black uppercase tracking-[0.3em] text-xs">Sin coincidencias para "{searchTerm}"</p>
+              <p className="text-neutral-600 font-black uppercase tracking-[0.3em] text-xs">Sin coincidencias para los filtros aplicados</p>
+              <button onClick={() => { setActiveFilter('all'); setSearchTerm(''); }} className="mt-4 text-yellow-500 hover:text-white text-[10px] font-black uppercase underline tracking-widest">Reiniciar búsqueda</button>
             </div>
           )}
         </div>
