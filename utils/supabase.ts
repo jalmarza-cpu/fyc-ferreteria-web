@@ -14,6 +14,10 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {
   }
 });
 
+// Administrador dedicado para el Dashboard (Usa Service Role para saltarse RLS)
+const serviceRoleKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrcWNicGl6eHNyZmZoeWd3eGNnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2ODU5NzAyMCwiZXhwIjoyMDg0MTczMDIwfQ.nPj_9tDFp1sGmqcalo_xPfgBwXz_NRTN4et0w_XpWac";
+export const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
+
 /**
  * Normaliza textos quitando tildes y caracteres especiales
  */
