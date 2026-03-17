@@ -37,38 +37,32 @@ export const slugify = (text: string) => {
  * Si no, usa el `imagePath` crudo (ej: "taladro.jpg").
  * Mapeo por SKU (Ley de Hierro): [SKU]-[Nombre].jpg 
  */
-export const getProductImageUrl = (productName: string, imagePath?: string) => {
+export const getProductImageUrl = (productName: string, imagePath?: string, sku?: string) => {
+  // 1. Prioridad Máxima: Si tenemos SKU, buscar por SKU (Ignora carpetas)
+  if (sku) {
+    return `${BASE_IMAGE_URL}/${sku}.jpg?v=innobate_sku`;
+  }
+
   if (!imagePath) {
     const firstWord = productName.split(' ')[0];
     const autoFile = `${slugify(firstWord)}.webp`;
     return `${BASE_IMAGE_URL}/${autoFile}?v=innobate1`;
   }
 
-  // 1. URLs Externas Directas
+  // 2. URLs Externas Directas
   if (imagePath.startsWith('http')) {
     return imagePath;
   }
 
-  // 2. Sistema de Subida Moderno (uploads/)
+  // 3. Sistema de Subida Moderno (uploads/)
   if (imagePath.startsWith('uploads/')) {
     return `${BASE_IMAGE_URL}/${imagePath}?v=innobate1`;
   }
 
-  // 3. Catálogo Legacy / Subcarpetas (CatalogoTerceros2, Alicates, Martillos, etc.)
-  // Si la ruta ya incluye el nombre de una carpeta (contiene '/')
-  if (imagePath.includes('/')) {
-    return `${BASE_IMAGE_URL}/${imagePath}?v=innobate1`;
-  }
-
-  // 4. Archivo en Raíz de Bucket (ej: taladro.jpg)
-  if (imagePath.includes('.')) {
-    return `${BASE_IMAGE_URL}/${imagePath}?v=innobate1`;
-  }
-
-  // 5. Fallback Mágico (Auto-mapeo por nombre)
-  const firstWord = productName.split(' ')[0];
-  const autoFile = `${slugify(firstWord)}.webp`;
-  return `${BASE_IMAGE_URL}/${autoFile}?v=innobate1`;
+  // 4. Si la ruta tiene el SKU integrado (Limpieza de ruta)
+  // Ej: "Alicates/070346-Alicate.jpg" -> "070346-Alicate.jpg"
+  const fileName = imagePath.includes('/') ? imagePath.split('/').pop() : imagePath;
+  return `${BASE_IMAGE_URL}/${fileName}?v=innobate1`;
 };
 
 /**

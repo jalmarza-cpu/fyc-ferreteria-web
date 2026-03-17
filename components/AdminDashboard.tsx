@@ -175,8 +175,8 @@ const AdminDashboard = () => {
   const isNoImage = (url) => {
     if (!url) return true;
     const lower = url.toLowerCase();
-    // Es una imagen válida si empieza con http, uploads/ o tiene una extensión de archivo (.jpg, .png, etc.)
-    if (lower.startsWith('http') || lower.startsWith('uploads/') || url.includes('.')) return false;
+    // Es una imagen válida si tiene SKU (contiene números), empieza con http, uploads/ o tiene extensión
+    if (lower.startsWith('http') || lower.startsWith('uploads/') || url.includes('.') || /\d+/.test(url)) return false;
     return true;
   };
 
@@ -251,7 +251,7 @@ const AdminDashboard = () => {
                   <div className="w-full md:w-40 h-40 bg-black rounded-lg border border-[#222] overflow-hidden flex items-center justify-center relative group">
                     {formData.url_imagen ? (
                       <img
-                        src={getProductImageUrl(formData.nombre, formData.url_imagen)}
+                        src={getProductImageUrl(formData.nombre, formData.url_imagen, formData.sku)}
                         alt="Preview"
                         className="w-full h-full object-cover"
                         onError={(e) => { e.currentTarget.src = 'https://placehold.co/400x400/111/yellow?text=Formato+Inválido'; }}
@@ -473,7 +473,7 @@ const AdminDashboard = () => {
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 bg-zinc-950 rounded-lg border border-[#222] overflow-hidden flex-shrink-0 flex items-center justify-center relative">
                         {!isNoImage(p.url_imagen) ? (
-                          <img src={getProductImageUrl(p.nombre, p.url_imagen)} alt={p.nombre} className="w-full h-full object-cover" />
+                          <img src={getProductImageUrl(p.nombre, p.url_imagen, p.sku)} alt={p.nombre} className="w-full h-full object-cover" />
                         ) : (
                           <div className="flex flex-col items-center gap-1 opacity-40">
                             <CameraOff size={14} className="text-neutral-500" />

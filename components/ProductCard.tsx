@@ -128,7 +128,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         >
           <img
             loading="lazy"
-            src={getProductImageUrl(product.name, product.imageUrl)}
+            src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
             alt={`${product.name} - SKU: ${product.sku}`}
             className="w-full h-full object-contain group-hover:scale-105 group-hover:brightness-110 transition-transform duration-500 ease-out"
             onError={(e) => {
@@ -183,8 +183,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <div
                 onClick={() => setPricingMode('retail')}
                 className={`flex items-center justify-between px-2 py-1.5 rounded cursor-pointer transition-all border ${pricingMode === 'retail'
-                    ? 'border-neutral-500 bg-[#1a1a1a]'
-                    : 'border-transparent hover:bg-[#1a1a1a]'
+                  ? 'border-neutral-500 bg-[#1a1a1a]'
+                  : 'border-transparent hover:bg-[#1a1a1a]'
                   }`}
               >
                 <div className="flex items-center gap-2">
@@ -206,8 +206,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <div
                 onClick={() => setPricingMode('wholesale')}
                 className={`relative flex flex-col px-3 py-2 rounded-lg cursor-pointer transition-all border-2 ${pricingMode === 'wholesale'
-                    ? 'border-[#FFD700] bg-[#FFD700]/5 shadow-[0_0_15px_rgba(255,215,0,0.1)]'
-                    : 'border-[#333] bg-[#0E0E0E] hover:border-[#FFD700]/50'
+                  ? 'border-[#FFD700] bg-[#FFD700]/5 shadow-[0_0_15px_rgba(255,215,0,0.1)]'
+                  : 'border-[#333] bg-[#0E0E0E] hover:border-[#FFD700]/50'
                   }`}
               >
                 {/* Header del Tier */}
@@ -335,7 +335,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               >
                 <img
                   loading="lazy"
-                  src={getProductImageUrl(product.name, product.imageUrl)}
+                  src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
                   alt={`${product.name} - SKU: ${product.sku}`}
                   className="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-500 ease-out"
                   onError={(e) => {
@@ -458,7 +458,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               className="w-full h-full flex items-center justify-center p-2 md:p-12 cursor-zoom-out"
             >
               <img
-                src={getProductImageUrl(product.name, product.imageUrl) + "&quality=highres"}
+                src={getProductImageUrl(product.name, product.imageUrl, product.sku) + "&quality=highres"}
                 alt={`${product.name} - SKU: ${product.sku}`}
                 className="max-w-full max-h-full object-contain pointer-events-auto"
                 style={{ touchAction: 'pinch-zoom' }}
