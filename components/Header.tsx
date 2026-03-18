@@ -53,12 +53,13 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
             <button onClick={onMenuClick} className="lg:hidden text-white hover:text-[#FFD700] transition-colors">
               <Menu className="w-6 h-6" />
             </button>
-            <div className="flex flex-col leading-none select-none cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <div className="flex items-center gap-1">
-                <span className="font-industrial text-3xl md:text-4xl text-white font-black tracking-tighter">F<span className="text-[#FFD700]">y</span>C</span>
-                <span className="font-industrial text-xl md:text-2xl text-white font-bold tracking-tight mt-1">SPA</span>
-              </div>
-              <span className="text-[8px] md:text-[9px] text-neutral-500 font-black uppercase tracking-[0.3em] pl-1">Soluciones en Ferretería</span>
+            <div className="select-none cursor-pointer hover:opacity-90 transition-opacity" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <img
+                src="/Logo/Logo-sin-fondo.png"
+                alt="Ferretería FYC"
+                className="h-[60px] md:h-20 w-auto object-contain"
+                title="Ferretería FYC"
+              />
             </div>
           </div>
 
