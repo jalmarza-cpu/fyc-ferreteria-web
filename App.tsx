@@ -650,7 +650,7 @@ const AppContent = () => {
             path="/admin"
             element={
               <React.Suspense fallback={<div className="min-h-screen bg-[#050505] text-white flex justify-center items-center font-industrial text-xl uppercase animate-pulse">Cargando Módulo Administrativo...</div>}>
-                <AdminDashboard />
+                <AdminDashboard searchTerm={searchTerm} onSearchChange={handleSearchChange} />
               </React.Suspense>
             }
           />

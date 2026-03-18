@@ -2,12 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase, supabaseAdmin, getProductImageUrl } from '../utils/supabase';
 import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, ExternalLink, FilterX } from 'lucide-react';
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [localSearchTerm, setLocalSearchTerm] = useState(''); // Local search state for the dashboard
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm); // Sync initial state
   const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'out_of_stock', 'in_stock', 'no_image'
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [updatingId, setUpdatingId] = useState(null);
@@ -16,6 +16,13 @@ const AdminDashboard = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+
+  // Sync with global searchTerm when it changes
+  useEffect(() => {
+    if (searchTerm !== undefined) {
+      setLocalSearchTerm(searchTerm);
+    }
+  }, [searchTerm]);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -94,7 +101,7 @@ const AdminDashboard = () => {
 
     setUploading(true);
     const fileExt = file.name.split('.').pop();
-    const fileName = `${formData.sku || 'prod'}-${Date.now()}.${fileExt}`;
+    const fileName = `${String(formData.sku || 'prod')}-${Date.now()}.${fileExt}`;
     const filePath = `uploads/${fileName}`;
 
     try {
@@ -116,6 +123,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     setIsSaving(true);
 
+    // Aseguramos SKU como String explícitamente en el envío
     const payload = {
       sku: String(formData.sku).trim(),
       nombre: formData.nombre,
@@ -182,9 +190,11 @@ const AdminDashboard = () => {
 
   const filtered = productos.filter(p => {
     // FILTRO DE BÚSQUEDA (SKU o Nombre) - Usar localSearchTerm
-    const matchesSearch =
-      p.sku?.toLowerCase().includes(localSearchTerm.toLowerCase()) ||
-      p.nombre?.toLowerCase().includes(localSearchTerm.toLowerCase());
+    const search = (localSearchTerm || '').toLowerCase().trim();
+    const productName = (p.nombre || '').toLowerCase();
+    const productSku = String(p.sku || '').toLowerCase();
+
+    const matchesSearch = productSku.includes(search) || productName.includes(search);
 
     // FILTROS DE ESTADO (Stock, Sin imagen, etc.)
     let matchesFilter = true;
