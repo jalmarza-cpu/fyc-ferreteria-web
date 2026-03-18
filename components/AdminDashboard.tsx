@@ -7,7 +7,7 @@ const AdminDashboard = () => {
   const [password, setPassword] = useState('');
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [localSearchTerm, setLocalSearchTerm] = useState(''); // Local search state for the dashboard
   const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'out_of_stock', 'in_stock', 'no_image'
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [updatingId, setUpdatingId] = useState(null);
@@ -181,10 +181,10 @@ const AdminDashboard = () => {
   };
 
   const filtered = productos.filter(p => {
-    // FILTRO DE BÚSQUEDA (SKU o Nombre)
+    // FILTRO DE BÚSQUEDA (SKU o Nombre) - Usar localSearchTerm
     const matchesSearch =
-      p.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.nombre?.toLowerCase().includes(searchTerm.toLowerCase());
+      p.sku?.toLowerCase().includes(localSearchTerm.toLowerCase()) ||
+      p.nombre?.toLowerCase().includes(localSearchTerm.toLowerCase());
 
     // FILTROS DE ESTADO (Stock, Sin imagen, etc.)
     let matchesFilter = true;
@@ -366,12 +366,12 @@ const AdminDashboard = () => {
             <input
               type="text"
               placeholder="BUSCAR SKU O NOMBRE..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              value={localSearchTerm}
+              onChange={(e) => setLocalSearchTerm(e.target.value)}
               className="w-full bg-[#111] border border-[#333] focus:border-yellow-500 rounded-lg py-3 pl-10 pr-4 text-[10px] font-black uppercase transition-all outline-none"
             />
-            {searchTerm && (
-              <button onClick={() => setSearchTerm('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white">
+            {localSearchTerm && (
+              <button onClick={() => setLocalSearchTerm('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white">
                 <X size={14} />
               </button>
             )}
@@ -420,7 +420,7 @@ const AdminDashboard = () => {
           </div>
         </button>
 
-        <button onClick={() => { setActiveFilter('all'); setSearchTerm(''); setSelectedCategory('Todas'); }} className="bg-zinc-900 hover:bg-zinc-800 p-4 rounded-xl flex items-center justify-center gap-3 transition group col-span-2 lg:col-span-1">
+        <button onClick={() => { setActiveFilter('all'); setLocalSearchTerm(''); setSelectedCategory('Todas'); }} className="bg-zinc-900 hover:bg-zinc-800 p-4 rounded-xl flex items-center justify-center gap-3 transition group col-span-2 lg:col-span-1">
           <FilterX className="text-zinc-500 group-hover:text-white transition" size={18} />
           <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-white">Limpiar</span>
         </button>
@@ -563,7 +563,7 @@ const AdminDashboard = () => {
             <div className="p-20 text-center flex flex-col items-center">
               <Search className="w-16 h-16 text-zinc-900 mb-4" />
               <p className="text-neutral-600 font-black uppercase tracking-[0.3em] text-xs">Sin coincidencias</p>
-              <button onClick={() => { setActiveFilter('all'); setSearchTerm(''); setSelectedCategory('Todas'); }} className="mt-4 text-yellow-500 hover:text-white text-[10px] font-black uppercase underline tracking-widest">Reiniciar filtros</button>
+              <button onClick={() => { setActiveFilter('all'); setLocalSearchTerm(''); setSelectedCategory('Todas'); }} className="mt-4 text-yellow-500 hover:text-white text-[10px] font-black uppercase underline tracking-widest">Reiniciar filtros</button>
             </div>
           )}
         </div>
