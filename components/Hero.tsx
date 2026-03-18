@@ -96,15 +96,15 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
           initial={{ opacity: 0, x: 50, scale: 0.9 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-          className="hidden xl:flex flex-1 justify-end items-center relative h-full"
+          className="hidden lg:flex flex-1 justify-end items-center relative h-full"
         >
           {/* Glow Effect Backend */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#FFD700]/10 rounded-full blur-[120px] pointer-events-none"></div>
 
           <img
-            src="/images/hero-tools.png"
+            src="./images/hero-tools.png"
             alt="Herramientas Industriales F&C"
-            className="relative z-10 max-h-[550px] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] filter brightness-110"
+            className="relative z-10 max-h-[450px] xl:max-h-[550px] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] filter brightness-110"
           />
         </motion.div>
       </div>
