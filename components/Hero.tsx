@@ -17,12 +17,12 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
     >
       {/* Static Premium Background: Dark Industrial Gradient */}
       <div className="absolute inset-0 w-full h-full z-0 bg-[#050505]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,215,0,0.05)_0%,transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0A0A0A] to-black opacity-90"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,100,0,0.03)_0%,transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-[#080808] to-black opacity-95"></div>
       </div>
 
       {/* Industrial Texture / Mesh Pattern Overlay */}
-      <div className="absolute inset-0 opacity-[0.03] z-0 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+      <div className="absolute inset-0 opacity-[0.02] z-0 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
 
 
       <div className="relative z-10 max-w-[1600px] mx-auto w-full px-6 md:px-12 flex items-center h-full">
