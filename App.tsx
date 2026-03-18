@@ -13,7 +13,6 @@ import Footer from './components/Footer';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
 import Sidebar from './components/Sidebar';
-import CategoryBento from './components/CategoryBento';
 import About from './components/About';
 import Maestros from './components/Maestros';
 // Legal Pages Import
@@ -438,7 +437,24 @@ const Home = ({
             const grid = document.getElementById('productos');
             grid?.scrollIntoView({ behavior: 'smooth' });
           }} />
-          <CategoryBento onSelectCategory={handleBentoCategorySelect} />
+
+          {/* Video Showcase Section (Replacing Categories) */}
+          <section className="w-full bg-[#050505] py-12 px-4 md:px-12 border-b border-[#111]">
+            <div className="max-w-[1400px] mx-auto overflow-hidden rounded-[2rem] border border-[#222] shadow-[0_30px_100px_rgba(0,0,0,1)] relative bg-black group">
+              <video
+                src="https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public/video-webp/video%20Logo%20full%20realismo%20720.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover aspect-video scale-105 group-hover:scale-100 transition-transform duration-[3s] ease-out opacity-80 group-hover:opacity-100"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
+              {/* Subtle accent line */}
+              <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#FFD700]/30 to-transparent"></div>
+            </div>
+          </section>
+
           <About />
         </>
       )}

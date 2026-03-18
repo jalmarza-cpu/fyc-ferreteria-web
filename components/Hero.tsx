@@ -11,30 +11,23 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
   const toggleCart = useCartStore((state) => state.toggleCart);
 
   return (
-    <section 
-      id="inicio" 
+    <section
+      id="inicio"
       className="h-[600px] md:h-[700px] w-full flex items-center overflow-hidden border-b border-[#111] bg-[#050505] relative scroll-mt-32 shadow-[0_10px_50px_rgba(0,0,0,0.8)]"
     >
-      {/* Supabase Storage HTML5 Video Container */}
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden opacity-100">
-        <video 
-          /* URL Oficial 720p - Innobate World Standard */
-          src="https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public/video-webp/video%20Logo%20full%20realismo%20720.mp4" 
-          autoPlay 
-          muted 
-          loop 
-          playsInline 
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+      {/* Static Premium Background: Dark Industrial Gradient */}
+      <div className="absolute inset-0 w-full h-full z-0 bg-[#050505]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,215,0,0.05)_0%,transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0A0A0A] to-black opacity-90"></div>
       </div>
 
-      {/* Zero-Weight Overlay: Máximo realismo del video, pero protegiendo legibilidad del texto */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/10 to-transparent z-0 pointer-events-none"></div>
+      {/* Industrial Texture / Mesh Pattern Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] z-0 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+
 
       <div className="relative z-10 max-w-[1600px] mx-auto w-full px-6 md:px-12 flex items-center h-full">
         {/* Barra Amarilla Decorativa (Acento Amarillo Neón Real) */}
-        <motion.div 
+        <motion.div
           initial={{ height: 0 }}
           animate={{ height: '60%' }}
           transition={{ duration: 1, ease: "circOut" }}
@@ -47,26 +40,26 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-             {/* Etiqueta Superior */}
-             <div className="inline-flex items-center gap-2 mb-6 bg-black/40 border border-[#FFD700] rounded-full px-5 py-2 backdrop-blur-md shadow-[0_0_15px_#FFD700]">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FFD700] shadow-[0_0_10px_#FFD700,0_0_20px_#FFD700] animate-pulse"></span>
-                <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] drop-shadow-[0_0_5px_#FFD700]">
-                  Stock Disponible 2026
-                </span>
-             </div>
+            {/* Etiqueta Superior */}
+            <div className="inline-flex items-center gap-2 mb-6 bg-black/40 border border-[#FFD700] rounded-full px-5 py-2 backdrop-blur-md shadow-[0_0_15px_#FFD700]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FFD700] shadow-[0_0_10px_#FFD700,0_0_20px_#FFD700] animate-pulse"></span>
+              <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] drop-shadow-[0_0_5px_#FFD700]">
+                Stock Disponible 2026
+              </span>
+            </div>
 
-             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.05] tracking-tighter font-industrial text-white mb-3 md:mb-4 drop-shadow-2xl">
-               QUE TU OBRA NUNCA <br className="hidden md:block" /> SE DETENGA POR <br/>
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFE55C] to-[#FFF1AB] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">FALTA DE MATERIALES.</span>
-             </h1>
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.05] tracking-tighter font-industrial text-white mb-3 md:mb-4 drop-shadow-2xl">
+              QUE TU OBRA NUNCA <br className="hidden md:block" /> SE DETENGA POR <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFE55C] to-[#FFF1AB] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">FALTA DE MATERIALES.</span>
+            </h1>
 
-             <h2 className="text-lg md:text-2xl text-white font-bold uppercase tracking-[0.15em] mb-8 flex items-center gap-4 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-               <span className="w-12 h-[2px] bg-[#FFD700] shadow-[0_0_15px_#FFD700]"></span>
-               HERRAMIENTAS Y MATERIALES
-             </h2>
+            <h2 className="text-lg md:text-2xl text-white font-bold uppercase tracking-[0.15em] mb-8 flex items-center gap-4 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+              <span className="w-12 h-[2px] bg-[#FFD700] shadow-[0_0_15px_#FFD700]"></span>
+              HERRAMIENTAS Y MATERIALES
+            </h2>
           </motion.div>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -74,22 +67,22 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
           >
             Evita retrasos y multas. Asegura tus insumos con stock real, facturación inmediata y despacho exprés.
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-5"
           >
-            <button 
+            <button
               onClick={onCatalogClick}
               className="group bg-[#FFD700] text-black px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_0_20px_#FFD700] hover:shadow-[0_0_40px_#FFD700,0_0_60px_#FFD700] font-industrial flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
             >
               Cotizar mi lista (Es rápido)
               <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
             </button>
-            
-            <button 
+
+            <button
               onClick={toggleCart}
               className="group bg-black/40 border border-[#FFD700]/50 text-white px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-[#FFD700]/20 hover:border-[#FFD700] transition-all backdrop-blur-md rounded-full w-full sm:w-auto flex items-center justify-center shadow-[0_0_15px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_#FFD700]"
             >
