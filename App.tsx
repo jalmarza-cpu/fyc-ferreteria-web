@@ -598,7 +598,8 @@ const AppContent = () => {
   const handleSearchChange = (term: string) => {
     setSearchTerm(term);
     // If user starts searching while on a legal page, redirect to home/catalog
-    if (term && location.pathname !== '/') {
+    // BUT! Don't redirect if we are in the admin dashboard
+    if (term && location.pathname !== '/' && !location.pathname.startsWith('/admin')) {
       navigate('/');
     }
   };
