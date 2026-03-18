@@ -24,9 +24,9 @@ const catalog = {
   "070129": { name: "Martillo Peña forjado 1.5lb", retail: 4000, wholesale: 3750, category: "Herramientas Manuales" },
   "070122": { name: "Martillo mecánico 300g", retail: 1990, wholesale: 1760, category: "Herramientas Manuales" },
   "070121": { name: "Martillo mecánico 200g", retail: 1500, wholesale: 1350, category: "Herramientas Manuales" },
-  "070120": { name: "Martillo mecánico 100g", retail: 1490, wholesale: 1190, category: "Herramientas Manuales", overrideSku: "07012" }, 
+  "070120": { name: "Martillo mecánico 100g", retail: 1490, wholesale: 1190, category: "Herramientas Manuales" },
   "070112": { name: "Martillo con mango de fibra forjado 25mm", retail: 3500, wholesale: 3300, category: "Herramientas Manuales" },
-  
+
   // Alicates image 3 and image 2
   "070346": { name: 'Alicate Cortante 8"', retail: 2500, wholesale: 2250, category: "Herramientas Manuales" },
   "070323": { name: 'Alicate Ford 8"', retail: 2500, wholesale: 2170, category: "Herramientas Manuales" },
@@ -82,26 +82,26 @@ let prodIdCount = 100;
 for (const [sku, item] of Object.entries(catalog)) {
   const finalSku = item.overrideSku || sku;
   if (!constantsContent.includes('sku: "' + finalSku + '"')) {
-     toAppend += '\n  {\n';
-     toAppend += '    id: "prod-' + (prodIdCount++) + '",\n';
-     const saneName = item.name.replace(/"/g, '\\\\\\"');
-     toAppend += '    name: "' + saneName + '",\n';
-     toAppend += '    sku: "' + finalSku + '",\n';
-     toAppend += '    description: "' + saneName + ' para uso profesional.",\n';
-     toAppend += '    priceRetail: ' + item.retail + ',\n';
-     toAppend += '    priceWholesale: ' + item.wholesale + ',\n';
-     toAppend += '    imageUrl: "' + item.category.replace(/\\s+/g, '') + '/' + finalSku + '.jpg",\n';
-     toAppend += '    category: "' + item.category + '"\n';
-     toAppend += '  },';
+    toAppend += '\n  {\n';
+    toAppend += '    id: "prod-' + (prodIdCount++) + '",\n';
+    const saneName = item.name.replace(/"/g, '\\\\\\"');
+    toAppend += '    name: "' + saneName + '",\n';
+    toAppend += '    sku: "' + finalSku + '",\n';
+    toAppend += '    description: "' + saneName + ' para uso profesional.",\n';
+    toAppend += '    priceRetail: ' + item.retail + ',\n';
+    toAppend += '    priceWholesale: ' + item.wholesale + ',\n';
+    toAppend += '    imageUrl: "' + item.category.replace(/\\s+/g, '') + '/' + finalSku + '.jpg",\n';
+    toAppend += '    category: "' + item.category + '"\n';
+    toAppend += '  },';
   }
 }
 
 if (toAppend.length > 0) {
-    // Find the last ]; which belongs to PRODUCTS array.
-    const lastBracketIndex = constantsContent.lastIndexOf('];');
-    if (lastBracketIndex !== -1) {
-        constantsContent = constantsContent.slice(0, lastBracketIndex) + toAppend + '\n];' + constantsContent.slice(lastBracketIndex + 2);
-    }
+  // Find the last ]; which belongs to PRODUCTS array.
+  const lastBracketIndex = constantsContent.lastIndexOf('];');
+  if (lastBracketIndex !== -1) {
+    constantsContent = constantsContent.slice(0, lastBracketIndex) + toAppend + '\n];' + constantsContent.slice(lastBracketIndex + 2);
+  }
 }
 
 fs.writeFileSync(constantsPath, constantsContent);

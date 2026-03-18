@@ -150,6 +150,17 @@ export const PRODUCTS: Product[] = [
     category: "Revestimientos"
   },
 
+  {
+    id: "prod-126",
+    name: "Martillo mecánico 100g",
+    sku: "070120",
+    description: "Martillo mecánico 100g para uso profesional.",
+    priceRetail: 1490,
+    priceWholesale: 1190,
+    imageUrl: "Martillos/070120.jpg",
+    category: "Herramientas Manuales"
+  },
+
   // --- MARTILLOS ---
   {
     id: 'prod-009',
@@ -302,7 +313,7 @@ export const PRODUCTS: Product[] = [
     imageUrl: "Medicion/040153.jpg",
     category: "Medición"
   },
-  
+
   // --- HERRAMIENTAS ADICIONALES ---
   {
     id: 'prod-027',
@@ -787,11 +798,11 @@ export const PRODUCTS: Product[] = [
   {
     id: "prod-126",
     name: "Martillo mecánico 100g",
-    sku: "07012",
+    sku: "070120",
     description: "Martillo mecánico 100g para uso profesional.",
     priceRetail: 1490,
     priceWholesale: 1190,
-    imageUrl: "Herramientas Manuales/07012.jpg",
+    imageUrl: "Martillos/070120.jpg",
     category: "Herramientas Manuales"
   },
   {

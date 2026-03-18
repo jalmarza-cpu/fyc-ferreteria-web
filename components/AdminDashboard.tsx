@@ -76,7 +76,7 @@ const AdminDashboard = () => {
     setIsEditing(true);
     setFormData({
       id: producto.id,
-      sku: producto.sku,
+      sku: String(producto.sku || ''),
       nombre: producto.nombre,
       descripcion: producto.descripcion || '',
       categoria: producto.categoria,
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
     setIsSaving(true);
 
     const payload = {
-      sku: formData.sku,
+      sku: String(formData.sku).trim(),
       nombre: formData.nombre,
       descripcion: formData.descripcion,
       categoria: formData.categoria,
@@ -181,14 +181,18 @@ const AdminDashboard = () => {
   };
 
   const filtered = productos.filter(p => {
-    const matchesSearch = (p.nombre || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (p.sku || '').toLowerCase().includes(searchTerm.toLowerCase());
+    // FILTRO DE BÚSQUEDA (SKU o Nombre)
+    const matchesSearch =
+      p.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.nombre?.toLowerCase().includes(searchTerm.toLowerCase());
 
+    // FILTROS DE ESTADO (Stock, Sin imagen, etc.)
     let matchesFilter = true;
-    if (activeFilter === 'out_of_stock') matchesFilter = !p.en_stock;
-    if (activeFilter === 'in_stock') matchesFilter = p.en_stock;
-    if (activeFilter === 'no_image') matchesFilter = isNoImage(p.url_imagen);
+    if (activeFilter === 'out_of_stock') matchesFilter = p.en_stock === false;
+    if (activeFilter === 'in_stock') matchesFilter = p.en_stock === true;
+    if (activeFilter === 'no_image') matchesFilter = !p.url_imagen;
 
+    // FILTRO DE CATEGORÍA
     const matchesCategory = selectedCategory === 'Todas' || p.categoria === selectedCategory;
 
     return matchesSearch && matchesFilter && matchesCategory;
