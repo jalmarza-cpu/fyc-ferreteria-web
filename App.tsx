@@ -576,18 +576,21 @@ const AppContent = () => {
             const fromSupabase = data.map(d => {
               // Si existía en constants, heredamos solo el id estructurado
               const base = PRODUCTS.find(p => normSku(p.sku) === normSku(d.sku));
+              // Safety: Limpiar backslashes residuales de encoding y convertir precios a número
+              const rawName = d.nombre || base?.name || 'Producto sin nombre';
+              const cleanName = rawName.replace(/\\/g, '').trim();
               return {
                 ...(base || {}),
                 id: base ? base.id : `supabase-${d.id}`,
-                // Supabase manda: nombre, sku, descripción, precios, imagen, categoría
-                name: d.nombre || base?.name || 'Producto sin nombre',
+                name: cleanName,
                 sku: normSku(d.sku),
-                description: d.descripcion || base?.description || '',
-                priceRetail: d.precio_detalle || base?.priceRetail || 0,
-                priceWholesale: d.precio_mayorista || base?.priceWholesale || 0,
+                description: (d.descripcion || base?.description || '').replace(/\\/g, '').trim(),
+                // Convertir explícitamente a número (Supabase puede devolver strings)
+                priceRetail: Number(d.precio_detalle) || Number(base?.priceRetail) || 0,
+                priceWholesale: Number(d.precio_mayorista) || Number(base?.priceWholesale) || 0,
                 imageUrl: d.url_imagen || base?.imageUrl || '',
                 // Categoría de Supabase tiene PRIORIDAD ABSOLUTA (director define desde admin)
-                category: d.categoria || base?.category || 'Herramientas Manuales',
+                category: (d.categoria || base?.category || 'Herramientas Manuales').trim(),
                 inStock: d.en_stock !== false,
                 isVisible: d.estado_visibilidad !== false,
               };
@@ -625,10 +628,17 @@ const AppContent = () => {
       // Ocultar de la web si isVisible es false
       if (p.isVisible === false) return false;
 
-      const matchCat = category === 'Todas' || p.category === category;
-      const matchSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.sku.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchPrice = p.priceWholesale <= maxPrice;
+      // Null-safe: normalizar campos antes de comparar
+      const pCat = (p.category || '').trim();
+      const pName = (p.name || '').toLowerCase();
+      const pSku = String(p.sku || '').toLowerCase();
+      const term = searchTerm.toLowerCase().trim();
+
+      const matchCat = category === 'Todas' || pCat === category;
+      // Short-circuit: si no hay búsqueda, todos pasan
+      const matchSearch = !term || pName.includes(term) || pSku.includes(term);
+      // Number() garantiza comparación numérica aunque el precio llegue como string
+      const matchPrice = (Number(p.priceWholesale) || 0) <= maxPrice;
       return matchCat && matchSearch && matchPrice;
     });
   }, [category, searchTerm, maxPrice, liveProducts]);
