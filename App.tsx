@@ -559,41 +559,42 @@ const AppContent = () => {
         const { data, error } = await supabase.from('productos').select('*');
         if (data && data.length > 0 && isMounted) {
           setLiveProducts(() => {
-            // PASO 1: Actualizar los productos de constants con datos de Supabase
-            const updatedConstants = PRODUCTS.map(p => {
-              const remote = data.find(d => d.sku === p.sku);
-              if (remote) {
-                return {
-                  ...p,
-                  inStock: remote.en_stock !== false,
-                  priceWholesale: remote.precio_mayorista || p.priceWholesale,
-                  priceRetail: remote.precio_detalle || p.priceRetail,
-                  isVisible: remote.estado_visibilidad !== false,
-                  imageUrl: remote.url_imagen || p.imageUrl
-                };
-              }
-              return p;
+            // Normalizar SKU para comparación segura (Supabase puede devolver número o string)
+            const normSku = (sku: any): string => String(sku ?? '').trim();
+
+            // Construir Set de SKUs que existen en Supabase (fuente de verdad)
+            const supabaseSkus = new Set(data.map(d => normSku(d.sku)));
+
+            // PASO 1: Solo mantener productos de constants cuyo SKU NO está en Supabase
+            // Si un SKU existe en Supabase, Supabase tiene prioridad ABSOLUTA → sin duplicados
+            const staticFallback = PRODUCTS.filter(
+              p => !supabaseSkus.has(normSku(p.sku))
+            );
+
+            // PASO 2: Mapear TODOS los productos de Supabase al formato de la web
+            // Nombre, categoría, imagen y precios vienen 100% de Supabase
+            const fromSupabase = data.map(d => {
+              // Si existía en constants, heredamos solo el id estructurado
+              const base = PRODUCTS.find(p => normSku(p.sku) === normSku(d.sku));
+              return {
+                ...(base || {}),
+                id: base ? base.id : `supabase-${d.id}`,
+                // Supabase manda: nombre, sku, descripción, precios, imagen, categoría
+                name: d.nombre || base?.name || 'Producto sin nombre',
+                sku: normSku(d.sku),
+                description: d.descripcion || base?.description || '',
+                priceRetail: d.precio_detalle || base?.priceRetail || 0,
+                priceWholesale: d.precio_mayorista || base?.priceWholesale || 0,
+                imageUrl: d.url_imagen || base?.imageUrl || '',
+                // Categoría de Supabase tiene PRIORIDAD ABSOLUTA (director define desde admin)
+                category: d.categoria || base?.category || 'Herramientas Manuales',
+                inStock: d.en_stock !== false,
+                isVisible: d.estado_visibilidad !== false,
+              };
             });
 
-            // PASO 2: Agregar productos NUEVOS de Supabase que NO existen en constants
-            const existingSkus = new Set(PRODUCTS.map(p => String(p.sku)));
-            const newFromSupabase = data
-              .filter(d => !existingSkus.has(String(d.sku)))
-              .map(d => ({
-                id: `supabase-${d.id}`,
-                name: d.nombre || 'Producto sin nombre',
-                sku: String(d.sku || ''),
-                description: d.descripcion || '',
-                priceRetail: d.precio_detalle || 0,
-                priceWholesale: d.precio_mayorista || 0,
-                imageUrl: d.url_imagen || '',
-                category: d.categoria || 'Herramientas Manuales',
-                inStock: d.en_stock !== false,
-                // Por defecto visible si la columna no existe o es null
-                isVisible: d.estado_visibilidad !== false,
-              }));
-
-            return [...updatedConstants, ...newFromSupabase];
+            // Resultado: constantes sin colisión + todos los de Supabase
+            return [...staticFallback, ...fromSupabase];
           });
         }
       } catch (err) {
