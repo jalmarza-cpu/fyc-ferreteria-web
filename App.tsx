@@ -3,7 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck, FileText, Receipt, User, Building2, MapPin, Phone, ArrowLeft, Send } from 'lucide-react';
-import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE } from './constants';
+import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE, getSubcategory } from './constants';
 import { useCartStore } from './store';
 import { supabase, getProductImageUrl } from './utils/supabase';
 
@@ -393,6 +393,7 @@ const CartDrawer = () => {
 // --- HOME COMPONENT (CATALOG VIEW) ---
 const Home = ({
   category, setCategory,
+  subcategory, setSubcategory,
   searchTerm, setSearchTerm,
   maxPrice, setMaxPrice,
   maxProductPrice,
@@ -470,7 +471,8 @@ const Home = ({
             <div className="hidden lg:block sticky top-32 w-72 flex-shrink-0">
               <Sidebar
                 selectedCategory={category}
-                onSelectCategory={setCategory}
+                selectedSubcategory={subcategory}
+                onSelectCategory={(cat, sub) => { setCategory(cat); setSubcategory(sub || ''); }}
                 maxPrice={maxPrice}
                 onPriceChange={setMaxPrice}
                 absMaxPrice={maxProductPrice}
@@ -543,6 +545,7 @@ const Home = ({
 // --- APP CONTENT WRAPPER (To use Hooks) ---
 const AppContent = () => {
   const [category, setCategory] = useState('Todas');
+  const [subcategory, setSubcategory] = useState('');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -571,7 +574,11 @@ const AppContent = () => {
             // Si un SKU existe en Supabase, Supabase tiene prioridad ABSOLUTA → sin duplicados
             const staticFallback = PRODUCTS.filter(
               p => !supabaseSkus.has(normSku(p.sku))
-            );
+            ).map(p => ({
+              ...p,
+              // Derivar subcategoría automáticamente desde nombre + categoría
+              subcategory: getSubcategory(p.name, p.category || ''),
+            }));
 
             // PASO 2: Mapear TODOS los productos de Supabase al formato de la web
             // Nombre, categoría, imagen y precios vienen 100% de Supabase
@@ -595,6 +602,8 @@ const AppContent = () => {
                 category: (d.categoria || base?.category || 'Herramientas').trim(),
                 inStock: d.en_stock !== false,
                 isVisible: d.estado_visibilidad !== false,
+                // Subcategoría: derivada automáticamente desde el nombre del producto
+                subcategory: getSubcategory(cleanName, (d.categoria || base?.category || 'Herramientas').trim()),
               };
             });
 
@@ -640,11 +649,14 @@ const AppContent = () => {
       const matchCat = category === 'Todas' || pCat.toLowerCase() === category.toLowerCase();
       // Short-circuit: si no hay búsqueda, todos pasan
       const matchSearch = !term || pName.includes(term) || pSku.includes(term);
+      // Filtro de subcategoría: solo aplica si hay subcategoría activa
+      const pSubcat = (p.subcategory || '').toLowerCase().trim();
+      const matchSubcat = !subcategory || pSubcat === subcategory.toLowerCase().trim();
       // Number() garantiza comparación numérica aunque el precio llegue como string
       const matchPrice = (Number(p.priceWholesale) || 0) <= maxPrice;
-      return matchCat && matchSearch && matchPrice;
+      return matchCat && matchSubcat && matchSearch && matchPrice;
     });
-  }, [category, searchTerm, maxPrice, liveProducts]);
+  }, [category, subcategory, searchTerm, maxPrice, liveProducts]);
 
   // Handle Search Redirection
   const handleSearchChange = (term: string) => {
@@ -656,11 +668,6 @@ const AppContent = () => {
     }
   };
 
-  const handleSidebarCategorySelect = (c: string) => {
-    setCategory(c);
-    setSidebarOpen(false);
-    if (location.pathname !== '/') navigate('/');
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#050505] text-white selection:bg-[#FFD700] selection:text-black font-sans">
@@ -674,7 +681,13 @@ const AppContent = () => {
       <MobileSidebarDrawer isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)}>
         <Sidebar
           selectedCategory={category}
-          onSelectCategory={handleSidebarCategorySelect}
+          selectedSubcategory={subcategory}
+          onSelectCategory={(cat, sub) => {
+            setCategory(cat);
+            setSubcategory(sub || '');
+            setSidebarOpen(false);
+            if (location.pathname !== '/') navigate('/');
+          }}
           maxPrice={maxPrice}
           onPriceChange={setMaxPrice}
           absMaxPrice={maxProductPrice}
@@ -689,6 +702,7 @@ const AppContent = () => {
           <Route path="/" element={
             <Home
               category={category} setCategory={setCategory}
+              subcategory={subcategory} setSubcategory={setSubcategory}
               searchTerm={searchTerm} setSearchTerm={setSearchTerm}
               maxPrice={maxPrice} setMaxPrice={setMaxPrice}
               maxProductPrice={maxProductPrice}

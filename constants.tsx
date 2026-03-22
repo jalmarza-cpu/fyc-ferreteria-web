@@ -34,6 +34,65 @@ export const CATEGORIES = [
   "Selladora",
 ];
 
+// Categorías que tienen subcategorías (desplegables en el sidebar)
+export const EXPANDABLE_CATEGORIES = ['Herramientas', 'Electricidad', 'Maquinaria', 'Cintas'];
+
+// Mapa keyword → subcategoría para asignación automática desde nombre del producto
+export interface SubcategoryEntry {
+  parentCategory: string;
+  keywords: string[];
+  subcategory: string;
+}
+export const SUBCATEGORY_MAP: SubcategoryEntry[] = [
+  // HERRAMIENTAS
+  { parentCategory: 'Herramientas', keywords: ['alicate'], subcategory: 'Alicates' },
+  { parentCategory: 'Herramientas', keywords: ['espatula', 'espátula'], subcategory: 'Espátulas' },
+  { parentCategory: 'Herramientas', keywords: ['napoleon', 'napoleón', 'plana con punta', 'plana punta'], subcategory: 'Planas y Napoleones' },
+  { parentCategory: 'Herramientas', keywords: ['extractor de pol'], subcategory: 'Extractores' },
+  { parentCategory: 'Herramientas', keywords: ['hoja sierra', 'sierra circular', 'serrucho'], subcategory: 'Sierras y Serruchos' },
+  { parentCategory: 'Herramientas', keywords: ['llave franc', 'llave ingl'], subcategory: 'Llaves' },
+  { parentCategory: 'Herramientas', keywords: ['martillo'], subcategory: 'Martillos' },
+  { parentCategory: 'Herramientas', keywords: ['mecha', 'broca', 'set de mec', 'brocas hss', 'brocas pal', 'brocas con', 'brocas par', 'set de bro'], subcategory: 'Mechas y Brocas' },
+  { parentCategory: 'Herramientas', keywords: ['nivel', 'topedo'], subcategory: 'Niveles' },
+  { parentCategory: 'Herramientas', keywords: ['prensa esquin', 'prensa f ', 'prensa g '], subcategory: 'Prensas' },
+  { parentCategory: 'Herramientas', keywords: ['regla de '], subcategory: 'Reglas' },
+  { parentCategory: 'Herramientas', keywords: ['sacaclavos'], subcategory: 'Sacaclavos' },
+  { parentCategory: 'Herramientas', keywords: ['tijera'], subcategory: 'Tijeras' },
+  { parentCategory: 'Herramientas', keywords: ['escuadra'], subcategory: 'Escuadras' },
+  { parentCategory: 'Herramientas', keywords: ['guante'], subcategory: 'Guantes' },
+  { parentCategory: 'Herramientas', keywords: ['compresor'], subcategory: 'Compresores' },
+  // ELECTRICIDAD
+  { parentCategory: 'Electricidad', keywords: ['ampolleta'], subcategory: 'Ampolletas' },
+  { parentCategory: 'Electricidad', keywords: ['ufo'], subcategory: 'Focos UFO' },
+  { parentCategory: 'Electricidad', keywords: ['proyector'], subcategory: 'Proyectores' },
+  { parentCategory: 'Electricidad', keywords: ['tablero'], subcategory: 'Tableros' },
+  { parentCategory: 'Electricidad', keywords: ['campa', 'timbre'], subcategory: 'Campanas' },
+  { parentCategory: 'Electricidad', keywords: ['huincha aislad'], subcategory: 'Huinchas Aisladoras' },
+  // MAQUINARIA
+  { parentCategory: 'Maquinaria', keywords: ['torno'], subcategory: 'Tornos' },
+  { parentCategory: 'Maquinaria', keywords: ['hidráulica', 'hidraulica'], subcategory: 'Hidráulica' },
+  // CINTAS
+  { parentCategory: 'Cintas', keywords: ['amarra'], subcategory: 'Amarras' },
+  { parentCategory: 'Cintas', keywords: ['huincha aislad'], subcategory: 'Huinchas Aisladoras' },
+  { parentCategory: 'Cintas', keywords: ['maskitape', 'masking', 'mask'], subcategory: 'Masking Tape' },
+  { parentCategory: 'Cintas', keywords: ['embalaje'], subcategory: 'Embalaje' },
+  { parentCategory: 'Cintas', keywords: ['pasador'], subcategory: 'Pasadores' },
+];
+
+// Helper: obtiene subcategoría automáticamente desde nombre del producto + categoría padre
+export const getSubcategory = (name: string, category: string): string => {
+  const nameLower = (name || '').toLowerCase();
+  for (const entry of SUBCATEGORY_MAP) {
+    if (
+      entry.parentCategory === category &&
+      entry.keywords.some(k => nameLower.includes(k))
+    ) {
+      return entry.subcategory;
+    }
+  }
+  return '';
+};
+
 // ==========================================
 // BASE DE DATOS DE PRODUCTOS
 // ==========================================
