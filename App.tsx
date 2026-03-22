@@ -558,8 +558,9 @@ const AppContent = () => {
       try {
         const { data, error } = await supabase.from('productos').select('*');
         if (data && data.length > 0 && isMounted) {
-          setLiveProducts(prev => {
-            return prev.map(p => {
+          setLiveProducts(() => {
+            // PASO 1: Actualizar los productos de constants con datos de Supabase
+            const updatedConstants = PRODUCTS.map(p => {
               const remote = data.find(d => d.sku === p.sku);
               if (remote) {
                 return {
@@ -573,6 +574,26 @@ const AppContent = () => {
               }
               return p;
             });
+
+            // PASO 2: Agregar productos NUEVOS de Supabase que NO existen en constants
+            const existingSkus = new Set(PRODUCTS.map(p => String(p.sku)));
+            const newFromSupabase = data
+              .filter(d => !existingSkus.has(String(d.sku)))
+              .map(d => ({
+                id: `supabase-${d.id}`,
+                name: d.nombre || 'Producto sin nombre',
+                sku: String(d.sku || ''),
+                description: d.descripcion || '',
+                priceRetail: d.precio_detalle || 0,
+                priceWholesale: d.precio_mayorista || 0,
+                imageUrl: d.url_imagen || '',
+                category: d.categoria || 'Herramientas Manuales',
+                inStock: d.en_stock !== false,
+                // Por defecto visible si la columna no existe o es null
+                isVisible: d.estado_visibilidad !== false,
+              }));
+
+            return [...updatedConstants, ...newFromSupabase];
           });
         }
       } catch (err) {
@@ -584,7 +605,7 @@ const AppContent = () => {
     // Suscripción Realtime a Supabase Postgres
     const channel = supabase
       .channel('productos_realtime')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'productos' }, (payload) => {
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'productos' }, () => {
         // Al ocurrir un cambio, forzamos refetch para sincronizar
         fetchSupabaseProducts();
         // Validamos el estado del carro en caso de tener el item agotado

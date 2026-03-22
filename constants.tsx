@@ -18,16 +18,18 @@ export const BUSINESS_HOURS = [
   { day: "Domingo", hours: "Cerrado" }
 ];
 
-// CATEGORÍAS (Terminología Chilena)
+// CATEGORÍAS (Sincronizadas con Panel Admin)
 export const CATEGORIES = [
   "Todas",
   "Herramientas Manuales",
-  "Maquinaria",
-  "Fijaciones",
   "Revestimientos",
+  "Fijaciones",
   "Electricidad",
+  "Pinturas",
+  "Soldadura",
   "Gasfitería",
-  "Medición"
+  "Seguridad",
+  "Adhesivos",
 ];
 
 // ==========================================
