@@ -35,7 +35,8 @@ export const CATEGORIES = [
 ];
 
 // Categorías que tienen subcategorías (desplegables en el sidebar)
-export const EXPANDABLE_CATEGORIES = ['Herramientas', 'Electricidad', 'Maquinaria', 'Cintas'];
+// Solo se expanden Herramientas y Canalización — menú limpio sin saturar
+export const EXPANDABLE_CATEGORIES = ['Herramientas', 'Canalización'];
 
 // Mapa keyword → subcategoría para asignación automática desde nombre del producto
 export interface SubcategoryEntry {
@@ -44,7 +45,7 @@ export interface SubcategoryEntry {
   subcategory: string;
 }
 export const SUBCATEGORY_MAP: SubcategoryEntry[] = [
-  // HERRAMIENTAS
+  // ── HERRAMIENTAS ──────────────────────────────────────────
   { parentCategory: 'Herramientas', keywords: ['alicate'], subcategory: 'Alicates' },
   { parentCategory: 'Herramientas', keywords: ['espatula', 'espátula'], subcategory: 'Espátulas' },
   { parentCategory: 'Herramientas', keywords: ['napoleon', 'napoleón', 'plana con punta', 'plana punta'], subcategory: 'Planas y Napoleones' },
@@ -61,22 +62,11 @@ export const SUBCATEGORY_MAP: SubcategoryEntry[] = [
   { parentCategory: 'Herramientas', keywords: ['escuadra'], subcategory: 'Escuadras' },
   { parentCategory: 'Herramientas', keywords: ['guante'], subcategory: 'Guantes' },
   { parentCategory: 'Herramientas', keywords: ['compresor'], subcategory: 'Compresores' },
-  // ELECTRICIDAD
-  { parentCategory: 'Electricidad', keywords: ['ampolleta'], subcategory: 'Ampolletas' },
-  { parentCategory: 'Electricidad', keywords: ['ufo'], subcategory: 'Focos UFO' },
-  { parentCategory: 'Electricidad', keywords: ['proyector'], subcategory: 'Proyectores' },
-  { parentCategory: 'Electricidad', keywords: ['tablero'], subcategory: 'Tableros' },
-  { parentCategory: 'Electricidad', keywords: ['campa', 'timbre'], subcategory: 'Campanas' },
-  { parentCategory: 'Electricidad', keywords: ['huincha aislad'], subcategory: 'Huinchas Aisladoras' },
-  // MAQUINARIA
-  { parentCategory: 'Maquinaria', keywords: ['torno'], subcategory: 'Tornos' },
-  { parentCategory: 'Maquinaria', keywords: ['hidráulica', 'hidraulica'], subcategory: 'Hidráulica' },
-  // CINTAS
-  { parentCategory: 'Cintas', keywords: ['amarra'], subcategory: 'Amarras' },
-  { parentCategory: 'Cintas', keywords: ['huincha aislad'], subcategory: 'Huinchas Aisladoras' },
-  { parentCategory: 'Cintas', keywords: ['maskitape', 'masking', 'mask'], subcategory: 'Masking Tape' },
-  { parentCategory: 'Cintas', keywords: ['embalaje'], subcategory: 'Embalaje' },
-  { parentCategory: 'Cintas', keywords: ['pasador'], subcategory: 'Pasadores' },
+
+  // ── CANALIZACIÓN (subcategorías exactas del proveedor) ────
+  { parentCategory: 'Canalización', keywords: ['canaleta'], subcategory: 'Canaletas' },
+  { parentCategory: 'Canalización', keywords: ['conduit', 'pvc'], subcategory: 'Tubería Conduit' },
+  { parentCategory: 'Canalización', keywords: ['emt', 'metálica', 'metalica', 'rígida', 'rigida'], subcategory: 'Tubería EMT' },
 ];
 
 // Helper: obtiene subcategoría automáticamente desde nombre del producto + categoría padre
