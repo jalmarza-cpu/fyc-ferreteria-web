@@ -326,15 +326,17 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Categoría de Catálogo</label>
                   <select value={formData.categoria} onChange={e => setFormData({ ...formData, categoria: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold">
-                    <option>Herramientas Manuales</option>
-                    <option>Revestimientos</option>
-                    <option>Fijaciones</option>
+                    <option>Basurero</option>
+                    <option>Canalización</option>
+                    <option>Cielo falso</option>
+                    <option>Cintas</option>
                     <option>Electricidad</option>
-                    <option>Pinturas</option>
-                    <option>Soldadura</option>
-                    <option>Gasfitería</option>
-                    <option>Seguridad</option>
-                    <option>Adhesivos</option>
+                    <option>Extractores de Aire</option>
+                    <option>Grifería</option>
+                    <option>Herramientas</option>
+                    <option>Iluminación LED</option>
+                    <option>Maquinaria</option>
+                    <option>Selladora</option>
                   </select>
                 </div>
                 <div className="flex items-end">

@@ -18,18 +18,20 @@ export const BUSINESS_HOURS = [
   { day: "Domingo", hours: "Cerrado" }
 ];
 
-// CATEGORÍAS (Sincronizadas con Panel Admin)
+// CATEGORÍAS (Estándar del Proveedor — sincronizadas con Supabase y Admin)
 export const CATEGORIES = [
   "Todas",
-  "Herramientas Manuales",
-  "Revestimientos",
-  "Fijaciones",
+  "Basurero",
+  "Canalización",
+  "Cielo falso",
+  "Cintas",
   "Electricidad",
-  "Pinturas",
-  "Soldadura",
-  "Gasfitería",
-  "Seguridad",
-  "Adhesivos",
+  "Extractores de Aire",
+  "Grifería",
+  "Herramientas",
+  "Iluminación LED",
+  "Maquinaria",
+  "Selladora",
 ];
 
 // ==========================================

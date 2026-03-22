@@ -397,6 +397,7 @@ const Home = ({
   maxPrice, setMaxPrice,
   maxProductPrice,
   filteredProducts,
+  liveProducts,
   setSidebarOpen
 }: any) => {
 
@@ -473,6 +474,7 @@ const Home = ({
                 maxPrice={maxPrice}
                 onPriceChange={setMaxPrice}
                 absMaxPrice={maxProductPrice}
+                allProducts={liveProducts}
               />
             </div>
 
@@ -590,7 +592,7 @@ const AppContent = () => {
                 priceWholesale: Number(d.precio_mayorista) || Number(base?.priceWholesale) || 0,
                 imageUrl: d.url_imagen || base?.imageUrl || '',
                 // Categoría de Supabase tiene PRIORIDAD ABSOLUTA (director define desde admin)
-                category: (d.categoria || base?.category || 'Herramientas Manuales').trim(),
+                category: (d.categoria || base?.category || 'Herramientas').trim(),
                 inStock: d.en_stock !== false,
                 isVisible: d.estado_visibilidad !== false,
               };
@@ -634,7 +636,8 @@ const AppContent = () => {
       const pSku = String(p.sku || '').toLowerCase();
       const term = searchTerm.toLowerCase().trim();
 
-      const matchCat = category === 'Todas' || pCat === category;
+      // Case-insensitive: 'Grifería' y 'grifería' se tratan igual
+      const matchCat = category === 'Todas' || pCat.toLowerCase() === category.toLowerCase();
       // Short-circuit: si no hay búsqueda, todos pasan
       const matchSearch = !term || pName.includes(term) || pSku.includes(term);
       // Number() garantiza comparación numérica aunque el precio llegue como string
@@ -675,6 +678,7 @@ const AppContent = () => {
           maxPrice={maxPrice}
           onPriceChange={setMaxPrice}
           absMaxPrice={maxProductPrice}
+          allProducts={liveProducts}
         />
       </MobileSidebarDrawer>
 
@@ -689,6 +693,7 @@ const AppContent = () => {
               maxPrice={maxPrice} setMaxPrice={setMaxPrice}
               maxProductPrice={maxProductPrice}
               filteredProducts={filteredProducts}
+              liveProducts={liveProducts}
               setSidebarOpen={setSidebarOpen}
             />
           } />
