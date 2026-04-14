@@ -87,7 +87,8 @@ export const getSubcategory = (name: string, category: string): string => {
 // BASE DE DATOS DE PRODUCTOS
 // ==========================================
 export const PRODUCTS: Product[] = [
-  // --- ALICATES ---
+    {
+// --- ALICATES ---
   {
     id: 'prod-001',
     name: "Alicate Ford 8\"",
@@ -840,16 +841,6 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas Manuales"
   },
   {
-    id: "prod-126",
-    name: "Martillo mecánico 100g",
-    sku: "070120",
-    description: "Martillo mecánico 100g para uso profesional.",
-    priceRetail: 1490,
-    priceWholesale: 1190,
-    imageUrl: "Martillos/070120.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
     id: "prod-127",
     name: "Alicate Universal 7\\\"",
     sku: "070341",
@@ -1041,16 +1032,6 @@ export const PRODUCTS: Product[] = [
     category: "Fijaciones"
   },
   {
-    id: "prod-204",
-    name: "Espatula de 1 1/2\\\"",
-    sku: "011161",
-    description: "Espatula de 1 1/2\\\" de excelente calidad profesional.",
-    priceRetail: 980,
-    priceWholesale: 680,
-    imageUrl: "CatalogoExtra/011161.jpg",
-    category: "Revestimientos"
-  },
-  {
     id: "prod-205",
     name: "Espatula de 1\\\"",
     sku: "011160",
@@ -1101,16 +1082,6 @@ export const PRODUCTS: Product[] = [
     category: "Revestimientos"
   },
   {
-    id: "prod-210",
-    name: "Espatula de 5\\\"",
-    sku: "011165",
-    description: "Espatula de 5\\\" de excelente calidad profesional.",
-    priceRetail: 1570,
-    priceWholesale: 1270,
-    imageUrl: "CatalogoExtra/011165.jpg",
-    category: "Revestimientos"
-  },
-  {
     id: "prod-211",
     name: "Extractor de poleas 3\\\"",
     sku: "010660",
@@ -1137,26 +1108,6 @@ export const PRODUCTS: Product[] = [
     description: "Set destornillador Pin 5 piezas de excelente calidad profesional.",
     priceRetail: 3300,
     priceWholesale: 3000,
-    imageUrl: "CatalogoExtra/011003.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
-    id: "prod-214",
-    name: "Set destornillador relojero 6 piezas",
-    sku: "011003",
-    description: "Set destornillador relojero 6 piezas de excelente calidad profesional.",
-    priceRetail: 1200,
-    priceWholesale: 900,
-    imageUrl: "CatalogoExtra/011003.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
-    id: "prod-215",
-    name: "set destornillados JG070",
-    sku: "011003",
-    description: "set destornillados JG070 de excelente calidad profesional.",
-    priceRetail: 1800,
-    priceWholesale: 1100,
     imageUrl: "CatalogoExtra/011003.jpg",
     category: "Herramientas Manuales"
   },
@@ -1321,16 +1272,6 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas Manuales"
   },
   {
-    id: "prod-232",
-    name: "Tijeras De Podar 10\\\"",
-    sku: "070253",
-    description: "Tijeras De Podar 10\\\" de excelente calidad profesional.",
-    priceRetail: 4750,
-    priceWholesale: 4350,
-    imageUrl: "CatalogoExtra/070253.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
     id: "prod-233",
     name: "Llave Francesa 12\\\"",
     sku: "010413",
@@ -1381,32 +1322,12 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas Manuales"
   },
   {
-    id: "prod-238",
-    name: "Extractor de poleas 8\\\"",
-    sku: "010662",
-    description: "Extractor de poleas 8\\\" de excelente calidad profesional.",
-    priceRetail: 7600,
-    priceWholesale: 7200,
-    imageUrl: "CatalogoExtra/010662.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
     id: "prod-239",
     name: "Formon suelto 1- 1/5\\\"",
     sku: "070093",
     description: "Formon suelto 1- 1/5\\\" de excelente calidad profesional.",
     priceRetail: 3600,
     priceWholesale: 3300,
-    imageUrl: "CatalogoExtra/070093.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
-    id: "prod-240",
-    name: "Set de formon 4 piezas",
-    sku: "070093",
-    description: "Set de formon 4 piezas de excelente calidad profesional.",
-    priceRetail: 7650,
-    priceWholesale: 7350,
     imageUrl: "CatalogoExtra/070093.jpg",
     category: "Herramientas Manuales"
   },
@@ -1471,17 +1392,6 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas Manuales"
   },
   {
-    id: "prod-247",
-    name: "Guantes de goma verde",
-    sku: "011662",
-    description: "Guantes de goma verde de excelente calidad profesional.",
-    priceRetail: 750,
-    priceWholesale: 450,
-    imageUrl: "CatalogoExtra/011662.jpg",
-    category: "Herramientas Manuales"
-  },
-
-  {
     id: "prod-300",
     name: "Prensa F 60x500",
     sku: "010826",
@@ -1509,16 +1419,6 @@ export const PRODUCTS: Product[] = [
     priceRetail: 15500,
     priceWholesale: 15000,
     imageUrl: "CatalogoTerceros/010830.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
-    id: "prod-303",
-    name: "Prensa F 80x500",
-    sku: "010834",
-    description: "Prensa F 80x500 resistente y duradero.",
-    priceRetail: 18500,
-    priceWholesale: 18000,
-    imageUrl: "CatalogoTerceros/010834.jpg",
     category: "Herramientas Manuales"
   },
   {
@@ -1572,16 +1472,6 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas Manuales"
   },
   {
-    id: "prod-309",
-    name: "Prensa G 2\\\"",
-    sku: "010838",
-    description: "Prensa G 2\\\" resistente y duradero.",
-    priceRetail: 1500,
-    priceWholesale: 1130,
-    imageUrl: "CatalogoTerceros/010838.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
     id: "prod-310",
     name: "Regla de acero 12\\\"",
     sku: "011900",
@@ -1590,26 +1480,6 @@ export const PRODUCTS: Product[] = [
     priceWholesale: 1500,
     imageUrl: "CatalogoTerceros/011900.jpg",
     category: "Medición"
-  },
-  {
-    id: "prod-311",
-    name: "Regla de acero 24\\\"",
-    sku: "011900",
-    description: "Regla de acero 24\\\" resistente y duradero.",
-    priceRetail: 3600,
-    priceWholesale: 3300,
-    imageUrl: "CatalogoTerceros/011900.jpg",
-    category: "Medición"
-  },
-  {
-    id: "prod-312",
-    name: "Llave Francesa 8\\\"",
-    sku: "010410",
-    description: "Llave Francesa 8\\\" resistente y duradero.",
-    priceRetail: 3000,
-    priceWholesale: 2700,
-    imageUrl: "CatalogoTerceros/010410.jpg",
-    category: "Herramientas Manuales"
   },
   {
     id: "prod-313",
@@ -1682,16 +1552,6 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas Manuales"
   },
   {
-    id: "prod-320",
-    name: "Llave pipa 8mm",
-    sku: "010028",
-    description: "Llave pipa 8mm resistente y duradero.",
-    priceRetail: 1260,
-    priceWholesale: 960,
-    imageUrl: "CatalogoTerceros/010028.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
     id: "prod-321",
     name: "Napoleon de 12\\\"",
     sku: "011769",
@@ -1718,16 +1578,6 @@ export const PRODUCTS: Product[] = [
     description: "Napoleon de 24\\\" resistente y duradero.",
     priceRetail: 10390,
     priceWholesale: 10090,
-    imageUrl: "CatalogoTerceros/011773.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
-    id: "prod-324",
-    name: "Napoleon de 30\\\"",
-    sku: "011773",
-    description: "Napoleon de 30\\\" resistente y duradero.",
-    priceRetail: 14550,
-    priceWholesale: 14250,
     imageUrl: "CatalogoTerceros/011773.jpg",
     category: "Herramientas Manuales"
   },
@@ -1842,26 +1692,6 @@ export const PRODUCTS: Product[] = [
     category: "Medición"
   },
   {
-    id: "prod-336",
-    name: "Nivel aluminio 48\\\"",
-    sku: "011081",
-    description: "Nivel aluminio 48\\\" resistente y duradero.",
-    priceRetail: 5550,
-    priceWholesale: 5250,
-    imageUrl: "CatalogoTerceros/011081.jpg",
-    category: "Medición"
-  },
-  {
-    id: "prod-337",
-    name: "Nivel topedo 9\\\"",
-    sku: "011081",
-    description: "Nivel topedo 9\\\" resistente y duradero.",
-    priceRetail: 2550,
-    priceWholesale: 2250,
-    imageUrl: "CatalogoTerceros/011081.jpg",
-    category: "Medición"
-  },
-  {
     id: "prod-338",
     name: "Pasadores para ventana 3\\\"",
     sku: "030312",
@@ -1902,16 +1732,6 @@ export const PRODUCTS: Product[] = [
     category: "Fijaciones"
   },
   {
-    id: "prod-342",
-    name: "Pasadores para ventana 8\\\"",
-    sku: "030315",
-    description: "Pasadores para ventana 8\\\" resistente y duradero.",
-    priceRetail: 560,
-    priceWholesale: 360,
-    imageUrl: "CatalogoTerceros/030315.jpg",
-    category: "Fijaciones"
-  },
-  {
     id: "prod-343",
     name: "Plana con punta cuadrada 5\\\"",
     sku: "011730",
@@ -1942,16 +1762,6 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas Manuales"
   },
   {
-    id: "prod-346",
-    name: "Plana con punta cuadrada 8\\\"",
-    sku: "011733",
-    description: "Plana con punta cuadrada 8\\\" resistente y duradero.",
-    priceRetail: 2000,
-    priceWholesale: 1880,
-    imageUrl: "CatalogoTerceros/011733.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
     id: "prod-347",
     name: "Plana con punta redonda 5\\\"",
     sku: "011734",
@@ -1978,16 +1788,6 @@ export const PRODUCTS: Product[] = [
     description: "Plana con punta redonda 7\\\" resistente y duradero.",
     priceRetail: 1720,
     priceWholesale: 1420,
-    imageUrl: "CatalogoTerceros/011736.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
-    id: "prod-350",
-    name: "Plana con punta redonda 8\\\"",
-    sku: "011736",
-    description: "Plana con punta redonda 8\\\" resistente y duradero.",
-    priceRetail: 2000,
-    priceWholesale: 1880,
     imageUrl: "CatalogoTerceros/011736.jpg",
     category: "Herramientas Manuales"
   },
@@ -2093,16 +1893,6 @@ export const PRODUCTS: Product[] = [
     category: "Herramientas Manuales"
   },
   {
-    id: "prod-405",
-    name: "Serrucho 24\\\"",
-    sku: "011742",
-    description: "Serrucho 24\\\" de alta durabilidad.",
-    priceRetail: 3500,
-    priceWholesale: 3000,
-    imageUrl: "CatalogoExtra2/011742.jpg",
-    category: "Herramientas Manuales"
-  },
-  {
     id: "prod-406",
     name: "Tarugo Tipo Fisher 10mm",
     sku: "070473",
@@ -2133,16 +1923,6 @@ export const PRODUCTS: Product[] = [
     category: "Fijaciones"
   },
   {
-    id: "prod-409",
-    name: "Tarugo Tipo Fisher 8mm",
-    sku: "070471",
-    description: "Tarugo Tipo Fisher 8mm de alta durabilidad.",
-    priceRetail: 4720,
-    priceWholesale: 4420,
-    imageUrl: "CatalogoExtra2/070471.jpg",
-    category: "Fijaciones"
-  },
-  {
     id: "prod-410",
     name: "Goma para llave 1/2\\\"- 5/8\\\"",
     sku: "030641",
@@ -2160,16 +1940,6 @@ export const PRODUCTS: Product[] = [
     priceRetail: 15900,
     priceWholesale: 15400,
     imageUrl: "CatalogoExtra2/03068.jpg",
-    category: "Gasfitería"
-  },
-  {
-    id: "prod-412",
-    name: "Llave Combinacion Lavaplatos 30492",
-    sku: "030686",
-    description: "Llave Combinacion Lavaplatos 30492 de alta durabilidad.",
-    priceRetail: 17900,
-    priceWholesale: 17500,
-    imageUrl: "CatalogoExtra2/030686.jpg",
     category: "Gasfitería"
   },
   {
@@ -2223,16 +1993,6 @@ export const PRODUCTS: Product[] = [
     category: "Gasfitería"
   },
   {
-    id: "prod-418",
-    name: "Llave lavaplatos monomando 30940",
-    sku: "030683",
-    description: "Llave lavaplatos monomando 30940 de alta durabilidad.",
-    priceRetail: 19500,
-    priceWholesale: 18900,
-    imageUrl: "CatalogoExtra2/030683.jpg",
-    category: "Gasfitería"
-  },
-  {
     id: "prod-419",
     name: "Llave monomando 35mm 30401",
     sku: "030680",
@@ -2242,27 +2002,6 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoExtra2/030680.jpg",
     category: "Gasfitería"
   },
-  {
-    id: "prod-420",
-    name: "Llave monomando ducha 30496",
-    sku: "030682",
-    description: "Llave monomando ducha 30496 de alta durabilidad.",
-    priceRetail: 19960,
-    priceWholesale: 19460,
-    imageUrl: "CatalogoExtra2/030682.jpg",
-    category: "Gasfitería"
-  },
-  {
-    id: "prod-421",
-    name: "tubo flexible para ducha 1.5m",
-    sku: "030681",
-    description: "tubo flexible para ducha 1.5m de alta durabilidad.",
-    priceRetail: 2500,
-    priceWholesale: 1950,
-    imageUrl: "CatalogoExtra2/030681.jpg",
-    category: "Gasfitería"
-  },
-
   {
     id: "prod-423",
     name: "Candado dorado 32mm",
@@ -2284,32 +2023,12 @@ export const PRODUCTS: Product[] = [
     category: "Fijaciones"
   },
   {
-    id: "prod-425",
-    name: "Carretilla 85L",
-    sku: "030600",
-    description: "Carretilla 85L de alta durabilidad.",
-    priceRetail: 60000,
-    priceWholesale: 58500,
-    imageUrl: "CatalogoExtra2/030600.jpg",
-    category: "Maquinaria"
-  },
-  {
     id: "prod-426",
     name: "Tuberia Conduit PVC 25x1.5x3000mm",
     sku: "011570",
     description: "Tuberia Conduit PVC 25x1.5x3000mm de alta durabilidad.",
     priceRetail: 2000,
     priceWholesale: 1550,
-    imageUrl: "CatalogoExtra2/011570.jpg",
-    category: "Electricidad"
-  },
-  {
-    id: "prod-427",
-    name: "Tuberia Conduit PVC 16x1.4x3000mm",
-    sku: "011570",
-    description: "Tuberia Conduit PVC 16x1.4x3000mm de alta durabilidad.",
-    priceRetail: 1100,
-    priceWholesale: 780,
     imageUrl: "CatalogoExtra2/011570.jpg",
     category: "Electricidad"
   },
@@ -2321,16 +2040,6 @@ export const PRODUCTS: Product[] = [
     priceRetail: 1500,
     priceWholesale: 1000,
     imageUrl: "CatalogoExtra2/011572.jpg",
-    category: "Electricidad"
-  },
-  {
-    id: "prod-429",
-    name: "Tuberia EMT 20mm x 1.2mm",
-    sku: "011500",
-    description: "Tuberia EMT 20mm x 1.2mm de alta durabilidad.",
-    priceRetail: 3500,
-    priceWholesale: 2950,
-    imageUrl: "CatalogoExtra2/011500.jpg",
     category: "Electricidad"
   },
   {
@@ -2364,32 +2073,12 @@ export const PRODUCTS: Product[] = [
     category: "Maquinaria"
   },
   {
-    id: "prod-433",
-    name: "Yegua roja con ruedas 250 kilos",
-    sku: "010479",
-    description: "Yegua roja con ruedas 250 kilos de alta durabilidad.",
-    priceRetail: 44550,
-    priceWholesale: 43550,
-    imageUrl: "CatalogoExtra2/010479.jpg",
-    category: "Maquinaria"
-  },
-  {
     id: "prod-434",
     name: "Basurero pvc 120L Gris",
     sku: "010251",
     description: "Basurero pvc 120L Gris de alta durabilidad.",
     priceRetail: 37800,
     priceWholesale: 37800,
-    imageUrl: "CatalogoExtra2/010251.jpg",
-    category: "Maquinaria"
-  },
-  {
-    id: "prod-435",
-    name: "Basurero pvc 240L Verde",
-    sku: "010251",
-    description: "Basurero pvc 240L Verde de alta durabilidad.",
-    priceRetail: 52700,
-    priceWholesale: 52700,
     imageUrl: "CatalogoExtra2/010251.jpg",
     category: "Maquinaria"
   },
@@ -2564,16 +2253,6 @@ export const PRODUCTS: Product[] = [
     category: "Maquinaria"
   },
   {
-    id: "prod-453",
-    name: "Plato para Torno de 3 patitas 6\\\"",
-    sku: "130235",
-    description: "Plato para Torno de 3 patitas 6\\\" de alta durabilidad.",
-    priceRetail: 135000,
-    priceWholesale: 132000,
-    imageUrl: "CatalogoExtra2/130235.jpg",
-    category: "Maquinaria"
-  },
-  {
     id: "prod-454",
     name: "Plato para Torno de 3 patitas 8\\\"",
     sku: "130237",
@@ -2712,16 +2391,6 @@ export const PRODUCTS: Product[] = [
     priceRetail: 5500,
     priceWholesale: 5300,
     imageUrl: "CatalogoTerceros2/160847-160848.jpg",
-    category: "Electricidad"
-  },
-  {
-    id: "prod-509",
-    name: "Ampolleta Tubular Led 100w E-40",
-    sku: "160027",
-    description: "Ampolleta Tubular Led 100w E-40 de alto rendimiento industrial.",
-    priceRetail: 28490,
-    priceWholesale: 28190,
-    imageUrl: "CatalogoTerceros2/160027.jpg",
     category: "Electricidad"
   },
   {
@@ -2915,26 +2584,6 @@ export const PRODUCTS: Product[] = [
     category: "Electricidad"
   },
   {
-    id: "prod-529",
-    name: "Campana Ufo N°1 Led 100w",
-    sku: "120482",
-    description: "Campana Ufo N°1 Led 100w de alto rendimiento industrial.",
-    priceRetail: 30000,
-    priceWholesale: 28500,
-    imageUrl: "CatalogoTerceros2/120482.jpg",
-    category: "Electricidad"
-  },
-  {
-    id: "prod-530",
-    name: "Campana Ufo N°1 Led 150w",
-    sku: "120483",
-    description: "Campana Ufo N°1 Led 150w de alto rendimiento industrial.",
-    priceRetail: 45000,
-    priceWholesale: 43750,
-    imageUrl: "CatalogoTerceros2/120483.jpg",
-    category: "Electricidad"
-  },
-  {
     id: "prod-531",
     name: "Canoa acrilica con tubo led 1x18w",
     sku: "040231",
@@ -3106,16 +2755,6 @@ export const PRODUCTS: Product[] = [
     category: "Maquinaria"
   },
   {
-    id: "prod-549",
-    name: "Maquina para Moler Grano blando",
-    sku: "011419",
-    description: "Maquina para Moler Grano blando de alto rendimiento industrial.",
-    priceRetail: 285000,
-    priceWholesale: 281750,
-    imageUrl: "CatalogoTerceros2/011419.jpg",
-    category: "Maquinaria"
-  },
-  {
     id: "prod-550",
     name: "Maquina para Moler Granos",
     sku: "130219",
@@ -3166,36 +2805,6 @@ export const PRODUCTS: Product[] = [
     category: "Electricidad"
   },
 
-  {
-    id: "prod-556",
-    name: "Ampolleta Champiñon Led 100w E-27",
-    sku: "160026",
-    description: "Ampolleta Champiñon Led 100w E-27 de alto rendimiento industrial.",
-    priceRetail: 28490,
-    priceWholesale: 28190,
-    imageUrl: "CatalogoTerceros2/160026.jpg",
-    category: "Electricidad"
-  },
-  {
-    id: "prod-557",
-    name: "Ampolleta Champiñon Led 150w E-27",
-    sku: "160027",
-    description: "Ampolleta Champiñon Led 150w E-27 de alto rendimiento industrial.",
-    priceRetail: 32170,
-    priceWholesale: 31870,
-    imageUrl: "CatalogoTerceros2/160027.jpg",
-    category: "Electricidad"
-  },
-  {
-    id: "prod-558",
-    name: "Ampolleta Champiñon Led 50w E-27",
-    sku: "160025",
-    description: "Ampolleta Champiñon Led 50w E-27 de alto rendimiento industrial.",
-    priceRetail: 15170,
-    priceWholesale: 14870,
-    imageUrl: "CatalogoTerceros2/160025.jpg",
-    category: "Electricidad"
-  },
   {
     id: "prod-559",
     name: "Ampolleta Led 10w 6500k-3500k",

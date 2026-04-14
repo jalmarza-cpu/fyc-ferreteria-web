@@ -177,13 +177,33 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         }
       }
 
-      // 2. Eliminar el registro de la base de datos
-      const { error } = await supabaseAdmin
-        .from('productos')
-        .delete()
-        .eq('id', formData.id);
+      // 2. Eliminar el registro lógicamente (para sobreescribir fallback de constants)
+      let updateError = null;
+      
+      if (formData.id && !String(formData.id).startsWith('constants-')) {
+        // Actualizar registro existente
+        const { error } = await supabaseAdmin
+          .from('productos')
+          .update({ estado_visibilidad: false, en_stock: false })
+          .eq('id', formData.id);
+        updateError = error;
+      } else {
+        // Es un producto de constants, crear un tombstone en Supabase
+        const payload = {
+          sku: formData.sku,
+          nombre: formData.nombre,
+          precio_detalle: formData.priceRetail || 0,
+          precio_mayorista: formData.priceWholesale || 0,
+          url_imagen: formData.url_imagen || '',
+          categoria: formData.category || 'Herramientas',
+          en_stock: false,
+          estado_visibilidad: false
+        };
+        const { error } = await supabaseAdmin.from('productos').insert([payload]);
+        updateError = error;
+      }
 
-      if (error) throw error;
+      if (updateError) throw updateError;
       
       // 3. Actualizar estado local
       setProductos(productos.filter(p => p.id !== formData.id));
@@ -224,6 +244,9 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   };
 
   const filtered = productos.filter(p => {
+    // Si fue "eliminado" lógicamente, se oculta del panel admin también
+    if (p.estado_visibilidad === false) return false;
+
     // FILTRO DE BÚSQUEDA (SKU o Nombre) - Usar localSearchTerm
     const search = (localSearchTerm || '').toLowerCase().trim();
     const productName = (p.nombre || '').toLowerCase();
