@@ -400,16 +400,7 @@ export const PRODUCTS: Product[] = [
     imageUrl: "Revestimiento/LH7020.jpg",
     category: "Revestimientos"
   },
-  {
-    id: 'prod-019',
-    name: "Plancha UV Tipo Mármol",
-    sku: "1671",
-    description: "Plancha con recubrimiento UV decorativa, elegante y fácil de instalar.",
-    priceRetail: 25000,
-    priceWholesale: 17990,
-    imageUrl: "Revestimiento/1671.jpg",
-    category: "Revestimientos"
-  },
+
   {
     id: 'prod-020',
     name: "Planchas OSB 11.1mm",
@@ -3013,16 +3004,7 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoTerceros2/120142.jpg",
     category: "Electricidad"
   },
-  {
-    id: "prod-538",
-    name: "Canoa T5 con Tubo Led compacto 16w 6500k",
-    sku: "120142-LED",
-    description: "Canoa T5 con Tubo Led compacto 16w 6500k de alto rendimiento industrial.",
-    priceRetail: 6580,
-    priceWholesale: 6280,
-    imageUrl: "CatalogoTerceros2/120142-LED.jpg",
-    category: "Electricidad"
-  },
+
   {
     id: "prod-539",
     name: "Tubo Led 18W 6500k",
@@ -3183,16 +3165,7 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoTerceros2/160400.jpg",
     category: "Electricidad"
   },
-  {
-    id: "prod-555",
-    name: "Alta Eficiencia 3x18 sobrepuesta",
-    sku: "160400-3X18",
-    description: "Alta Eficiencia 3x18 sobrepuesta de alto rendimiento industrial.",
-    priceRetail: 35500,
-    priceWholesale: 35000,
-    imageUrl: "CatalogoTerceros2/160400-3X18.jpg",
-    category: "Electricidad"
-  },
+
   {
     id: "prod-556",
     name: "Ampolleta Champiñon Led 100w E-27",
