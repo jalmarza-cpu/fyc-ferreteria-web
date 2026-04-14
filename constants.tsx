@@ -35,8 +35,13 @@ export const CATEGORIES = [
 ];
 
 // Categorías que tienen subcategorías (desplegables en el sidebar)
-// Solo se expanden Herramientas y Canalización — menú limpio sin saturar
-export const EXPANDABLE_CATEGORIES = ['Herramientas', 'Canalización'];
+export const EXPANDABLE_CATEGORIES = [
+  'Herramientas', 
+  'Canalización', 
+  'Iluminación LED', 
+  'Electricidad', 
+  'Maquinaria'
+];
 
 // Mapa keyword → subcategoría para asignación automática desde nombre del producto
 export interface SubcategoryEntry {
@@ -45,25 +50,66 @@ export interface SubcategoryEntry {
   subcategory: string;
 }
 export const SUBCATEGORY_MAP: SubcategoryEntry[] = [
-  // ── HERRAMIENTAS ──────────────────────────────────────────
-  { parentCategory: 'Herramientas', keywords: ['alicate'], subcategory: 'Alicates' },
-  { parentCategory: 'Herramientas', keywords: ['espatula', 'espátula'], subcategory: 'Espátulas' },
-  { parentCategory: 'Herramientas', keywords: ['napoleon', 'napoleón', 'plana con punta', 'plana punta'], subcategory: 'Planas y Napoleones' },
-  { parentCategory: 'Herramientas', keywords: ['extractor de pol'], subcategory: 'Extractores' },
-  { parentCategory: 'Herramientas', keywords: ['hoja sierra', 'sierra circular', 'serrucho'], subcategory: 'Sierras y Serruchos' },
-  { parentCategory: 'Herramientas', keywords: ['llave franc', 'llave ingl'], subcategory: 'Llaves' },
-  { parentCategory: 'Herramientas', keywords: ['martillo'], subcategory: 'Martillos' },
-  { parentCategory: 'Herramientas', keywords: ['mecha', 'broca', 'set de mec', 'brocas hss', 'brocas pal', 'brocas con', 'brocas par', 'set de bro'], subcategory: 'Mechas y Brocas' },
-  { parentCategory: 'Herramientas', keywords: ['nivel', 'topedo'], subcategory: 'Niveles' },
-  { parentCategory: 'Herramientas', keywords: ['prensa esquin', 'prensa f ', 'prensa g '], subcategory: 'Prensas' },
-  { parentCategory: 'Herramientas', keywords: ['regla de '], subcategory: 'Reglas' },
-  { parentCategory: 'Herramientas', keywords: ['sacaclavos'], subcategory: 'Sacaclavos' },
-  { parentCategory: 'Herramientas', keywords: ['tijera'], subcategory: 'Tijeras' },
-  { parentCategory: 'Herramientas', keywords: ['escuadra'], subcategory: 'Escuadras' },
-  { parentCategory: 'Herramientas', keywords: ['guante'], subcategory: 'Guantes' },
-  { parentCategory: 'Herramientas', keywords: ['compresor'], subcategory: 'Compresores' },
+  // ── ILUMINACIÓN LED ───────────────────────────────────────
+  { parentCategory: 'Iluminación LED', keywords: ['alta eficiencia'], subcategory: 'Alta eficiencia' },
+  { parentCategory: 'Iluminación LED', keywords: ['ampolleta'], subcategory: 'Ampolleta' },
+  { parentCategory: 'Iluminación LED', keywords: ['campana'], subcategory: 'Campana' },
+  { parentCategory: 'Iluminación LED', keywords: ['canoa'], subcategory: 'Canoa' },
+  { parentCategory: 'Iluminación LED', keywords: ['foco led', 'focos led'], subcategory: 'Focos LED' },
+  { parentCategory: 'Iluminación LED', keywords: ['emergencia'], subcategory: 'Lámpara de emergencia' },
+  { parentCategory: 'Iluminación LED', keywords: ['estanco'], subcategory: 'Lámpara estanco' },
+  { parentCategory: 'Iluminación LED', keywords: ['panel l', 'paneles l'], subcategory: 'Paneles LED' },
+  { parentCategory: 'Iluminación LED', keywords: ['proyector'], subcategory: 'Proyectores Led' },
 
-  // ── CANALIZACIÓN (subcategorías exactas del proveedor) ────
+  // ── ELECTRICIDAD ──────────────────────────────────────────
+  { parentCategory: 'Electricidad', keywords: ['alargador', 'extensión'], subcategory: 'Alargador' },
+  { parentCategory: 'Electricidad', keywords: ['cable', 'cordón', 'cordon'], subcategory: 'Cables' },
+  { parentCategory: 'Electricidad', keywords: ['caja'], subcategory: 'Cajas' },
+  { parentCategory: 'Electricidad', keywords: ['timbre'], subcategory: 'Campana Timbre' },
+  { parentCategory: 'Electricidad', keywords: ['enchufe', 'toma corriente'], subcategory: 'Enchufes' },
+  { parentCategory: 'Electricidad', keywords: ['gabinete'], subcategory: 'Gabinete' },
+  { parentCategory: 'Electricidad', keywords: ['interruptor'], subcategory: 'Interruptores' },
+  { parentCategory: 'Electricidad', keywords: ['tablero'], subcategory: 'Tableros' },
+
+  // ── HERRAMIENTAS ──────────────────────────────────────────
+  { parentCategory: 'Herramientas', keywords: ['alicate'], subcategory: 'Alicate' },
+  { parentCategory: 'Herramientas', keywords: ['amarra'], subcategory: 'Amarra' },
+  { parentCategory: 'Herramientas', keywords: ['broca', 'mecha'], subcategory: 'Broca' },
+  { parentCategory: 'Herramientas', keywords: ['brocha'], subcategory: 'Brocha' },
+  { parentCategory: 'Herramientas', keywords: ['cortadora'], subcategory: 'Cortadora' },
+  { parentCategory: 'Herramientas', keywords: ['destornillador', 'atornillador'], subcategory: 'Destornillador' },
+  { parentCategory: 'Herramientas', keywords: ['disco', 'corte'], subcategory: 'Discos' },
+  { parentCategory: 'Herramientas', keywords: ['escuadra'], subcategory: 'Escuadra' },
+  { parentCategory: 'Herramientas', keywords: ['espatula', 'espátula'], subcategory: 'Espátula' },
+  { parentCategory: 'Herramientas', keywords: ['extractor de pol'], subcategory: 'Extractor de poleas' },
+  { parentCategory: 'Herramientas', keywords: ['formon', 'formón'], subcategory: 'Formón' },
+  { parentCategory: 'Herramientas', keywords: ['guante'], subcategory: 'Guantes' },
+  { parentCategory: 'Herramientas', keywords: ['jardin', 'jardín'], subcategory: 'Jardín' },
+  { parentCategory: 'Herramientas', keywords: ['llave'], subcategory: 'Llaves' },
+  { parentCategory: 'Herramientas', keywords: ['martillo'], subcategory: 'Martillo' },
+  { parentCategory: 'Herramientas', keywords: ['napoleon', 'napoleón'], subcategory: 'Napoleón' },
+  { parentCategory: 'Herramientas', keywords: ['nivel', 'topedo'], subcategory: 'Nivel' },
+  { parentCategory: 'Herramientas', keywords: ['pasador'], subcategory: 'Pasadores' },
+  { parentCategory: 'Herramientas', keywords: ['plana'], subcategory: 'Planas' },
+  { parentCategory: 'Herramientas', keywords: ['prensa'], subcategory: 'Prensa' },
+  { parentCategory: 'Herramientas', keywords: ['regla'], subcategory: 'Regla' },
+  { parentCategory: 'Herramientas', keywords: ['rodillo'], subcategory: 'Rodillos' },
+  { parentCategory: 'Herramientas', keywords: ['sacaclavo'], subcategory: 'Sacaclavos' },
+  { parentCategory: 'Herramientas', keywords: ['serrucho', 'sierra'], subcategory: 'Serrucho' },
+  { parentCategory: 'Herramientas', keywords: ['tarugo'], subcategory: 'Tarugo' },
+
+  // ── MAQUINARIA ────────────────────────────────────────────
+  { parentCategory: 'Maquinaria', keywords: ['bomba', 'piscina'], subcategory: 'Bomba piscina' },
+  { parentCategory: 'Maquinaria', keywords: ['compresor'], subcategory: 'Compresor de Aire' },
+  { parentCategory: 'Maquinaria', keywords: ['gata'], subcategory: 'Gatas' },
+  { parentCategory: 'Maquinaria', keywords: ['máquina de madera', 'maquina de madera'], subcategory: 'Máquina de madera' },
+  { parentCategory: 'Maquinaria', keywords: ['máquina para moler', 'maquina para moler'], subcategory: 'Máquina para moler' },
+  { parentCategory: 'Maquinaria', keywords: ['prensa hidraulica', 'prensa hidráulica'], subcategory: 'Prensa hidráulica' },
+  { parentCategory: 'Maquinaria', keywords: ['tecle'], subcategory: 'Tecle pluma' },
+  { parentCategory: 'Maquinaria', keywords: ['torno'], subcategory: 'Tornos' },
+  { parentCategory: 'Maquinaria', keywords: ['transpaleta'], subcategory: 'Transpaleta' },
+
+  // ── CANALIZACIÓN ──────────────────────────────────────────
   { parentCategory: 'Canalización', keywords: ['canaleta'], subcategory: 'Canaletas' },
   { parentCategory: 'Canalización', keywords: ['conduit', 'pvc'], subcategory: 'Tubería Conduit' },
   { parentCategory: 'Canalización', keywords: ['emt', 'metálica', 'metalica', 'rígida', 'rigida'], subcategory: 'Tubería EMT' },
