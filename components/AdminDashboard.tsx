@@ -12,8 +12,10 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [updatingId, setUpdatingId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -161,6 +163,39 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     }
   };
 
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      // 1. Eliminar la imagen del storage si existe y pertenece a uploads/
+      if (formData.url_imagen && formData.url_imagen.startsWith('uploads/')) {
+        const { error: storageError } = await supabaseAdmin.storage
+          .from('productos')
+          .remove([formData.url_imagen]);
+        
+        if (storageError) {
+          console.error('Error eliminando imagen del storage:', storageError);
+        }
+      }
+
+      // 2. Eliminar el registro de la base de datos
+      const { error } = await supabaseAdmin
+        .from('productos')
+        .delete()
+        .eq('id', formData.id);
+
+      if (error) throw error;
+      
+      // 3. Actualizar estado local
+      setProductos(productos.filter(p => p.id !== formData.id));
+      setIsDeleteModalOpen(false);
+      setIsModalOpen(false);
+    } catch (error) {
+      alert('Error eliminando producto: ' + error.message);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const updateQuickStock = async (id, currentStatus) => {
     const newStatus = !currentStatus;
     setUpdatingId(id + 'stock');
@@ -247,6 +282,46 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   return (
     <div className="p-4 md:p-8 bg-[#050505] text-white min-h-screen font-sans relative">
+      {/* DELETE CONFIRMATION MODAL */}
+      {isDeleteModalOpen && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={() => !isDeleting && setIsDeleteModalOpen(false)} />
+          <div className="bg-[#0A0A0A] border border-red-500/50 w-full max-w-md rounded-2xl p-6 relative z-10 shadow-[0_0_50px_rgba(220,38,38,0.3)]">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-black uppercase text-red-500 flex items-center gap-2">
+                <AlertTriangle size={24} /> Eliminar Producto
+              </h2>
+            </div>
+            
+            <p className="text-white text-sm mb-6 leading-relaxed">
+              ¿Estás seguro de eliminar permanentemente el producto <strong className="text-yellow-500">"{formData.nombre}"</strong>? 
+              <br/><br/>
+              <span className="text-red-400 font-bold block bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+                Esta acción no se puede deshacer y eliminará también las imágenes asociadas.
+              </span>
+            </p>
+            
+            <div className="flex gap-3">
+              <button 
+                disabled={isDeleting} 
+                onClick={() => setIsDeleteModalOpen(false)} 
+                className="flex-1 bg-[#111] text-white py-3 rounded-xl font-bold uppercase text-[11px] hover:bg-[#222] transition border border-[#333]"
+              >
+                Cancelar
+              </button>
+              <button 
+                disabled={isDeleting} 
+                onClick={handleDelete} 
+                className="flex-1 bg-red-600/10 text-red-500 py-3 rounded-xl font-black uppercase tracking-widest text-[11px] hover:bg-red-600 hover:text-white transition flex items-center justify-center gap-2 border border-red-600 shadow-[0_0_20px_rgba(220,38,38,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isDeleting ? <Save className="animate-spin" size={16} /> : <Trash2 size={16} />}
+                {isDeleting ? 'Eliminando...' : 'Sí, Eliminar'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* MODAL FORM */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -352,7 +427,18 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
               </div>
 
               <div className="flex gap-3 pt-4 border-t border-[#222]">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-[#111] text-white py-3 rounded-xl font-bold uppercase text-[11px] hover:bg-[#222] transition">Cancelar</button>
+                {isEditing && (
+                  <button 
+                    type="button" 
+                    onClick={() => setIsDeleteModalOpen(true)} 
+                    className="bg-red-600/10 border border-red-600/50 text-red-500 px-4 py-3 rounded-xl font-black uppercase tracking-widest text-[11px] hover:bg-red-600 hover:text-white transition flex items-center justify-center gap-2"
+                    title="Eliminar producto permanentemente"
+                  >
+                    <Trash2 size={16} />
+                    <span className="hidden sm:inline">Eliminar</span>
+                  </button>
+                )}
+                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-[#111] text-white py-3 rounded-xl font-bold uppercase text-[11px] hover:bg-[#222] transition border border-[#333]">Cancelar</button>
                 <button disabled={isSaving} type="submit" className="flex-[2] bg-yellow-500 text-black py-3 rounded-xl font-black uppercase tracking-widest text-[11px] hover:bg-yellow-400 transition flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(234,179,8,0.2)]">
                   {isSaving ? <Save className="animate-spin" size={16} /> : <CheckCircle size={16} />}
                   {isSaving ? 'Guardando...' : (isEditing ? 'Actualizar Producto' : 'Crear Producto')}

@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck, FileText, Receipt, User, Building2, MapPin, Phone, ArrowLeft, Send } from 'lucide-react';
 import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE, getSubcategory } from './constants';
@@ -564,8 +564,8 @@ const AppContent = () => {
         const { data, error } = await supabase.from('productos').select('*');
         if (data && data.length > 0 && isMounted) {
           setLiveProducts(() => {
-            // Normalizar SKU para comparación segura (Supabase puede devolver número o string)
-            const normSku = (sku: any): string => String(sku ?? '').trim();
+            // Normalizar SKU para comparación segura y evitar duplicados por minúsculas/mayúsculas
+            const normSku = (sku: any): string => String(sku ?? '').trim().toLowerCase();
 
             // Construir Set de SKUs que existen en Supabase (fuente de verdad)
             const supabaseSkus = new Set(data.map(d => normSku(d.sku)));
@@ -722,6 +722,8 @@ const AppContent = () => {
               </React.Suspense>
             }
           />
+          <Route path="/admin-dashboard" element={<Navigate to="/admin" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 
       </main>
