@@ -8,7 +8,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm); // Sync initial state
-  const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'out_of_stock', 'in_stock', 'no_image'
+  const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'out_of_stock', 'in_stock', 'no_image', 'trash'
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [updatingId, setUpdatingId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +18,18 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+
+  const triggerCloudflarePurge = async () => {
+    try {
+      await fetch('https://servicios-n8n-n8n.9barxf.easypanel.host/webhook/easypanel-deploy-fyc', {
+        method: 'POST',
+        mode: 'no-cors'
+      });
+      console.log('Cloudflare purge triggered');
+    } catch (e) {
+      console.error('Error triggering Cloudflare purge:', e);
+    }
+  };
 
   // Sync with global searchTerm when it changes
   useEffect(() => {
@@ -156,6 +168,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         if (data) setProductos([data[0], ...productos]);
       }
       setIsModalOpen(false);
+      triggerCloudflarePurge(); // Trigger cache purge on save
     } catch (error) {
       alert('Error: ' + error.message);
     } finally {
@@ -209,6 +222,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       setProductos(productos.filter(p => p.id !== formData.id));
       setIsDeleteModalOpen(false);
       setIsModalOpen(false);
+      triggerCloudflarePurge(); // Trigger cache purge on logic delete
     } catch (error) {
       alert('Error eliminando producto: ' + error.message);
     } finally {
@@ -228,6 +242,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
       if (error) throw error;
       setProductos(productos.map(p => p.id === id ? { ...p, en_stock: newStatus } : p));
+      triggerCloudflarePurge(); // Trigger cache purge on stock change
     } catch (error) {
       alert('Error: ' + error.message);
     } finally {
@@ -244,8 +259,10 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   };
 
   const filtered = productos.filter(p => {
-    // Si fue "eliminado" lógicamente, se oculta del panel admin también
-    if (p.estado_visibilidad === false) return false;
+    // Si está eliminado y no estamos en la vista de papelera, ocultarlo.
+    // Si estamos en la vista de papelera, solo mostrar los eliminados.
+    if (activeFilter !== 'trash' && p.estado_visibilidad === false) return false;
+    if (activeFilter === 'trash' && p.estado_visibilidad !== false) return false;
 
     // FILTRO DE BÚSQUEDA (SKU o Nombre) - Usar localSearchTerm
     const search = (localSearchTerm || '').toLowerCase().trim();
@@ -508,7 +525,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       </div>
 
       {/* STATS MINI BAR - INTERACTIVE FILTERS */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-8">
         <button onClick={() => setActiveFilter('all')} className={`bg-[#0A0A0A] border p-4 rounded-xl flex items-center gap-4 transition text-left group ${activeFilter === 'all' ? 'border-zinc-100 ring-1 ring-zinc-500' : 'border-[#222] hover:border-zinc-700'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'all' ? 'bg-zinc-100 text-black' : 'bg-zinc-900 text-zinc-400'}`}><Package size={18} /></div>
           <div>
@@ -538,6 +555,14 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">En Stock</p>
             <p className="text-xl font-black text-green-500 leading-none mt-1">{productos.filter(p => p.en_stock).length}</p>
+          </div>
+        </button>
+
+        <button onClick={() => setActiveFilter('trash')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'trash' ? 'border-zinc-500 ring-1 ring-zinc-500/50' : 'border-[#222] border-l-zinc-600/50 hover:border-zinc-500'}`}>
+          <div className={`p-3 rounded-lg transition ${activeFilter === 'trash' ? 'bg-zinc-600 text-white' : 'bg-zinc-950/20 text-zinc-500'}`}><Trash2 size={18} /></div>
+          <div>
+            <p className="text-[9px] text-neutral-500 font-black uppercase">Papelera</p>
+            <p className="text-xl font-black text-zinc-500 leading-none mt-1">{productos.filter(p => p.estado_visibilidad === false).length}</p>
           </div>
         </button>
 
@@ -573,6 +598,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
               {activeFilter === 'out_of_stock' && 'Agotados'}
               {activeFilter === 'in_stock' && 'En Stock'}
               {activeFilter === 'no_image' && 'Sin Imagen'}
+              {activeFilter === 'trash' && 'Papelera'}
               {selectedCategory !== 'Todas' && ` | ${selectedCategory}`}
             </span>
             <button onClick={() => { setActiveFilter('all'); setSelectedCategory('Todas'); }} className="text-yellow-500 hover:text-white"><X size={12} /></button>
