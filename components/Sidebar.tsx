@@ -23,35 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   absMaxPrice,
   allProducts = []
 }) => {
-  // Fetch categories from Supabase with fallback to constants
-  const [dbCategorias, setDbCategorias] = useState(CATEGORIES);
-  const [dbSubcategorias, setDbSubcategorias] = useState(SUBCATEGORY_MAP);
   const [expanded, setExpanded] = useState<Set<string>>(new Set<string>());
-
-  useEffect(() => {
-    const fetchCats = async () => {
-      // 🚨 BYPASS DE EMERGENCIA: Forzar uso de constants.tsx (ignorando Supabase)
-      console.warn('Fallback Forzado: Ignorando Supabase y usando constants.tsx local');
-      return;
-      
-      try {
-        const { data, error } = await supabase.from('categorias').select('*');
-        if (!error && data && data.length > 0) {
-          const principales = data.filter(c => !c.es_subcategoria && !c.categoria_padre).map(c => c.nombre);
-          if (principales.length > 0) setDbCategorias(['Todas', ...principales]);
-          
-          const subs = data.filter(c => c.es_subcategoria || c.categoria_padre).map(c => ({
-            parentCategory: c.categoria_padre || c.padre || 'Herramientas',
-            subcategory: c.nombre
-          }));
-          if (subs.length > 0) setDbSubcategorias(subs as any);
-        }
-      } catch (e) {
-        console.warn('Usando constants.tsx como fallback en Sidebar');
-      }
-    };
-    fetchCats();
-  }, []);
 
   const toggleExpand = (cat: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -62,18 +34,18 @@ const Sidebar: React.FC<SidebarProps> = ({
     });
   };
 
-  // Subcategorías únicas para una categoría padre (en el orden del mapa o BD)
+  // Subcategorías únicas para una categoría padre (en el orden del mapa)
   const subcatsFor = useMemo(() => (cat: string): string[] => {
     const seen = new Set<string>();
     const result: string[] = [];
-    for (const entry of dbSubcategorias) {
+    for (const entry of SUBCATEGORY_MAP) {
       if (entry.parentCategory === cat && !seen.has(entry.subcategory)) {
         seen.add(entry.subcategory);
         result.push(entry.subcategory);
       }
     }
     return result;
-  }, [dbSubcategorias]);
+  }, []);
 
   // Contador dinámico por categoría (y opcionalmente subcategoría)
   const countFor = (cat: string, subcat?: string): number => {
@@ -103,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         <ul className="space-y-0.5 max-h-[70vh] overflow-y-auto pr-1 custom-scrollbar">
-          {dbCategorias.map((cat) => {
+          {CATEGORIES.map((cat) => {
             const count = countFor(cat);
             const isActive = selectedCategory === cat && !selectedSubcategory;
             const isExpandable = EXPANDABLE_CATEGORIES.includes(cat);
