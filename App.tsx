@@ -564,51 +564,37 @@ const AppContent = () => {
         const { data, error } = await supabase.from('productos').select('*');
         if (data && data.length > 0 && isMounted) {
           setLiveProducts(() => {
-            // Normalizar SKU para comparación segura y evitar duplicados por minúsculas/mayúsculas
+            // Normalizar SKU para comparación segura
             const normSku = (sku: any): string => String(sku ?? '').trim().toLowerCase();
 
-            // Construir Set de SKUs que existen en Supabase (fuente de verdad)
-            const supabaseSkus = new Set(data.map(d => normSku(d.sku)));
-
-            // PASO 1: Solo mantener productos de constants cuyo SKU NO está en Supabase
-            // Si un SKU existe en Supabase, Supabase tiene prioridad ABSOLUTA → sin duplicados
-            const staticFallback = PRODUCTS.filter(
-              p => !supabaseSkus.has(normSku(p.sku))
-            ).map(p => ({
-              ...p,
-              // Derivar subcategoría automáticamente desde nombre + categoría
-              subcategory: getSubcategory(p.name, p.category || ''),
-            }));
-
-            // PASO 2: Mapear TODOS los productos de Supabase al formato de la web
-            // Nombre, categoría, imagen y precios vienen 100% de Supabase
+            // Mapear TODOS los productos de Supabase al formato de la web
             const fromSupabase = data.map(d => {
-              // Si existía en constants, heredamos solo el id estructurado
+              // Si existía en constants, heredamos solo el id estructurado o defaults mínimos
               const base = PRODUCTS.find(p => normSku(p.sku) === normSku(d.sku));
-              // Safety: Limpiar backslashes residuales de encoding y convertir precios a número
+              
               const rawName = d.nombre || base?.name || 'Producto sin nombre';
               const cleanName = rawName.replace(/\\/g, '').trim();
+              
               return {
-                ...(base || {}),
+                ...(base || {}), // Mantiene la estructura de id/imageUrl antigua
                 id: base ? base.id : `supabase-${d.id}`,
                 name: cleanName,
                 sku: normSku(d.sku),
                 description: (d.descripcion || base?.description || '').replace(/\\/g, '').trim(),
-                // Convertir explícitamente a número (Supabase puede devolver strings)
                 priceRetail: Number(d.precio_detalle) || Number(base?.priceRetail) || 0,
                 priceWholesale: Number(d.precio_mayorista) || Number(base?.priceWholesale) || 0,
                 imageUrl: d.url_imagen || base?.imageUrl || '',
-                // Categoría de Supabase tiene PRIORIDAD ABSOLUTA (director define desde admin)
+                // Categoría de Supabase tiene PRIORIDAD ABSOLUTA
                 category: (d.categoria || base?.category || 'Herramientas').trim(),
                 inStock: d.en_stock !== false,
                 isVisible: d.estado_visibilidad !== false,
-                // Subcategoría: derivada automáticamente desde el nombre del producto
+                // Subcategoría: derivada automáticamente
                 subcategory: getSubcategory(cleanName, (d.categoria || base?.category || 'Herramientas').trim()),
               };
             });
 
-            // Resultado: constantes sin colisión + todos los de Supabase
-            return [...staticFallback, ...fromSupabase];
+            // Fuente de Verdad: Supabase al 100% (eliminamos staticFallback)
+            return fromSupabase;
           });
         }
       } catch (err) {
