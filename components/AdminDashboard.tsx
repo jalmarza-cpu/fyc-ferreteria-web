@@ -551,7 +551,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           <div className={`p-3 rounded-lg transition ${activeFilter === 'all' ? 'bg-zinc-100 text-black' : 'bg-zinc-900 text-zinc-400'}`}><Package size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Total SKU</p>
-            <p className="text-xl font-black text-white leading-none mt-1">{productos.length}</p>
+            <p className="text-xl font-black text-white leading-none mt-1">{productos.filter(p => p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
@@ -559,7 +559,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           <div className={`p-3 rounded-lg transition ${activeFilter === 'out_of_stock' ? 'bg-red-600 text-white' : 'bg-red-950/20 text-red-500'}`}><AlertTriangle size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Agotados</p>
-            <p className="text-xl font-black text-red-500 leading-none mt-1">{productos.filter(p => !p.en_stock).length}</p>
+            <p className="text-xl font-black text-red-500 leading-none mt-1">{productos.filter(p => !p.en_stock && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
@@ -567,7 +567,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           <div className={`p-3 rounded-lg transition ${activeFilter === 'no_image' ? 'bg-yellow-600 text-black' : 'bg-yellow-950/20 text-yellow-500'}`}><CameraOff size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Sin Foto</p>
-            <p className="text-xl font-black text-yellow-500 leading-none mt-1">{productos.filter(p => isNoImage(p.url_imagen)).length}</p>
+            <p className="text-xl font-black text-yellow-500 leading-none mt-1">{productos.filter(p => isNoImage(p.url_imagen) && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
@@ -575,7 +575,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           <div className={`p-3 rounded-lg transition ${activeFilter === 'in_stock' ? 'bg-green-600 text-white' : 'bg-green-950/20 text-green-500'}`}><CheckCircle size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">En Stock</p>
-            <p className="text-xl font-black text-green-500 leading-none mt-1">{productos.filter(p => p.en_stock).length}</p>
+            <p className="text-xl font-black text-green-500 leading-none mt-1">{productos.filter(p => p.en_stock && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
