@@ -24,35 +24,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [checkingStock, setCheckingStock] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
-
-    // 1. Sync from prop (App's Realtime connection)
+    // 1. Sync from prop (Default value)
     setLiveStock(product.inStock !== false);
 
-    // 2. Extra fetch to be 100% sure on individual load
-    const fetchStock = async () => {
-      try {
-        const { data, error } = await supabase.from('productos').select('in_stock').eq('sku', product.sku).single();
-        if (!error && data && isMounted) {
-          setLiveStock(data.in_stock !== false);
-        }
-      } catch (err) { }
-    };
-    fetchStock();
-
-    // 3. Suscripción directa a Producto Individual (Doble protección)
-    const channel = supabase.channel(`card_${product.sku}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'productos', filter: `sku=eq.${product.sku}` }, (payload) => {
-        if (isMounted && payload.new) {
-          setLiveStock((payload.new as any).in_stock !== false);
-        }
-      })
-      .subscribe();
-
-    return () => {
-      isMounted = false;
-      supabase.removeChannel(channel);
-    };
+    // DISABLED FOR EMERGENCY: The extra REST fetch to the database and realtime subscription
+    // were causing 400 Bad Request which breaks the delivery presentation.
   }, [product.sku, product.inStock]);
 
   // Pricing State Logic
@@ -68,17 +44,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    // Verificación Crítica Just-in-Time
-    setCheckingStock(true);
-    try {
-      const { data, error } = await supabase.from('productos').select('in_stock').eq('sku', product.sku).single();
-      if (!error && data && data.in_stock === false) {
-        setLiveStock(false);
-        setCheckingStock(false);
-        return; // Detiene la adición si se agotó en la base de datos central
-      }
-    } catch (err) { }
-    setCheckingStock(false);
+    // DISABLED FOR EMERGENCY: Just-In-Time Stock checking
+    // setCheckingStock(true);
+    // try {
+    //   const { data, error } = await supabase.from('productos').select('in_stock').eq('sku', product.sku).single();
+    //   if (!error && data && data.in_stock === false) {
+    //     setLiveStock(false);
+    //     setCheckingStock(false);
+    //     return;
+    //   }
+    // } catch (err) { }
+    // setCheckingStock(false);
 
     const quantityToAdd = pricingMode === 'wholesale' ? MIN_WHOLESALE_QTY : 1;
     const priceToUse = pricingMode === 'wholesale' ? product.priceWholesale : product.priceRetail;
