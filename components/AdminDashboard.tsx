@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase, supabaseAdmin, getProductImageUrl } from '../utils/supabase';
-import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, ExternalLink, FilterX } from 'lucide-react';
+import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, FilterX } from 'lucide-react';
+import { CATEGORIES, SUBCATEGORY_MAP } from '../constants';
 
 const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,6 +19,27 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+
+  const [dbCategorias, setDbCategorias] = useState(CATEGORIES);
+  const [dbSubcategorias, setDbSubcategorias] = useState(SUBCATEGORY_MAP);
+
+  const fetchCategorias = async () => {
+    try {
+      const { data, error } = await supabaseAdmin.from('categorias').select('*');
+      if (!error && data && data.length > 0) {
+        const principales = data.filter(c => !c.es_subcategoria && !c.categoria_padre).map(c => c.nombre);
+        if (principales.length > 0) setDbCategorias(principales);
+        
+        const subs = data.filter(c => c.es_subcategoria || c.categoria_padre).map(c => ({
+          parentCategory: c.categoria_padre || c.padre || 'Herramientas',
+          subcategory: c.nombre
+        }));
+        if (subs.length > 0) setDbSubcategorias(subs);
+      }
+    } catch (e) {
+      console.warn('Usando constants.tsx como fallback para categorías (tabla categorias no encontrada)');
+    }
+  };
 
   const triggerCloudflarePurge = async () => {
     try {
@@ -44,7 +66,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     sku: '',
     nombre: '',
     descripcion: '',
-    categoria: 'Herramientas Manuales',
+    categoria: 'Herramientas',
     precio_mayorista: 0,
     precio_detalle: 0,
     url_imagen: '',
@@ -56,6 +78,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     if (authStatus === 'true') {
       setIsAuthenticated(true);
       fetchProductos();
+      fetchCategorias();
     } else {
       setLoading(false);
     }
@@ -441,17 +464,15 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Categoría de Catálogo</label>
                   <select value={formData.categoria} onChange={e => setFormData({ ...formData, categoria: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold">
-                    <option>Basurero</option>
-                    <option>Canalización</option>
-                    <option>Cielo falso</option>
-                    <option>Cintas</option>
-                    <option>Electricidad</option>
-                    <option>Extractores de Aire</option>
-                    <option>Grifería</option>
-                    <option>Herramientas</option>
-                    <option>Iluminación LED</option>
-                    <option>Maquinaria</option>
-                    <option>Selladora</option>
+                    <option value="">Selecciona Categoría...</option>
+                    {dbCategorias.map(cat => (
+                      <optgroup label={cat} key={cat}>
+                        <option value={cat}>{cat}</option>
+                        {dbSubcategorias.filter(s => s.parentCategory === cat).map(sub => (
+                          <option value={sub.subcategory} key={sub.subcategory}>-- {sub.subcategory}</option>
+                        ))}
+                      </optgroup>
+                    ))}
                   </select>
                 </div>
                 <div className="flex items-end">
@@ -575,7 +596,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       {/* FILTER ACTIVE BADGE & CATEGORY SELECTOR */}
       <div className="mb-6 flex flex-wrap items-center gap-4">
         <div className="flex-1 flex gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
-          {['Todas', 'Herramientas Manuales', 'Revestimientos', 'Fijaciones', 'Electricidad', 'Pinturas', 'Soldadura', 'Gasfitería', 'Seguridad', 'Adhesivos'].map(cat => (
+          {['Todas', ...dbCategorias].map(cat => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}

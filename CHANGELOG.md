@@ -2,6 +2,23 @@
 
 Todo cambio técnico y de arquitectura en la plataforma se registra en este documento con fecha, descripción y los archivos involucrados, garantizando trazabilidad y control de versiones por orden de Dirección.
 
+
+## [1.2.0] - 2026-04-14 (Nueva Arquitectura de Categorías)
+
+### 📌 Descripción de Cambios
+- **Ampliación de Árbol Dinámico de Categorías**: Se configuró y expandió el mapa de subcategorías (`SUBCATEGORY_MAP`) y se estableció el nuevo comportamiento de menús desplegables (`EXPANDABLE_CATEGORIES`).
+- **Nuevas Secciones Implementadas**:
+  - **Iluminación LED**: Alta eficiencia, Ampolleta, Campana, Canoa, Focos LED, Lámpara de emergencia, Lámpara estanco, Paneles LED, Proyectores Led.
+  - **Electricidad**: Alargador, Cables, Cajas, Campana Timbre, Enchufes, Gabinete, Interruptores, Tableros.
+  - **Herramientas**: Alicate, Amarra, Broca, Brocha, Cortadora, Destornillador, Discos, Escuadra, Espátula, Extractor de poleas, Formón, Guantes, Jardín, Llaves, Martillo, Napoleón, Nivel, Pasadores, Planas, Prensa, Regla, Rodillos, Sacaclavos, Serrucho, Tarugo.
+  - **Maquinaria**: Bomba piscina, Compresor de Aire, Gatas, Máquina de madera, Máquina para moler, Prensa hidráulica, Tecle pluma, Tornos, Transpaleta.
+- **Sincronización Previa a Base de Datos**: Como preparación, los keywords de cada subcategoría están seteados para poder extraerlos de base de datos automáticamente si provienen de facturas o inventarios brutos.
+- **Unificación de UI (Web vs Admin Dashboard)**: Se reemplazaron las dependencias estáticas (*hardcoded*) en las pestañas de filtros y dropdowns de edición en `AdminDashboard.tsx`, programando una estructura asíncrona preparada para consumir la tabla `categorias` desde Supabase como fuente de la verdad, con *fallback* seguro a `constants.tsx` en caso de latencia o re-creación de tablas.
+
+### 📁 Archivos Modificados
+- `constants.tsx`
+- `components/AdminDashboard.tsx`
+
 ## [1.1.0] - 2026-04-14 (Fase de Estabilización de Inventario)
 
 ### 📌 Descripción de Cambios
