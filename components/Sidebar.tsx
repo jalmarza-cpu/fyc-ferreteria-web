@@ -47,8 +47,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     return result;
   }, []);
 
-  // Contador dinámico por categoría (y opcionalmente subcategoría)
-  const countFor = (cat: string, subcat?: string): number => {
+  // Contador dinámico por categoría (renombrado para forzar purga de caché en Vercel)
+  const getCategoryCount = (cat: string, subcat?: string): number => {
     if (!allProducts.length) return 0;
     const visible = allProducts.filter(p => p.isVisible !== false);
     if (cat === 'Todas') return visible.length;
@@ -88,7 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         <ul className="space-y-0.5 max-h-[70vh] overflow-y-auto pr-1 custom-scrollbar">
           {CATEGORIES.map((cat) => {
-            const count = countFor(cat);
+            const count = getCategoryCount(cat);
             const isActive = selectedCategory === cat && !selectedSubcategory;
             const isExpandable = EXPANDABLE_CATEGORIES.includes(cat);
             const isExpanded = expanded.has(cat);
@@ -158,7 +158,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     >
                       <li className="pl-3 pt-0.5 space-y-0.5 pb-1">
                         {subcats.map(sub => {
-                          const subCount = countFor(cat, sub);
+                          const subCount = getCategoryCount(cat, sub);
                           const isSubActive =
                             selectedCategory === cat && selectedSubcategory === sub;
                           return (
