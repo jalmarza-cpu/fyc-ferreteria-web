@@ -4,10 +4,10 @@ import { createClient } from '@supabase/supabase-js';
 export const SUPABASE_BASE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizsrffhygwxcg.supabase.co"}/storage/v1/object/public`;
 export const BASE_IMAGE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizsrffhygwxcg.supabase.co"}/storage/v1/object/public/products`;
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://tkqcbpizsrffhygwxcg.supabase.co';
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'dummy-key';
 
-export const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseKey || 'placeholder-key', {
+export const supabase = createClient(supabaseUrl, supabaseKey, {
   global: {
     headers: {
       'Cache-Control': 'no-store, max-age=0'
@@ -16,7 +16,7 @@ export const supabase = createClient(supabaseUrl || 'https://placeholder.supabas
 });
 
 // Administrador dedicado para el Dashboard (Usa Service Role para saltarse RLS)
-const serviceRoleKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || '';
+const serviceRoleKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || 'dummy-role-key';
 export const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
 
 /**
