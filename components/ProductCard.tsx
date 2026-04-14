@@ -458,7 +458,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               className="w-full h-full flex items-center justify-center p-2 md:p-12 cursor-zoom-out"
             >
               <img
-                src={getProductImageUrl(product.name, product.imageUrl, product.sku) + "&quality=highres"}
+                src={(() => {
+                  const url = getProductImageUrl(product.name, product.imageUrl, product.sku);
+                  return url.includes('?') ? `${url}&quality=highres` : `${url}?quality=highres`;
+                })()}
                 alt={`${product.name} - SKU: ${product.sku}`}
                 className="max-w-full max-h-full object-contain pointer-events-auto"
                 style={{ touchAction: 'pinch-zoom' }}

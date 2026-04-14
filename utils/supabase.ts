@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 import { createClient } from '@supabase/supabase-js';
 
-export const SUPABASE_BASE_URL = "https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public";
-export const BASE_IMAGE_URL = "https://tkqcbpizxsrffhygwxcg.supabase.co/storage/v1/object/public/productos";
+export const SUPABASE_BASE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co"}/storage/v1/object/public`;
+export const BASE_IMAGE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co"}/storage/v1/object/public/productos`;
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
