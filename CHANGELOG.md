@@ -3,7 +3,25 @@
 Todo cambio técnico y de arquitectura en la plataforma se registra en este documento con fecha, descripción y los archivos involucrados, garantizando trazabilidad y control de versiones por orden de Dirección.
 
 
-## [1.2.1] - 2026-04-14\n- **Hotfix:** Limpiados 18 productos fantasmas reales (duplicados de BD).\n- **Hotfix:** Corregido el conteo de AdminDashboard para excluir productos eliminados lógicamente.\n- **Hotfix:** Forzadas las subcategorías en Dashboard Admin (Fallback a constants correcto).\n- **Hotfix:** Purgado Cloudflare vía ping manual POST en n8n.\n\n## [1.2.0] - 2026-04-14 (Nueva Arquitectura de Categorías)
+## [1.2.2] - 2026-04-14 (Incidencia de Seguridad & Securización de API Keys)
+
+### 📌 Descripción de Cambios
+- **Alerta de Secretos Expuestos**: GitHub y Google Cloud reportaron API Keys públicas en el código.
+- **Acción Inmediata (Google)**: Eliminación permanente del archivo `Recursos catalogo/Api` del entorno de local/github. Las API Keys fueron declaradas comprometidas. Las nuevas llaves deberán almacenarse en Variables de Entorno (`.env`) en Vercel/Easypanel.
+- **Acción Preventiva (Supabase)**: Extirpadas las llaves crudas (`VITE_SUPABASE_SERVICE_ROLE_KEY` y `VITE_SUPABASE_ANON_KEY`) dentro de `utils/supabase.ts` para depender 100% de `import.meta.env`, impidiendo futuros vectores de vulnerabilidad.
+- **Rotación de Claves**: El administrador ha sido notificado para llevar a cabo la rotación/invaliadación manual en Google Cloud y rotación de claves maestras si procede, restaurando la seguridad total.
+
+### 📁 Archivos Modificados
+- `Recursos catalogo/Api` (borrado)
+- `utils/supabase.ts`
+
+## [1.2.1] - 2026-04-14 (Hotfix de Estabilidad)
+- **Hotfix:** Limpiados 18 productos fantasmas reales (duplicados de BD).
+- **Hotfix:** Corregido el conteo de AdminDashboard para excluir productos eliminados lógicamente.
+- **Hotfix:** Forzadas las subcategorías en Dashboard Admin (Fallback a constants correcto).
+- **Hotfix:** Purgado Cloudflare vía ping manual POST en n8n.
+
+## [1.2.0] - 2026-04-14 (Nueva Arquitectura de Categorías)
 
 ### 📌 Descripción de Cambios
 - **Ampliación de Árbol Dinámico de Categorías**: Se configuró y expandió el mapa de subcategorías (`SUBCATEGORY_MAP`) y se estableció el nuevo comportamiento de menús desplegables (`EXPANDABLE_CATEGORIES`).
