@@ -87,7 +87,6 @@ export const getSubcategory = (name: string, category: string): string => {
 // BASE DE DATOS DE PRODUCTOS
 // ==========================================
 export const PRODUCTS: Product[] = [
-    {
 // --- ALICATES ---
   {
     id: 'prod-001',
