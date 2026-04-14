@@ -1,11 +1,11 @@
 /// <reference types="vite/client" />
 import { createClient } from '@supabase/supabase-js';
 
-export const SUPABASE_BASE_URL = `${(import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co").trim()}/storage/v1/object/public`;
-export const BASE_IMAGE_URL = `${(import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co").trim()}/storage/v1/object/public/products`;
+export const SUPABASE_BASE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizsrffhygwxcg.supabase.co"}/storage/v1/object/public`;
+export const BASE_IMAGE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizsrffhygwxcg.supabase.co"}/storage/v1/object/public/products`;
 
-const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || '').trim();
-const supabaseKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || '').trim();
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 export const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseKey || 'placeholder-key', {
   global: {
