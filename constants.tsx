@@ -2271,16 +2271,7 @@ export const PRODUCTS: Product[] = [
     imageUrl: "CatalogoExtra2/030681.jpg",
     category: "Gasfitería"
   },
-  {
-    id: "prod-422",
-    name: "Ducha Telefono",
-    sku: "030687",
-    description: "Ducha Telefono de alta durabilidad.",
-    priceRetail: 1990,
-    priceWholesale: 1660,
-    imageUrl: "CatalogoExtra2/030687.jpg",
-    category: "Gasfitería"
-  },
+
   {
     id: "prod-423",
     name: "Candado dorado 32mm",
