@@ -2,7 +2,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 export const SUPABASE_BASE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co"}/storage/v1/object/public`;
-export const BASE_IMAGE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co"}/storage/v1/object/public/products`;
+export const BASE_IMAGE_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://tkqcbpizxsrffhygwxcg.supabase.co"}/storage/v1/object/public/productos`;
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://tkqcbpizxsrffhygwxcg.supabase.co';
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_2ne2YbHvV04Hvi-d96LJqg_sgHJ87CI';
@@ -45,12 +45,17 @@ export const getProductImageUrl = (productName: string, imagePath?: string, sku?
 
   // 2. Sistema de Subida Moderno (uploads/)
   if (imagePath?.startsWith('uploads/')) {
-    return `${BASE_IMAGE_URL}/${imagePath}?v=innobate_upd`;
+    return `${BASE_IMAGE_URL}/${imagePath}`;
   }
 
-  // 3. Búsqueda por SKU (Si existe el SKU, intentamos cargar la foto local)
+  // 3. Ruta relativa de imagen (ej: "070323.jpg" guardada en BD)
+  if (imagePath && imagePath.trim() !== '') {
+    return `${BASE_IMAGE_URL}/${imagePath}`;
+  }
+
+  // 4. Búsqueda por SKU (Si existe el SKU, intentamos cargar la foto local)
   if (sku) {
-    return `${BASE_IMAGE_URL}/${sku}.jpg?v=innobate_sku`;
+    return `${BASE_IMAGE_URL}/${sku}.jpg`;
   }
 
   // 4. Si no hay SKU ni ruta de nube, devolvemos el logo o un placeholder controlado
