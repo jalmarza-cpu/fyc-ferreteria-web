@@ -3,7 +3,7 @@
 Todo cambio técnico y de arquitectura en la plataforma se registra en este documento con fecha, descripción y los archivos involucrados, garantizando trazabilidad y control de versiones por orden de Dirección.
 
 
-## [1.2.0] - 2026-04-14 (Nueva Arquitectura de Categorías)
+## [1.2.1] - 2026-04-14\n- **Hotfix:** Limpiados 18 productos fantasmas reales (duplicados de BD).\n- **Hotfix:** Corregido el conteo de AdminDashboard para excluir productos eliminados lógicamente.\n- **Hotfix:** Forzadas las subcategorías en Dashboard Admin (Fallback a constants correcto).\n- **Hotfix:** Purgado Cloudflare vía ping manual POST en n8n.\n\n## [1.2.0] - 2026-04-14 (Nueva Arquitectura de Categorías)
 
 ### 📌 Descripción de Cambios
 - **Ampliación de Árbol Dinámico de Categorías**: Se configuró y expandió el mapa de subcategorías (`SUBCATEGORY_MAP`) y se estableció el nuevo comportamiento de menús desplegables (`EXPANDABLE_CATEGORIES`).
