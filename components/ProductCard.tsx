@@ -5,7 +5,26 @@ import { useCartStore } from '../store';
 import { Eye, ShoppingCart, ZoomIn, X, Check, Star, Zap, TrendingDown, Package } from 'lucide-react';
 import { CONTACT_PHONE } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getProductImageUrl, supabase } from '../utils/supabase';
+import { getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
+
+// Helper: reintenta con otras extensiones antes de mostrar el logo
+const makeImageErrorHandler = (imageUrl: string, imagePath?: string, sku?: string) => {
+  let fallbackIndex = 0;
+  const fallbacks = getProductImageFallbacks(imagePath, sku);
+  return (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = e.target as HTMLImageElement;
+    // Avanzar a la siguiente URL de fallback que sea diferente a la actual
+    while (fallbackIndex < fallbacks.length) {
+      const next = fallbacks[fallbackIndex++];
+      if (next !== target.src) {
+        target.src = next;
+        return;
+      }
+    }
+    // Agotados los fallbacks: mostrar logo
+    target.src = '/logo-fyc.png';
+  };
+};
 
 interface ProductCardProps {
   product: Product;
@@ -107,13 +126,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
             alt={`${product.name} - SKU: ${product.sku}`}
             className="w-full h-full object-contain group-hover:scale-105 group-hover:brightness-110 transition-transform duration-500 ease-out"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              // Fallback just in case the image hasn't uploaded yet
-              if (!target.src.includes('logo-fyc.png')) {
-                target.src = '/logo-fyc.png';
-              }
-            }}
+            onError={makeImageErrorHandler(
+              getProductImageUrl(product.name, product.imageUrl, product.sku),
+              product.imageUrl,
+              product.sku
+            )}
           />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
             <div className="bg-black/80 text-white p-2 rounded-full backdrop-blur-sm shadow-xl">
@@ -314,12 +331,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
                   alt={`${product.name} - SKU: ${product.sku}`}
                   className="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-500 ease-out"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    if (!target.src.includes('logo-fyc.png')) {
-                      target.src = '/logo-fyc.png';
-                    }
-                  }}
+                  onError={makeImageErrorHandler(
+                    getProductImageUrl(product.name, product.imageUrl, product.sku),
+                    product.imageUrl,
+                    product.sku
+                  )}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover/img:bg-[rgba(0,0,0,0.4)] transition-colors duration-300 flex items-center justify-center opacity-0 group-hover/img:opacity-100">
                   <div className="bg-black/90 text-white py-2 px-4 rounded-full backdrop-blur-md shadow-2xl flex items-center gap-2 border border-[#333]">
@@ -439,10 +455,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 className="max-w-full max-h-full object-contain pointer-events-auto"
                 style={{ touchAction: 'pinch-zoom' }}
                 onClick={(e) => e.stopPropagation()}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  if (!target.src.includes('logo-fyc.png')) { target.src = '/logo-fyc.png'; }
-                }}
+                onError={makeImageErrorHandler(
+                  getProductImageUrl(product.name, product.imageUrl, product.sku),
+                  product.imageUrl,
+                  product.sku
+                )}
               />
             </motion.div>
           </motion.div>

@@ -472,7 +472,15 @@ const Home = ({
               <Sidebar
                 selectedCategory={category}
                 selectedSubcategory={subcategory}
-                onSelectCategory={(cat, sub) => { setCategory(cat); setSubcategory(sub || ''); }}
+                onSelectCategory={(cat, sub) => {
+                  // Reset filtros acumulados al cambiar categoría principal
+                  if (cat !== category) {
+                    setSearchTerm('');
+                    setMaxPrice(maxProductPrice);
+                  }
+                  setCategory(cat);
+                  setSubcategory(sub || '');
+                }}
                 maxPrice={maxPrice}
                 onPriceChange={setMaxPrice}
                 absMaxPrice={maxProductPrice}

@@ -43,23 +43,54 @@ export const getProductImageUrl = (productName: string, imagePath?: string, sku?
     return imagePath;
   }
 
-  // 2. Sistema de Subida Moderno (uploads/)
+  // 2. Ruta con prefijo uploads/ (subidas desde el Dashboard)
   if (imagePath?.startsWith('uploads/')) {
     return `${BASE_IMAGE_URL}/${imagePath}`;
   }
 
-  // 3. Ruta relativa de imagen (ej: "070323.jpg" guardada en BD)
+  // 3. Cualquier otra ruta relativa guardada en BD
   if (imagePath && imagePath.trim() !== '') {
     return `${BASE_IMAGE_URL}/${imagePath}`;
   }
 
-  // 4. Búsqueda por SKU (Si existe el SKU, intentamos cargar la foto local)
+  // 4. Búsqueda por SKU: primera extensión a probar
   if (sku) {
     return `${BASE_IMAGE_URL}/${sku}.jpg`;
   }
 
-  // 4. Si no hay SKU ni ruta de nube, devolvemos el logo o un placeholder controlado
+  // 5. Sin datos suficientes, usar logo de fallback
   return '/logo-fyc.png';
+};
+
+/**
+ * Genera array ordenado de URLs alternativas para el fallback de imagen.
+ * Usar en onError del <img>: iterar hasta encontrar una que cargue.
+ */
+export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
+  const fallbacks: string[] = [];
+
+  // Si tenemos ruta base, intentar otras extensiones
+  if (imagePath && !imagePath.startsWith('http')) {
+    const base = `${BASE_IMAGE_URL}/${imagePath}`;
+    const noExt = base.replace(/\.(jpg|jpeg|png|webp|JPG|JPEG|PNG)$/i, '');
+    fallbacks.push(`${noExt}.jpg`, `${noExt}.JPG`, `${noExt}.png`, `${noExt}.jpeg`, `${noExt}.webp`);
+  }
+
+  // Si tenemos SKU, probar múltiples extensiones
+  if (sku) {
+    fallbacks.push(
+      `${BASE_IMAGE_URL}/${sku}.jpg`,
+      `${BASE_IMAGE_URL}/${sku}.JPG`,
+      `${BASE_IMAGE_URL}/${sku}.png`,
+      `${BASE_IMAGE_URL}/${sku}.jpeg`,
+    );
+  }
+
+  // Último recurso: logo local
+  fallbacks.push('/logo-fyc.png');
+
+  // Eliminar duplicados manteniendo el orden
+  return [...new Set(fallbacks)];
 };
 
 /**
