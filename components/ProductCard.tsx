@@ -335,7 +335,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               >
                 <img
                   loading="lazy"
-                  src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/products/${product.imageUrl}`}
+                  src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
                   alt={`${product.name} - SKU: ${product.sku}`}
                   className="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-500 ease-out"
                   onError={(e) => {
@@ -458,7 +458,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               className="w-full h-full flex items-center justify-center p-2 md:p-12 cursor-zoom-out"
             >
               <img
-                src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/products/${product.imageUrl}`}
+                src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
                 alt={`${product.name} - SKU: ${product.sku}`}
                 className="max-w-full max-h-full object-contain pointer-events-auto"
                 style={{ touchAction: 'pinch-zoom' }}

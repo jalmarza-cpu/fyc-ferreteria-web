@@ -56,9 +56,21 @@ const Sidebar: React.FC<SidebarProps> = ({
       p => (p.category || '').trim().toLowerCase() === cat.toLowerCase()
     );
     if (!subcat) return inCat.length;
-    return inCat.filter(
-      p => (p.subcategory || '').toLowerCase() === subcat.toLowerCase()
-    ).length;
+    
+    return inCat.filter(p => {
+      if (p.subcategory && p.subcategory.toLowerCase() === subcat.toLowerCase()) return true;
+      
+      // Fallback: buscar keywords en nombre y descripción
+      const textToSearch = `${p.name || ''} ${p.description || ''}`.toLowerCase();
+      const entry = SUBCATEGORY_MAP.find(s => 
+        s.subcategory.toLowerCase() === subcat.toLowerCase() && 
+        s.parentCategory.toLowerCase() === cat.toLowerCase()
+      );
+      if (entry) {
+        return entry.keywords.some(k => textToSearch.includes(k.toLowerCase()));
+      }
+      return false;
+    }).length;
   };
 
   const formatPrice = (val: number) =>
