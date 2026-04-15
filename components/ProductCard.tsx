@@ -21,8 +21,8 @@ const makeImageErrorHandler = (imageUrl: string, imagePath?: string, sku?: strin
         return;
       }
     }
-    // Agotados los fallbacks: mostrar logo
-    target.src = '/logo-fyc.png';
+    // Agotados los fallbacks: mostrar placeholder de la ferretería
+    target.src = '/placeholder-fyc.png';
   };
 };
 

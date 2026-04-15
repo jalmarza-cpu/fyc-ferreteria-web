@@ -1,8 +1,9 @@
 
-import React, { useState, useEffect } from 'react';
-import { Star, Quote, CheckCircle2, Factory, Loader2 } from 'lucide-react';
+import React from 'react';
+import { Star, Quote, CheckCircle2, Factory } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getMaestroImageUrl, supabase } from '../utils/supabase';
+import { getMaestroImageUrl } from '../utils/supabase';
+import testimoniosData from '../data/testimonios.json';
 
 interface Maestro {
   id: number;
@@ -14,77 +15,12 @@ interface Maestro {
   highlight: string;
 }
 
-const FALLBACK_MAESTROS: Maestro[] = [
-  {
-    id: 1,
-    name: "Matías Canto",
-    role: "Jefe de Obra",
-    originalImage: "https://ui-avatars.com/api/?name=Matias+Canto&background=FFD700&color=0A0A0A&size=200&bold=true",
-    imagePath: "Cliente-1-Matias-Canto.jpg",
-    quote: "Pedí alicates y llegaron al día siguiente a la obra con la factura lista. Excelente servicio.",
-    highlight: "Rapidez Extrema"
-  },
-  {
-    id: 2,
-    name: "Axel Cabrera",
-    role: "Contratista General",
-    originalImage: "https://ui-avatars.com/api/?name=Axel+Cabrera&background=FFD700&color=0A0A0A&size=200&bold=true",
-    imagePath: "Cliente-2-Axel-Cabrera.jpeg",
-    quote: "Cotización formal rápida. Los precios mayoristas son reales, se nota el ahorro en el total final.",
-    highlight: "Precio Justo"
-  },
-  {
-    id: 3,
-    name: "Héctor El Maestro",
-    role: "Pintor Profesional",
-    originalImage: "https://ui-avatars.com/api/?name=Hector+El+Maestro&background=FFD700&color=0A0A0A&size=200&bold=true",
-    imagePath: "Cliente-3-Hector-El-maestro.jpeg",
-    quote: "Necesitaba asesoría para un proyecto grande y me atendieron por WhatsApp de maravilla.",
-    highlight: "Calidad Industrial"
-  }
-];
+const maestrosData: Maestro[] = testimoniosData.map((t) => ({
+  ...t,
+  originalImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=FFD700&color=0A0A0A&size=200&bold=true`,
+}));
 
 const Maestros = () => {
-  const [maestrosData, setMaestrosData] = useState<Maestro[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMaestros = async () => {
-      try {
-        // Intento de conexión con la tabla 'testimonios'
-        const { data, error } = await supabase
-          .from('testimonios')
-          .select('*')
-          .order('id', { ascending: true });
-
-        if (error) throw error;
-
-        if (data && data.length > 0) {
-          // Mapear los datos de Supabase. Si imagePath viene en la BD, se usa.
-          const mappedData = data.map((item: any) => ({
-             id: item.id,
-             name: item.name || item.nombre || 'Maestro Anónimo',
-             role: item.role || item.rol || 'Cliente Fiscal',
-             quote: item.quote || item.comentario || item.testimonio || '',
-             highlight: item.highlight || item.destacado || 'Cliente Verificado',
-             imagePath: item.imagePath || item.imagen || item.image || undefined,
-             originalImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name || item.nombre || 'M')}&background=FFD700&color=0A0A0A&size=200&bold=true`
-          }));
-          setMaestrosData(mappedData);
-        } else {
-           console.log("No se encontraron testimonios en Supabase. Aplicando Fallback de Seguridad.");
-           setMaestrosData(FALLBACK_MAESTROS);
-        }
-      } catch (error) {
-        console.error("Error obteniendo testimonios de Supabase, activando protección:", error);
-        setMaestrosData(FALLBACK_MAESTROS);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMaestros();
-  }, []);
 
   return (
     <section id="maestros" className="py-20 bg-[#0A0A0A] border-t border-[#222] relative overflow-hidden scroll-mt-32">
@@ -111,15 +47,7 @@ const Maestros = () => {
         </div>
 
         {/* Grid of Cards */}
-        {loading ? (
-          <div className="flex justify-center items-center py-20">
-             <div className="flex flex-col items-center gap-4">
-                <Loader2 className="w-10 h-10 text-[#FFD700] animate-spin" />
-                <span className="text-[#FFD700] uppercase font-black tracking-widest text-xs">Cargando Testimonios...</span>
-             </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {maestrosData.map((t, index) => (
               <motion.div
                 key={t.id}
@@ -186,7 +114,6 @@ const Maestros = () => {
               </motion.div>
             ))}
           </div>
-        )}
 
       </div>
     </section>

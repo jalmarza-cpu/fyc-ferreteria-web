@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Matías Canto",
+    "role": "Jefe de Obra",
+    "quote": "Pedí alicates y llegaron al día siguiente a la obra con la factura lista. Excelente servicio para contratistas serios.",
+    "highlight": "Rapidez Extrema",
+    "imagePath": "Cliente-1-Matias-Canto.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Axel Cabrera",
+    "role": "Contratista General",
+    "quote": "Cotización formal rápida. Los precios mayoristas son reales, se nota el ahorro en el total final de la obra.",
+    "highlight": "Precio Justo",
+    "imagePath": "Cliente-2-Axel-Cabrera.jpeg"
+  },
+  {
+    "id": 3,
+    "name": "Héctor El Maestro",
+    "role": "Pintor Profesional",
+    "quote": "Necesitaba asesoría para un proyecto grande y me atendieron por WhatsApp de maravilla. Gente que sabe del rubro.",
+    "highlight": "Asesoría de Calidad",
+    "imagePath": "Cliente-3-Hector-El-maestro.jpeg"
+  }
+]

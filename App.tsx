@@ -677,6 +677,11 @@ const AppContent = () => {
           selectedCategory={category}
           selectedSubcategory={subcategory}
           onSelectCategory={(cat, sub) => {
+            // Reset filtros al cambiar categoría principal (igual que desktop)
+            if (cat !== category) {
+              setSearchTerm('');
+              setMaxPrice(maxProductPrice);
+            }
             setCategory(cat);
             setSubcategory(sub || '');
             setSidebarOpen(false);

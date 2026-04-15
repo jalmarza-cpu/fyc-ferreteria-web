@@ -55,10 +55,11 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
             </button>
             <div className="select-none cursor-pointer hover:opacity-90 transition-opacity" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <img
-                src="/Logo/Logo-sin-fondo.png"
+                src="/logo-fyc.png"
                 alt="Ferretería FYC"
                 className="h-[60px] md:h-20 w-auto object-contain"
                 title="Ferretería FYC"
+                onError={(e) => { (e.target as HTMLImageElement).src = '/Logo/Logo-sin-fondo.png'; }}
               />
             </div>
           </div>
