@@ -1,14 +1,18 @@
 /**
- * ProductCardV2.tsx — Diseño "Alta Gama" (Sandbox V2)
- * ─────────────────────────────────────────────────────
+ * ProductCardV2.tsx — Diseño "Industrial Élite" (Sandbox V2)
+ * ───────────────────────────────────────────────────────────
  * ⚠️  COMPONENTE EXPERIMENTAL — NO está conectado al flujo productivo (V1).
  *
- * Estándar Visual INNOBATE:
- *   • Fondo canvas:     #121212 (Negro Obsidiana)
- *   • Borde tarjeta:    1px solid #2D3748
- *   • Nombre producto:  #FFFFFF (Blanco puro)
- *   • Specs / textos:   #94A3B8 (Gris Platino)
- *   • Único CTA dorado: bg #FFD700, texto #000000 (Solo el botón principal)
+ * FILOSOFÍA: "El sitio de FYC no es solo una ferretería.
+ *             Es un catálogo de soluciones técnicas de alta gama."
+ *
+ * Estándar Visual INNOBATE Industrial Élite:
+ *   • Fondo canvas:     #121212 — Profundidad OLED, elimina fatiga visual
+ *   • Borde tarjeta:    1px solid #2D3748 — Estructura de ingeniería
+ *   • Nombre producto:  #FFFFFF — Legibilidad máxima         → clase: product-title-v2
+ *   • Datos técnicos:   #A0AEC0 — Autoridad técnica neutral  → var: --text-tech / clase: .text-tech
+ *   • Metadatos:        #64748B — Atenuado, no compite
+ *   • Único CTA dorado: bg #FFD700, texto #000000 — Foco absoluto en conversión
  *   • Sin fondos amarillos en badges ni precios
  */
 
@@ -148,21 +152,18 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
         {/* ── Cuerpo ── */}
         <div className="flex flex-col flex-1 p-4 gap-3">
 
-          {/* Categoría + SKU */}
+          {/* Categoría + SKU — Datos técnicos con --text-tech */}
           <div className="flex items-center justify-between">
-            <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: V2.textDim }}>
+            <span className="text-tech uppercase tracking-widest">
               {product.category}
             </span>
-            <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded" style={{ color: V2.textDim, border: `1px solid ${V2.divider}` }}>
+            <span className="text-tech font-mono px-1.5 py-0.5 rounded" style={{ border: `1px solid ${V2.divider}` }}>
               SKU {product.sku}
             </span>
           </div>
 
-          {/* Nombre — Blanco puro, sin amarillo */}
-          <h3
-            className="text-sm font-black uppercase leading-tight line-clamp-2"
-            style={{ color: V2.textWhite, fontFamily: 'inherit', letterSpacing: '-0.01em' }}
-          >
+          {/* Nombre — product-title-v2: blanco puro, sin amarillo, máxima legibilidad */}
+          <h3 className="product-title-v2 text-sm font-black uppercase leading-tight line-clamp-2">
             {product.name}
           </h3>
 
@@ -196,19 +197,21 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
             ))}
           </div>
 
-          {/* ── Bloque de precio — SIN fondos amarillos ── */}
+          {/* ── Bloque de precio — Datos técnicos con .text-tech, precio en blanco ── */}
           <div className="flex flex-col gap-1">
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px]" style={{ color: V2.textPlatino }}>
+              {/* Etiqueta de modo: dato técnico */}
+              <span className="text-tech">
                 {modo === 'mayorista' ? 'Pack de 6 · c/u' : '1 unidad'}
               </span>
               {modo === 'mayorista' && ahorroUnitario > 0 && (
-                <div className="flex items-center gap-1" style={{ color: V2.badgeGreen }}>
+                <div className="flex items-center gap-1" style={{ color: V2.success }}>
                   <TrendingDown className="w-3 h-3" />
                   <span className="text-[9px] font-bold">Ahorra {formatearCLP(ahorroPack)}</span>
                 </div>
               )}
             </div>
+            {/* Precio principal: blanco puro — máximo contraste */}
             <div className="flex items-end justify-between">
               <span
                 className="text-2xl font-black"
@@ -216,15 +219,15 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
               >
                 {precioUnitarioFormateado}
               </span>
-              <span className="text-[9px]" style={{ color: V2.textPlatino }}>
-                IVA incluido
-              </span>
+              {/* IVA: dato técnico */}
+              <span className="text-tech">IVA incluido</span>
             </div>
             {modo === 'mayorista' && (
               <div className="flex items-center gap-1.5">
                 <Package className="w-3 h-3" style={{ color: V2.textDim }} />
-                <span className="text-[9px]" style={{ color: V2.textPlatino }}>
-                  Mínimo <strong style={{ color: V2.textWhite }}>6 unidades</strong> · Despacho hoy
+                {/* Specs de pack: dato técnico con valor en blanco */}
+                <span className="text-tech">
+                  Mínimo <strong>6 unidades</strong> · Despacho hoy
                 </span>
               </div>
             )}

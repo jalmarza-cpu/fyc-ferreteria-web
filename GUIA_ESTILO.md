@@ -1,20 +1,36 @@
 # 🎨 GUÍA DE ESTILO — Portal FYC Ferretería
 
-> **Versión:** 2.0 · **Fecha:** Abril 2025 · **Estándar:** INNOBATE Alta Gama
+> **Versión:** 2.1 · **Fecha:** Abril 2025 · **Estándar:** INNOBATE Industrial Élite
 >
-> Este documento es el **ADN Visual** del portal. Cualquier cambio en V1 o V2
-> debe respetar estos valores. Si se aprueba un cambio de estilo, actualizar
-> este archivo primero y luego aplicarlo — nunca al revés.
+> ### 💡 El Reporte del Arquitecto
+> *"El azul no será un bloque de color, sino un detalle de ingeniería que hará que el
+> sitio de FYC no parezca solo una ferretería, sino un catálogo de soluciones de
+> iluminación de alta gama."*
 >
-> **V2 (Alta Gama):** Los colores de la sección V2 son **definitivos y aprobados por el Director**.
+> Esta frase es el **corazón** de la GUIA_ESTILO. Le da al equipo una dirección clara:
+> **el diseño está al servicio de la técnica.** Cada color, cada tamaño de fuente y
+> cada margen existe para hacer los datos del producto más legibles, no para decorar.
+>
+> **V2 (Industrial Élite):** Los colores V2 son **definitivos y aprobados por el Director**.
 > No alterar sin consulta previa.
 
 ---
 
-## 🆕 PALETA V2 — "Alta Gama" (Canvas Obsidiana)
+## 🆕 PALETA V2 — "Industrial Élite" (Canvas Obsidiana)
 
-> **Regla de oro V2:** El amarillo `#FFD700` solo aparece en **UN elemento por tarjeta**: el botón "Añadir al Carrito".
+> **Regla de oro V2:** El amarillo `#FFD700` aparece en **UN solo elemento por tarjeta**: el botón CTA.
 > Ningún badge, precio ni fondo puede ser amarillo sólido en V2.
+
+### 🎯 Tabla Maestra de Variables V2
+
+| Elemento | Variable CSS | Hexadecimal | Función Psicológica |
+|---|---|---|---|
+| Fondo Canvas | `--canvas-v2` | `#121212` | Profundidad OLED — elimina fatiga visual |
+| Texto Títulos | `--text-white` | `#FFFFFF` | Legibilidad máxima en entorno oscuro |
+| **Datos Técnicos** | **`--text-tech`** | **`#A0AEC0`** | **Autoridad técnica — separa el nombre de la especificación** |
+| Bordes/Divisores | `--border-v2` | `#2D3748` | Estructura de ingeniería sin "cerrar" el diseño |
+| Metadatos dim | `--text-dim` | `#64748B` | Información de soporte — no compite |
+| Acento Acción | `--accent-action` | `#FFD700` | Foco absoluto en la conversión (Venta) |
 
 ### Fondos V2
 
@@ -33,13 +49,20 @@
 | **Acero Hover** | `#1E2533` | Borde al hacer hover sobre tarjeta |
 | **Divisor Interno** | `#1E293B` | Separadores entre secciones dentro de tarjeta |
 
-### Texto V2 — Jerarquía
+### Texto V2 — Jerarquía de 3 Niveles
 
-| Nivel | Nombre | Hexadecimal | Uso |
-|---|---|---|---|
-| 1 (Primario) | **Blanco Puro** | `#FFFFFF` | Nombre del producto — máxima legibilidad |
-| 2 (Secundario) | **Gris Platino** | `#94A3B8` | Specs, precio label, IVA, descripción corta |
-| 3 (Terciario) | **Gris Acero** | `#64748B` | SKU, metadatos, viewers, texto muy atenuado |
+| Nivel | Nombre | Hexadecimal | Variable CSS | Clase CSS | Aplicar en... |
+|---|---|---|---|---|---|
+| 1 · Primario | **Blanco Puro** | `#FFFFFF` | `--text-white` | `.product-title-v2` | Nombre del producto |
+| 2 · Técnico | **Gris Platino Técnico** | `#A0AEC0` | `--text-tech` | `.text-tech` | Voltaje, Watts, Kelvin, Dimensiones, modo de precio, IVA |
+| 3 · Atenuado | **Gris Acero** | `#64748B` | `--text-dim` | _(inline)_ | SKU, categoría, viewers, metadatos |
+
+> **Cómo usar `.text-tech`:** Envolver cualquier dato de especificación técnica en esta clase.
+> Los valores numéricos dentro de `<strong>` resaltan automáticamente en blanco.
+> ```html
+> <span class="text-tech">Voltaje: <strong>220V</strong> · Potencia: <strong>50W</strong></span>
+> <span class="text-tech">Temp. Color: <strong>3000K</strong> · Dimensiones: <strong>120×60mm</strong></span>
+> ```
 
 ### Acento V2 — Dorado Restringido
 
