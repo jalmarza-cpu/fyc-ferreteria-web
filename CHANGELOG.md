@@ -2,11 +2,25 @@
 
 Todo cambio técnico y de arquitectura en la plataforma se registra en este documento con fecha, descripción y los archivos involucrados, garantizando trazabilidad y control de versiones por orden de Dirección.
 
-## [1.3.0] - 2026-04-15 🚨 INFRAESTRUCTURA Y CONTINGENCIA — Manual de Rescate
+## [1.3.1] - 2026-04-15 🚨 MIGRACIÓN DB — Migración Exitosa a Sao Paulo
 
-> **Contexto:** EasyPanel/DigitalOcean no podía completar el build Docker por el peso del repositorio (~489 MB). Se tomaron medidas de emergencia para restablecer el despliegue en `fycferreteria.cl`. Esta sección documenta **qué se hizo, por qué, y cómo revertirlo**.
+> **Contexto:** Se procedió a migrar de manera urgente y definitiva la base de datos hacia una nueva instancia master `Supabase (Región Sao Paulo)` para restaurar el entorno V2 Industrial (eliminando un 'pantalla negra' o blackout por pérdida de conectividad en el entorno anterior). 
 
 ---
+
+### 🗄️ 1. Inyección de Semilla (Seed) y Catálogo
+**Problema:** El nuevo entorno de BD estaba vacío, causando caídas de carga.
+**Solución ejecutada:**
+- Se inyectaron credenciales seguras (URL y Service Role Key) estrictamente en ambiente bloqueado (`.env.local`), verificando su resguardo mediante `.gitignore` para no subir jamás a GitHub.
+- Se implementó y ejecutó el script maestro `scripts/seed_productos.ts` que escanea las constantes locales en `constants.tsx`.
+- Se adaptó el *payload* eliminando inserciones forzadas con identificadores de cadena (e.g., `prod-001`) para permitir que la tabla `productos` autogenere UUIDs válidos.
+- Se migraron **343 productos** completos exitosamente hacia el nuevo entorno de producción en bloques/lotes de 50 ítems.
+- **Resultado:** La web originada de la contingencia en `fycferreteria.cl` responde exitosamente en este instante **con Código HTTP 200**.
+
+**⚠️ Nota Crítica de Seguridad:**
+Variables inyectadas (`VITE_SUPABASE_URL`, llaves privadas) deben ser administradas estrictamente a través de la sección **Environment** del Dashboard de EasyPanel. 
+
+## [1.3.0] - 2026-04-15 🚨 INFRAESTRUCTURA Y CONTINGENCIA — Manual de Rescate
 
 ### 🗜️ 1. Optimización Radical del Repositorio (489 MB → 3.2 MB)
 
