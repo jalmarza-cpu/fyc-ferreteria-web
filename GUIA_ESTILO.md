@@ -1,12 +1,82 @@
 # 🎨 GUÍA DE ESTILO — Portal FYC Ferretería
 
-> **Versión:** 1.0 · **Fecha:** Abril 2025 · **Estándar:** INNOBATE Alta Gama
+> **Versión:** 2.0 · **Fecha:** Abril 2025 · **Estándar:** INNOBATE Alta Gama
 >
 > Este documento es el **ADN Visual** del portal. Cualquier cambio en V1 o V2
 > debe respetar estos valores. Si se aprueba un cambio de estilo, actualizar
 > este archivo primero y luego aplicarlo — nunca al revés.
+>
+> **V2 (Alta Gama):** Los colores de la sección V2 son **definitivos y aprobados por el Director**.
+> No alterar sin consulta previa.
 
 ---
+
+## 🆕 PALETA V2 — "Alta Gama" (Canvas Obsidiana)
+
+> **Regla de oro V2:** El amarillo `#FFD700` solo aparece en **UN elemento por tarjeta**: el botón "Añadir al Carrito".
+> Ningún badge, precio ni fondo puede ser amarillo sólido en V2.
+
+### Fondos V2
+
+| Nombre | Hexadecimal | RGB | Uso |
+|---|---|---|---|
+| **Negro Obsidiana (Canvas)** | `#121212` | (18, 18, 18) | Fondo global del canvas V2 — aprobado |
+| **Negro Tarjeta** | `#181818` | (24, 24, 24) | Fondo de tarjetas de producto V2 |
+| **Negro Imagen** | `#0F0F0F` | (15, 15, 15) | Contenedor de imagen en tarjeta V2 |
+| **Negro Input** | `#1A1A1A` | (26, 26, 26) | Inputs, selects, fondos de controles |
+
+### Bordes V2
+
+| Nombre | Hexadecimal | Uso |
+|---|---|---|
+| **Acero Oscuro (borde)** | `#2D3748` | Borde fino 1px de tarjetas V2 — estándar |
+| **Acero Hover** | `#1E2533` | Borde al hacer hover sobre tarjeta |
+| **Divisor Interno** | `#1E293B` | Separadores entre secciones dentro de tarjeta |
+
+### Texto V2 — Jerarquía
+
+| Nivel | Nombre | Hexadecimal | Uso |
+|---|---|---|---|
+| 1 (Primario) | **Blanco Puro** | `#FFFFFF` | Nombre del producto — máxima legibilidad |
+| 2 (Secundario) | **Gris Platino** | `#94A3B8` | Specs, precio label, IVA, descripción corta |
+| 3 (Terciario) | **Gris Acero** | `#64748B` | SKU, metadatos, viewers, texto muy atenuado |
+
+### Acento V2 — Dorado Restringido
+
+| Nombre | Hexadecimal | Regla de uso |
+|---|---|---|
+| **Dorado Marca** | `#FFD700` | **SOLO** fondo del botón "Añadir al Carrito" / "Agregar Pack" |
+| **Dorado Hover** | `#FFF176` | Hover del botón dorado |
+| **Negro CTA** | `#000000` | Texto DENTRO del botón dorado (contraste máximo) |
+
+### Estados V2
+
+| Estado | Hexadecimal | Uso |
+|---|---|---|
+| **Verde Éxito** | `#10B981` | Ahorro, confirmación de carrito, stock activo |
+| **Rojo Error** | `#EF4444` | Badge de oferta (sin fondo), sin stock |
+| **Ámbar Aviso** | `#F59E0B` | Advertencias de stock bajo |
+
+---
+
+## 💡 Optimización de Imágenes V2 — Estrategia WebP
+
+> **Objetivo:** Mantener la profundidad de negros con el menor peso posible.
+
+```
+Orden de prioridad de formatos (V2 activo):
+  1. .webp   ← Primero siempre. ~35% más liviano que JPEG, negros más ricos
+  2. .jpg    ← Fallback para buckets sin versión WebP
+  3. .png    ← Solo si no hay .jpg
+  4. placeholder-fyc.png  ← Último recurso local
+```
+
+**Estado actual:** Stub listo en `hooks/useWebPOptimizer.ts`.
+**Activación:** Ver guía detallada en el mismo archivo.
+
+---
+
+
 
 ## 🎨 Paleta de Colores Oficial
 
