@@ -739,6 +739,25 @@ export default function App() {
   return (
     <Router>
       <AppContent />
+      {/* ============================================================
+          🤖 CONTENEDOR IA — PUNTO DE EXTENSIÓN RESERVADO
+          ============================================================
+          Este bloque está preparado para conectar el motor de IA.
+          No eliminar. No mover. Solo descomentar cuando esté listo.
+
+          Casos de uso planeados:
+            - Asistente de búsqueda por lenguaje natural ("¿Tienes llaves 12mm?")
+            - Recomendador de productos según historial del carro
+            - Chat de cotización automática por WhatsApp
+            - Predicción de precio mayorista según volumen
+
+          Cómo activar:
+            1. Crear el componente en components/v2/AsistenteIA.tsx
+            2. Importarlo aquí: import AsistenteIA from './components/v2/AsistenteIA'
+            3. Descomentar la línea de abajo
+
+          <AsistenteIA apiKey={import.meta.env.VITE_AI_API_KEY} />
+          ============================================================ */}
     </Router>
   );
 }
