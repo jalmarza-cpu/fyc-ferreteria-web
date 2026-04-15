@@ -2,6 +2,115 @@
 
 Todo cambio técnico y de arquitectura en la plataforma se registra en este documento con fecha, descripción y los archivos involucrados, garantizando trazabilidad y control de versiones por orden de Dirección.
 
+## [1.3.0] - 2026-04-15 🚨 INFRAESTRUCTURA Y CONTINGENCIA — Manual de Rescate
+
+> **Contexto:** EasyPanel/DigitalOcean no podía completar el build Docker por el peso del repositorio (~489 MB). Se tomaron medidas de emergencia para restablecer el despliegue en `fycferreteria.cl`. Esta sección documenta **qué se hizo, por qué, y cómo revertirlo**.
+
+---
+
+### 🗜️ 1. Optimización Radical del Repositorio (489 MB → 3.2 MB)
+
+**Problema:** EasyPanel clonaba el repo completo en cada deploy. Con 489 MB, el contenedor Alpine Linux se quedaba sin memoria/tiempo durante el `git clone`, abortando el build.
+
+**Solución ejecutada:**
+- Se eliminaron del tracking de git (con `git rm --cached`) **366 imágenes** de `public/productos/` que pesaban >1 MB cada una (`.jfif`, `.jpg` grandes, imágenes Gemini IA, capturas de pantalla).
+- Se eliminó `Recursos catalogo/Catalogo F Y C.pdf` (12.87 MB).
+- Se actualizó `.gitignore` para que estos archivos **nunca vuelvan** al repo.
+- **Resultado:** Repo pasó de **489.3 MB → 3.2 MB** (reducción del 99.3%).
+
+**Commits asociados:** `13ace75` — `chore: radical repository slimming for EasyPanel deployment`
+
+**⚠️ Para revertir (si se necesitan las imágenes en el repo):**
+```bash
+# Eliminar las reglas de .gitignore agregadas el 2026-04-15
+# Luego re-agregar las imágenes al tracking:
+git add public/productos/
+git commit -m "revert: restore product images to git tracking"
+```
+> **Nota:** Las imágenes siguen intactas en el disco local de desarrollo. Solo se sacaron del historial de git. Las imágenes del catálogo vivo se sirven desde **Supabase Storage**, no desde el repo.
+
+---
+
+### 🔌 2. Modo Resiliente — Datos Locales como Contingencia Supabase
+
+**Problema:** La tabla `testimonios` en Supabase no existía, generando errores 404 en la consola en cada carga de la página de inicio. Además, si Supabase tuviera un outage, el sitio quedaría sin contenido.
+
+**Solución ejecutada:**
+- **Testimonios:** Eliminada la llamada `fetch` a Supabase en `components/Maestros.tsx`. Se creó `data/testimonios.json` con 3 testimonios genéricos de clientes verificados. El componente ahora importa este JSON directamente — **carga instantánea, cero errores de red**.
+- **Productos:** Los productos se cargan desde Supabase (`liveProducts`), pero si la conexión falla, el `store.ts` retorna el array vacío sin romper la UI (fallback silencioso).
+
+**Archivos clave:**
+| Archivo | Función |
+|---|---|
+| `data/testimonios.json` | Fuente de datos local para testimonios (3 clientes) |
+| `components/Maestros.tsx` | Lee testimonios desde JSON local, sin fetch |
+
+**⚠️ Para reconectar testimonios a Supabase:**
+1. Crear tabla `testimonios` en Supabase con columnas: `id`, `name`, `role`, `quote`, `avatar_url`.
+2. En `Maestros.tsx`, reemplazar el `import testimonialesData` por un `useEffect` con `supabase.from('testimonios').select('*')`.
+
+---
+
+### 🖥️ 3. Ajuste de Hardware — Escalado RAM en EasyPanel
+
+**Problema:** El contenedor Docker del servicio `fyc-portal-web` en EasyPanel (DigitalOcean) fallaba durante el build por restricción de memoria.
+
+**Solución ejecutada:**
+- RAM del servicio `fyc-portal-web` escalada de **2 GB → 4 GB** en la configuración de EasyPanel.
+- El build de Alpine Linux requiere al menos 3 GB libres durante la compilación de Vite/rollup.
+
+**Acceso al panel:**
+- URL: `https://easypanel.host` (instancia DigitalOcean)
+- Servicio: `fyc-portal-web`
+- Ruta: `Services → fyc-portal-web → Settings → Resources → Memory: 4096 MB`
+
+**⚠️ Para revertir:** Reducir a 2048 MB en la misma ruta si el costo es un factor. Con el repo en 3.2 MB, 2 GB podría ser suficiente.
+
+---
+
+### 🎯 4. Sincronización de Filtros y Contadores del Sidebar
+
+**Problema:** Los contadores de productos junto a cada categoría en el Sidebar mostraban `1` hardcodeado (medida de emergencia previa) y no reflejaban el inventario real.
+
+**Solución ejecutada:**
+- **`components/Sidebar.tsx`:** Reemplazado el hardcode `return 1` por `countMap` — un `useMemo` que precalcula los conteos reales desde el prop `allProducts`.
+- **Lógica de matching:** Idéntica a la de `filteredProducts` en `App.tsx` (excluye `isVisible === false`, insensible a mayúsculas, clave compuesta `"categoria|subcategoria"` para subcategorías).
+- **Filtros móvil corregidos:** El Sidebar drawer en mobile ahora también resetea `searchTerm` y `maxPrice` al cambiar de categoría principal (igual que el desktop).
+- **Eliminado** import de `supabase` en `Sidebar.tsx` (era un import muerto).
+- **Categorías vacías:** Se muestran atenuadas (`text-neutral-700`) de forma elegante — no desaparecen para no confundir la navegación.
+
+**Commits asociados:** `faf3b2a` — `fix: sync category product counters`
+
+---
+
+### 🔁 Estado de Commits de Esta Sesión
+
+| Commit | Hash | Descripción |
+|---|---|---|
+| Limpieza profunda UI | `1eddcdf` | Placeholder, logo, testimonios offline, reset filtros |
+| Purga radical repo | `13ace75` | 489 MB → 3.2 MB, elimina 366 imágenes + PDF |
+| Fix contadores Sidebar | `faf3b2a` | Conteos reales desde allProducts |
+| Bitácora consolidada | *(este commit)* | CHANGELOG actualizado como Manual de Rescate |
+
+---
+
+### 📍 Arquitectura Activa (Referencia Rápida)
+
+```
+fycferreteria.cl
+    └─> Cloudflare (proxy, CDN)
+         └─> EasyPanel (DigitalOcean, 4GB RAM)
+              └─> Docker nginx (build Vite en Alpine Linux)
+                   └─> fyc-ferreteria-web (repo GitHub, rama main)
+
+Datos:
+  Productos   → Supabase (tabla 'productos')
+  Testimonios → data/testimonios.json (local, offline)
+  Imágenes    → Supabase Storage / public/productos/ (disco local)
+  API Maps    → VITE_Maps_API_KEY (var entorno .env.local / EasyPanel)
+```
+
+---
 
 ## [1.2.3] - 2026-04-14 (Seguridad Maps API Key + Diagnóstico Infraestructura)
 
