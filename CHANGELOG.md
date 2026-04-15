@@ -3,7 +3,24 @@
 Todo cambio técnico y de arquitectura en la plataforma se registra en este documento con fecha, descripción y los archivos involucrados, garantizando trazabilidad y control de versiones por orden de Dirección.
 
 
-## [1.2.2] - 2026-04-14 (Incidencia de Seguridad & Securización de API Keys)
+## [1.2.3] - 2026-04-14 (Seguridad Maps API Key + Diagnóstico Infraestructura)
+
+### 📌 Descripción de Cambios
+- **Migración Maps API Key**: La variable `GOOGLE_API_KEY` encontrada en el historial de git (`Recursos catalogo/Api`, commit `bc32fe9`) fue recuperada y migrada como variable de entorno segura con nombre `VITE_Maps_API_KEY` en `.env.local`. Pendiente configurar en Vercel Dashboard y EasyPanel.
+- **Diagnóstico Infraestructura fycferreteria.cl**: Se confirmó que el dominio `.cl` apunta a un contenedor Docker en **EasyPanel** (no a Vercel directamente). DNS gestionado vía Cloudflare con nameservers `adel.ns.cloudflare.com` / `cameron.ns.cloudflare.com`.
+- **Arquitectura confirmada**: `fycferreteria.cl → Cloudflare (proxy) → EasyPanel Docker (nginx)`. La URL `fyc-ferreteria-web.vercel.app` es la versión más actualizada.
+- **Cuenta Cloudflare activa**: `jalmarza@kirisinmobiliaria.com` (gestiona solo `kirisinmobiliaria.cl`). La cuenta que gestiona `fycferreteria.cl` es independiente — pendiente identificar.
+- **Webhook redeploy EasyPanel**: `servicios-n8n-n8n.9barxf.easypanel.host/webhook/easypanel-deploy-fyc` — redeploy tarda ~8-12 min por build Docker en Alpine Linux.
+
+### 📁 Archivos Modificados
+- `.env.local` (agregado `VITE_Maps_API_KEY`)
+
+### ⚠️ Pendientes
+- Configurar `VITE_Maps_API_KEY` en Vercel Dashboard (Settings → Environment Variables)
+- Configurar `VITE_Maps_API_KEY` en EasyPanel (Entorno del servicio `fyc-portal-web`)
+- Identificar y registrar cuenta Cloudflare que gestiona `fycferreteria.cl`
+
+## [1.2.2] - 2026-04-14 (Incidencia de Seguridad &amp; Securización de API Keys)
 
 ### 📌 Descripción de Cambios
 - **Alerta de Secretos Expuestos**: GitHub y Google Cloud reportaron API Keys públicas en el código.
