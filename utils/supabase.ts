@@ -24,7 +24,7 @@ export const SUPABASE_BASE_URL = supabaseUrl
   : '';
 
 export const BASE_IMAGE_URL = supabaseUrl
-  ? `${supabaseUrl}/storage/v1/object/public/productos`
+  ? `${supabaseUrl}/storage/v1/object/public/productos_v2`
   : '';
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
