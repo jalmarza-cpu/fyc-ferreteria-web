@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CATEGORIES, SUBCATEGORY_MAP, EXPANDABLE_CATEGORIES } from '../constants';
 import { Filter, SlidersHorizontal, Check, ChevronDown } from 'lucide-react';
-import { supabase } from '../utils/supabase';
 
 interface SidebarProps {
   selectedCategory: string;
@@ -47,11 +46,32 @@ const Sidebar: React.FC<SidebarProps> = ({
     return result;
   }, []);
 
-  // Contador dinámico por categoría (renombrado para forzar purga de caché en Vercel)
+  // Mapa de conteos precalculado desde allProducts (misma lógica que filteredProducts en App.tsx)
+  // Solo productos visibles, sin filtro de búsqueda ni precio (para que los conteos sean estables)
+  const countMap = useMemo(() => {
+    const map: Record<string, number> = {};
+    for (const p of allProducts) {
+      if (p.isVisible === false) continue;
+      const pCat = (p.category || '').trim();
+      const pSub = (p.subcategory || '').toLowerCase().trim();
+      // Contador de categoría madre
+      const catKey = pCat.toLowerCase();
+      map[catKey] = (map[catKey] || 0) + 1;
+      // Contador de subcategoría (clave: "categoria|subcategoria")
+      if (pSub) {
+        const subKey = `${catKey}|${pSub}`;
+        map[subKey] = (map[subKey] || 0) + 1;
+      }
+    }
+    return map;
+  }, [allProducts]);
+
+  // Devuelve el conteo real desde el mapa precalculado
   const getCategoryCount = (cat: string, subcat?: string): number => {
-    // HARDCODE DE EMERGENCIA: Retornamos 1 para que nunca se marquen como "Sin Stock" en el Sidebar visualmente,
-    // y aseguramos que el árbol se despliegue estáticamente sin fallos.
-    return 1;
+    if (subcat) {
+      return countMap[`${cat.toLowerCase()}|${subcat.toLowerCase().trim()}`] || 0;
+    }
+    return countMap[cat.toLowerCase()] || 0;
   };
 
   const formatPrice = (val: number) =>
@@ -79,10 +99,13 @@ const Sidebar: React.FC<SidebarProps> = ({
               <li key={cat}>
                 {/* Fila de categoría madre */}
                 <div
-                  className={`flex items-center justify-between rounded-xl px-3 py-2 cursor-pointer transition-all group ${isActive
+                  className={`flex items-center justify-between rounded-xl px-3 py-2 cursor-pointer transition-all group ${
+                    isActive
                       ? 'bg-[#FFD700] text-black'
-                      : 'hover:bg-[#151515] text-neutral-400 hover:text-white'
-                    }`}
+                      : count === 0
+                        ? 'text-neutral-700 hover:bg-[#111] hover:text-neutral-500 cursor-default'
+                        : 'hover:bg-[#151515] text-neutral-400 hover:text-white'
+                  }`}
                   onClick={() => {
                     onSelectCategory(cat);
                     if (isExpandable && !isExpanded) {
