@@ -7,23 +7,52 @@ import { CONTACT_PHONE } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
 
-// Helper: reintenta con otras extensiones antes de mostrar el logo
-const makeImageErrorHandler = (imageUrl: string, imagePath?: string, sku?: string) => {
-  let fallbackIndex = 0;
-  const fallbacks = getProductImageFallbacks(imagePath, sku);
-  return (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const target = e.target as HTMLImageElement;
-    // Avanzar a la siguiente URL de fallback que sea diferente a la actual
-    while (fallbackIndex < fallbacks.length) {
-      const next = fallbacks[fallbackIndex++];
-      if (next !== target.src) {
-        target.src = next;
-        return;
+// Componente especializado para la carga resiliente de la imagen.
+const DynamicImage = ({ product, className, onClick, style }: { product: Product, className?: string, onClick?: (e: React.MouseEvent) => void, style?: React.CSSProperties }) => {
+  const urls = getProductImageFallbacks(product.imageUrl, product.sku);
+  const [index, setIndex] = useState(0);
+  const currentSrc = urls[index] || '/logo-fyc.png';
+
+  useEffect(() => {
+    if (currentSrc === '/logo-fyc.png') return;
+    
+    let isMounted = true;
+    let resolved = false;
+    const img = new window.Image();
+    
+    img.onload = () => { resolved = true; };
+    img.onerror = () => {
+      if (resolved || !isMounted) return;
+      resolved = true;
+      setIndex(i => Math.min(i + 1, urls.length - 1));
+    };
+    img.src = currentSrc;
+
+    // Timeout de 200ms para fallbacks rapidos
+    const timeout = setTimeout(() => {
+      if (!resolved && isMounted) {
+        resolved = true;
+        img.src = ''; 
+        setIndex(i => Math.min(i + 1, urls.length - 1));
       }
-    }
-    // Agotados los fallbacks: mostrar placeholder de la ferretería
-    target.src = '/placeholder-fyc.png';
-  };
+    }, 200);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timeout);
+    };
+  }, [currentSrc, urls]);
+
+  return (
+    <img 
+      src={currentSrc} 
+      alt={`${product.name} - SKU: ${product.sku}`} 
+      className={className} 
+      onClick={onClick}
+      style={style}
+      loading="lazy"
+    />
+  );
 };
 
 interface ProductCardProps {
@@ -121,16 +150,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className="relative aspect-square w-full bg-[#151515] border-b border-[#222] flex items-center justify-center overflow-hidden p-4 cursor-zoom-in"
           onClick={() => setIsZoomOpen(true)}
         >
-          <img
-            loading="lazy"
-            src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
-            alt={`${product.name} - SKU: ${product.sku}`}
-            className="w-full h-full object-contain group-hover:scale-105 group-hover:brightness-110 transition-transform duration-500 ease-out"
-            onError={makeImageErrorHandler(
-              getProductImageUrl(product.name, product.imageUrl, product.sku),
-              product.imageUrl,
-              product.sku
-            )}
+          <DynamicImage
+            product={product}
+            className="w-full h-full object-contain group-hover:scale-105 brightness-110 contrast-125 group-hover:brightness-125 transition-transform duration-500 ease-out drop-shadow-md"
           />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
             <div className="bg-black/80 text-white p-2 rounded-full backdrop-blur-sm shadow-xl">
@@ -326,16 +348,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 className="group/img bg-[#151515] p-2 md:p-4 rounded-t-2xl md:rounded-2xl overflow-hidden shadow-2xl w-full max-w-[600px] border border-[#333] mb-4 md:mb-6 flex justify-center items-center h-[35vh] max-h-[35vh] relative cursor-zoom-in"
                 onClick={() => setIsImageFullscreen(true)}
               >
-                <img
-                  loading="lazy"
-                  src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
-                  alt={`${product.name} - SKU: ${product.sku}`}
-                  className="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-500 ease-out"
-                  onError={makeImageErrorHandler(
-                    getProductImageUrl(product.name, product.imageUrl, product.sku),
-                    product.imageUrl,
-                    product.sku
-                  )}
+                <DynamicImage
+                  product={product}
+                  className="w-full h-full object-contain group-hover/img:scale-105 brightness-110 contrast-125 transition-transform duration-500 ease-out drop-shadow-lg"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover/img:bg-[rgba(0,0,0,0.4)] transition-colors duration-300 flex items-center justify-center opacity-0 group-hover/img:opacity-100">
                   <div className="bg-black/90 text-white py-2 px-4 rounded-full backdrop-blur-md shadow-2xl flex items-center gap-2 border border-[#333]">
@@ -449,17 +464,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="w-full h-full flex items-center justify-center p-2 md:p-12 cursor-zoom-out"
             >
-              <img
-                src={getProductImageUrl(product.name, product.imageUrl, product.sku)}
-                alt={`${product.name} - SKU: ${product.sku}`}
-                className="max-w-full max-h-full object-contain pointer-events-auto"
+              <DynamicImage
+                product={product}
+                className="max-w-full max-h-full object-contain pointer-events-auto brightness-110 contrast-110"
                 style={{ touchAction: 'pinch-zoom' }}
                 onClick={(e) => e.stopPropagation()}
-                onError={makeImageErrorHandler(
-                  getProductImageUrl(product.name, product.imageUrl, product.sku),
-                  product.imageUrl,
-                  product.sku
-                )}
               />
             </motion.div>
           </motion.div>

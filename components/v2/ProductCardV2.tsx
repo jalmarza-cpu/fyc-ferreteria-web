@@ -40,18 +40,51 @@ const V2 = {
   divider:       '#1E293B',  // Separadores internos
 } as const;
 
-// ── Fallback de imágenes ────────────────────────────────────────────────────
-const makeErrorHandler = (imagePath?: string, sku?: string) => {
-  let idx = 0;
-  const fallbacks = getProductImageFallbacks(imagePath, sku);
-  return (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const target = e.target as HTMLImageElement;
-    while (idx < fallbacks.length) {
-      const next = fallbacks[idx++];
-      if (next !== target.src) { target.src = next; return; }
-    }
-    target.src = '/placeholder-fyc.png';
-  };
+// ── Componente de imagen resiliente con fallback 200ms ─────────────────────
+const DynamicImageV2 = ({ product, className, onClick, style }: { product: Product, className?: string, onClick?: (e: React.MouseEvent) => void, style?: React.CSSProperties }) => {
+  const urls = getProductImageFallbacks(product.imageUrl, product.sku);
+  const [index, setIndex] = useState(0);
+  const currentSrc = urls[index] || '/logo-fyc.png';
+
+  useEffect(() => {
+    if (currentSrc === '/logo-fyc.png') return;
+    
+    let isMounted = true;
+    let resolved = false;
+    const img = new window.Image();
+    
+    img.onload = () => { resolved = true; };
+    img.onerror = () => {
+      if (resolved || !isMounted) return;
+      resolved = true;
+      setIndex(i => Math.min(i + 1, urls.length - 1));
+    };
+    img.src = currentSrc;
+
+    const timeout = setTimeout(() => {
+      if (!resolved && isMounted) {
+        resolved = true;
+        img.src = ''; 
+        setIndex(i => Math.min(i + 1, urls.length - 1));
+      }
+    }, 200);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timeout);
+    };
+  }, [currentSrc, urls]);
+
+  return (
+    <img 
+      src={currentSrc} 
+      alt={`${product.name} · SKU ${product.sku}`} 
+      className={className} 
+      onClick={onClick}
+      style={style}
+      loading="lazy"
+    />
+  );
 };
 
 // ── Props ───────────────────────────────────────────────────────────────────
@@ -126,12 +159,9 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
           style={{ background: '#0F0F0F', borderBottom: `1px solid ${V2.divider}` }}
           onClick={() => setIsZoomOpen(true)}
         >
-          <img
-            loading="lazy"
-            src={imgSrc}
-            alt={`${product.name} · SKU ${product.sku}`}
-            className="w-full h-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
-            onError={makeErrorHandler(product.imageUrl, product.sku)}
+          <DynamicImageV2
+            product={product}
+            className="w-full h-full object-contain transition-transform duration-500 ease-out group-hover:scale-105 brightness-110 contrast-125"
           />
           {/* Overlay zoom */}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -303,11 +333,9 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
                 className="w-full aspect-square rounded-xl overflow-hidden flex items-center justify-center p-6"
                 style={{ background: '#0F0F0F', border: `1px solid ${V2.cardBorder}` }}
               >
-                <img
-                  src={imgSrc}
-                  alt={product.name}
-                  className="w-full h-full object-contain"
-                  onError={makeErrorHandler(product.imageUrl, product.sku)}
+                <DynamicImageV2
+                  product={product}
+                  className="w-full h-full object-contain brightness-110 contrast-125"
                 />
               </div>
               <h2 className="text-lg font-black uppercase text-center" style={{ color: V2.textWhite }}>

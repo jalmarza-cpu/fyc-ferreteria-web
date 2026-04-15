@@ -31,7 +31,6 @@ async function seedProductos() {
 
     // Preparar el formato exacto requerido por la tabla 'productos' en Supabase
     const payload = PRODUCTS.map((prod: any) => ({
-        id_unico: prod.id,                 // O asume 'id' si la BD usa UUID generado automático, puedes quitar esta línea para auto-generación
         sku: prod.sku || '',
         nombre: prod.name || '',
         descripcion: prod.description || '',
