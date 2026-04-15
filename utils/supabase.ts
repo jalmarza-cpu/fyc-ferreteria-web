@@ -7,11 +7,11 @@ import { createClient } from '@supabase/supabase-js';
 // Configurar en EasyPanel → Variables de Entorno (o en .env.local para desarrollo).
 // ─────────────────────────────────────────────────────────────────────────────
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const serviceRoleKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder';
+const serviceRoleKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || '';
 
-if (!supabaseUrl || !supabaseKey) {
+if (import.meta.env.VITE_SUPABASE_URL === undefined) {
   console.error(
     '[FYC] ⚠️ Variables de entorno de Supabase no configuradas. ' +
     'Definir VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en el archivo .env.local ' +
@@ -27,7 +27,7 @@ export const BASE_IMAGE_URL = supabaseUrl
   ? `${supabaseUrl}/storage/v1/object/public/productos`
   : '';
 
-export const supabase = createClient(supabaseUrl || '', supabaseKey || '', {
+export const supabase = createClient(supabaseUrl, supabaseKey, {
   global: {
     headers: {
       'Cache-Control': 'no-store, max-age=0'
@@ -36,7 +36,7 @@ export const supabase = createClient(supabaseUrl || '', supabaseKey || '', {
 });
 
 // Cliente administrativo — Solo para el Dashboard interno (usa Service Role para saltarse RLS)
-export const supabaseAdmin = createClient(supabaseUrl || '', serviceRoleKey || '');
+export const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey || 'placeholder');
 
 /**
  * Normaliza textos quitando tildes y caracteres especiales
