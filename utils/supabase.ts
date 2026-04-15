@@ -62,8 +62,14 @@ export const slugify = (text: string) => {
 export const getProductImageUrl = (productName: string, imagePath?: string, sku?: string) => {
   if (imagePath?.startsWith('http')) return imagePath;
   if (imagePath?.startsWith('uploads/')) return `${BASE_IMAGE_URL}/${imagePath}`;
-  if (imagePath && imagePath.trim() !== '') return `${BASE_IMAGE_URL}/${imagePath}`;
-  if (sku) return `${BASE_IMAGE_URL}/${sku}.jpg`;
+  
+  if (imagePath && imagePath.trim() !== '') {
+    // Normalizar a .jfif si es el formato principal subido
+    const noExt = imagePath.replace(/\.(jpg|jpeg|png|webp|jfif|JPG|JPEG|PNG|JFIF)$/i, '');
+    return `${BASE_IMAGE_URL}/${noExt}.jfif`;
+  }
+  
+  if (sku) return `${BASE_IMAGE_URL}/${sku}.jfif`;
   return '/logo-fyc.png';
 };
 
@@ -76,14 +82,15 @@ export const getProductImageFallbacks = (imagePath?: string, sku?: string): stri
 
   if (imagePath && !imagePath.startsWith('http')) {
     const base = `${BASE_IMAGE_URL}/${imagePath}`;
-    const noExt = base.replace(/\.(jpg|jpeg|png|webp|JPG|JPEG|PNG)$/i, '');
-    fallbacks.push(`${noExt}.jpg`, `${noExt}.JPG`, `${noExt}.png`, `${noExt}.jpeg`, `${noExt}.webp`);
+    const noExt = base.replace(/\.(jpg|jpeg|png|webp|jfif|JPG|JPEG|PNG|JFIF)$/i, '');
+    // Insertamos .jfif primero, luego las alternativas
+    fallbacks.push(`${noExt}.jfif`, `${noExt}.jpg`, `${noExt}.png`, `${noExt}.jpeg`, `${noExt}.webp`);
   }
 
   if (sku) {
     fallbacks.push(
+      `${BASE_IMAGE_URL}/${sku}.jfif`,
       `${BASE_IMAGE_URL}/${sku}.jpg`,
-      `${BASE_IMAGE_URL}/${sku}.JPG`,
       `${BASE_IMAGE_URL}/${sku}.png`,
       `${BASE_IMAGE_URL}/${sku}.jpeg`,
     );
