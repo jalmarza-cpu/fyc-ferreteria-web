@@ -60,38 +60,18 @@ export const slugify = (text: string) => {
  *   5. Fallback: logo local
  */
 export const getProductImageUrl = (productName: string, imagePath?: string, sku?: string) => {
-  if (imagePath?.startsWith('http')) return imagePath;
-  if (imagePath?.startsWith('uploads/')) return `${BASE_IMAGE_URL}/${imagePath}`;
-  
-  const fallbacks = getProductImageFallbacks(imagePath, sku);
-  return fallbacks[0];
+  if (!sku) return '/logo-fyc.png';
+  return `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`;
 };
 
-/**
- * Genera array ordenado de URLs alternativas para el manejo de error de imagen.
- * Usar en el atributo onError del <img>: iterar hasta encontrar una que cargue.
- */
 export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
-  const fallbacks: string[] = [];
-
-  if (imagePath && !imagePath.startsWith('http')) {
-    const base = `${BASE_IMAGE_URL}/${imagePath}`;
-    const noExt = base.replace(/\.(jpg|jpeg|png|webp|jfif|JPG|JPEG|PNG|JFIF)$/i, '');
-    fallbacks.push(`${noExt}.jpg`, `${noExt}.jfif`, `${noExt}.png`, `${noExt}.jpeg`, `${noExt}.webp`);
-  }
-
   if (sku) {
-    fallbacks.push(
-      `${BASE_IMAGE_URL}/${sku}.jpg`,
-      `${BASE_IMAGE_URL}/${sku}.jfif`,
-      `${BASE_IMAGE_URL}/${sku}.png`,
-      `${BASE_IMAGE_URL}/${sku}.jpeg`,
-      `${BASE_IMAGE_URL}/${sku}.webp`
-    );
+    return [
+      `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`,
+      '/logo-fyc.png'
+    ];
   }
-
-  fallbacks.push('/logo-fyc.png');
-  return [...new Set(fallbacks)];
+  return ['/logo-fyc.png'];
 };
 
 /**
