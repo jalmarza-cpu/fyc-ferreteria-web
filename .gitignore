@@ -26,3 +26,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ── ARCHIVOS MULTIMEDIA PESADOS (excluidos del repo por tamaño) ──
+# Las imágenes de productos se sirven desde Supabase Storage, no del repo
+Recursos catalogo/
+*.pdf
+public/productos/*.jfif
+public/productos/*.JFIF
+# Imágenes de captura y generadas por IA (no son activos del catálogo)
+public/productos/Captura*
+public/productos/Gemini_Generated*
