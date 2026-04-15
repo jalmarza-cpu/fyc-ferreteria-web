@@ -36,3 +36,30 @@ public/productos/*.JFIF
 # Imágenes de captura y generadas por IA (no son activos del catálogo)
 public/productos/Captura*
 public/productos/Gemini_Generated*
+
+# ── SCRIPTS DE UTILIDAD (contienen credenciales — solo para uso local) ──
+# Estos archivos son herramientas de administración y NUNCA deben ir en GitHub
+check_supabase.cjs
+cleaner2.cjs
+cleanup_adv.cjs
+cleanup_supe.cjs
+cleanup_supe.js
+generate.cjs
+generate_eighth.cjs
+generate_extra.cjs
+generate_fifth.cjs
+generate_ninth.cjs
+generate_seventh.cjs
+generate_sixth.cjs
+generate_tenth.cjs
+inspect2.cjs
+inspect3.cjs
+inspect_product.cjs
+inspect_supe.cjs
+list_tables.cjs
+query_dupes.cjs
+test_supabase.js
+upload.js
+update_wf.py
+seed_categorias.ts
+.env.backup

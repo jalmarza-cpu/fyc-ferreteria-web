@@ -25,6 +25,8 @@ Cada vez que se detecte un error, agregar una fila nueva al inicio de la tabla (
 
 | Fecha | Entorno | Error Detectado | Causa Raíz | Solución Aplicada | Estado |
 |---|---|---|---|---|---|
+| 15/04/2025 | Producción | Brecha de seguridad: credenciales de Supabase hardcodeadas como fallback en `utils/supabase.ts` y en scripts de utilidad (`.cjs`, `.js`) | Durante la fase de emergencia se usaron valores reales como respaldo en el código fuente | Eliminados todos los valores hardcodeados. `supabase.ts` ahora falla explícitamente si las variables de entorno no están configuradas. Scripts de utilidad agregados al `.gitignore` | ✅ Resuelto |
+| 15/04/2025 | Repositorio | Scripts de diagnóstico con credenciales reales rastreados por Git | Archivos `*.cjs`, `test_supabase.js`, `upload.js` y otros no estaban excluidos | Agregados todos los scripts al `.gitignore`. Se eliminaron del tracking de futuros commits | ✅ Resuelto |
 | 14/04/2025 | Producción | Build de Docker falla por tiempo de espera agotado en EasyPanel | Repositorio pesaba 489 MB (366 imágenes + PDF catálogo en historial Git) | Purga radical con `git filter-repo --strip-blobs-bigger-than 1M`. Repo reducido a 3.2 MB | ✅ Resuelto |
 | 14/04/2025 | Producción | Error 404 en consola: tabla `testimonios` no existe en Supabase | La tabla nunca fue creada en la base de datos del proyecto | Migración a datos locales en `data/testimonios.json`. Se eliminó llamada a Supabase | ✅ Resuelto |
 | 14/04/2025 | Producción | Contadores de categorías mostraban siempre `1` en el Sidebar | Función `getCategoryCount` retornaba valor fijo (hardcodeado) | Reescritura con `useMemo` + `countMap` calculado desde `allProducts` | ✅ Resuelto |
