@@ -60,11 +60,20 @@ export const slugify = (text: string) => {
  *   5. Fallback: logo local
  */
 export const getProductImageUrl = (productName: string, imagePath?: string, sku?: string) => {
-  if (!sku) return '/logo-fyc.png';
-  return `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`;
+  if (imagePath?.startsWith('http')) return imagePath;
+  if (!imagePath && !sku) return '/logo-fyc.png';
+
+  const finalPath = imagePath || `${sku}.jpg`;
+  return `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${finalPath}`;
 };
 
 export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
+  if (imagePath) {
+    return [
+      `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${imagePath}`,
+      '/logo-fyc.png'
+    ];
+  }
   if (sku) {
     return [
       `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`,

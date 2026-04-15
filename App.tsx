@@ -570,6 +570,10 @@ const AppContent = () => {
     const fetchSupabaseProducts = async () => {
       try {
         const { data, error } = await supabase.from('productos').select('*');
+        // Extraemos la lista en vivo de nombres de archivo físicos desde la bóveda de Storage.
+        // Hacemos limit: 1000 para traer todo en una sola petición.
+        const { data: filesData } = await supabase.storage.from('productos-v2').list('', { limit: 1000 });
+        
         if (data && data.length > 0 && isMounted) {
           setLiveProducts(() => {
             // Normalizar SKU para comparación segura
@@ -583,15 +587,29 @@ const AppContent = () => {
               const rawName = d.nombre || base?.name || 'Producto sin nombre';
               const cleanName = rawName.replace(/\\/g, '').trim();
               
+              const skuStr = normSku(d.sku);
+              // Buscar coincidencia física exacta del archivo por prefijo usando startWith y delimitador
+              const matchedFile = filesData?.find(f => {
+                const fNameL = f.name.toLowerCase();
+                // Match exacto o prefijo "SKU-" / "SKU "
+                return fNameL === `${skuStr}.jpg` || 
+                       fNameL === `${skuStr}.jpeg` || 
+                       fNameL === `${skuStr}.png` || 
+                       fNameL === `${skuStr}.jfif` || 
+                       fNameL.startsWith(`${skuStr}-`) || 
+                       fNameL.startsWith(`${skuStr} `) ||
+                       fNameL.startsWith(`${skuStr}_`);
+              });
+              
               return {
                 ...(base || {}), // Mantiene la estructura de id/imageUrl antigua
                 id: base ? base.id : `supabase-${d.id}`,
                 name: cleanName,
-                sku: normSku(d.sku),
+                sku: skuStr,
                 description: (d.descripcion || base?.description || '').replace(/\\/g, '').trim(),
                 priceRetail: Number(d.precio_detalle) || Number(base?.priceRetail) || 0,
                 priceWholesale: Number(d.precio_mayorista) || Number(base?.priceWholesale) || 0,
-                imageUrl: d.url_imagen || base?.imageUrl || '',
+                imageUrl: matchedFile ? matchedFile.name : (d.url_imagen || base?.imageUrl || ''),
                 // Categoría de Supabase tiene PRIORIDAD ABSOLUTA
                 category: (d.categoria || base?.category || 'Herramientas').trim(),
                 inStock: d.en_stock !== false,
