@@ -7,7 +7,6 @@ import { CONTACT_PHONE } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
 
-// Componente especializado para la carga resiliente de la imagen.
 const DynamicImage = ({ product, className, onClick, style }: { product: Product, className?: string, onClick?: (e: React.MouseEvent) => void, style?: React.CSSProperties }) => {
   const urls = getProductImageFallbacks(product.imageUrl, product.sku);
   const [index, setIndex] = useState(0);
@@ -17,29 +16,18 @@ const DynamicImage = ({ product, className, onClick, style }: { product: Product
     if (currentSrc === '/logo-fyc.png') return;
     
     let isMounted = true;
-    let resolved = false;
     const img = new window.Image();
     
-    img.onload = () => { resolved = true; };
+    img.onload = () => { /* Carga exitosa en background */ };
     img.onerror = () => {
-      if (resolved || !isMounted) return;
-      resolved = true;
+      if (!isMounted) return;
       setIndex(i => Math.min(i + 1, urls.length - 1));
     };
     img.src = currentSrc;
 
-    // Timeout de 200ms para fallbacks rapidos
-    const timeout = setTimeout(() => {
-      if (!resolved && isMounted) {
-        resolved = true;
-        img.src = ''; 
-        setIndex(i => Math.min(i + 1, urls.length - 1));
-      }
-    }, 200);
-
     return () => {
       isMounted = false;
-      clearTimeout(timeout);
+      // img.src = ''; // Dejar que el GC limpie
     };
   }, [currentSrc, urls]);
 
@@ -50,7 +38,7 @@ const DynamicImage = ({ product, className, onClick, style }: { product: Product
       className={className} 
       onClick={onClick}
       style={style}
-      loading="lazy"
+      // Quitamos loading="lazy" para forzar carga INMEDIATA.
     />
   );
 };

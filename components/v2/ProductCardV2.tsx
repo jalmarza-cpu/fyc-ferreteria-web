@@ -40,7 +40,7 @@ const V2 = {
   divider:       '#1E293B',  // Separadores internos
 } as const;
 
-// ── Componente de imagen resiliente con fallback 200ms ─────────────────────
+// ── Componente de imagen resiliente (SIN TIMEOUTS AGRESIVOS NI LAZY LOAD) ──
 const DynamicImageV2 = ({ product, className, onClick, style }: { product: Product, className?: string, onClick?: (e: React.MouseEvent) => void, style?: React.CSSProperties }) => {
   const urls = getProductImageFallbacks(product.imageUrl, product.sku);
   const [index, setIndex] = useState(0);
@@ -50,28 +50,17 @@ const DynamicImageV2 = ({ product, className, onClick, style }: { product: Produ
     if (currentSrc === '/logo-fyc.png') return;
     
     let isMounted = true;
-    let resolved = false;
     const img = new window.Image();
     
-    img.onload = () => { resolved = true; };
+    img.onload = () => { /* Carga natural completa */ };
     img.onerror = () => {
-      if (resolved || !isMounted) return;
-      resolved = true;
+      if (!isMounted) return;
       setIndex(i => Math.min(i + 1, urls.length - 1));
     };
     img.src = currentSrc;
 
-    const timeout = setTimeout(() => {
-      if (!resolved && isMounted) {
-        resolved = true;
-        img.src = ''; 
-        setIndex(i => Math.min(i + 1, urls.length - 1));
-      }
-    }, 200);
-
     return () => {
       isMounted = false;
-      clearTimeout(timeout);
     };
   }, [currentSrc, urls]);
 
@@ -82,7 +71,7 @@ const DynamicImageV2 = ({ product, className, onClick, style }: { product: Produ
       className={className} 
       onClick={onClick}
       style={style}
-      loading="lazy"
+      // Forzamos carga ansiosa (quita el efecto tapón del Network request)
     />
   );
 };
