@@ -61,24 +61,25 @@ export const slugify = (text: string) => {
  */
 export const getProductImageUrl = (productName: string, imagePath?: string, sku?: string) => {
   if (imagePath?.startsWith('http')) return imagePath;
-  if (!imagePath && !sku) return '/logo-fyc.png';
+  
+  if (sku) {
+    const finalUrl = `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`;
+    console.log(`[getProductImageUrl] Generando URL original para ${sku}: ${finalUrl}`);
+    return finalUrl;
+  }
 
-  const finalPath = imagePath || `${sku}.jpg`;
-  return `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${finalPath}`;
+  return '/logo-fyc.png';
 };
 
 export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
-  if (imagePath) {
-    return [
-      `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${imagePath}`,
-      '/logo-fyc.png'
-    ];
-  }
   if (sku) {
-    return [
+    const fallbacks = [
       `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`,
+      `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.JPG`,
       '/logo-fyc.png'
     ];
+    console.log(`[getProductImageFallbacks] Generando fallbacks para ${sku}:`, fallbacks);
+    return fallbacks;
   }
   return ['/logo-fyc.png'];
 };
