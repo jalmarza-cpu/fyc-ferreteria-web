@@ -573,36 +573,36 @@ const AppContent = () => {
         
         if (data && data.length > 0 && isMounted) {
           setLiveProducts(() => {
-            // Normalizar SKU para comparación segura
+            // Normalizar SKU SOLO para comparación segura
             const normSku = (sku: any): string => String(sku ?? '').trim().toLowerCase();
 
             // Mapear TODOS los productos de Supabase al formato de la web
             const fromSupabase = data.map(d => {
-              // Si existía en constants, heredamos solo el id estructurado o defaults mínimos
+              // Si existía en constants, comparamos case-insensitive
               const base = PRODUCTS.find(p => normSku(p.sku) === normSku(d.sku));
               
               const rawName = d.nombre || base?.name || 'Producto sin nombre';
               const cleanName = rawName.replace(/\\/g, '').trim();
               
+              const exactDbSku = String(d.sku ?? '').trim();
+
               return {
                 ...(base || {}), // Mantiene la estructura de id/imageUrl antigua
                 id: base ? base.id : `supabase-${d.id}`,
                 name: cleanName,
-                sku: normSku(d.sku),
+                sku: exactDbSku, // Preservamos Mayúsculas/Minúsculas y Guiones EXACTAMENTE como en DB
                 description: (d.descripcion || base?.description || '').replace(/\\/g, '').trim(),
                 priceRetail: Number(d.precio_detalle) || Number(base?.priceRetail) || 0,
                 priceWholesale: Number(d.precio_mayorista) || Number(base?.priceWholesale) || 0,
                 imageUrl: d.url_imagen || base?.imageUrl || '',
-                // Categoría de Supabase tiene PRIORIDAD ABSOLUTA
                 category: (d.categoria || base?.category || 'Herramientas').trim(),
                 inStock: d.en_stock !== false,
                 isVisible: d.estado_visibilidad !== false,
-                // Subcategoría: derivada automáticamente
                 subcategory: getSubcategory(cleanName, (d.categoria || base?.category || 'Herramientas').trim()),
               };
             });
 
-            // Fuente de Verdad: Supabase al 100% (eliminamos staticFallback)
+            // Fuente de Verdad: Supabase al 100%
             return fromSupabase;
           });
         }
