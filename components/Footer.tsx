@@ -9,7 +9,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="bg-[#050505] border-t border-[#222] text-neutral-400 pt-16 pb-8">
+    <footer className="bg-[#050505] border-t border-[#222] text-neutral-400 py-[40px]">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -18,7 +18,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="space-y-6">
             <div className="flex items-center gap-2 text-white">
                <div className="font-industrial font-black text-3xl tracking-tighter uppercase">
-                 FYC<span className="text-[#FFD700]">SPA</span>
+                 FYC<span className="text-[#FFFFFF]">SPA</span>
                </div>
             </div>
             <p className="text-sm leading-relaxed max-w-xs">
@@ -26,10 +26,10 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               Calidad profesional al alcance de tu obra y hogar.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center hover:bg-[#FFD700] hover:text-black transition-all">
+              <a href="#" className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center hover:bg-[#FFFFFF] hover:text-black transition-all">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center hover:bg-[#FFD700] hover:text-black transition-all">
+              <a href="#" className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center hover:bg-[#FFFFFF] hover:text-black transition-all">
                 <Facebook className="w-5 h-5" />
               </a>
             </div>
@@ -38,29 +38,29 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* COLUMNA 2: CONTACTO DIRECTO */}
           <div>
             <h3 className="text-white font-bold uppercase tracking-widest mb-6 flex items-center gap-2">
-              <span className="w-1 h-4 bg-[#FFD700]"></span> Contacto
+              <span className="w-1 h-4 bg-[#FFFFFF]"></span> Contacto
             </h3>
             <ul className="space-y-4 text-sm">
               <li>
-                <a href={`tel:${CONTACT_PHONE_DISPLAY.replace(/\s/g, '')}`} className="flex items-start gap-3 hover:text-[#FFD700] transition-colors group">
-                  <Phone className="w-5 h-5 text-[#FFD700] group-hover:animate-pulse" />
+                <a href={`tel:${CONTACT_PHONE_DISPLAY.replace(/\s/g, '')}`} className="flex items-start gap-3 hover:text-[#FFFFFF] transition-colors group">
+                  <Phone className="w-5 h-5 text-[#FFFFFF] group-hover:animate-pulse" />
                   <span className="font-bold text-white">{CONTACT_PHONE_DISPLAY}</span>
                 </a>
               </li>
               <li>
-                <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-start gap-3 hover:text-[#FFD700] transition-colors">
-                  <Mail className="w-5 h-5 text-[#FFD700]" />
+                <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-start gap-3 hover:text-[#FFFFFF] transition-colors">
+                  <Mail className="w-5 h-5 text-[#FFFFFF]" />
                   <span>{CONTACT_EMAIL}</span>
                 </a>
               </li>
               <li>
-                <a href={CONTACT_MAP_URL} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-[#FFD700] transition-colors">
-                  <MapPin className="w-5 h-5 text-[#FFD700] shrink-0" />
+                <a href={CONTACT_MAP_URL} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-[#FFFFFF] transition-colors">
+                  <MapPin className="w-5 h-5 text-[#FFFFFF] shrink-0" />
                   <div>
                     <span className="block text-white font-medium">Centro de Operaciones:</span>
                     {/* AQUI SE USA LA VARIABLE AUTOMÁTICA */}
                     <span>{CONTACT_ADDRESS}</span>
-                    <span className="block text-[10px] text-[#FFD700] mt-1">(Venta Online y Despachos)</span>
+                    <span className="block text-[10px] text-[#FFFFFF] mt-1">(Venta Online y Despachos)</span>
                   </div>
                 </a>
               </li>
@@ -70,19 +70,19 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* COLUMNA 3: HORARIO EXTENDIDO */}
           <div>
             <h3 className="text-white font-bold uppercase tracking-widest mb-6 flex items-center gap-2">
-              <span className="w-1 h-4 bg-[#FFD700]"></span> Horario Atención
+              <span className="w-1 h-4 bg-[#FFFFFF]"></span> Horario Atención
             </h3>
             <ul className="space-y-4 text-sm bg-[#111] p-4 rounded-lg border border-[#222]">
               {/* AQUI SE GENERAN LOS HORARIOS AUTOMÁTICAMENTE */}
               {BUSINESS_HOURS.map((item, index) => (
                 <li key={index} className="flex items-center justify-between border-b border-[#222] last:border-0 pb-2 last:pb-0">
                   <span className="flex items-center gap-2 text-neutral-300">
-                    <Clock className="w-3 h-3 text-[#FFD700]" /> {item.day}
+                    <Clock className="w-3 h-3 text-[#FFFFFF]" /> {item.day}
                   </span>
                   <span className="font-bold text-white text-xs">{item.hours}</span>
                 </li>
               ))}
-              <li className="pt-2 text-[10px] text-[#FFD700] text-center font-bold uppercase tracking-wider">
+              <li className="pt-2 text-[10px] text-[#FFFFFF] text-center font-bold uppercase tracking-wider">
                 ¡Atendemos tus urgencias!
               </li>
             </ul>
@@ -91,22 +91,22 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* COLUMNA 4: LEGAL */}
           <div>
             <h3 className="text-white font-bold uppercase tracking-widest mb-6 flex items-center gap-2">
-              <span className="w-1 h-4 bg-[#FFD700]"></span> Información
+              <span className="w-1 h-4 bg-[#FFFFFF]"></span> Información
             </h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/despachos" className="flex items-center gap-2 hover:text-[#FFD700] transition-colors group">
-                  <ArrowRight className="w-3 h-3 text-[#333] group-hover:text-[#FFD700]" /> Políticas de Despacho
+                <Link to="/despachos" className="flex items-center gap-2 hover:text-[#FFFFFF] transition-colors group">
+                  <ArrowRight className="w-3 h-3 text-[#333] group-hover:text-[#FFFFFF]" /> Políticas de Despacho
                 </Link>
               </li>
               <li>
-                <Link to="/devoluciones" className="flex items-center gap-2 hover:text-[#FFD700] transition-colors group">
-                   <ArrowRight className="w-3 h-3 text-[#333] group-hover:text-[#FFD700]" /> Cambios y Devoluciones
+                <Link to="/devoluciones" className="flex items-center gap-2 hover:text-[#FFFFFF] transition-colors group">
+                   <ArrowRight className="w-3 h-3 text-[#333] group-hover:text-[#FFFFFF]" /> Cambios y Devoluciones
                 </Link>
               </li>
               <li>
-                <Link to="/terminos" className="flex items-center gap-2 hover:text-[#FFD700] transition-colors group">
-                   <ArrowRight className="w-3 h-3 text-[#333] group-hover:text-[#FFD700]" /> Términos y Condiciones
+                <Link to="/terminos" className="flex items-center gap-2 hover:text-[#FFFFFF] transition-colors group">
+                   <ArrowRight className="w-3 h-3 text-[#333] group-hover:text-[#FFFFFF]" /> Términos y Condiciones
                 </Link>
               </li>
             </ul>

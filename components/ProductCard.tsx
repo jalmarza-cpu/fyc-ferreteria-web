@@ -311,7 +311,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   <span className="text-xs text-neutral-400 ml-2">({rating}/5.0)</span>
                 </div>
 
-                <p className="text-sm text-neutral-400 max-w-md mx-auto mb-4">{product.description}</p>
+                <p className="text-sm text-[#A0AEC0] max-w-md mx-auto mb-4">{product.description}</p>
 
                 <h2 className="sr-only">Precios y Opciones de Compra</h2>
 
@@ -322,9 +322,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     onClick={() => setPricingMode('retail')}
                     className={`p-3 rounded-xl border flex flex-col items-center cursor-pointer transition-colors ${pricingMode === 'retail' ? 'border-white bg-[#1a1a1a]' : 'border-[#333] bg-[#111] hover:border-[#555]'}`}
                   >
-                    <h3 className="text-[10px] text-neutral-400 font-bold uppercase mb-1">1 Unidad</h3>
+                    <h3 className="text-[10px] text-[#A0AEC0] font-bold uppercase mb-1">1 Unidad</h3>
                     <p className={`font-bold text-lg md:text-xl font-industrial ${pricingMode === 'retail' ? 'text-white' : 'text-neutral-300'}`}>{formatCLP(product.priceRetail)}</p>
-                    <span className="text-[9px] text-green-400 font-semibold mt-1">(IVA incluido)</span>
+                    <span className="text-[9px] text-[#A0AEC0] font-semibold mt-1">(IVA incluido)</span>
                   </div>
 
                   {/* Wholesale Modal */}
@@ -335,16 +335,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     <div className="absolute top-0 right-0 bg-[#FFFFFF] text-black text-[8px] font-black px-1.5 py-0.5 uppercase">
                       Recomendado
                     </div>
-                    <h3 className="text-[10px] text-[#FFFFFF] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</h3>
+                    <h3 className="text-[10px] text-[#A0AEC0] font-bold uppercase mb-1">Lleva {MIN_WHOLESALE_QTY} x</h3>
                     <p className={`font-bold text-xl md:text-2xl font-industrial ${pricingMode === 'wholesale' ? 'text-[#FFFFFF]' : 'text-[#FFFFFF]/80'}`}>{formatCLP(product.priceWholesale)}</p>
-                    <span className="text-[9px] text-neutral-500">c/u + IVA</span>
+                    <span className="text-[9px] text-[#A0AEC0]">c/u + IVA</span>
                   </div>
                 </div>
 
                 {/* Botones de Acción */}
                 <div className="flex flex-col gap-3 w-full max-w-md mx-auto mt-auto pb-4">
                   {!liveStock ? (
-                    <div className="w-full py-3.5 px-4 font-black uppercase tracking-wider bg-[#151515] text-neutral-500 border border-[#333] flex items-center justify-center gap-2 rounded shadow-inner">
+                    <div className="w-full py-3.5 px-4 font-black uppercase tracking-wider bg-[#151515] text-[#A0AEC0] border border-[#333] flex items-center justify-center gap-2 rounded shadow-inner">
                       <X className="w-5 h-5 text-red-500/50" />
                       <span>SIN STOCK TEMPORAL</span>
                     </div>
@@ -353,8 +353,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                       onClick={handleAddToCart}
                       disabled={checkingStock}
                       className={`w-full py-3.5 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg 
-                          ${checkingStock ? 'bg-neutral-800 text-neutral-500 cursor-wait' :
-                          isAdded ? 'bg-green-600 text-white' : 'bg-[#FFFFFF] hover:brightness-110 transition-all duration-300 text-black shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
+                          ${checkingStock ? 'bg-neutral-800 text-[#A0AEC0] cursor-wait' :
+                          isAdded ? 'bg-green-600 text-white' : 'bg-[#FFD700] hover:brightness-110 transition-all duration-300 text-black font-bold shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
                     >
                       {checkingStock ? (
                         <><Zap className="w-5 h-5 animate-pulse" /> Verificando Stock</>
