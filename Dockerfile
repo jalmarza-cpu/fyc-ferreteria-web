@@ -24,5 +24,5 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-# Custom startup script that prints the message and starts Nginx
-CMD sh -c 'echo "🚀 [F Y C SOLUCIONES FERRETERAS] CONTAINED ACTUALIZADO EXITOSAMENTE - Listo para Vender!" && nginx -g "daemon off;"'
+# Comando de arranque directo nativo para evitar cuelgues del sh -c
+CMD ["nginx", "-g", "daemon off;"]
