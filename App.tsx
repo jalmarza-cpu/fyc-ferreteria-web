@@ -3,7 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck, FileText, Receipt, User, Building2, MapPin, Phone, ArrowLeft, Send } from 'lucide-react';
-import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE, getSubcategory } from './constants';
+import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE, getSubcategory, SUBCATEGORY_MAP } from './constants';
 import { useCartStore } from './store';
 import { supabase, getProductImageUrl } from './utils/supabase';
 
@@ -587,6 +587,22 @@ const AppContent = () => {
               
               const exactDbSku = String(d.sku ?? '').trim();
 
+              // Mapeo Inteligente de Categorías/Subcategorías desde el Admin
+              let dbCatRaw = (d.categoria_ppal || base?.category || 'Herramientas').trim();
+              let actualCategory = dbCatRaw;
+              let actualSubcategory = d.subcategoria ? String(d.subcategoria).trim() : '';
+
+              // Verificamos si el string guardado como 'categoria_ppal' pertenece realmente a una subcategoría.
+              const isSubcategory = SUBCATEGORY_MAP.find(s => s.subcategory.toLowerCase() === dbCatRaw.toLowerCase());
+              
+              if (isSubcategory) {
+                actualCategory = isSubcategory.parentCategory;
+                actualSubcategory = isSubcategory.subcategory;
+              } else if (!actualSubcategory) {
+                // Si no, lo extraemos a partir del string del nombre de producto como fallback original
+                actualSubcategory = getSubcategory(cleanName, actualCategory);
+              }
+
               return {
                 ...(base || {}), // Mantiene la estructura de id/imageUrl antigua
                 id: base ? base.id : `supabase-${d.id}`,
@@ -596,10 +612,10 @@ const AppContent = () => {
                 priceRetail: Number(d.precio_retail) || Number(base?.priceRetail) || 0,
                 priceWholesale: Number(d.precio_mayorista) || Number(base?.priceWholesale) || 0,
                 imageUrl: d.imagen_url || base?.imageUrl || '',
-                category: (d.categoria_ppal || base?.category || 'Herramientas').trim(),
+                category: actualCategory,
                 inStock: d.stock !== false,
                 isVisible: d.estado_visibilidad !== false,
-                subcategory: getSubcategory(cleanName, (d.categoria_ppal || base?.category || 'Herramientas').trim()),
+                subcategory: actualSubcategory,
               };
             });
 
