@@ -1,7 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
-import { supabase, supabaseAdmin, getProductImageUrl } from '../utils/supabase';
+import { supabase, supabaseAdmin, getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
 import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, FilterX } from 'lucide-react';
 import { CATEGORIES, SUBCATEGORY_MAP } from '../constants';
+
+const AdminDynamicImage = ({ nombre, url_imagen, sku, className }) => {
+  const urls = getProductImageFallbacks(url_imagen, sku);
+  const [index, setIndex] = useState(0);
+  const currentSrc = urls[index] || '/logo-fyc.png';
+
+  useEffect(() => {
+    if (currentSrc === '/logo-fyc.png') return;
+    let isMounted = true;
+    const img = new window.Image();
+    img.onload = () => {};
+    img.onerror = () => {
+      if (!isMounted) return;
+      setIndex(i => Math.min(i + 1, urls.length - 1));
+    };
+    img.src = currentSrc;
+    return () => { isMounted = false; };
+  }, [currentSrc, urls]);
+
+  return <img src={currentSrc} alt={nombre} className={className} />;
+};
 
 const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -143,7 +164,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
     try {
       const { error: uploadError } = await supabaseAdmin.storage
-        .from('productos')
+        .from('productos-v2')
         .upload(filePath, file);
 
       if (uploadError) throw uploadError;
@@ -205,7 +226,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       // 1. Eliminar la imagen del storage si existe y pertenece a uploads/
       if (formData.url_imagen && formData.url_imagen.startsWith('uploads/')) {
         const { error: storageError } = await supabaseAdmin.storage
-          .from('productos')
+          .from('productos-v2')
           .remove([formData.url_imagen]);
         
         if (storageError) {
@@ -401,12 +422,12 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
               <div className="bg-[#111] p-4 rounded-xl border border-dashed border-[#333]">
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="w-full md:w-40 h-40 bg-black rounded-lg border border-[#222] overflow-hidden flex items-center justify-center relative group">
-                    {formData.url_imagen ? (
-                      <img
-                        src={getProductImageUrl(formData.nombre, formData.url_imagen, formData.sku)}
-                        alt="Preview"
+                    {formData.sku || formData.url_imagen ? (
+                      <AdminDynamicImage
+                        nombre="Preview"
+                        url_imagen={formData.url_imagen}
+                        sku={formData.sku}
                         className="w-full h-full object-cover"
-                        onError={(e) => { e.currentTarget.src = 'https://placehold.co/400x400/111/yellow?text=Formato+Inválido'; }}
                       />
                     ) : (
                       <ImageIcon className="text-zinc-800" size={48} />
@@ -644,15 +665,15 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                   <td className="p-6">
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 bg-zinc-950 rounded-lg border border-[#222] overflow-hidden flex-shrink-0 flex items-center justify-center relative">
-                        {!isNoImage(p.url_imagen) ? (
-                          <img src={getProductImageUrl(p.nombre, p.url_imagen, p.sku)} alt={p.nombre} className="w-full h-full object-cover" />
+                        {p.sku || !isNoImage(p.url_imagen) ? (
+                          <AdminDynamicImage nombre={p.nombre} url_imagen={p.url_imagen} sku={p.sku} className="w-full h-full object-cover" />
                         ) : (
                           <div className="flex flex-col items-center gap-1 opacity-40">
                             <CameraOff size={14} className="text-neutral-500" />
                             <span className="text-[7px] font-black uppercase tracking-tighter text-neutral-500">Sin Imagen</span>
                           </div>
                         )}
-                        {isNoImage(p.url_imagen) && <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-yellow-500/80 rounded-full border border-black animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>}
+                        {isNoImage(p.url_imagen) && !p.sku && <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-yellow-500/80 rounded-full border border-black animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>}
                       </div>
                       <div>
                         <div className={`font-black uppercase text-xs leading-tight max-w-sm truncate ${!p.en_stock ? 'text-red-400' : 'text-zinc-100'}`}>
