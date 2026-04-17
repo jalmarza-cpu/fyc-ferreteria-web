@@ -72,6 +72,7 @@ export const getProductImageUrl = (productName: string, imagePath?: string, sku?
 export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
   if (sku) {
     return [
+      `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.webp`,
       `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`,
       `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.JPG`,
       '/logo-fyc.png'

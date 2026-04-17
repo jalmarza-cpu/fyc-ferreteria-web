@@ -38,7 +38,7 @@ const DynamicImage = ({ product, className, onClick, style }: { product: Product
       className={className} 
       onClick={onClick}
       style={style}
-      // Quitamos loading="lazy" para forzar carga INMEDIATA.
+      loading="lazy"
     />
   );
 };
@@ -115,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <>
-      <div className="group relative bg-[#0a0a0a] border border-[#222] transition-all duration-300 hover:border-[#FFD700]/50 hover:-translate-y-1 flex flex-col overflow-hidden shadow-md hover:shadow-[0_8px_30px_rgba(255,215,0,0.1)] rounded-xl h-full">
+      <div className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] transition-all duration-300 hover:border-[#3B82F6] hover:-translate-y-1 flex flex-col overflow-hidden shadow-[var(--card-shadow)] rounded-xl h-full">
 
         {/* BADGE SYSTEM: Floating Badges */}
         <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start pointer-events-none">
@@ -135,7 +135,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* Imagen - Updated for Better Visibility on Dark Mode */}
         <div
-          className="relative aspect-square w-full bg-[#151515] border-b border-[#222] flex items-center justify-center overflow-hidden p-4 cursor-zoom-in"
+          className="relative aspect-square w-full bg-[#000000] border-b border-[var(--card-border)] flex items-center justify-center overflow-hidden p-4 cursor-zoom-in"
           onClick={() => setIsZoomOpen(true)}
         >
           <DynamicImage
@@ -154,18 +154,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Cuerpo */}
-        <div className="p-3 flex-grow flex flex-col bg-[#111] relative border-t border-[#222]">
+        <div className="p-3 flex-grow flex flex-col bg-[var(--card-bg)] relative">
 
           <div className="mb-3">
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-1.5">
-                <span className="w-1 h-1 bg-[#FFD700] rounded-full"></span>
+                <span className="w-1 h-1 bg-[var(--accent-gold)] rounded-full"></span>
                 <p className="text-[9px] text-neutral-400 font-bold uppercase tracking-widest truncate">{product.category}</p>
               </div>
-              <span className="text-[9px] text-neutral-500 font-mono font-bold tracking-widest px-1.5 py-0.5 border border-[#333] rounded uppercase">SKU: {product.sku}</span>
+              <span className="text-[9px] text-[var(--text-tech)] font-mono font-bold tracking-widest px-1.5 py-0.5 border border-[var(--card-border)] rounded uppercase">SKU: {product.sku}</span>
             </div>
 
-            <h3 className="text-sm font-bold text-white uppercase font-industrial leading-none mb-1 group-hover:text-[#FFD700] transition-colors line-clamp-2 h-[2.5em]">
+            <h3 className="product-title-v2 text-sm font-bold text-[var(--text-white)] uppercase font-industrial leading-none mb-1 group-hover:text-[#3B82F6] transition-colors line-clamp-2 h-[2.5em]">
               {product.name}
             </h3>
 
@@ -209,14 +209,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <div
                 onClick={() => setPricingMode('wholesale')}
                 className={`relative flex flex-col px-3 py-2 rounded-lg cursor-pointer transition-all border-2 ${pricingMode === 'wholesale'
-                  ? 'border-[#FFD700] bg-[#FFD700]/5 shadow-[0_0_15px_rgba(255,215,0,0.1)]'
-                  : 'border-[#333] bg-[#0E0E0E] hover:border-[#FFD700]/50'
+                  ? 'border-[var(--card-border)] bg-[#1A1A1A] shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
+                  : 'border-[#333] bg-[#0E0E0E] hover:border-[#3B82F6]'
                   }`}
               >
                 {/* Header del Tier */}
                 <div className="flex justify-between items-center mb-1">
                   <div className="flex items-center gap-1.5">
-                    <div className={`w-3 h-3 rounded-full border flex items-center justify-center ${pricingMode === 'wholesale' ? 'border-[#FFD700]' : 'border-neutral-600'}`}>
+                    <div className={`w-3 h-3 rounded-full border flex items-center justify-center ${pricingMode === 'wholesale' ? 'border-white' : 'border-neutral-600'}`}>
                       {pricingMode === 'wholesale' && <div className="w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
                     </div>
                     <span className="text-[10px] font-black uppercase text-[#FFD700] tracking-wider">Pack Maestro</span>
@@ -259,12 +259,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 onClick={handleAddToCart}
                 whileTap={{ scale: checkingStock ? 1 : 0.98 }}
                 disabled={checkingStock}
-                className={`w-full py-3 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg group/btn border border-transparent
+                className={`w-full py-3 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded group/btn border border-transparent
                    ${checkingStock
                     ? 'bg-neutral-800 text-neutral-500 cursor-wait'
                     : isAdded
                       ? 'bg-green-600 text-white'
-                      : 'bg-[#FFD700] group-hover:bg-[#FFED4D] text-black shadow-md group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'
+                      : 'bg-[var(--accent-gold)] hover:brightness-90 text-black shadow-[var(--card-shadow)] border-0'
                   }`}
               >
                 <AnimatePresence mode="wait" initial={false}>

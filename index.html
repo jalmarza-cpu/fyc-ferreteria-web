@@ -38,17 +38,19 @@
             --surface: #171717;
 
             /* V2 — Alta Gama "Industrial Élite" */
-            --canvas-v2:     #121212;  /* Fondo OLED — elimina fatiga visual */
-            --card-v2:       #181818;  /* Superficie de tarjetas */
-            --border-v2:     #2D3748;  /* Estructura de ingeniería */
+            --bg-canvas:     #121212;  /* Fondo OLED — elimina fatiga visual */
+            --card-bg:       #1A1C20;  /* Superficie de tarjetas */
+            --card-border:   #2D3748;  /* Estructura de ingeniería */
+            --card-shadow:   0 4px 20px rgba(0,0,0,0.5); /* Elevación de tarjetas */
             --text-white:    #FFFFFF;  /* Títulos — legibilidad máxima */
-            --text-tech:     #A0AEC0;  /* Datos técnicos — autoridad neutral */
+            --text-tech:     #A0AEC0;  /* Datos técnicos — Azul platino */
             --text-dim:      #64748B;  /* Metadatos atenuados */
-            --accent-action: #FFD700;  /* Foco de conversión (solo CTA) */
+            --accent-gold:   #FFD700;  /* Foco de conversión (C/A y acción) */
+            --accent-blue:   #1E293B;  /* Azul noche secundario */
         }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-canvas);
             color: #E5E5E5;
             margin: 0;
             overflow-x: hidden;
