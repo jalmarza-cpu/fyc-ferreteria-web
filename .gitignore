@@ -31,11 +31,7 @@ dist-ssr
 # Las imágenes de productos se sirven desde Supabase Storage, no del repo
 Recursos catalogo/
 *.pdf
-public/productos/*.jfif
-public/productos/*.JFIF
-# Imágenes de captura y generadas por IA (no son activos del catálogo)
-public/productos/Captura*
-public/productos/Gemini_Generated*
+public/productos/*
 
 # ── SCRIPTS DE UTILIDAD (contienen credenciales — solo para uso local) ──
 # Estos archivos son herramientas de administración y NUNCA deben ir en GitHub
