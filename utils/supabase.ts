@@ -36,7 +36,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {
 });
 
 // Cliente administrativo — Solo para el Dashboard interno (usa Service Role para saltarse RLS)
-export const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey || 'placeholder');
+export const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey || supabaseKey);
 
 /**
  * Normaliza textos quitando tildes y caracteres especiales
