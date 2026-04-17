@@ -24,6 +24,17 @@ import { getProductImageUrl, getProductImageFallbacks } from '../../utils/supaba
 import { Product } from '../../types';
 import { useCartStore } from '../../store';
 
+const formatProductName = (name: string) => {
+  const regex = /(\b\d+(?:[\.,]\d+)?(?:x\d+(?:[\.,]\d+)?)?\s*(?:mm|cm|m|w|v|g|kg|l|hp|ton|módulos|unid\w*|pulg\w*)\b|\b\d+\s*\/\s*\d+"\b|\b\d+"\b|\b[A-Z]+-\d+\w*\b)/gi;
+  const parts = name.split(regex);
+  return parts.map((part, i) => {
+    if (part.match(regex)) {
+      return <span key={i} className="text-tech">{part}</span>;
+    }
+    return part;
+  });
+};
+
 // ── Paleta V2 Centralizada ──────────────────────────────────────────────────
 const V2 = {
   canvasBg:      '#121212',  // Canvas principal
@@ -183,7 +194,7 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
 
           {/* Nombre — product-title-v2: blanco puro, sin amarillo, máxima legibilidad */}
           <h3 className="product-title-v2 text-sm font-black uppercase leading-tight line-clamp-2">
-            {product.name}
+            {formatProductName(product.name)}
           </h3>
 
           {/* Rating — Gris Platino */}
@@ -265,16 +276,10 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
               <motion.button
                 onClick={handleAdd}
                 whileTap={{ scale: 0.97 }}
-                className="w-full py-3 text-xs font-black uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2"
+                className="w-full py-3 text-xs font-black uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2 hover:brightness-110"
                 style={{
                   background: isAdded ? V2.badgeGreen : V2.accentGold,
                   color: '#000000',
-                }}
-                onMouseEnter={e => {
-                  if (!isAdded) (e.currentTarget as HTMLElement).style.background = V2.accentGoldHov;
-                }}
-                onMouseLeave={e => {
-                  if (!isAdded) (e.currentTarget as HTMLElement).style.background = V2.accentGold;
                 }}
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -328,7 +333,7 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
                 />
               </div>
               <h2 className="text-lg font-black uppercase text-center" style={{ color: V2.textWhite }}>
-                {product.name}
+                {formatProductName(product.name)}
               </h2>
               <p className="text-sm text-center" style={{ color: V2.textPlatino }}>
                 {product.description}

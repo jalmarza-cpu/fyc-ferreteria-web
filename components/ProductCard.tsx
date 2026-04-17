@@ -7,6 +7,17 @@ import { CONTACT_PHONE } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
 
+const formatProductName = (name: string) => {
+  const regex = /(\b\d+(?:[\.,]\d+)?(?:x\d+(?:[\.,]\d+)?)?\s*(?:mm|cm|m|w|v|g|kg|l|hp|ton|módulos|unid\w*|pulg\w*)\b|\b\d+\s*\/\s*\d+"\b|\b\d+"\b|\b[A-Z]+-\d+\w*\b)/gi;
+  const parts = name.split(regex);
+  return parts.map((part, i) => {
+    if (part.match(regex)) {
+      return <span key={i} className="text-tech">{part}</span>;
+    }
+    return part;
+  });
+};
+
 const DynamicImage = ({ product, className, onClick, style }: { product: Product, className?: string, onClick?: (e: React.MouseEvent) => void, style?: React.CSSProperties }) => {
   const urls = getProductImageFallbacks(product.imageUrl, product.sku);
   const [index, setIndex] = useState(0);
@@ -166,7 +177,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
 
             <h3 className="product-title-v2 text-sm font-bold text-[var(--text-white)] uppercase font-industrial leading-none mb-1 group-hover:text-[#3B82F6] transition-colors line-clamp-2 h-[2.5em]">
-              {product.name}
+              {formatProductName(product.name)}
             </h3>
 
             {/* SOCIAL RATING: 5 Stars */}
@@ -264,7 +275,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     ? 'bg-neutral-800 text-neutral-500 cursor-wait'
                     : isAdded
                       ? 'bg-green-600 text-white'
-                      : 'bg-[var(--accent-gold)] hover:brightness-90 text-black shadow-[var(--card-shadow)] border-0'
+                      : 'bg-[var(--accent-gold)] hover:brightness-110 transition-all duration-300 text-black shadow-[var(--card-shadow)] border-0'
                   }`}
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -350,7 +361,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
               {/* Contenedor de Información con Scroll Opcional */}
               <div className="w-full max-w-[600px] bg-[#0A0A0A] md:bg-transparent rounded-b-2xl md:rounded-none px-4 pb-4 md:px-0 md:pb-0 text-center flex-1 overflow-y-auto custom-scrollbar">
-                <h1 className="text-xl md:text-2xl font-industrial font-bold text-white uppercase mb-2">{product.name}</h1>
+                <h1 className="text-xl md:text-2xl font-industrial font-bold text-white uppercase mb-2">{formatProductName(product.name)}</h1>
 
                 <div className="flex items-center justify-center gap-1 mb-2">
                   {[...Array(5)].map((_, i) => (
@@ -402,7 +413,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                       disabled={checkingStock}
                       className={`w-full py-3.5 px-4 font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded shadow-lg 
                           ${checkingStock ? 'bg-neutral-800 text-neutral-500 cursor-wait' :
-                          isAdded ? 'bg-green-600 text-white' : 'bg-[#FFD700] hover:bg-[#FFED4D] text-black shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
+                          isAdded ? 'bg-green-600 text-white' : 'bg-[#FFD700] hover:brightness-110 transition-all duration-300 text-black shadow-md hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]'}`}
                     >
                       {checkingStock ? (
                         <><Zap className="w-5 h-5 animate-pulse" /> Verificando Stock</>

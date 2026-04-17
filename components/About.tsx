@@ -4,7 +4,7 @@ import { HardHat, Handshake, Users, Award, ShieldCheck, Wrench } from 'lucide-re
 
 const About = () => {
   return (
-    <section id="nosotros" className="relative py-20 bg-[#0A0A0A] border-y border-[#222] overflow-hidden scroll-mt-32">
+    <section id="nosotros" className="relative py-20 bg-gradient-to-b from-[#0A0A0A] to-[#1E293B] border-y border-[#222] overflow-hidden scroll-mt-32">
       
       {/* Background Texture & Elements */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none"></div>

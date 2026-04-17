@@ -101,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <div
                   className={`flex items-center justify-between rounded-xl px-3 py-2 cursor-pointer transition-all group ${
                     isActive
-                      ? 'bg-[#FFD700] text-black'
+                      ? 'bg-[#151515] text-white ring-2 ring-inset ring-[#3B82F6]'
                       : count === 0
                         ? 'text-neutral-700 hover:bg-[#111] hover:text-neutral-500 cursor-default'
                         : 'hover:bg-[#151515] text-neutral-400 hover:text-white'
@@ -114,7 +114,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   }}
                 >
                   <div className="flex items-center gap-2 flex-1 min-w-0">
-                    {isActive && <Check className="w-3 h-3 flex-shrink-0" />}
+                    {isActive && <Check className="w-3 h-3 flex-shrink-0 text-[#FFD700]" />}
                     <span className="text-xs font-bold uppercase tracking-wider truncate">
                       {cat}
                     </span>
@@ -123,7 +123,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <div className="flex items-center gap-1.5 flex-shrink-0">
                     {/* Contador */}
                     <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-full ${isActive
-                        ? 'bg-black/20 text-black'
+                        ? 'bg-[#3B82F6]/20 text-[#3B82F6]'
                         : count === 0
                           ? 'bg-[#1a1a1a] text-neutral-700'
                           : 'bg-[#FFD700]/10 text-[#FFD700]'
@@ -135,7 +135,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {isExpandable && (
                       <button
                         onClick={(e) => toggleExpand(cat, e)}
-                        className={`p-0.5 rounded transition-colors ${isActive ? 'text-black hover:text-black/70' : 'text-neutral-600 hover:text-white'
+                        className={`p-0.5 rounded transition-colors ${isActive ? 'text-white hover:text-gray-300' : 'text-neutral-600 hover:text-white'
                           }`}
                       >
                         <motion.div
@@ -169,18 +169,18 @@ const Sidebar: React.FC<SidebarProps> = ({
                             <button
                               key={sub}
                               onClick={() => onSelectCategory(cat, sub)}
-                              className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all ${isSubActive
-                                  ? 'bg-[#FFD700]/20 text-[#FFD700] border border-[#FFD700]/30'
+                              className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-transparent ${isSubActive
+                                  ? 'bg-[#1A1A1A] text-white border-[#3B82F6]'
                                   : subCount === 0
                                     ? 'text-neutral-700 hover:text-neutral-500'
                                     : 'text-neutral-500 hover:text-white hover:bg-[#1a1a1a]'
                                 }`}
                             >
                               <span className="flex items-center gap-1.5">
-                                <span className="w-1 h-1 rounded-full bg-current opacity-60 flex-shrink-0" />
+                                <span className={`w-1 h-1 rounded-full bg-current flex-shrink-0 ${isSubActive ? 'text-[#FFD700] opacity-100' : 'opacity-60'}`} />
                                 {sub}
                               </span>
-                              <span className={`text-[9px] font-black tabular-nums ${isSubActive ? 'text-[#FFD700]' : subCount === 0 ? 'text-neutral-700' : 'text-neutral-500'
+                              <span className={`text-[9px] font-black tabular-nums ${isSubActive ? 'text-[#3B82F6]' : subCount === 0 ? 'text-neutral-700' : 'text-neutral-500'
                                 }`}>
                                 {subCount}
                               </span>

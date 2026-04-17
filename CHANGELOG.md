@@ -2,6 +2,35 @@
 
 Todo cambio técnico y de arquitectura en la plataforma se registra en este documento con fecha, descripción y los archivos involucrados, garantizando trazabilidad y control de versiones por orden de Dirección.
 
+## [1.3.2] - 2026-04-17 🎨 AJUSTE FINAL DE PRECISIÓN: ECOSISTEMA FYC V1.1
+
+> **Contexto:** Se ejecutó un refinamiento visual y funcional del ecosistema FYC V1.1 para alinear los componentes con la filosofía de diseño "Industrial Élite", garantizando máxima legibilidad, jerarquía técnica y eliminación de ruido visual.
+
+---
+
+### 🎨 1. Mejoras de UI y Jerarquía Técnica Implementadas
+**Solución ejecutada:**
+- **Profundidad del Azul (Garantías):** Aplicado degradado hacia Azul Noche (`#1E293B`) en la sección de manifiesto de `About.tsx`.
+- **Refinamiento Tipográfico:** Se implementó una función `formatProductName` (Regex) en `ProductCard.tsx` y `ProductCardV2.tsx` que colorea automáticamente atributos técnicos (medidas, vatios, códigos) en Gris Platino (`#A0AEC0`, `.text-tech`).
+- **Limpieza de Ruido (Filtros Laterales):** Eliminado fondo amarillo en categorías seleccionadas en `Sidebar.tsx`, reemplazado por anillos sutiles en Azul Eléctrico (`#3B82F6`). Amarillo reservado exclusivamente al check mark y CTAs.
+- **Optimización Botón CTA:** Sustituido el cambio de color en hover por transición de incremento de brillo (`hover:brightness-110`) en botones de añadir al carrito.
+
+**Archivos Modificados:**
+- `components/About.tsx`
+- `components/ProductCard.tsx`
+- `components/Sidebar.tsx`
+- `components/v2/ProductCardV2.tsx`
+
+**⚠️ Para revertir (ROLLBACK):**
+```bash
+# Revertir los cambios estéticos regresando al commit previo:
+git reset --hard HEAD
+# O si ya hiciste commit y necesitas revertir el de los ajustes estéticos:
+git revert HEAD
+```
+
+---
+
 ## [1.3.1] - 2026-04-15 🚨 MIGRACIÓN DB — Migración Exitosa a Sao Paulo
 
 > **Contexto:** Se procedió a migrar de manera urgente y definitiva la base de datos hacia una nueva instancia master `Supabase (Región Sao Paulo)` para restaurar el entorno V2 Industrial (eliminando un 'pantalla negra' o blackout por pérdida de conectividad en el entorno anterior). 
