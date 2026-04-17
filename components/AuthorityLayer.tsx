@@ -2,7 +2,7 @@ import React from 'react';
 import { Truck, PackageCheck, ShieldCheck } from 'lucide-react';
 
 const partners = [
-  "DEWALT", "MAKITA", "BOSCH", "MILWAUKEE", "STANLEY", "TRUPER", "HILTI", "TOUGHBUILT"
+  "DeWalt", "Makita", "Bosch", "Milwaukee", "Stanley", "Toughbuilt", "Truper"
 ];
 
 const AuthorityLayer: React.FC = () => {
@@ -37,11 +37,11 @@ const AuthorityLayer: React.FC = () => {
       <div className="border-t border-[#111] bg-[#0A0A0A] py-10 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12">
           <p className="text-center text-[10px] font-bold text-[#A0AEC0] uppercase tracking-[0.3em] mb-8">
-            Marcas que confían en nosotros
+            HERRAMIENTAS DE CLASE MUNDIAL EN NUESTRO STOCK
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
             {partners.map((partner, idx) => (
-              <span key={idx} className="font-industrial font-black text-2xl md:text-3xl tracking-tighter text-[#64748B] hover:text-white transition-colors cursor-default">
+              <span key={idx} className="font-industrial font-black text-2xl md:text-3xl tracking-tighter text-white opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default">
                 {partner}
               </span>
             ))}
