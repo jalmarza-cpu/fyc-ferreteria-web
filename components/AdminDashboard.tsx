@@ -198,10 +198,10 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         const { error } = await supabaseAdmin
           .from('productos')
           .update(payload)
-          .eq('id', formData.id);
+          .eq('sku', formData.sku);
 
         if (error) throw error;
-        setProductos(productos.map(p => p.id === formData.id ? { ...p, ...payload } : p));
+        setProductos(productos.map(p => p.sku === formData.sku ? { ...p, ...payload } : p));
       } else {
         const { data, error } = await supabaseAdmin
           .from('productos')
@@ -242,7 +242,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         const { error } = await supabaseAdmin
           .from('productos')
           .update({ estado_visibilidad: false, stock: false })
-          .eq('id', formData.id);
+          .eq('sku', formData.sku);
         updateError = error;
       } else {
         // Es un producto de constants, crear un tombstone en Supabase
@@ -263,7 +263,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       if (updateError) throw updateError;
       
       // 3. Actualizar estado local
-      setProductos(productos.filter(p => p.id !== formData.id));
+      setProductos(productos.filter(p => p.sku !== formData.sku));
       setIsDeleteModalOpen(false);
       setIsModalOpen(false);
       triggerCloudflarePurge(); // Trigger cache purge on logic delete
@@ -276,16 +276,16 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   const updateQuickStock = async (id, currentStatus) => {
     const newStatus = !currentStatus;
-    setUpdatingId(id + 'stock');
+    setUpdatingId(sku + 'stock');
 
     try {
       const { error } = await supabaseAdmin
         .from('productos')
         .update({ stock: newStatus })
-        .eq('id', id);
+        .eq('sku', sku);
 
       if (error) throw error;
-      setProductos(productos.map(p => p.id === id ? { ...p, stock: newStatus } : p));
+      setProductos(productos.map(p => p.sku === sku ? { ...p, stock: newStatus } : p));
       triggerCloudflarePurge(); // Trigger cache purge on stock change
     } catch (error) {
       alert('Error: ' + error.message);
@@ -698,9 +698,9 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                         onBlur={async (e) => {
                           const val = parseInt(e.target.value);
                           if (val !== p.precio_mayorista) {
-                            setUpdatingId(p.id + 'mayorista');
-                            await supabaseAdmin.from('productos').update({ precio_mayorista: val }).eq('id', p.id);
-                            setProductos(productos.map(prod => prod.id === p.id ? { ...prod, precio_mayorista: val } : prod));
+                            setUpdatingId(p.sku + 'mayorista');
+                            await supabaseAdmin.from('productos').update({ precio_mayorista: val }).eq('sku', p.sku);
+                            setProductos(productos.map(prod => prod.sku === p.sku ? { ...prod, precio_mayorista: val } : prod));
                             setUpdatingId(null);
                           }
                         }}
@@ -717,9 +717,9 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                         onBlur={async (e) => {
                           const val = parseInt(e.target.value);
                           if (val !== p.precio_retail) {
-                            setUpdatingId(p.id + 'detalle');
-                            await supabaseAdmin.from('productos').update({ precio_retail: val }).eq('id', p.id);
-                            setProductos(productos.map(prod => prod.id === p.id ? { ...prod, precio_retail: val } : prod));
+                            setUpdatingId(p.sku + 'detalle');
+                            await supabaseAdmin.from('productos').update({ precio_retail: val }).eq('sku', p.sku);
+                            setProductos(productos.map(prod => prod.sku === p.sku ? { ...prod, precio_retail: val } : prod));
                             setUpdatingId(null);
                           }
                         }}
@@ -732,14 +732,14 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                         <Edit size={10} /> EDITAR
                       </button>
                       <button
-                        onClick={() => updateQuickStock(p.id, p.stock)}
+                        onClick={() => updateQuickStock(p.sku, p.stock)}
                         className={`w-full py-2 rounded-lg text-[8px] font-black tracking-[0.2em] transition flex items-center justify-center gap-2 border 
                           ${p.stock
                             ? 'bg-green-600/5 border-green-600/30 text-green-500 hover:bg-green-600 hover:text-white'
                             : 'bg-red-600/10 border-red-600 text-red-500 animate-pulse'
                           }`}
                       >
-                        {updatingId === p.id + 'stock' ? <Save className="animate-spin" size={10} /> : (p.stock ? <CheckCircle size={10} /> : <AlertTriangle size={10} />)}
+                        {updatingId === p.sku + 'stock' ? <Save className="animate-spin" size={10} /> : (p.stock ? <CheckCircle size={10} /> : <AlertTriangle size={10} />)}
                         {p.stock ? 'EN STOCK' : 'AGOTADO'}
                       </button>
                     </div>
