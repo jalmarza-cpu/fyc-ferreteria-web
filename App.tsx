@@ -27,7 +27,7 @@ const formatPrice = (val: number) =>
 // --- MARQUEE ---
 const MarqueeBar = () => {
   return (
-    <div className="bg-[#FFD700] overflow-hidden py-2 relative z-20 border-b border-[#cca700] shadow-md pointer-events-none select-none">
+    <div className="bg-[#FFFFFF] overflow-hidden py-2 relative z-20 border-b border-[#cca700] shadow-md pointer-events-none select-none">
       <motion.div
         className="flex whitespace-nowrap"
         animate={{ x: ["0%", "-50%"] }}
@@ -75,7 +75,7 @@ const MobileSidebarDrawer = ({ isOpen, onClose, children }: any) => {
           >
             <div className="p-6 border-b border-[#222] flex justify-between items-center bg-[#050505] sticky top-0 z-10">
               <span className="font-industrial text-xl text-white font-bold uppercase tracking-wider">Filtros</span>
-              <button onClick={onClose} className="p-2 bg-[#1a1a1a] rounded-full hover:bg-[#FFD700] hover:text-black transition-all"><X className="w-5 h-5" /></button>
+              <button onClick={onClose} className="p-2 bg-[#1a1a1a] rounded-full hover:bg-[#FFFFFF] hover:text-black transition-all"><X className="w-5 h-5" /></button>
             </div>
             <div className="p-6">
               {children}
@@ -118,7 +118,7 @@ const ScrollToTopButton = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 p-4 bg-[#FFD700] text-black rounded-full shadow-xl hover:bg-white hover:shadow-2xl transition-all border-2 border-transparent hover:border-[#FFD700]"
+          className="fixed bottom-8 right-8 z-40 p-4 bg-[#FFFFFF] text-black rounded-full shadow-xl hover:bg-white hover:shadow-2xl transition-all border-2 border-transparent hover:border-[#FFFFFF]"
         >
           <ArrowUp className="w-6 h-6" />
         </motion.button>
@@ -199,7 +199,7 @@ const CartDrawer = () => {
             <div className="p-5 border-b border-[#222] flex items-center justify-between bg-[#111]">
               <div className="flex items-center gap-3">
                 {step === 'checkout' && (
-                  <button onClick={() => setStep('cart')} className="hover:text-[#FFD700] transition-colors">
+                  <button onClick={() => setStep('cart')} className="hover:text-[#FFFFFF] transition-colors">
                     <ArrowLeft className="w-5 h-5" />
                   </button>
                 )}
@@ -257,7 +257,7 @@ const CartDrawer = () => {
                           <div className="flex justify-between items-start gap-2">
                             <div>
                               <h4 className="text-xs font-bold text-white uppercase leading-tight mb-1 line-clamp-2">{item.name}</h4>
-                              <p className="text-[10px] text-[#FFD700] font-bold tracking-wider">SKU: {item.sku}</p>
+                              <p className="text-[10px] text-[#FFFFFF] font-bold tracking-wider">SKU: {item.sku}</p>
                             </div>
                             <button onClick={() => removeItem(item.id)} className="text-neutral-600 hover:text-[#D32F2F] transition-colors"><Trash2 className="w-4 h-4" /></button>
                           </div>
@@ -268,7 +268,7 @@ const CartDrawer = () => {
                               <button onClick={() => updateQuantity(item.id, 1)} className="w-7 h-full flex items-center justify-center hover:bg-[#222] text-neutral-400 rounded-r transition-colors"><Plus className="w-3 h-3" /></button>
                             </div>
                             <div className="text-right">
-                              <p className="text-sm font-bold text-[#FFD700]">{formatPrice(item.price * item.quantity)}</p>
+                              <p className="text-sm font-bold text-[#FFFFFF]">{formatPrice(item.price * item.quantity)}</p>
                             </div>
                           </div>
                         </div>
@@ -281,36 +281,36 @@ const CartDrawer = () => {
               {step === 'checkout' && (
                 <div className="p-5 space-y-6">
                   <div className="bg-[#111] p-1 rounded-lg border border-[#333] flex relative">
-                    <button onClick={() => setDocType('boleta')} className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'boleta' ? 'text-black bg-[#FFD700] shadow-md' : 'text-neutral-500 hover:text-white'}`}>
+                    <button onClick={() => setDocType('boleta')} className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'boleta' ? 'text-black bg-[#FFFFFF] shadow-md' : 'text-neutral-500 hover:text-white'}`}>
                       <Receipt className="w-4 h-4" /> Boleta
                     </button>
-                    <button onClick={() => setDocType('factura')} className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'factura' ? 'text-black bg-[#FFD700] shadow-md' : 'text-neutral-500 hover:text-white'}`}>
+                    <button onClick={() => setDocType('factura')} className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded flex items-center justify-center gap-2 transition-all relative z-10 ${docType === 'factura' ? 'text-black bg-[#FFFFFF] shadow-md' : 'text-neutral-500 hover:text-white'}`}>
                       <FileText className="w-4 h-4" /> Factura
                     </button>
                   </div>
 
                   <div className="space-y-4">
                     <div className="flex items-center gap-2 pb-2 border-b border-[#222]">
-                      <User className="w-4 h-4 text-[#FFD700]" />
+                      <User className="w-4 h-4 text-[#FFFFFF]" />
                       <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Datos de Contacto</h3>
                     </div>
                     <div className="space-y-3">
                       <div>
                         <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Nombre Completo *</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Ej: Juan Pérez" />
+                        <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Ej: Juan Pérez" />
                       </div>
                       <div>
                         <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Teléfono / WhatsApp *</label>
-                        <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="+56 9 ..." />
+                        <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="+56 9 ..." />
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Región / Comuna</label>
-                          <input type="text" name="region" value={formData.region} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Ej: Santiago" />
+                          <input type="text" name="region" value={formData.region} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Ej: Santiago" />
                         </div>
                         <div>
                           <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Dirección</label>
-                          <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Calle 123" />
+                          <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-3 py-2 text-xs text-white outline-none transition-colors" placeholder="Calle 123" />
                         </div>
                       </div>
                     </div>
@@ -319,21 +319,21 @@ const CartDrawer = () => {
                       {docType === 'factura' && (
                         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden space-y-4 pt-4">
                           <div className="flex items-center gap-2 pb-2 border-b border-[#222]">
-                            <Building2 className="w-4 h-4 text-[#FFD700]" />
+                            <Building2 className="w-4 h-4 text-[#FFFFFF]" />
                             <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Datos Empresa (SII)</h3>
                           </div>
                           <div className="space-y-3">
                             <div>
                               <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">RUT Empresa *</label>
-                              <input type="text" name="rut" value={formData.rut} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5" placeholder="76.123.456-K" />
+                              <input type="text" name="rut" value={formData.rut} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFFFFF]/50 focus:border-[#FFFFFF] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFFFFF]/5" placeholder="76.123.456-K" />
                             </div>
                             <div>
                               <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Razón Social *</label>
-                              <input type="text" name="razonSocial" value={formData.razonSocial} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5" placeholder="Constructora SPA" />
+                              <input type="text" name="razonSocial" value={formData.razonSocial} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFFFFF]/50 focus:border-[#FFFFFF] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFFFFF]/5" placeholder="Constructora SPA" />
                             </div>
                             <div>
                               <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Giro Comercial</label>
-                              <input type="text" name="giro" value={formData.giro} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFD700]/5" placeholder="Ej: Obras menores en construcción" />
+                              <input type="text" name="giro" value={formData.giro} onChange={handleInputChange} className="w-full bg-[#151515] border border-[#FFFFFF]/50 focus:border-[#FFFFFF] rounded px-3 py-2 text-xs text-white outline-none transition-colors bg-[#FFFFFF]/5" placeholder="Ej: Obras menores en construcción" />
                             </div>
                           </div>
                         </motion.div>
@@ -349,11 +349,11 @@ const CartDrawer = () => {
                 <div className="mb-4">
                   <div className="flex justify-between items-end mb-2">
                     <span className="text-xs text-neutral-400 font-medium">Total Estimado</span>
-                    <span className="text-2xl font-black font-industrial text-[#FFD700]">{formatPrice(getTotal())}</span>
+                    <span className="text-2xl font-black font-industrial text-[#FFFFFF]">{formatPrice(getTotal())}</span>
                   </div>
                   {step === 'cart' && (
                     <div className="w-full h-1.5 bg-[#222] rounded-full overflow-hidden">
-                      <motion.div initial={{ width: 0 }} animate={{ width: `${progressPercentage}%` }} className={`h-full ${remainingForFreeShipping <= 0 ? 'bg-green-500' : 'bg-[#FFD700]'} relative`} />
+                      <motion.div initial={{ width: 0 }} animate={{ width: `${progressPercentage}%` }} className={`h-full ${remainingForFreeShipping <= 0 ? 'bg-green-500' : 'bg-[#FFFFFF]'} relative`} />
                     </div>
                   )}
                   {step === 'cart' && remainingForFreeShipping > 0 && (
@@ -366,7 +366,7 @@ const CartDrawer = () => {
                       <button onClick={quickCheckout} className="w-full py-4 bg-[#25D366] hover:bg-[#20b858] text-white font-black text-xs uppercase tracking-[0.1em] rounded transition-all shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] flex items-center justify-center gap-2">
                         <Send className="w-4 h-4" /> Cotizar Rápido por WhatsApp
                       </button>
-                      <button onClick={() => setStep('checkout')} className="w-full py-3 bg-transparent border border-[#333] hover:border-[#FFD700] text-neutral-300 hover:text-white font-bold text-[10px] uppercase tracking-wider rounded transition-colors flex items-center justify-center gap-2">
+                      <button onClick={() => setStep('checkout')} className="w-full py-3 bg-transparent border border-[#333] hover:border-[#FFFFFF] text-neutral-300 hover:text-white font-bold text-[10px] uppercase tracking-wider rounded transition-colors flex items-center justify-center gap-2">
                         Solicitar Factura Pyme <ArrowRight className="w-3 h-3" />
                       </button>
                     </>
@@ -376,7 +376,7 @@ const CartDrawer = () => {
                     </button>
                   )}
                   {step === 'cart' && (
-                    <button onClick={toggleCart} className="w-full py-3 bg-transparent text-neutral-500 hover:text-[#FFD700] font-bold text-[10px] uppercase tracking-wider rounded transition-colors underline decoration-neutral-700 underline-offset-4 hidden">
+                    <button onClick={toggleCart} className="w-full py-3 bg-transparent text-neutral-500 hover:text-[#FFFFFF] font-bold text-[10px] uppercase tracking-wider rounded transition-colors underline decoration-neutral-700 underline-offset-4 hidden">
                       Seguir Viendo Productos
                     </button>
                   )}
@@ -441,7 +441,7 @@ const Home = ({
           }} />
 
           {/* Video Showcase Section (Replacing Categories) - Full Screen Style Clean */}
-          <section className="w-full bg-[#050505] pb-20">
+          <section className="w-full bg-[var(--bg-canvas)] pb-20">
             <div className="max-w-[1600px] mx-auto px-6 md:px-12">
               <div className="overflow-hidden rounded-[2rem] border border-[#222] shadow-[0_30px_100px_rgba(0,0,0,1)] relative bg-black group">
                 <video
@@ -453,7 +453,7 @@ const Home = ({
                   className="w-full h-full object-cover aspect-video scale-105 group-hover:scale-100 transition-transform duration-[3s] ease-out opacity-90 group-hover:opacity-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#FFD700]/30 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#FFFFFF]/30 to-transparent"></div>
               </div>
             </div>
           </section>
@@ -463,7 +463,7 @@ const Home = ({
       )}
 
       {/* Catalog Section */}
-      <div className="bg-[#111] border-t border-[#222]">
+      <div className="bg-transparent border-t border-[#222]">
         <div id="productos" className="max-w-[1600px] mx-auto px-6 py-16 md:py-24 scroll-mt-32">
           <div className="flex flex-col lg:flex-row gap-12 items-start">
 
@@ -497,7 +497,7 @@ const Home = ({
                     {searchTerm ? `Buscando "${searchTerm}"` : category}
                   </h2>
                   <div className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
-                    <span className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></span>
+                    <span className="w-2 h-2 bg-[#FFFFFF] rounded-full animate-pulse"></span>
                     {filteredProducts.length} Productos Disponibles
                   </div>
                 </div>
@@ -505,7 +505,7 @@ const Home = ({
                 {/* Mobile Filter Trigger */}
                 <button
                   onClick={() => setSidebarOpen(true)}
-                  className="lg:hidden flex items-center justify-center gap-2 w-full md:w-auto bg-[#1A1A1A] border border-[#333] rounded-full py-4 px-6 text-white text-xs font-black uppercase tracking-widest hover:border-[#FFD700] hover:text-[#FFD700] transition-all shadow-md"
+                  className="lg:hidden flex items-center justify-center gap-2 w-full md:w-auto bg-[#1A1A1A] border border-[#333] rounded-full py-4 px-6 text-white text-xs font-black uppercase tracking-widest hover:border-[#FFFFFF] hover:text-[#FFFFFF] transition-all shadow-md"
                 >
                   <Menu className="w-4 h-4" /> Filtrar Catálogo
                 </button>
@@ -514,7 +514,7 @@ const Home = ({
               {/* Grid */}
               {filteredProducts.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {filteredProducts.slice(0, visibleCount).map((product: any) => (
                       <ProductCard key={product.id} product={product} />
                     ))}
@@ -524,7 +524,7 @@ const Home = ({
                     <div className="mt-12 flex justify-center">
                       <button
                         onClick={() => setVisibleCount(v => v + 12)}
-                        className="bg-[#1A1A1A] hover:bg-[#FFD700] text-white hover:text-black border border-[#333] hover:border-[#FFD700] px-10 py-5 rounded-full text-sm font-black uppercase tracking-widest transition-all shadow-xl"
+                        className="bg-[#1A1A1A] hover:bg-[#FFFFFF] text-white hover:text-black border border-[#333] hover:border-[#FFFFFF] px-10 py-5 rounded-full text-sm font-black uppercase tracking-widest transition-all shadow-xl"
                       >
                         Cargar Más Herramientas ({filteredProducts.length - visibleCount} restantes)
                       </button>
@@ -536,7 +536,7 @@ const Home = ({
                   <AlertCircle className="w-16 h-16 mb-4 text-neutral-700" />
                   <h3 className="text-2xl font-industrial font-bold uppercase mb-2 text-white">Sin resultados</h3>
                   <p className="text-sm uppercase tracking-wider mb-8 text-neutral-500">No encontramos herramientas con esos filtros.</p>
-                  <button onClick={() => { setSearchTerm(''); setCategory('Todas'); setMaxPrice(maxProductPrice) }} className="bg-[#FFD700] text-black px-8 py-4 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl">
+                  <button onClick={() => { setSearchTerm(''); setCategory('Todas'); setMaxPrice(maxProductPrice) }} className="bg-[#FFFFFF] text-black px-8 py-4 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl">
                     Ver Todo el Catálogo
                   </button>
                 </div>
@@ -665,7 +665,7 @@ const AppContent = () => {
 
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#050505] text-white selection:bg-[#FFD700] selection:text-black font-sans">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-canvas)] text-white selection:bg-[var(--accent-gold)] selection:text-black font-sans">
 
       <Header
         searchTerm={searchTerm}
@@ -717,7 +717,7 @@ const AppContent = () => {
           <Route
             path="/admin"
             element={
-              <React.Suspense fallback={<div className="min-h-screen bg-[#050505] text-white flex justify-center items-center font-industrial text-xl uppercase animate-pulse">Cargando Módulo Administrativo...</div>}>
+              <React.Suspense fallback={<div className="min-h-screen bg-[var(--bg-canvas)] text-white flex justify-center items-center font-industrial text-xl uppercase animate-pulse">Cargando Módulo Administrativo...</div>}>
                 <AdminDashboard searchTerm={searchTerm} onSearchChange={handleSearchChange} />
               </React.Suspense>
             }
