@@ -12,6 +12,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
+import AuthorityLayer from './components/AuthorityLayer';
 import Sidebar from './components/Sidebar';
 import About from './components/About';
 import Maestros from './components/Maestros';
@@ -728,6 +729,7 @@ const AppContent = () => {
 
       </main>
 
+      <AuthorityLayer />
       <Footer onNavigate={() => { }} /> {/* onNavigate is deprecated in Footer, uses Link now */}
       <CartDrawer />
       <ScrollToTopButton />
