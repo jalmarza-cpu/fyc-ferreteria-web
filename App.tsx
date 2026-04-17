@@ -592,13 +592,13 @@ const AppContent = () => {
                 name: cleanName,
                 sku: exactDbSku, // Preservamos Mayúsculas/Minúsculas y Guiones EXACTAMENTE como en DB
                 description: (d.descripcion || base?.description || '').replace(/\\/g, '').trim(),
-                priceRetail: Number(d.precio_detalle) || Number(base?.priceRetail) || 0,
+                priceRetail: Number(d.precio_retail) || Number(base?.priceRetail) || 0,
                 priceWholesale: Number(d.precio_mayorista) || Number(base?.priceWholesale) || 0,
-                imageUrl: d.url_imagen || base?.imageUrl || '',
-                category: (d.categoria || base?.category || 'Herramientas').trim(),
-                inStock: d.en_stock !== false,
+                imageUrl: d.imagen_url || base?.imageUrl || '',
+                category: (d.categoria_ppal || base?.category || 'Herramientas').trim(),
+                inStock: d.stock !== false,
                 isVisible: d.estado_visibilidad !== false,
-                subcategory: getSubcategory(cleanName, (d.categoria || base?.category || 'Herramientas').trim()),
+                subcategory: getSubcategory(cleanName, (d.categoria_ppal || base?.category || 'Herramientas').trim()),
               };
             });
 

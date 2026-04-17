@@ -3,8 +3,8 @@ import { supabase, supabaseAdmin, getProductImageUrl, getProductImageFallbacks }
 import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, FilterX } from 'lucide-react';
 import { CATEGORIES, SUBCATEGORY_MAP } from '../constants';
 
-const AdminDynamicImage = ({ nombre, url_imagen, sku, className }) => {
-  const urls = getProductImageFallbacks(url_imagen, sku);
+const AdminDynamicImage = ({ nombre, imagen_url, sku, className }) => {
+  const urls = getProductImageFallbacks(imagen_url, sku);
   const [index, setIndex] = useState(0);
   const currentSrc = urls[index] || '/logo-fyc.png';
 
@@ -87,11 +87,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     sku: '',
     nombre: '',
     descripcion: '',
-    categoria: 'Herramientas',
+    categoria_ppal: 'Herramientas',
     precio_mayorista: 0,
-    precio_detalle: 0,
-    url_imagen: '',
-    en_stock: true
+    precio_retail: 0,
+    imagen_url: '',
+    stock: true
   });
 
   useEffect(() => {
@@ -131,8 +131,8 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const openCreateModal = () => {
     setIsEditing(false);
     setFormData({
-      id: null, sku: '', nombre: '', descripcion: '', categoria: 'Herramientas Manuales',
-      precio_mayorista: 0, precio_detalle: 0, url_imagen: '', en_stock: true
+      id: null, sku: '', nombre: '', descripcion: '', categoria_ppal: 'Herramientas Manuales',
+      precio_mayorista: 0, precio_retail: 0, imagen_url: '', stock: true
     });
     setIsModalOpen(true);
   };
@@ -144,11 +144,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       sku: String(producto.sku || ''),
       nombre: producto.nombre,
       descripcion: producto.descripcion || '',
-      categoria: producto.categoria,
+      categoria_ppal: producto.categoria_ppal,
       precio_mayorista: producto.precio_mayorista,
-      precio_detalle: producto.precio_detalle,
-      url_imagen: producto.url_imagen || '',
-      en_stock: producto.en_stock
+      precio_retail: producto.precio_retail,
+      imagen_url: producto.imagen_url || '',
+      stock: producto.stock
     });
     setIsModalOpen(true);
   };
@@ -169,7 +169,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
       if (uploadError) throw uploadError;
 
-      setFormData({ ...formData, url_imagen: filePath });
+      setFormData({ ...formData, imagen_url: filePath });
     } catch (error) {
       alert('Error subiendo imagen: ' + error.message);
     } finally {
@@ -186,11 +186,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       sku: String(formData.sku).trim(),
       nombre: formData.nombre,
       descripcion: formData.descripcion,
-      categoria: formData.categoria,
+      categoria_ppal: formData.categoria_ppal,
       precio_mayorista: formData.precio_mayorista,
-      precio_detalle: formData.precio_detalle,
-      url_imagen: formData.url_imagen,
-      en_stock: formData.en_stock
+      precio_retail: formData.precio_retail,
+      imagen_url: formData.imagen_url,
+      stock: formData.stock
     };
 
     try {
@@ -224,10 +224,10 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     setIsDeleting(true);
     try {
       // 1. Eliminar la imagen del storage si existe y pertenece a uploads/
-      if (formData.url_imagen && formData.url_imagen.startsWith('uploads/')) {
+      if (formData.imagen_url && formData.imagen_url.startsWith('uploads/')) {
         const { error: storageError } = await supabaseAdmin.storage
           .from('productos-v2')
-          .remove([formData.url_imagen]);
+          .remove([formData.imagen_url]);
         
         if (storageError) {
           console.error('Error eliminando imagen del storage:', storageError);
@@ -241,7 +241,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         // Actualizar registro existente
         const { error } = await supabaseAdmin
           .from('productos')
-          .update({ estado_visibilidad: false, en_stock: false })
+          .update({ estado_visibilidad: false, stock: false })
           .eq('id', formData.id);
         updateError = error;
       } else {
@@ -249,11 +249,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         const payload = {
           sku: formData.sku,
           nombre: formData.nombre,
-          precio_detalle: formData.priceRetail || 0,
+          precio_retail: formData.priceRetail || 0,
           precio_mayorista: formData.priceWholesale || 0,
-          url_imagen: formData.url_imagen || '',
-          categoria: formData.category || 'Herramientas',
-          en_stock: false,
+          imagen_url: formData.imagen_url || '',
+          categoria_ppal: formData.category || 'Herramientas',
+          stock: false,
           estado_visibilidad: false
         };
         const { error } = await supabaseAdmin.from('productos').insert([payload]);
@@ -281,11 +281,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     try {
       const { error } = await supabaseAdmin
         .from('productos')
-        .update({ en_stock: newStatus })
+        .update({ stock: newStatus })
         .eq('id', id);
 
       if (error) throw error;
-      setProductos(productos.map(p => p.id === id ? { ...p, en_stock: newStatus } : p));
+      setProductos(productos.map(p => p.id === id ? { ...p, stock: newStatus } : p));
       triggerCloudflarePurge(); // Trigger cache purge on stock change
     } catch (error) {
       alert('Error: ' + error.message);
@@ -317,12 +317,12 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
     // FILTROS DE ESTADO (Stock, Sin imagen, etc.)
     let matchesFilter = true;
-    if (activeFilter === 'out_of_stock') matchesFilter = p.en_stock === false;
-    if (activeFilter === 'in_stock') matchesFilter = p.en_stock === true;
-    if (activeFilter === 'no_image') matchesFilter = !p.url_imagen;
+    if (activeFilter === 'out_of_stock') matchesFilter = p.stock === false;
+    if (activeFilter === 'in_stock') matchesFilter = p.stock === true;
+    if (activeFilter === 'no_image') matchesFilter = !p.imagen_url;
 
     // FILTRO DE CATEGORÍA
-    const matchesCategory = selectedCategory === 'Todas' || p.categoria === selectedCategory;
+    const matchesCategory = selectedCategory === 'Todas' || p.categoria_ppal === selectedCategory;
 
     return matchesSearch && matchesFilter && matchesCategory;
   });
@@ -422,10 +422,10 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
               <div className="bg-[#111] p-4 rounded-xl border border-dashed border-[#333]">
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="w-full md:w-40 h-40 bg-black rounded-lg border border-[#222] overflow-hidden flex items-center justify-center relative group">
-                    {formData.sku || formData.url_imagen ? (
+                    {formData.sku || formData.imagen_url ? (
                       <AdminDynamicImage
                         nombre="Preview"
-                        url_imagen={formData.url_imagen}
+                        imagen_url={formData.imagen_url}
                         sku={formData.sku}
                         className="w-full h-full object-cover"
                       />
@@ -440,8 +440,8 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                     <div className="flex gap-2">
                       <input
                         type="text"
-                        value={formData.url_imagen || ''}
-                        onChange={e => setFormData({ ...formData, url_imagen: e.target.value })}
+                        value={formData.imagen_url || ''}
+                        onChange={e => setFormData({ ...formData, imagen_url: e.target.value })}
                         className="flex-1 bg-black border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-mono"
                         placeholder="Path o URL de imagen..."
                       />
@@ -477,14 +477,14 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-yellow-600 uppercase ml-1">Precio Detalle ($)</label>
-                  <input type="number" required value={formData.precio_detalle} onChange={e => setFormData({ ...formData, precio_detalle: parseInt(e.target.value) })} className="w-full bg-black border border-yellow-500/20 rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-black" />
+                  <input type="number" required value={formData.precio_retail} onChange={e => setFormData({ ...formData, precio_retail: parseInt(e.target.value) })} className="w-full bg-black border border-yellow-500/20 rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-black" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Categoría de Catálogo</label>
-                  <select value={formData.categoria} onChange={e => setFormData({ ...formData, categoria: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold">
+                  <select value={formData.categoria_ppal} onChange={e => setFormData({ ...formData, categoria_ppal: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold">
                     <option value="">Selecciona Categoría...</option>
                     {dbCategorias.map(cat => (
                       <optgroup label={cat} key={cat}>
@@ -499,11 +499,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                 <div className="flex items-end">
                   <button
                     type="button"
-                    onClick={() => setFormData({ ...formData, en_stock: !formData.en_stock })}
-                    className={`w-full py-2.5 rounded-lg font-black text-xs transition border-2 flex items-center justify-center gap-2 ${formData.en_stock ? 'bg-green-600/10 border-green-600 text-green-500' : 'bg-red-600/10 border-red-600 text-red-500'}`}
+                    onClick={() => setFormData({ ...formData, stock: !formData.stock })}
+                    className={`w-full py-2.5 rounded-lg font-black text-xs transition border-2 flex items-center justify-center gap-2 ${formData.stock ? 'bg-green-600/10 border-green-600 text-green-500' : 'bg-red-600/10 border-red-600 text-red-500'}`}
                   >
-                    {formData.en_stock ? <CheckCircle size={16} /> : <AlertTriangle size={16} />}
-                    {formData.en_stock ? ' PRODUCTO EN STOCK' : 'PRODUCTO AGOTADO'}
+                    {formData.stock ? <CheckCircle size={16} /> : <AlertTriangle size={16} />}
+                    {formData.stock ? ' PRODUCTO EN STOCK' : 'PRODUCTO AGOTADO'}
                   </button>
                 </div>
               </div>
@@ -580,7 +580,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           <div className={`p-3 rounded-lg transition ${activeFilter === 'out_of_stock' ? 'bg-red-600 text-white' : 'bg-red-950/20 text-red-500'}`}><AlertTriangle size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Agotados</p>
-            <p className="text-xl font-black text-red-500 leading-none mt-1">{productos.filter(p => !p.en_stock && p.estado_visibilidad !== false).length}</p>
+            <p className="text-xl font-black text-red-500 leading-none mt-1">{productos.filter(p => !p.stock && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
@@ -588,7 +588,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           <div className={`p-3 rounded-lg transition ${activeFilter === 'no_image' ? 'bg-yellow-600 text-black' : 'bg-yellow-950/20 text-yellow-500'}`}><CameraOff size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">Sin Foto</p>
-            <p className="text-xl font-black text-yellow-500 leading-none mt-1">{productos.filter(p => isNoImage(p.url_imagen) && p.estado_visibilidad !== false).length}</p>
+            <p className="text-xl font-black text-yellow-500 leading-none mt-1">{productos.filter(p => isNoImage(p.imagen_url) && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
@@ -596,7 +596,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           <div className={`p-3 rounded-lg transition ${activeFilter === 'in_stock' ? 'bg-green-600 text-white' : 'bg-green-950/20 text-green-500'}`}><CheckCircle size={18} /></div>
           <div>
             <p className="text-[9px] text-neutral-500 font-black uppercase">En Stock</p>
-            <p className="text-xl font-black text-green-500 leading-none mt-1">{productos.filter(p => p.en_stock && p.estado_visibilidad !== false).length}</p>
+            <p className="text-xl font-black text-green-500 leading-none mt-1">{productos.filter(p => p.stock && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
@@ -661,28 +661,28 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
             </thead>
             <tbody className="divide-y divide-[#222]">
               {filtered.map((p) => (
-                <tr key={p.id} className={`transition group ${!p.en_stock ? 'bg-red-900/[0.03]' : 'hover:bg-zinc-900/40'}`}>
+                <tr key={p.id} className={`transition group ${!p.stock ? 'bg-red-900/[0.03]' : 'hover:bg-zinc-900/40'}`}>
                   <td className="p-6">
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 bg-zinc-950 rounded-lg border border-[#222] overflow-hidden flex-shrink-0 flex items-center justify-center relative">
-                        {p.sku || !isNoImage(p.url_imagen) ? (
-                          <AdminDynamicImage nombre={p.nombre} url_imagen={p.url_imagen} sku={p.sku} className="w-full h-full object-cover" />
+                        {p.sku || !isNoImage(p.imagen_url) ? (
+                          <AdminDynamicImage nombre={p.nombre} imagen_url={p.imagen_url} sku={p.sku} className="w-full h-full object-cover" />
                         ) : (
                           <div className="flex flex-col items-center gap-1 opacity-40">
                             <CameraOff size={14} className="text-neutral-500" />
                             <span className="text-[7px] font-black uppercase tracking-tighter text-neutral-500">Sin Imagen</span>
                           </div>
                         )}
-                        {isNoImage(p.url_imagen) && !p.sku && <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-yellow-500/80 rounded-full border border-black animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>}
+                        {isNoImage(p.imagen_url) && !p.sku && <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-yellow-500/80 rounded-full border border-black animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>}
                       </div>
                       <div>
-                        <div className={`font-black uppercase text-xs leading-tight max-w-sm truncate ${!p.en_stock ? 'text-red-400' : 'text-zinc-100'}`}>
+                        <div className={`font-black uppercase text-xs leading-tight max-w-sm truncate ${!p.stock ? 'text-red-400' : 'text-zinc-100'}`}>
                           {p.nombre}
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
                           <span className="text-[9px] font-black text-yellow-500/80 bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/20 tracking-widest">SKU: {p.sku}</span>
-                          <button onClick={() => setSelectedCategory(p.categoria)} className="text-[9px] font-black text-neutral-500 hover:text-yellow-500 uppercase tracking-tighter bg-transparent border-none p-0 transition-colors">
-                            {p.categoria}
+                          <button onClick={() => setSelectedCategory(p.categoria_ppal)} className="text-[9px] font-black text-neutral-500 hover:text-yellow-500 uppercase tracking-tighter bg-transparent border-none p-0 transition-colors">
+                            {p.categoria_ppal}
                           </button>
                         </div>
                       </div>
@@ -713,13 +713,13 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                       <input
                         type="number"
                         className="bg-transparent w-20 text-center font-black text-sm outline-none text-zinc-300"
-                        defaultValue={p.precio_detalle}
+                        defaultValue={p.precio_retail}
                         onBlur={async (e) => {
                           const val = parseInt(e.target.value);
-                          if (val !== p.precio_detalle) {
+                          if (val !== p.precio_retail) {
                             setUpdatingId(p.id + 'detalle');
-                            await supabaseAdmin.from('productos').update({ precio_detalle: val }).eq('id', p.id);
-                            setProductos(productos.map(prod => prod.id === p.id ? { ...prod, precio_detalle: val } : prod));
+                            await supabaseAdmin.from('productos').update({ precio_retail: val }).eq('id', p.id);
+                            setProductos(productos.map(prod => prod.id === p.id ? { ...prod, precio_retail: val } : prod));
                             setUpdatingId(null);
                           }
                         }}
@@ -732,15 +732,15 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                         <Edit size={10} /> EDITAR
                       </button>
                       <button
-                        onClick={() => updateQuickStock(p.id, p.en_stock)}
+                        onClick={() => updateQuickStock(p.id, p.stock)}
                         className={`w-full py-2 rounded-lg text-[8px] font-black tracking-[0.2em] transition flex items-center justify-center gap-2 border 
-                          ${p.en_stock
+                          ${p.stock
                             ? 'bg-green-600/5 border-green-600/30 text-green-500 hover:bg-green-600 hover:text-white'
                             : 'bg-red-600/10 border-red-600 text-red-500 animate-pulse'
                           }`}
                       >
-                        {updatingId === p.id + 'stock' ? <Save className="animate-spin" size={10} /> : (p.en_stock ? <CheckCircle size={10} /> : <AlertTriangle size={10} />)}
-                        {p.en_stock ? 'EN STOCK' : 'AGOTADO'}
+                        {updatingId === p.id + 'stock' ? <Save className="animate-spin" size={10} /> : (p.stock ? <CheckCircle size={10} /> : <AlertTriangle size={10} />)}
+                        {p.stock ? 'EN STOCK' : 'AGOTADO'}
                       </button>
                     </div>
                   </td>
