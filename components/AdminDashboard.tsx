@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase, getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
 import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, FilterX } from 'lucide-react';
-import { CATEGORIES, SUBCATEGORY_MAP } from '../constants';
 
 const AdminDynamicImage = ({ nombre, imagen_url, sku, className }) => {
   const urls = getProductImageFallbacks(imagen_url, sku);
@@ -47,21 +46,28 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   const fetchCategorias = async () => {
     try {
-      const { data, error } = await supabase.from('categorias').select('*');
+      const { data, error } = await supabase.from('categorias').select('*').order('parent_id', { ascending: true, nullsFirst: true }).order('nombre', { ascending: true });
       if (!error && data && data.length > 0) {
-        // En la V6, table categorias is just id, nombre. 
-        // Some users might have added categoria_padre manually, we fallback graciously.
-        const principales = data.filter(c => !c.categoria_padre).map(c => c.nombre);
-        if (principales.length > 0) setDbCategorias(principales);
         
-        const subs = data.filter(c => c.categoria_padre).map(c => ({
-          parentCategory: c.categoria_padre,
-          subcategory: c.nombre
-        }));
-        setDbSubcategorias(subs.length > 0 ? subs : []); // force override static mapping
+        // V7 Hierarchy: Principales son los que no tienen parent_id
+        const principales = data.filter(c => !c.parent_id);
+        if (principales.length > 0) {
+          setDbCategorias(principales.map(c => c.nombre));
+        }
+        
+        // Subcategorias son hijos referenciados a un parent_id
+        const subs = data.filter(c => c.parent_id).map(c => {
+          const parent = principales.find(p => p.id === c.parent_id);
+          return {
+            parentCategory: parent ? parent.nombre : 'General',
+            subcategory: c.nombre
+          };
+        });
+        
+        setDbSubcategorias(subs);
       }
     } catch (e) {
-      console.warn('Usando fallback para categorías');
+      console.error('Error al fetchear categorías:', e);
     }
   };
 
@@ -300,7 +306,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     }
   };
 
-  const updateQuickStock = async (id, currentStatus) => {
+  const updateQuickStock = async (sku, currentStatus) => {
     const newStatus = !currentStatus;
     setUpdatingId(sku + 'stock');
 
@@ -521,19 +527,19 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                         setFormData({ ...formData, categoria_ppal: val, subcategoria: '' });
                       }
                     }} 
-                    className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold"
+                    className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-normal"
                   >
-                    <option value="">Selecciona Categoría...</option>
+                    <option value="" className="font-normal text-gray-400">Selecciona Categoría...</option>
                     {dbCategorias.map(cat => (
-                      <optgroup label={cat} key={cat}>
-                        <option value={cat}>{cat} (General)</option>
+                      <optgroup label={cat} key={cat} className="font-bold text-white bg-[#0A0A0A] uppercase mt-2">
+                        <option value={cat} className="font-normal normal-case text-gray-200">{cat} (General)</option>
                         {dbSubcategorias.filter(s => s.parentCategory === cat).map(sub => (
-                          <option value={`${cat}|${sub.subcategory}`} key={sub.subcategory}>-- {sub.subcategory}</option>
+                          <option value={`${cat}|${sub.subcategory}`} key={sub.subcategory} className="font-normal normal-case text-gray-300">-- {sub.subcategory}</option>
                         ))}
                       </optgroup>
                     ))}
                     {dbCategorias.length === 0 && (
-                      <option value="" disabled>Cargando categorías desde BD...</option>
+                      <option value="" disabled className="font-normal">Cargando categorías desde BD...</option>
                     )}
                   </select>
                 </div>

@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CATEGORIES, SUBCATEGORY_MAP, EXPANDABLE_CATEGORIES } from '../constants';
 import { Filter, SlidersHorizontal, Check, ChevronDown, Wrench, Zap, Trash2, Droplets, PaintRoller, Type, Lightbulb, Box, Factory, Wind, Paperclip, Package } from 'lucide-react';
 
 interface SidebarProps {
@@ -11,6 +10,8 @@ interface SidebarProps {
   onPriceChange: (price: number) => void;
   absMaxPrice: number;
   allProducts?: any[];
+  dbCategories?: string[];
+  dbSubcats?: { parentCategory: string, subcategory: string }[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -20,7 +21,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   maxPrice,
   onPriceChange,
   absMaxPrice,
-  allProducts = []
+  allProducts = [],
+  dbCategories = ['Todas'],
+  dbSubcats = []
 }) => {
   const [expanded, setExpanded] = useState<Set<string>>(new Set<string>());
 
@@ -37,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const subcatsFor = useMemo(() => (cat: string): string[] => {
     const seen = new Set<string>();
     const result: string[] = [];
-    for (const entry of SUBCATEGORY_MAP) {
+    for (const entry of dbSubcats) {
       if (entry.parentCategory === cat && !seen.has(entry.subcategory)) {
         seen.add(entry.subcategory);
         result.push(entry.subcategory);
@@ -106,12 +109,12 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         <ul className="space-y-0.5 max-h-[70vh] overflow-y-auto pr-1 custom-scrollbar">
-          {CATEGORIES.map((cat) => {
+          {dbCategories.map((cat) => {
             const count = getCategoryCount(cat);
+            const subcats = subcatsFor(cat);
             const isActive = selectedCategory === cat && !selectedSubcategory;
-            const isExpandable = EXPANDABLE_CATEGORIES.includes(cat);
+            const isExpandable = subcats.length > 0;
             const isExpanded = expanded.has(cat);
-            const subcats = isExpandable ? subcatsFor(cat) : [];
 
             return (
               <li key={cat}>
@@ -202,7 +205,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                             >
                               <span className="flex items-center gap-1.5">
                                 <span className={`w-1 h-1 rounded-full bg-current flex-shrink-0 ${isSubActive ? 'text-[#FFFFFF] opacity-100' : 'opacity-60'}`} />
-                                {sub}
+                                -- {sub}
                               </span>
                               <span className={`text-[9px] font-black tabular-nums ${isSubActive ? 'text-[#3B82F6]' : subCount === 0 ? 'text-neutral-700' : 'text-neutral-500'
                                 }`}>

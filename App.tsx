@@ -3,7 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight, CheckCircle2, AlertCircle, Menu, ArrowUp, Truck, FileText, Receipt, User, Building2, MapPin, Phone, ArrowLeft, Send } from 'lucide-react';
-import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE, getSubcategory, SUBCATEGORY_MAP } from './constants';
+import { PRODUCTS, CONTACT_PHONE_DISPLAY, CONTACT_PHONE } from './constants';
 import { useCartStore } from './store';
 import { supabase, getProductImageUrl } from './utils/supabase';
 
@@ -400,6 +400,8 @@ const Home = ({
   maxProductPrice,
   filteredProducts,
   liveProducts,
+  liveCategories,
+  liveSubcats,
   setSidebarOpen
 }: any) => {
 
@@ -486,6 +488,8 @@ const Home = ({
                 onPriceChange={setMaxPrice}
                 absMaxPrice={maxProductPrice}
                 allProducts={liveProducts}
+                dbCategories={liveCategories}
+                dbSubcats={liveSubcats}
               />
             </div>
 
@@ -577,6 +581,8 @@ const AppContent = () => {
   }, [absMaxProductPrice]);
 
   const maxProductPriceFallback = absMaxProductPrice;
+  const [liveCategories, setLiveCategories] = useState<string[]>(['Todas']);
+  const [liveSubcats, setLiveSubcats] = useState<any[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -584,18 +590,27 @@ const AppContent = () => {
       try {
         const [prodRes, catRes] = await Promise.all([
           supabase.from('productos').select('*'),
-          supabase.from('categorias').select('*')
+          supabase.from('categorias').select('*').order('parent_id', { ascending: true, nullsFirst: true }).order('nombre', { ascending: true })
         ]);
         
-        let dbSubcats = [...SUBCATEGORY_MAP];
+        let dbSubcats: { parentCategory: string, subcategory: string }[] = [];
+        let dbCategoriesList: string[] = ['Todas'];
         
         if (catRes.data) {
-          const subs = catRes.data.filter((c: any) => c.es_subcategoria || (c.categoria_padre && c.categoria_padre !== c.nombre)).map((c: any) => ({
-            parentCategory: c.categoria_padre || c.padre || 'Herramientas',
+          const principales = catRes.data.filter((c: any) => !c.parent_id);
+          const principalesMap = new Map(principales.map((c: any) => [c.id, c.nombre]));
+          dbCategoriesList = ['Todas', ...principales.map((c: any) => c.nombre)];
+
+          const subs = catRes.data.filter((c: any) => c.parent_id).map((c: any) => ({
+            parentCategory: principalesMap.get(c.parent_id) || 'General',
             subcategory: c.nombre
           }));
           if (subs.length > 0) {
             dbSubcats = [...dbSubcats, ...subs];
+          }
+          if (isMounted) {
+            setLiveCategories(dbCategoriesList);
+            setLiveSubcats(dbSubcats);
           }
         }
 
@@ -618,11 +633,6 @@ const AppContent = () => {
               // Arquitectura V5: Lectura directa desde BD sin diccionarios intermedios
               let actualCategory = (d.categoria_ppal || base?.category || 'Herramientas').trim();
               let actualSubcategory = d.subcategoria ? String(d.subcategoria).trim() : (base?.subcategory || '').trim();
-
-              // Compatibilidad con los fallback locales sólo si la BD no retorna datos
-              if (!actualSubcategory && base) {
-                 actualSubcategory = getSubcategory(cleanName, actualCategory);
-              }
 
               return {
                 ...(base || {}), // Mantiene la estructura de id/imageUrl antigua
@@ -682,7 +692,8 @@ const AppContent = () => {
       const term = searchTerm.toLowerCase().trim();
 
       // Case-insensitive: 'Grifería' y 'grifería' se tratan igual
-      const matchCat = category === 'Todas' || pCat.toLowerCase() === category.toLowerCase();
+      const isChildOfSelected = liveSubcats.some(s => s.parentCategory.toLowerCase() === category.toLowerCase() && s.subcategory.toLowerCase() === pCat.toLowerCase());
+      const matchCat = category === 'Todas' || pCat.toLowerCase() === category.toLowerCase() || isChildOfSelected;
       // Short-circuit: si no hay búsqueda, todos pasan
       const matchSearch = !term || pName.includes(term) || pSku.includes(term);
       // Filtro de subcategoría: solo aplica si hay subcategoría activa
@@ -750,6 +761,8 @@ const AppContent = () => {
               maxProductPrice={absMaxProductPrice}
               filteredProducts={filteredProducts}
               liveProducts={liveProducts}
+              liveCategories={liveCategories}
+              liveSubcats={liveSubcats}
               setSidebarOpen={setSidebarOpen}
             />
           } />
