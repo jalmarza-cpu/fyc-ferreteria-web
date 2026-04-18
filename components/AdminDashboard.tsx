@@ -38,6 +38,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [saveError, setSaveError] = useState(null);
   const fileInputRef = useRef(null);
 
   const [dbCategorias, setDbCategorias] = useState([]);
@@ -139,6 +140,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   const openCreateModal = () => {
     setIsEditing(false);
+    setSaveError(null);
     setFormData({
       id: null, sku: '', nombre: '', descripcion: '', categoria: 'Herramientas',
       precio_mayorista: 0, precio_retail: 0, imagen_url: '', stock: true
@@ -148,6 +150,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   const openEditModal = (producto) => {
     setIsEditing(true);
+    setSaveError(null);
     setOriginalSku(String(producto.sku || ''));
     // Sanear valores con formato legacy "Padre|Hijo" -> extraer solo el hijo
     const rawCat = String(producto.categoria || 'Herramientas');
@@ -176,7 +179,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     const filePath = `uploads/${fileName}`;
 
     try {
-      const { error: uploadError } = await supabaseAdmin.storage
+      const { error: uploadError } = await supabase.storage
         .from('productos-v2')
         .upload(filePath, file);
 
@@ -193,16 +196,23 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
+    setSaveError(null);
 
-    // SKU ES EL REY: nunca usar id para identificar registros
+    // SKU ORIGINAL DEL PRODUCTO: obligatorio para que no se pierda al editar el SKU
     const targetSku = String(originalSku || formData.sku).trim();
     const newSku = String(formData.sku).trim();
+    
+    // CONEXIÓN DIRECTA Y LIMPIA: Garantizamos que la categoría sea un texto plano sin el pipe heredado
+    let valor_limpio = String(formData.categoria || 'Herramientas').trim();
+    if (valor_limpio.includes('|')) {
+      valor_limpio = valor_limpio.split('|')[1].trim();
+    }
 
     const payload = {
       sku: newSku,
       nombre: formData.nombre,
       descripcion: formData.descripcion,
-      categoria: formData.categoria,
+      categoria: valor_limpio,
       precio_mayorista: Number(formData.precio_mayorista) || 0,
       precio_retail: Number(formData.precio_retail) || 0,
       imagen_url: formData.imagen_url,
@@ -210,58 +220,58 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     };
 
     try {
+      let savedData = null;
+
       if (isEditing) {
-        // PASO 1: UPDATE exclusivo por SKU — sin .select() encadenado para evitar bloqueo por RLS
-        const { error: updateError } = await supabase
+        // PASO 1: UPDATE exclusivo por SKU original
+        const { data, error: updateError } = await supabase
           .from('productos')
           .update(payload)
-          .eq('sku', targetSku);
+          .eq('sku', targetSku)
+          .select(); // <= CRÍTICO para saber si realmente encontró y actualizó la fila
 
         if (updateError) {
-          console.error("🔴 ERROR SUPABASE ACTUALIZANDO:", updateError);
           throw updateError;
         }
 
-        // PASO 2: SELECT separado por SKU para obtener el registro fresco
-        const { data: freshData } = await supabase
-          .from('productos')
-          .select('*')
-          .eq('sku', newSku)
-          .maybeSingle();
-
-        // PASO 3: Actualizar caché local — usa datos frescos si existen, si no usa formData (optimistic)
-        const updatedRecord = freshData || { ...payload };
-        setProductos(prev =>
-          prev.map(p => String(p.sku).trim() === targetSku ? { ...p, ...updatedRecord } : p)
-        );
-
+        if (!data || data.length === 0) {
+          throw new Error(`El producto con SKU "${targetSku}" no fue encontrado en la base de datos o falló un permiso de seguridad.`);
+        }
+        
+        savedData = data[0];
       } else {
-        // CREAR: insert + select separado por SKU
-        const { error: insertError } = await supabase
+        // CREAR: insert
+        const { data, error: insertError } = await supabase
           .from('productos')
-          .insert([payload]);
+          .insert([payload])
+          .select();
 
         if (insertError) {
-          console.error("🔴 ERROR SUPABASE CREANDO:", insertError);
           throw insertError;
         }
 
-        const { data: newData } = await supabase
-          .from('productos')
-          .select('*')
-          .eq('sku', newSku)
-          .maybeSingle();
-
-        setProductos(prev => [newData || payload, ...prev]);
+        if (!data || data.length === 0) {
+          throw new Error('Fallo al crear el producto. La base de datos no lo retornó.');
+        }
+        
+        savedData = data[0];
       }
 
-      // Éxito: cerrar modal y purgar caché
+      // TRUCO SALVAVIDAS: Actualizar el estado local DIRECTAMENTE con la data enviada y validada por Supabase
+      // Esto evita que un fetchProductos() posterior traiga datos cacheados de Cloudflare y revierta la UI.
+      if (isEditing) {
+        setProductos(prev => prev.map(p => p.sku === targetSku ? { ...p, ...savedData } : p));
+      } else {
+        setProductos(prev => [...prev, savedData]);
+      }
+
+      // Éxito: cerrar modal y purgar caché EN BUCKET
       setIsModalOpen(false);
       triggerCloudflarePurge();
+
     } catch (error) {
       console.error("🔴 Error de Guardado:", error);
-      alert('Error de Guardado: ' + (error.message || 'Falla de conexión a BD.'));
-      // No cerramos el modal intencionalmente para que el Director pueda reintentar
+      setSaveError(error.message || JSON.stringify(error) || 'Falla de conexión a BD.');
     } finally {
       setIsSaving(false);
     }
@@ -287,7 +297,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       
       if (formData.id && !String(formData.id).startsWith('constants-')) {
         // Actualizar registro existente
-        const { error } = await supabaseAdmin
+        const { error } = await supabase
           .from('productos')
           .update({ estado_visibilidad: false, stock: false })
           .eq('sku', formData.sku);
@@ -304,7 +314,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           stock: false,
           estado_visibilidad: false
         };
-        const { error } = await supabaseAdmin.from('productos').insert([payload]);
+        const { error } = await supabase.from('productos').insert([payload]);
         updateError = error;
       }
 
@@ -327,12 +337,17 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     setUpdatingId(sku + 'stock');
 
     try {
-      const { error } = await supabase
+      // Eliminar actualización optimista y usar .select()
+      const { data, error } = await supabase
         .from('productos')
         .update({ stock: newStatus })
-        .eq('sku', sku);
+        .eq('sku', sku)
+        .select();
 
       if (error) throw error;
+      if (!data || data.length === 0) throw new Error("Producto no encontrado o fallo al actualizar.");
+      
+      // Actualizar solo al confirmar con la BD
       setProductos(productos.map(p => p.sku === sku ? { ...p, stock: newStatus } : p));
       triggerCloudflarePurge(); // Trigger cache purge on stock change
     } catch (error) {
@@ -467,6 +482,14 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              
+              {/* Alerta de Error Clara y Visible */}
+              {saveError && (
+                <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-xl text-xs font-bold mb-4 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                  ⚠ ERROR DE GUARDADO: {saveError}
+                </div>
+              )}
+
               <div className="bg-[#111] p-4 rounded-xl border border-dashed border-[#333]">
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="w-full md:w-40 h-40 bg-black rounded-lg border border-[#222] overflow-hidden flex items-center justify-center relative group">
@@ -756,7 +779,12 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                           const val = parseInt(e.target.value);
                           if (val !== p.precio_mayorista) {
                             setUpdatingId(p.sku + 'mayorista');
-                            await supabaseAdmin.from('productos').update({ precio_mayorista: val }).eq('sku', p.sku);
+                            const { error } = await supabase.from('productos').update({ precio_mayorista: val }).eq('sku', p.sku);
+                            if (error) {
+                              alert("Error actualizando precio: " + error.message);
+                              setUpdatingId(null);
+                              return;
+                            }
                             setProductos(productos.map(prod => prod.sku === p.sku ? { ...prod, precio_mayorista: val } : prod));
                             setUpdatingId(null);
                           }
@@ -775,7 +803,12 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                           const val = parseInt(e.target.value);
                           if (val !== p.precio_retail) {
                             setUpdatingId(p.sku + 'detalle');
-                            await supabaseAdmin.from('productos').update({ precio_retail: val }).eq('sku', p.sku);
+                            const { error } = await supabase.from('productos').update({ precio_retail: val }).eq('sku', p.sku);
+                            if (error) {
+                              alert("Error actualizando precio: " + error.message);
+                              setUpdatingId(null);
+                              return;
+                            }
                             setProductos(productos.map(prod => prod.sku === p.sku ? { ...prod, precio_retail: val } : prod));
                             setUpdatingId(null);
                           }
