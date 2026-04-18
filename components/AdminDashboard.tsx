@@ -191,62 +191,79 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     e.preventDefault();
     setIsSaving(true);
 
-    // Arquitectura SaaS V5: Escritura directa a columnas reales en BD
+    // SKU ES EL REY: nunca usar id para identificar registros
+    const targetSku = String(originalSku || formData.sku).trim();
+    const newSku = String(formData.sku).trim();
+
     const payload = {
-      sku: String(formData.sku).trim(),
+      sku: newSku,
       nombre: formData.nombre,
       descripcion: formData.descripcion,
       categoria: formData.categoria,
-      precio_mayorista: formData.precio_mayorista,
-      precio_retail: formData.precio_retail,
+      precio_mayorista: Number(formData.precio_mayorista) || 0,
+      precio_retail: Number(formData.precio_retail) || 0,
       imagen_url: formData.imagen_url,
       stock: formData.stock
     };
 
     try {
       if (isEditing) {
-        const { data, error } = await supabase
+        // PASO 1: UPDATE exclusivo por SKU — sin .select() encadenado para evitar bloqueo por RLS
+        const { error: updateError } = await supabase
           .from('productos')
           .update(payload)
-          .eq('sku', originalSku || formData.sku) // Buscamos por el SKU original por si lo cambió
-          .select(); // Exigimos la confirmación de vuelta
+          .eq('sku', targetSku);
 
-        if (error) {
-          console.error("🔴 ERROR SUPABASE ACTUALIZANDO:", error);
-          throw error;
-        }
-        
-        if (!data || data.length === 0) {
-          throw new Error("La base de datos aceptó el comando, pero no devolvió el registro. (Error de SKU o caché).");
+        if (updateError) {
+          console.error("🔴 ERROR SUPABASE ACTUALIZANDO:", updateError);
+          throw updateError;
         }
 
-        // Éxito: Actualizar Caché Local de Inmediato usando Callback para evitar State Stale
-        setProductos(prev => prev.map(p => p.sku === formData.sku ? { ...p, ...data[0] } : p));
-      } else {
-        const { data, error } = await supabase
+        // PASO 2: SELECT separado por SKU para obtener el registro fresco
+        const { data: freshData } = await supabase
           .from('productos')
-          .insert([payload])
-          .select();
+          .select('*')
+          .eq('sku', newSku)
+          .maybeSingle();
 
-        if (error) {
-          console.error("🔴 ERROR SUPABASE CREANDO:", error);
-          throw error;
+        // PASO 3: Actualizar caché local — usa datos frescos si existen, si no usa formData (optimistic)
+        const updatedRecord = freshData || { ...payload };
+        setProductos(prev =>
+          prev.map(p => String(p.sku).trim() === targetSku ? { ...p, ...updatedRecord } : p)
+        );
+
+      } else {
+        // CREAR: insert + select separado por SKU
+        const { error: insertError } = await supabase
+          .from('productos')
+          .insert([payload]);
+
+        if (insertError) {
+          console.error("🔴 ERROR SUPABASE CREANDO:", insertError);
+          throw insertError;
         }
-        
-        if (data) setProductos(prev => [data[0], ...prev]);
+
+        const { data: newData } = await supabase
+          .from('productos')
+          .select('*')
+          .eq('sku', newSku)
+          .maybeSingle();
+
+        setProductos(prev => [newData || payload, ...prev]);
       }
-      
-      // SOLO cerramos el modal si todo el bloque TRY fue exitoso
+
+      // Éxito: cerrar modal y purgar caché
       setIsModalOpen(false);
-      triggerCloudflarePurge(); // Trigger cache purge on save
+      triggerCloudflarePurge();
     } catch (error) {
-      console.error("🔴 Bloqueo de Modal. Error de Guardado:", error);
+      console.error("🔴 Error de Guardado:", error);
       alert('Error de Guardado: ' + (error.message || 'Falla de conexión a BD.'));
-      // No cerramos el modal intencionalmente
+      // No cerramos el modal intencionalmente para que el Director pueda reintentar
     } finally {
       setIsSaving(false);
     }
   };
+
 
   const handleDelete = async () => {
     setIsDeleting(true);
