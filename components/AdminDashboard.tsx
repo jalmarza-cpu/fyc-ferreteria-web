@@ -149,12 +149,15 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const openEditModal = (producto) => {
     setIsEditing(true);
     setOriginalSku(String(producto.sku || ''));
+    // Sanear valores con formato legacy "Padre|Hijo" -> extraer solo el hijo
+    const rawCat = String(producto.categoria || 'Herramientas');
+    const cleanCat = rawCat.includes('|') ? rawCat.split('|')[1].trim() : rawCat.trim();
     setFormData({
       id: producto.id,
       sku: String(producto.sku || ''),
       nombre: producto.nombre,
       descripcion: producto.descripcion || '',
-      categoria: producto.categoria || 'Herramientas',
+      categoria: cleanCat,
       precio_mayorista: producto.precio_mayorista,
       precio_retail: producto.precio_retail,
       imagen_url: producto.imagen_url || '',
@@ -537,9 +540,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                     <option value="" className="font-normal text-gray-400">Selecciona Categoría...</option>
                     {dbCategorias.map(cat => (
                       <optgroup label={cat} key={cat} className="font-bold text-white bg-[#0A0A0A] uppercase mt-2">
+                        {/* Padre: guarda solo el nombre del padre */}
                         <option value={cat} className="font-normal normal-case text-gray-200">{cat} (General)</option>
+                        {/* Hijos: guarda SOLO el nombre de la subcategoría — NO el compuesto Padre|Hijo */}
                         {dbSubcategorias.filter(s => s.parentCategory === cat).map(sub => (
-                          <option value={`${cat}|${sub.subcategory}`} key={sub.subcategory} className="font-normal normal-case text-gray-300">-- {sub.subcategory}</option>
+                          <option value={sub.subcategory} key={sub.subcategory} className="font-normal normal-case text-gray-300">-- {sub.subcategory}</option>
                         ))}
                       </optgroup>
                     ))}
