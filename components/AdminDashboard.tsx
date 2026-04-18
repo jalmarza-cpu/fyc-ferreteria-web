@@ -198,26 +198,44 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
     try {
       if (isEditing) {
-        const { error } = await supabaseAdmin
+        const { data, error } = await supabaseAdmin
           .from('productos')
           .update(payload)
-          .eq('sku', formData.sku);
+          .eq('sku', formData.sku)
+          .select(); // Exigimos la confirmación de vuelta
 
-        if (error) throw error;
-        setProductos(productos.map(p => p.sku === formData.sku ? { ...p, ...payload } : p));
+        if (error) {
+          console.error("🔴 ERROR SUPABASE ACTUALIZANDO:", error);
+          throw error;
+        }
+        
+        if (!data || data.length === 0) {
+          throw new Error("La base de datos aceptó el comando, pero no devolvió el registro. (Error de SKU o caché).");
+        }
+
+        // Éxito: Actualizar Caché Local de Inmediato usando Callback para evitar State Stale
+        setProductos(prev => prev.map(p => p.sku === formData.sku ? { ...p, ...data[0] } : p));
       } else {
         const { data, error } = await supabaseAdmin
           .from('productos')
           .insert([payload])
           .select();
 
-        if (error) throw error;
-        if (data) setProductos([data[0], ...productos]);
+        if (error) {
+          console.error("🔴 ERROR SUPABASE CREANDO:", error);
+          throw error;
+        }
+        
+        if (data) setProductos(prev => [data[0], ...prev]);
       }
+      
+      // SOLO cerramos el modal si todo el bloque TRY fue exitoso
       setIsModalOpen(false);
       triggerCloudflarePurge(); // Trigger cache purge on save
     } catch (error) {
-      alert('Error: ' + error.message);
+      console.error("🔴 Bloqueo de Modal. Error de Guardado:", error);
+      alert('Error de Guardado: ' + (error.message || 'Falla de conexión a BD.'));
+      // No cerramos el modal intencionalmente
     } finally {
       setIsSaving(false);
     }
