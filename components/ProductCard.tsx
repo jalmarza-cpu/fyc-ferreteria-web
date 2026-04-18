@@ -140,7 +140,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="group relative card-container transition-all duration-300 hover:border-[#3B82F6] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(59,130,246,0.12)] flex flex-col overflow-hidden shadow-[var(--card-shadow)] rounded-xl h-full p-4 gap-4">
 
         {/* BADGE SYSTEM: Floating Badges */}
-        <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start pointer-events-none">
+        <div className="absolute top-2 left-2 z-[50] flex flex-col gap-1 items-start pointer-events-none">
           {savingPercent > 0 && (
             <>
               {/* Red Sale Badge */}

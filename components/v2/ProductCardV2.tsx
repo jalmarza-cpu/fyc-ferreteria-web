@@ -136,7 +136,7 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
 
         {/* ── Badge de descuento (sin amarillo) ── */}
         {porcentajeDescuento > 0 && (
-          <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
+          <div className="absolute top-3 left-3 z-[50] flex flex-col gap-1">
             <span
               className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-sm text-white"
               style={{ background: V2.badgeRed }}

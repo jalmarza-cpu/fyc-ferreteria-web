@@ -562,9 +562,21 @@ const AppContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const maxProductPrice = Math.max(...PRODUCTS.map(p => p.priceRetail));
-  const [maxPrice, setMaxPrice] = useState(maxProductPrice);
   const [liveProducts, setLiveProducts] = useState(PRODUCTS);
+  
+  const absMaxProductPrice = useMemo(() => {
+    const highest = Math.max(...liveProducts.map(p => Number(p.priceRetail) || Number(p.priceWholesale) || 0), 10000000);
+    return highest > 0 ? highest : 10000000;
+  }, [liveProducts]);
+
+  const [maxPrice, setMaxPrice] = useState(absMaxProductPrice);
+  
+  // Sincronizar dinámicamente cuando absMaxProductPrice crezca debido a Data Remota
+  useEffect(() => {
+    setMaxPrice(prev => prev < absMaxProductPrice && prev === maxProductPriceFallback ? absMaxProductPrice : prev);
+  }, [absMaxProductPrice]);
+
+  const maxProductPriceFallback = absMaxProductPrice;
 
   useEffect(() => {
     let isMounted = true;
@@ -720,7 +732,7 @@ const AppContent = () => {
           }}
           maxPrice={maxPrice}
           onPriceChange={setMaxPrice}
-          absMaxPrice={maxProductPrice}
+          absMaxPrice={absMaxProductPrice}
           allProducts={liveProducts}
         />
       </MobileSidebarDrawer>
@@ -735,7 +747,7 @@ const AppContent = () => {
               subcategory={subcategory} setSubcategory={setSubcategory}
               searchTerm={searchTerm} setSearchTerm={setSearchTerm}
               maxPrice={maxPrice} setMaxPrice={setMaxPrice}
-              maxProductPrice={maxProductPrice}
+              maxProductPrice={absMaxProductPrice}
               filteredProducts={filteredProducts}
               liveProducts={liveProducts}
               setSidebarOpen={setSidebarOpen}
