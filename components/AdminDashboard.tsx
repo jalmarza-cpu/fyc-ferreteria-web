@@ -164,7 +164,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       precio_mayorista: producto.precio_mayorista,
       precio_retail: producto.precio_retail,
       imagen_url: producto.imagen_url || '',
-      stock: producto.stock
+      stock: Boolean(producto.stock)
     });
     setIsModalOpen(true);
   };
@@ -216,7 +216,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       precio_mayorista: Number(formData.precio_mayorista) || 0,
       precio_retail: Number(formData.precio_retail) || 0,
       imagen_url: formData.imagen_url,
-      stock: formData.stock
+      stock: formData.stock ? 100 : 0
     };
 
     try {
@@ -299,7 +299,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         // Actualizar registro existente
         const { error } = await supabase
           .from('productos')
-          .update({ estado_visibilidad: false, stock: false })
+          .update({ estado_visibilidad: false, stock: 0 })
           .eq('sku', formData.sku);
         updateError = error;
       } else {
@@ -311,7 +311,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           precio_mayorista: formData.precio_mayorista || 0,
           imagen_url: formData.imagen_url || '',
           categoria: formData.categoria || 'Herramientas',
-          stock: false,
+          stock: 0,
           estado_visibilidad: false
         };
         const { error } = await supabase.from('productos').insert([payload]);
@@ -333,14 +333,15 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   };
 
   const updateQuickStock = async (sku, currentStatus) => {
-    const newStatus = !currentStatus;
+    const isCurrentlyInStock = Boolean(currentStatus);
+    const newStockNumeric = isCurrentlyInStock ? 0 : 100;
     setUpdatingId(sku + 'stock');
 
     try {
       // Eliminar actualización optimista y usar .select()
       const { data, error } = await supabase
         .from('productos')
-        .update({ stock: newStatus })
+        .update({ stock: newStockNumeric })
         .eq('sku', sku)
         .select();
 
@@ -348,10 +349,10 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       if (!data || data.length === 0) throw new Error("Producto no encontrado o fallo al actualizar.");
       
       // Actualizar solo al confirmar con la BD
-      setProductos(productos.map(p => p.sku === sku ? { ...p, stock: newStatus } : p));
+      setProductos(productos.map(p => p.sku === sku ? { ...p, stock: newStockNumeric } : p));
       triggerCloudflarePurge(); // Trigger cache purge on stock change
     } catch (error) {
-      alert('Error: ' + error.message);
+      alert('Error al actualizar stock: ' + error.message);
     } finally {
       setUpdatingId(null);
     }
@@ -380,8 +381,8 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
     // FILTROS DE ESTADO (Stock, Sin imagen, etc.)
     let matchesFilter = true;
-    if (activeFilter === 'out_of_stock') matchesFilter = p.stock === false;
-    if (activeFilter === 'in_stock') matchesFilter = p.stock === true;
+    if (activeFilter === 'out_of_stock') matchesFilter = !p.stock;
+    if (activeFilter === 'in_stock') matchesFilter = !!p.stock;
     if (activeFilter === 'no_image') matchesFilter = !p.imagen_url;
 
     // FILTRO DE CATEGORÍA

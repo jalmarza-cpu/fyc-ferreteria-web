@@ -643,7 +643,7 @@ const AppContent = () => {
                 priceWholesale: Number(d.precio_mayorista) || Number(base?.priceWholesale) || 0,
                 imageUrl: d.imagen_url || base?.imageUrl || '',
                 category: actualCategory,
-                inStock: d.stock !== false,
+                inStock: Number(d.stock) !== 0,
                 isVisible: d.estado_visibilidad !== false,
               };
             });
