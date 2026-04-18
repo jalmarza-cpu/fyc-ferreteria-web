@@ -27,16 +27,12 @@ export const BASE_IMAGE_URL = supabaseUrl
   ? `${supabaseUrl}/storage/v1/object/public/productos-v2`
   : '';
 
-export const supabase = createClient(supabaseUrl, supabaseKey, {
+export const supabase = createClient(supabaseUrl, serviceRoleKey || supabaseKey, {
   global: {
     headers: {
       'Cache-Control': 'no-store, max-age=0'
     }
-  }
-});
-
-// Cliente administrativo — Solo para el Dashboard interno (usa Service Role para saltarse RLS)
-export const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey || supabaseKey, {
+  },
   auth: {
     persistSession: false,
     autoRefreshToken: false,

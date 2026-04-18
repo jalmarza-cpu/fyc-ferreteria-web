@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { supabase, supabaseAdmin, getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
+import { supabase, getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
 import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, FilterX } from 'lucide-react';
 import { CATEGORIES, SUBCATEGORY_MAP } from '../constants';
 
@@ -46,7 +46,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   const fetchCategorias = async () => {
     try {
-      const { data, error } = await supabaseAdmin.from('categorias').select('*');
+      const { data, error } = await supabase.from('categorias').select('*');
       if (!error && data && data.length > 0) {
         const principales = data.filter(c => !c.es_subcategoria && !c.categoria_padre).map(c => c.nombre);
         if (principales.length > 0) setDbCategorias(principales);
@@ -198,7 +198,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
     try {
       if (isEditing) {
-        const { data, error } = await supabaseAdmin
+        const { data, error } = await supabase
           .from('productos')
           .update(payload)
           .eq('sku', formData.sku)
@@ -216,7 +216,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         // Éxito: Actualizar Caché Local de Inmediato usando Callback para evitar State Stale
         setProductos(prev => prev.map(p => p.sku === formData.sku ? { ...p, ...data[0] } : p));
       } else {
-        const { data, error } = await supabaseAdmin
+        const { data, error } = await supabase
           .from('productos')
           .insert([payload])
           .select();
@@ -246,7 +246,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     try {
       // 1. Eliminar la imagen del storage si existe y pertenece a uploads/
       if (formData.imagen_url && formData.imagen_url.startsWith('uploads/')) {
-        const { error: storageError } = await supabaseAdmin.storage
+        const { error: storageError } = await supabase.storage
           .from('productos-v2')
           .remove([formData.imagen_url]);
         
@@ -301,7 +301,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     setUpdatingId(sku + 'stock');
 
     try {
-      const { error } = await supabaseAdmin
+      const { error } = await supabase
         .from('productos')
         .update({ stock: newStatus })
         .eq('sku', sku);
