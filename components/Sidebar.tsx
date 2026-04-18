@@ -55,11 +55,13 @@ const Sidebar: React.FC<SidebarProps> = ({
     const map: Record<string, number> = {};
     for (const p of allProducts) {
       if (p.isVisible === false) continue;
-      const pCat = (p.category || '').trim();
-      
+      // CRÍTICO: leer p.categoria (columna Supabase) NO p.category (modelo estático)
+      const pCat = (p.categoria || p.category || '').trim();
+      if (!pCat) continue;
+
       let parent = '';
       let subcat = '';
-      
+
       const foundSub = dbSubcats.find(s => s.subcategory.toLowerCase() === pCat.toLowerCase());
       if (foundSub) {
         parent = foundSub.parentCategory.toLowerCase();
@@ -68,9 +70,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         parent = pCat.toLowerCase();
       }
 
-      // Contador de categoría madre
+      // Contador de categoría madre (y "Todas" lo suma sumando todos los productos visibles)
       map[parent] = (map[parent] || 0) + 1;
-      
+
       // Contador de subcategoría (clave: "categoria|subcategoria")
       if (subcat) {
         const subKey = `${parent}|${subcat}`;
@@ -78,10 +80,17 @@ const Sidebar: React.FC<SidebarProps> = ({
       }
     }
     return map;
-  }, [allProducts]);
+  }, [allProducts, dbSubcats]);
+
+  // Total de productos visibles para "Todas"
+  const totalVisible = useMemo(
+    () => allProducts.filter(p => p.isVisible !== false && (p.categoria || p.category || '').trim() !== '').length,
+    [allProducts]
+  );
 
   // Devuelve el conteo real desde el mapa precalculado
   const getCategoryCount = (cat: string, subcat?: string): number => {
+    if (cat === 'Todas') return totalVisible;
     if (subcat) {
       return countMap[`${cat.toLowerCase()}|${subcat.toLowerCase().trim()}`] || 0;
     }
