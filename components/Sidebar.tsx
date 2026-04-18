@@ -56,13 +56,24 @@ const Sidebar: React.FC<SidebarProps> = ({
     for (const p of allProducts) {
       if (p.isVisible === false) continue;
       const pCat = (p.category || '').trim();
-      const pSub = (p.subcategory || '').toLowerCase().trim();
+      
+      let parent = '';
+      let subcat = '';
+      
+      const foundSub = dbSubcats.find(s => s.subcategory.toLowerCase() === pCat.toLowerCase());
+      if (foundSub) {
+        parent = foundSub.parentCategory.toLowerCase();
+        subcat = pCat.toLowerCase();
+      } else {
+        parent = pCat.toLowerCase();
+      }
+
       // Contador de categoría madre
-      const catKey = pCat.toLowerCase();
-      map[catKey] = (map[catKey] || 0) + 1;
+      map[parent] = (map[parent] || 0) + 1;
+      
       // Contador de subcategoría (clave: "categoria|subcategoria")
-      if (pSub) {
-        const subKey = `${catKey}|${pSub}`;
+      if (subcat) {
+        const subKey = `${parent}|${subcat}`;
         map[subKey] = (map[subKey] || 0) + 1;
       }
     }

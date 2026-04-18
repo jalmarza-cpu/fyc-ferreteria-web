@@ -630,9 +630,8 @@ const AppContent = () => {
               
               const exactDbSku = String(d.sku ?? '').trim();
 
-              // Arquitectura V5: Lectura directa desde BD sin diccionarios intermedios
-              let actualCategory = (d.categoria_ppal || base?.category || 'Herramientas').trim();
-              let actualSubcategory = d.subcategoria ? String(d.subcategoria).trim() : (base?.subcategory || '').trim();
+              // Arquitectura V8: Unificación total en una sola columna "categoria"
+              let actualCategory = (d.categoria || base?.category || 'Herramientas').trim();
 
               return {
                 ...(base || {}), // Mantiene la estructura de id/imageUrl antigua
@@ -646,7 +645,6 @@ const AppContent = () => {
                 category: actualCategory,
                 inStock: d.stock !== false,
                 isVisible: d.estado_visibilidad !== false,
-                subcategory: actualSubcategory,
               };
             });
 
@@ -691,17 +689,20 @@ const AppContent = () => {
       const pSku = String(p.sku || '').toLowerCase();
       const term = searchTerm.toLowerCase().trim();
 
-      // Case-insensitive: 'Grifería' y 'grifería' se tratan igual
-      const isChildOfSelected = liveSubcats.some(s => s.parentCategory.toLowerCase() === category.toLowerCase() && s.subcategory.toLowerCase() === pCat.toLowerCase());
-      const matchCat = category === 'Todas' || pCat.toLowerCase() === category.toLowerCase() || isChildOfSelected;
+      let matchCat = false;
+      if (category === 'Todas') {
+        matchCat = true;
+      } else if (subcategory) {
+        matchCat = pCat.toLowerCase() === subcategory.trim().toLowerCase();
+      } else {
+        const isChildOfSelected = liveSubcats.some(s => s.parentCategory.toLowerCase() === category.toLowerCase() && s.subcategory.toLowerCase() === pCat.toLowerCase());
+        matchCat = pCat.toLowerCase() === category.toLowerCase() || isChildOfSelected;
+      }
       // Short-circuit: si no hay búsqueda, todos pasan
       const matchSearch = !term || pName.includes(term) || pSku.includes(term);
-      // Filtro de subcategoría: solo aplica si hay subcategoría activa
-      const pSubcat = (p.subcategory || '').toLowerCase().trim();
-      const matchSubcat = !subcategory || pSubcat === subcategory.toLowerCase().trim();
       // Number() garantiza comparación numérica aunque el precio llegue como string
       const matchPrice = (Number(p.priceWholesale) || 0) <= maxPrice;
-      return matchCat && matchSubcat && matchSearch && matchPrice;
+      return matchCat && matchSearch && matchPrice;
     });
   }, [category, subcategory, searchTerm, maxPrice, liveProducts]);
 

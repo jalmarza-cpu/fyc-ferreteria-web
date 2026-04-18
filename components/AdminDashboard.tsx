@@ -96,8 +96,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     sku: '',
     nombre: '',
     descripcion: '',
-    categoria_ppal: 'Herramientas',
-    subcategoria: '',
+    categoria: 'Herramientas',
     precio_mayorista: 0,
     precio_retail: 0,
     imagen_url: '',
@@ -141,7 +140,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const openCreateModal = () => {
     setIsEditing(false);
     setFormData({
-      id: null, sku: '', nombre: '', descripcion: '', categoria_ppal: 'Herramientas', subcategoria: '',
+      id: null, sku: '', nombre: '', descripcion: '', categoria: 'Herramientas',
       precio_mayorista: 0, precio_retail: 0, imagen_url: '', stock: true
     });
     setIsModalOpen(true);
@@ -155,8 +154,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       sku: String(producto.sku || ''),
       nombre: producto.nombre,
       descripcion: producto.descripcion || '',
-      categoria_ppal: producto.categoria_ppal,
-      subcategoria: producto.subcategoria || '',
+      categoria: producto.categoria || 'Herramientas',
       precio_mayorista: producto.precio_mayorista,
       precio_retail: producto.precio_retail,
       imagen_url: producto.imagen_url || '',
@@ -198,8 +196,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       sku: String(formData.sku).trim(),
       nombre: formData.nombre,
       descripcion: formData.descripcion,
-      categoria_ppal: formData.categoria_ppal,
-      subcategoria: formData.subcategoria,
+      categoria: formData.categoria,
       precio_mayorista: formData.precio_mayorista,
       precio_retail: formData.precio_retail,
       imagen_url: formData.imagen_url,
@@ -283,8 +280,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           precio_retail: formData.priceRetail || 0,
           precio_mayorista: formData.precio_mayorista || 0,
           imagen_url: formData.imagen_url || '',
-          categoria_ppal: formData.categoria_ppal || 'Herramientas',
-          subcategoria: formData.subcategoria || '',
+          categoria: formData.categoria || 'Herramientas',
           stock: false,
           estado_visibilidad: false
         };
@@ -354,7 +350,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     if (activeFilter === 'no_image') matchesFilter = !p.imagen_url;
 
     // FILTRO DE CATEGORÍA
-    const matchesCategory = selectedCategory === 'Todas' || p.categoria_ppal === selectedCategory;
+    const matchesCategory = selectedCategory === 'Todas' || p.categoria === selectedCategory;
 
     return matchesSearch && matchesFilter && matchesCategory;
   });
@@ -517,16 +513,8 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Categoría de Catálogo</label>
                   <select 
-                    value={formData.subcategoria ? `${formData.categoria_ppal}|${formData.subcategoria}` : formData.categoria_ppal} 
-                    onChange={e => {
-                      const val = e.target.value;
-                      if (val.includes('|')) {
-                        const [c, s] = val.split('|');
-                        setFormData({ ...formData, categoria_ppal: c, subcategoria: s });
-                      } else {
-                        setFormData({ ...formData, categoria_ppal: val, subcategoria: '' });
-                      }
-                    }} 
+                    value={formData.categoria} 
+                    onChange={e => setFormData({ ...formData, categoria: e.target.value })} 
                     className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-normal"
                   >
                     <option value="" className="font-normal text-gray-400">Selecciona Categoría...</option>
@@ -728,8 +716,8 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
                           <span className="text-[9px] font-black text-yellow-500/80 bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/20 tracking-widest">SKU: {p.sku}</span>
-                          <button onClick={() => setSelectedCategory(p.categoria_ppal)} className="text-[9px] font-black text-neutral-500 hover:text-yellow-500 uppercase tracking-tighter bg-transparent border-none p-0 transition-colors">
-                            {p.categoria_ppal}
+                          <button onClick={() => setSelectedCategory(p.categoria)} className="text-[9px] font-black text-neutral-500 hover:text-yellow-500 uppercase tracking-tighter bg-transparent border-none p-0 transition-colors">
+                            {p.categoria}
                           </button>
                         </div>
                       </div>

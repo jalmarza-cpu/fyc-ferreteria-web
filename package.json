@@ -28,5 +28,8 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
     "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "dotenv": "^17.4.2"
   }
 }
