@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       }
     }
     return result;
-  }, []);
+  }, [dbSubcats]); // ← CRÍTICO: depende de dbSubcats para refrescar cuando llega el fetch
 
   // Mapa de conteos precalculado desde allProducts (misma lógica que filteredProducts en App.tsx)
   // Solo productos visibles, sin filtro de búsqueda ni precio (para que los conteos sean estables)

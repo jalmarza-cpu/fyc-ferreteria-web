@@ -746,6 +746,8 @@ const AppContent = () => {
           onPriceChange={setMaxPrice}
           absMaxPrice={absMaxProductPrice}
           allProducts={liveProducts}
+          dbCategories={liveCategories}
+          dbSubcats={liveSubcats}
         />
       </MobileSidebarDrawer>
 
