@@ -41,24 +41,27 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
 
-  const [dbCategorias, setDbCategorias] = useState(CATEGORIES);
-  const [dbSubcategorias, setDbSubcategorias] = useState(SUBCATEGORY_MAP);
+  const [dbCategorias, setDbCategorias] = useState([]);
+  const [dbSubcategorias, setDbSubcategorias] = useState([]);
+  const [originalSku, setOriginalSku] = useState(null);
 
   const fetchCategorias = async () => {
     try {
       const { data, error } = await supabase.from('categorias').select('*');
       if (!error && data && data.length > 0) {
-        const principales = data.filter(c => !c.es_subcategoria && !c.categoria_padre).map(c => c.nombre);
+        // En la V6, table categorias is just id, nombre. 
+        // Some users might have added categoria_padre manually, we fallback graciously.
+        const principales = data.filter(c => !c.categoria_padre).map(c => c.nombre);
         if (principales.length > 0) setDbCategorias(principales);
         
-        const subs = data.filter(c => c.es_subcategoria || c.categoria_padre).map(c => ({
-          parentCategory: c.categoria_padre || c.padre || 'Herramientas',
+        const subs = data.filter(c => c.categoria_padre).map(c => ({
+          parentCategory: c.categoria_padre,
           subcategory: c.nombre
         }));
-        if (subs.length > 0) setDbSubcategorias(subs);
+        setDbSubcategorias(subs.length > 0 ? subs : []); // force override static mapping
       }
     } catch (e) {
-      console.warn('Usando constants.tsx como fallback para categorías (tabla categorias no encontrada)');
+      console.warn('Usando fallback para categorías');
     }
   };
 
@@ -140,6 +143,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   const openEditModal = (producto) => {
     setIsEditing(true);
+    setOriginalSku(String(producto.sku || ''));
     setFormData({
       id: producto.id,
       sku: String(producto.sku || ''),
@@ -201,7 +205,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         const { data, error } = await supabase
           .from('productos')
           .update(payload)
-          .eq('sku', formData.sku)
+          .eq('sku', originalSku || formData.sku) // Buscamos por el SKU original por si lo cambió
           .select(); // Exigimos la confirmación de vuelta
 
         if (error) {
@@ -528,6 +532,9 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                         ))}
                       </optgroup>
                     ))}
+                    {dbCategorias.length === 0 && (
+                      <option value="" disabled>Cargando categorías desde BD...</option>
+                    )}
                   </select>
                 </div>
                 <div className="flex items-end">
