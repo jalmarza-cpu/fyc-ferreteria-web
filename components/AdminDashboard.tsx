@@ -414,7 +414,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
-          <div className="bg-[#0A0A0A] border border-[#222] w-full max-w-2xl rounded-2xl p-6 relative z-10 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
+          <div className="bg-[#0A0A0A] border border-[#222] w-full max-w-2xl rounded-2xl p-6 relative z-10 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar selection:bg-[#FFD700] selection:text-black">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-black uppercase text-yellow-500">
                 {isEditing ? 'Editar Ficha Producto' : 'Nuevo Producto'}
