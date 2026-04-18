@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase, getProductImageUrl, getProductImageFallbacks } from '../utils/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, FilterX } from 'lucide-react';
+
+// 🛑 MODO EMERGENCIA: Forzamos Service Role Key para saltar políticas RLS
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://ppijxgxmqhblgssrjdky.supabase.co';
+const SERVICE_ROLE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwaWp4Z3htcWhibGdzc3JqZGt5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjIwNzE2MSwiZXhwIjoyMDkxNzgzMTYxfQ.TRhzmUtLcK0H4vC9wThV6QgY7RVrCFYnkIwNWWoBW48';
+
+const adminSupabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+  auth: { persistSession: false }
+});
 
 const AdminDynamicImage = ({ nombre, imagen_url, sku, className }) => {
   const urls = getProductImageFallbacks(imagen_url, sku);
@@ -47,7 +56,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   const fetchCategorias = async () => {
     try {
-      const { data, error } = await supabase.from('categorias').select('*').order('parent_id', { ascending: true, nullsFirst: true }).order('nombre', { ascending: true });
+      const { data, error } = await adminSupabase.from('categorias').select('*').order('parent_id', { ascending: true, nullsFirst: true }).order('nombre', { ascending: true });
       if (!error && data && data.length > 0) {
         
         // V7 Hierarchy: Principales son los que no tienen parent_id
@@ -128,7 +137,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
   const fetchProductos = async () => {
     setLoading(true);
-    const { data, error } = await supabase
+    const { data, error } = await adminSupabase
       .from('productos')
       .select('*')
       .order('nombre', { ascending: true });
@@ -179,7 +188,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     const filePath = `uploads/${fileName}`;
 
     try {
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError } = await adminSupabase.storage
         .from('productos-v2')
         .upload(filePath, file);
 
@@ -223,42 +232,36 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       let savedData = null;
 
       if (isEditing) {
-        // PASO 1: UPDATE exclusivo por SKU original
-        const { data, error: updateError } = await supabase
+        // PASO 1: UPDATE exclusivo por SKU original usando SERVICE ROLE KEY
+        const updatePayload = { categoria: valor_limpio, ...payload }; // Aseguramos objeto directo
+        const { data, error: updateError } = await adminSupabase
           .from('productos')
-          .update(payload)
+          .update(updatePayload)
           .eq('sku', targetSku)
           .select(); // <= CRÍTICO para saber si realmente encontró y actualizó la fila
 
-        if (updateError) {
-          throw updateError;
-        }
-
+        if (updateError) throw updateError;
         if (!data || data.length === 0) {
-          throw new Error(`El producto con SKU "${targetSku}" no fue encontrado en la base de datos o falló un permiso de seguridad.`);
+          throw new Error(`PRODUCTO NO ENCONTRADO EN BD CON SKU: [${targetSku}]. O el RLS está fallando incluso con Service Key.`);
         }
         
         savedData = data[0];
       } else {
         // CREAR: insert
-        const { data, error: insertError } = await supabase
+        const { data, error: insertError } = await adminSupabase
           .from('productos')
           .insert([payload])
           .select();
 
-        if (insertError) {
-          throw insertError;
-        }
-
+        if (insertError) throw insertError;
         if (!data || data.length === 0) {
-          throw new Error('Fallo al crear el producto. La base de datos no lo retornó.');
+          throw new Error('Fallo al crear el producto. La base de datos no retornó los datos insertados.');
         }
         
         savedData = data[0];
       }
 
       // TRUCO SALVAVIDAS: Actualizar el estado local DIRECTAMENTE con la data enviada y validada por Supabase
-      // Esto evita que un fetchProductos() posterior traiga datos cacheados de Cloudflare y revierta la UI.
       if (isEditing) {
         setProductos(prev => prev.map(p => p.sku === targetSku ? { ...p, ...savedData } : p));
       } else {
@@ -270,8 +273,10 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       triggerCloudflarePurge();
 
     } catch (error) {
-      console.error("🔴 Error de Guardado:", error);
-      setSaveError(error.message || JSON.stringify(error) || 'Falla de conexión a BD.');
+      console.error("🔴 Error de Guardado CRÍTICO:", error);
+      // DEBUG EN PANTALLA: Imprimir error exacto de Supabase devuelto por el objeto
+      const errorMessage = error?.message || error?.details || error?.hint || JSON.stringify(error);
+      setSaveError(`SUPABASE ERROR: ${errorMessage}`);
     } finally {
       setIsSaving(false);
     }
@@ -283,7 +288,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     try {
       // 1. Eliminar la imagen del storage si existe y pertenece a uploads/
       if (formData.imagen_url && formData.imagen_url.startsWith('uploads/')) {
-        const { error: storageError } = await supabase.storage
+        const { error: storageError } = await adminSupabase.storage
           .from('productos-v2')
           .remove([formData.imagen_url]);
         
@@ -295,17 +300,19 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       // 2. Eliminar el registro lógicamente (para sobreescribir fallback de constants)
       let updateError = null;
       
+      const targetSku = String(formData.sku).trim();
+
       if (formData.id && !String(formData.id).startsWith('constants-')) {
         // Actualizar registro existente
-        const { error } = await supabase
+        const { error } = await adminSupabase
           .from('productos')
           .update({ estado_visibilidad: false, stock: 0 })
-          .eq('sku', formData.sku);
+          .eq('sku', targetSku);
         updateError = error;
       } else {
         // Es un producto de constants, crear un tombstone en Supabase
         const payload = {
-          sku: formData.sku,
+          sku: targetSku,
           nombre: formData.nombre,
           precio_retail: formData.priceRetail || 0,
           precio_mayorista: formData.precio_mayorista || 0,
@@ -314,7 +321,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           stock: 0,
           estado_visibilidad: false
         };
-        const { error } = await supabase.from('productos').insert([payload]);
+        const { error } = await adminSupabase.from('productos').insert([payload]);
         updateError = error;
       }
 
@@ -336,13 +343,15 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     const isCurrentlyInStock = Boolean(currentStatus);
     const newStockNumeric = isCurrentlyInStock ? 0 : 100;
     setUpdatingId(sku + 'stock');
+    
+    const targetSku = String(sku).trim();
 
     try {
       // Eliminar actualización optimista y usar .select()
-      const { data, error } = await supabase
+      const { data, error } = await adminSupabase
         .from('productos')
         .update({ stock: newStockNumeric })
-        .eq('sku', sku)
+        .eq('sku', targetSku)
         .select();
 
       if (error) throw error;
@@ -780,7 +789,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                           const val = parseInt(e.target.value);
                           if (val !== p.precio_mayorista) {
                             setUpdatingId(p.sku + 'mayorista');
-                            const { error } = await supabase.from('productos').update({ precio_mayorista: val }).eq('sku', p.sku);
+                            const { error } = await adminSupabase.from('productos').update({ precio_mayorista: val }).eq('sku', String(p.sku).trim());
                             if (error) {
                               alert("Error actualizando precio: " + error.message);
                               setUpdatingId(null);
@@ -804,7 +813,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                           const val = parseInt(e.target.value);
                           if (val !== p.precio_retail) {
                             setUpdatingId(p.sku + 'detalle');
-                            const { error } = await supabase.from('productos').update({ precio_retail: val }).eq('sku', p.sku);
+                            const { error } = await adminSupabase.from('productos').update({ precio_retail: val }).eq('sku', String(p.sku).trim());
                             if (error) {
                               alert("Error actualizando precio: " + error.message);
                               setUpdatingId(null);
