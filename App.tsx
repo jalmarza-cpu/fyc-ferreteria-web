@@ -603,20 +603,13 @@ const AppContent = () => {
               
               const exactDbSku = String(d.sku ?? '').trim();
 
-              // Mapeo Inteligente de Categorías/Subcategorías desde el Admin
-              let dbCatRaw = (d.categoria_ppal || base?.category || 'Herramientas').trim();
-              let actualCategory = dbCatRaw;
-              let actualSubcategory = d.subcategoria ? String(d.subcategoria).trim() : '';
+              // Arquitectura V5: Lectura directa desde BD sin diccionarios intermedios
+              let actualCategory = (d.categoria_ppal || base?.category || 'Herramientas').trim();
+              let actualSubcategory = d.subcategoria ? String(d.subcategoria).trim() : (base?.subcategory || '').trim();
 
-              // Verificamos si el string guardado como 'categoria_ppal' pertenece a una subcategoría de la BD o local.
-              const isSubcategory = dbSubcats.find(s => s.subcategory.toLowerCase() === dbCatRaw.toLowerCase());
-              
-              if (isSubcategory) {
-                actualCategory = isSubcategory.parentCategory;
-                actualSubcategory = isSubcategory.subcategory;
-              } else if (!actualSubcategory) {
-                // Si no, lo extraemos a partir del string del nombre de producto como fallback original
-                actualSubcategory = getSubcategory(cleanName, actualCategory);
+              // Compatibilidad con los fallback locales sólo si la BD no retorna datos
+              if (!actualSubcategory && base) {
+                 actualSubcategory = getSubcategory(cleanName, actualCategory);
               }
 
               return {

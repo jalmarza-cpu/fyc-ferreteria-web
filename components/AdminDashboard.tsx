@@ -183,14 +183,13 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     e.preventDefault();
     setIsSaving(true);
 
-    // Aseguramos SKU como String explícitamente en el envío
-    // Guardamos la subcategoría en categoria_ppal para evitar error de esquema en Supabase
-    // App.tsx se encarga de remapearlo invertidamente usando dbSubcats 
+    // Arquitectura SaaS V5: Escritura directa a columnas reales en BD
     const payload = {
       sku: String(formData.sku).trim(),
       nombre: formData.nombre,
       descripcion: formData.descripcion,
-      categoria_ppal: formData.subcategoria || formData.categoria_ppal,
+      categoria_ppal: formData.categoria_ppal,
+      subcategoria: formData.subcategoria,
       precio_mayorista: formData.precio_mayorista,
       precio_retail: formData.precio_retail,
       imagen_url: formData.imagen_url,
@@ -256,7 +255,8 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           precio_retail: formData.priceRetail || 0,
           precio_mayorista: formData.precio_mayorista || 0,
           imagen_url: formData.imagen_url || '',
-          categoria_ppal: formData.subcategoria || formData.categoria_ppal || 'Herramientas',
+          categoria_ppal: formData.categoria_ppal || 'Herramientas',
+          subcategoria: formData.subcategoria || '',
           stock: false,
           estado_visibilidad: false
         };
