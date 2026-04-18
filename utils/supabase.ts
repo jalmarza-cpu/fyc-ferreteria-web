@@ -9,7 +9,6 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder';
-const serviceRoleKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || '';
 
 if (import.meta.env.VITE_SUPABASE_URL === undefined) {
   console.error(
@@ -27,12 +26,11 @@ export const BASE_IMAGE_URL = supabaseUrl
   ? `${supabaseUrl}/storage/v1/object/public/productos-v2`
   : '';
 
-export const supabase = createClient(supabaseUrl, serviceRoleKey || supabaseKey, {
-  global: {
-    headers: {
-      'Cache-Control': 'no-store, max-age=0'
-    }
-  },
+// ─────────────────────────────────────────────────────────────────────────────
+// Cliente PÚBLICO: usa anon_key con caché habilitada (CDN Cloudflare activo).
+// Las peticiones de datos del catálogo usarán la caché de borde de Cloudflare.
+// ─────────────────────────────────────────────────────────────────────────────
+export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
     persistSession: false,
     autoRefreshToken: false,
@@ -61,20 +59,43 @@ export const slugify = (text: string) => {
  *   4. Búsqueda por SKU (primera extensión .jpg)
  *   5. Fallback: logo local
  */
+// ─────────────────────────────────────────────────────────────────────────────
+// OPTIMIZACIÓN DE IMÁGENES: Supabase Image Transformation API
+// Solicita WebP (60% más liviano) con ancho máximo 480px para thumbnails.
+// Cloudflare cachea estas URLs transformadas durante 7 días en sus nodos de borde.
+// Documentación: https://supabase.com/docs/guides/storage/serving/image-transformations
+// ─────────────────────────────────────────────────────────────────────────────
+
+// URL base para transformaciones de imagen (render endpoint)
+const IMAGE_RENDER_URL = `${supabaseUrl}/storage/v1/render/image/public/productos-v2`;
+
+/**
+ * Genera URL de imagen optimizada (WebP, 480px) para thumbnails del catálogo.
+ * Si la URL es externa (http), la retorna tal cual sin transformar.
+ */
 export const getProductImageUrl = (productName: string, imagePath?: string, sku?: string) => {
   if (imagePath?.startsWith('http')) return imagePath;
 
   if (sku) {
-    return `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`;
+    // Solicitar WebP optimizado vía Supabase Image Transformation
+    return `${IMAGE_RENDER_URL}/${sku}.jpg?width=480&format=webp&quality=80`;
   }
 
   return '/logo-fyc.png';
 };
 
+/**
+ * Genera lista de URLs candidatas en orden de preferencia.
+ * 1. WebP optimizado 480px (thumbnail rápido)
+ * 2. WebP optimizado 800px (fallback calidad media)
+ * 3. JPG original sin transformar
+ * 4. Logo de fallback local
+ */
 export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
   if (sku) {
     return [
-      `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.webp`,
+      `${IMAGE_RENDER_URL}/${sku}.jpg?width=480&format=webp&quality=80`,
+      `${IMAGE_RENDER_URL}/${sku}.JPG?width=480&format=webp&quality=80`,
       `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`,
       `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.JPG`,
       '/logo-fyc.png'

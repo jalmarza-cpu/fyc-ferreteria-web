@@ -60,6 +60,7 @@ const DynamicImage = ({ product, className, onClick, style }: { product: Product
         onClick={onClick}
         style={style}
         loading="lazy"
+        decoding="async"
       />
     </>
   );
