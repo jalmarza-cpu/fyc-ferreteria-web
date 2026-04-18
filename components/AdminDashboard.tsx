@@ -88,6 +88,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
     nombre: '',
     descripcion: '',
     categoria_ppal: 'Herramientas',
+    subcategoria: '',
     precio_mayorista: 0,
     precio_retail: 0,
     imagen_url: '',
@@ -131,7 +132,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   const openCreateModal = () => {
     setIsEditing(false);
     setFormData({
-      id: null, sku: '', nombre: '', descripcion: '', categoria_ppal: 'Herramientas Manuales',
+      id: null, sku: '', nombre: '', descripcion: '', categoria_ppal: 'Herramientas', subcategoria: '',
       precio_mayorista: 0, precio_retail: 0, imagen_url: '', stock: true
     });
     setIsModalOpen(true);
@@ -145,6 +146,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       nombre: producto.nombre,
       descripcion: producto.descripcion || '',
       categoria_ppal: producto.categoria_ppal,
+      subcategoria: producto.subcategoria || '',
       precio_mayorista: producto.precio_mayorista,
       precio_retail: producto.precio_retail,
       imagen_url: producto.imagen_url || '',
@@ -187,6 +189,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       nombre: formData.nombre,
       descripcion: formData.descripcion,
       categoria_ppal: formData.categoria_ppal,
+      subcategoria: formData.subcategoria,
       precio_mayorista: formData.precio_mayorista,
       precio_retail: formData.precio_retail,
       imagen_url: formData.imagen_url,
@@ -250,9 +253,10 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
           sku: formData.sku,
           nombre: formData.nombre,
           precio_retail: formData.priceRetail || 0,
-          precio_mayorista: formData.priceWholesale || 0,
+          precio_mayorista: formData.precio_mayorista || 0,
           imagen_url: formData.imagen_url || '',
-          categoria_ppal: formData.category || 'Herramientas',
+          categoria_ppal: formData.categoria_ppal || 'Herramientas',
+          subcategoria: formData.subcategoria || '',
           stock: false,
           estado_visibilidad: false
         };
@@ -484,13 +488,25 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Categoría de Catálogo</label>
-                  <select value={formData.categoria_ppal} onChange={e => setFormData({ ...formData, categoria_ppal: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold">
+                  <select 
+                    value={formData.subcategoria ? `${formData.categoria_ppal}|${formData.subcategoria}` : formData.categoria_ppal} 
+                    onChange={e => {
+                      const val = e.target.value;
+                      if (val.includes('|')) {
+                        const [c, s] = val.split('|');
+                        setFormData({ ...formData, categoria_ppal: c, subcategoria: s });
+                      } else {
+                        setFormData({ ...formData, categoria_ppal: val, subcategoria: '' });
+                      }
+                    }} 
+                    className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold"
+                  >
                     <option value="">Selecciona Categoría...</option>
                     {dbCategorias.map(cat => (
                       <optgroup label={cat} key={cat}>
-                        <option value={cat}>{cat}</option>
+                        <option value={cat}>{cat} (General)</option>
                         {dbSubcategorias.filter(s => s.parentCategory === cat).map(sub => (
-                          <option value={sub.subcategory} key={sub.subcategory}>-- {sub.subcategory}</option>
+                          <option value={`${cat}|${sub.subcategory}`} key={sub.subcategory}>-- {sub.subcategory}</option>
                         ))}
                       </optgroup>
                     ))}

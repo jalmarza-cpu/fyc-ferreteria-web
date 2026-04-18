@@ -39,7 +39,7 @@ export const coloresV2 = {
 
   // ── Acento — Foco de Conversión (ÚNICO uso de dorado) ────────────────
   /** SOLO en el botón "Añadir al Carrito" / CTA de venta */
-  accentGold:      '#FFD700',
+  accentGold:      '#FBBF24',
   /** Hover del botón dorado */
   accentGoldHov:   '#FFF176',
   /** Texto dentro del botón dorado — contraste máximo */

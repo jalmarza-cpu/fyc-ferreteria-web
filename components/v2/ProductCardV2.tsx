@@ -10,9 +10,9 @@
  *   • Fondo canvas:     #121212 — Profundidad OLED, elimina fatiga visual
  *   • Borde tarjeta:    1px solid #2D3748 — Estructura de ingeniería
  *   • Nombre producto:  #FFFFFF — Legibilidad máxima         → clase: product-title-v2
- *   • Datos técnicos:   #A0AEC0 — Autoridad técnica neutral  → var: --text-tech / clase: .text-tech
+ *   • Datos técnicos:   #A0AEC0 — Autoridad técnica neutral  → var: --tech-specs / clase: .tech-specs
  *   • Metadatos:        #64748B — Atenuado, no compite
- *   • Único CTA dorado: bg #FFD700, texto #000000 — Foco absoluto en conversión
+ *   • Único CTA dorado: bg #FFFFFF, texto #000000 — Foco absoluto en conversión
  *   • Sin fondos amarillos en badges ni precios
  */
 
@@ -29,7 +29,7 @@ const formatProductName = (name: string) => {
   const parts = name.split(regex);
   return parts.map((part, i) => {
     if (part.match(regex)) {
-      return <span key={i} className="text-tech">{part}</span>;
+      return <span key={i} className="tech-specs">{part}</span>;
     }
     return part;
   });
@@ -37,15 +37,15 @@ const formatProductName = (name: string) => {
 
 // ── Paleta V2 Centralizada ──────────────────────────────────────────────────
 const V2 = {
-  canvasBg:      '#121212',  // Canvas principal
-  cardBg:        '#181818',  // Fondo de tarjeta
-  cardBorder:    '#2D3748',  // Borde fino acero
-  cardHover:     '#1E2533',  // Borde hover (azul acero oscuro)
+  canvasBg:      'var(--bg-canvas)',  // Canvas principal (Azul cobalto)
+  cardBg:        'var(--card-bg)',  // Fondo de tarjeta (Negro)
+  cardBorder:    'var(--card-border)',  // Borde fino acero (Azul neón)
+  cardHover:     'var(--card-border)',  // Borde hover (Azul neón)
   textWhite:     '#FFFFFF',  // Nombre del producto
   textPlatino:   '#94A3B8',  // Specs, labels, metadatos
   textDim:       '#64748B',  // Texto muy atenuado (SKU, etc.)
-  accentGold:    '#FFD700',  // ÚNICO uso de dorado: botón CTA
-  accentGoldHov: '#FFF176',  // Hover del botón dorado
+  accentGold:    'var(--accent-gold)',  // Color de acento
+  accentGoldHov: '#F59E0B',  // Hover del botón ámbar
   badgeGreen:    '#10B981',  // Ahorro / stock
   badgeRed:      '#EF4444',  // Sin stock / oferta
   divider:       '#1E293B',  // Separadores internos
@@ -131,14 +131,7 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="relative flex flex-col overflow-hidden transition-all duration-300 group"
-        style={{
-          background: V2.cardBg,
-          border: `1px solid ${V2.cardBorder}`,
-          borderRadius: '12px',
-        }}
-        onMouseEnter={e => (e.currentTarget.style.borderColor = V2.cardHover)}
-        onMouseLeave={e => (e.currentTarget.style.borderColor = V2.cardBorder)}
+        className="relative flex flex-col overflow-hidden transition-all duration-300 group card-container product-card rounded-xl"
       >
 
         {/* ── Badge de descuento (sin amarillo) ── */}
@@ -182,12 +175,12 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
         {/* ── Cuerpo ── */}
         <div className="flex flex-col flex-1 p-4 gap-3">
 
-          {/* Categoría + SKU — Datos técnicos con --text-tech */}
+          {/* Categoría + SKU — Datos técnicos con --tech-specs */}
           <div className="flex items-center justify-between">
-            <span className="text-tech uppercase tracking-widest">
+            <span className="tech-specs uppercase tracking-widest">
               {product.category}
             </span>
-            <span className="text-tech font-mono px-1.5 py-0.5 rounded" style={{ border: `1px solid ${V2.divider}` }}>
+            <span className="tech-specs font-mono px-1.5 py-0.5 rounded" style={{ border: `1px solid ${V2.divider}` }}>
               SKU {product.sku}
             </span>
           </div>
@@ -227,11 +220,11 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
             ))}
           </div>
 
-          {/* ── Bloque de precio — Datos técnicos con .text-tech, precio en blanco ── */}
+          {/* ── Bloque de precio — Datos técnicos con .tech-specs, precio en blanco ── */}
           <div className="flex flex-col gap-1">
             <div className="flex items-baseline justify-between">
               {/* Etiqueta de modo: dato técnico */}
-              <span className="text-tech">
+              <span className="tech-specs">
                 {modo === 'mayorista' ? 'Pack de 6 · c/u' : '1 unidad'}
               </span>
               {modo === 'mayorista' && ahorroUnitario > 0 && (
@@ -244,19 +237,19 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
             {/* Precio principal: blanco puro — máximo contraste */}
             <div className="flex items-end justify-between">
               <span
-                className="text-2xl font-black"
-                style={{ color: V2.textWhite, letterSpacing: '-0.02em' }}
+                className={`text-2xl font-black ${porcentajeDescuento > 0 ? 'price-discount' : 'text-white'}`}
+                style={{ letterSpacing: '-0.02em' }}
               >
                 {precioUnitarioFormateado}
               </span>
               {/* IVA: dato técnico */}
-              <span className="text-tech">IVA incluido</span>
+              <span className="tech-specs">IVA incluido</span>
             </div>
             {modo === 'mayorista' && (
               <div className="flex items-center gap-1.5">
                 <Package className="w-3 h-3" style={{ color: V2.textDim }} />
                 {/* Specs de pack: dato técnico con valor en blanco */}
-                <span className="text-tech">
+                <span className="tech-specs">
                   Mínimo <strong>6 unidades</strong> · Despacho hoy
                 </span>
               </div>
@@ -276,10 +269,9 @@ const ProductCardV2: React.FC<ProductCardV2Props> = ({ product, totalCarro = 0 }
               <motion.button
                 onClick={handleAdd}
                 whileTap={{ scale: 0.97 }}
-                className="w-full py-3 text-xs font-black uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2 hover:brightness-110"
+                className={`w-full py-3 text-xs font-black uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2 hover:brightness-110 ${!isAdded ? 'btn-add-to-cart' : ''}`}
                 style={{
-                  background: isAdded ? V2.badgeGreen : V2.accentGold,
-                  color: '#000000',
+                  background: isAdded ? V2.badgeGreen : 'transparent'
                 }}
               >
                 <AnimatePresence mode="wait" initial={false}>

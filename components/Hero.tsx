@@ -31,7 +31,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
           initial={{ height: 0 }}
           animate={{ height: '60%' }}
           transition={{ duration: 1, ease: "circOut" }}
-          className="w-2 md:w-3 bg-[#FFD700] absolute left-0 md:left-12 top-[20%] shadow-[0_0_20px_#FFD700,0_0_40px_#FFD700] rounded-r-lg"
+          className="w-2 md:w-3 bg-[#FFFFFF] absolute left-0 md:left-12 top-[20%] shadow-[0_0_20px_#FFFFFF,0_0_40px_#FFFFFF] rounded-r-lg"
         ></motion.div>
 
         <div className="flex flex-col max-w-3xl ml-4 md:ml-16 mt-12 md:mt-0">
@@ -41,20 +41,20 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             {/* Etiqueta Superior */}
-            <div className="inline-flex items-center gap-2 mb-6 bg-black/40 border border-[#FFD700] rounded-full px-5 py-2 backdrop-blur-md shadow-[0_0_15px_#FFD700]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#FFD700] shadow-[0_0_10px_#FFD700,0_0_20px_#FFD700] animate-pulse"></span>
-              <span className="text-[#FFD700] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] drop-shadow-[0_0_5px_#FFD700]">
+            <div className="inline-flex items-center gap-2 mb-6 bg-black/40 border border-[#FFFFFF] rounded-full px-5 py-2 backdrop-blur-md shadow-[0_0_15px_#FFFFFF]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FFFFFF] shadow-[0_0_10px_#FFFFFF,0_0_20px_#FFFFFF] animate-pulse"></span>
+              <span className="text-[#FFFFFF] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] drop-shadow-[0_0_5px_#FFFFFF]">
                 Stock Disponible 2026
               </span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.05] tracking-tighter font-industrial text-white mb-3 md:mb-4 drop-shadow-2xl">
               QUE TU OBRA NUNCA <br className="hidden md:block" /> SE DETENGA POR <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFE55C] to-[#FFF1AB] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">FALTA DE MATERIALES.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#FFE55C] to-[#FFF1AB] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">FALTA DE MATERIALES.</span>
             </h1>
 
             <h2 className="text-lg md:text-2xl text-white font-bold uppercase tracking-[0.15em] mb-8 flex items-center gap-4 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-              <span className="w-12 h-[2px] bg-[#FFD700] shadow-[0_0_15px_#FFD700]"></span>
+              <span className="w-12 h-[2px] bg-[#FFFFFF] shadow-[0_0_15px_#FFFFFF]"></span>
               HERRAMIENTAS Y MATERIALES
             </h2>
           </motion.div>
@@ -63,7 +63,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-base md:text-xl text-white font-semibold max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFD700] pl-6 backdrop-blur-sm bg-black/30 p-4 rounded-r-2xl drop-shadow-xl"
+            className="text-base md:text-xl text-white font-semibold max-w-xl leading-relaxed mb-10 border-l-2 border-[#FFFFFF] pl-6 backdrop-blur-sm bg-black/30 p-4 rounded-r-2xl drop-shadow-xl"
           >
             Evita retrasos y multas. Asegura tus insumos con stock real, facturación inmediata y despacho exprés.
           </motion.p>
@@ -76,7 +76,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
           >
             <button
               onClick={onCatalogClick}
-              className="group bg-[#FFD700] text-black px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_0_20px_#FFD700] hover:shadow-[0_0_40px_#FFD700,0_0_60px_#FFD700] font-industrial flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
+              className="group bg-[#FFFFFF] text-black px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_0_20px_#FFFFFF] hover:shadow-[0_0_40px_#FFFFFF,0_0_60px_#FFFFFF] font-industrial flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
             >
               Cotizar mi lista (Es rápido)
               <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
@@ -84,7 +84,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
 
             <button
               onClick={toggleCart}
-              className="group bg-black/40 border border-[#FFD700]/50 text-white px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-[#FFD700]/20 hover:border-[#FFD700] transition-all backdrop-blur-md rounded-full w-full sm:w-auto flex items-center justify-center shadow-[0_0_15px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_#FFD700]"
+              className="group bg-black/40 border border-[#FFFFFF]/50 text-white px-8 py-4 md:py-5 text-sm font-black uppercase tracking-[0.2em] hover:bg-[#FFFFFF]/20 hover:border-[#FFFFFF] transition-all backdrop-blur-md rounded-full w-full sm:w-auto flex items-center justify-center shadow-[0_0_15px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_#FFFFFF]"
             >
               Resolver por WhatsApp
             </button>
@@ -99,7 +99,7 @@ const Hero: React.FC<HeroProps> = ({ onCatalogClick }) => {
           className="hidden lg:flex flex-1 justify-end items-center relative h-full"
         >
           {/* Glow Effect Backend */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#FFD700]/10 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#FFFFFF]/10 rounded-full blur-[120px] pointer-events-none"></div>
 
           <img
             src="./images/hero-tools.png"

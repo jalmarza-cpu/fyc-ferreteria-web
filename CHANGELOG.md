@@ -2,6 +2,32 @@
 
 Todo cambio técnico y de arquitectura en la plataforma se registra en este documento con fecha, descripción y los archivos involucrados, garantizando trazabilidad y control de versiones por orden de Dirección.
 
+## [1.3.3] - 2026-04-17 ⚡ IMPLEMENTACIÓN OPCIÓN A: "VOLTIO INDUSTRIAL"
+
+> **Contexto:** En respuesta al feedback del cliente sobre el estilo general de la plataforma, se ha ejecutado la variante solicitada denominada "Voltio Industrial". Esta opción posiciona el portal a la altura estética de las grandes marcas de herramientas de alta gama, reemplazando la paleta anterior sin afectar la integridad del código ni la base de datos.
+
+---
+
+### 🎨 1. Nueva Paleta de Colores "Voltio Industrial" Implementada
+**Solución ejecutada:**
+- **Fondo de la Web (Canvas):** Reemplazados los fondos `#050505` y `#111` por un Azul Cobalto profundo y elegante (`#0F172A`).
+- **Contenedores y Tarjetas:** Ajustados a Negro absoluto (`#000000`) con un borde neón iluminado en Azul claro (`#3B82F6`), dando un contraste premium y técnico.
+- **Color de Acento:** El dorado desaturado se reemplazó globalmente por un **Amarillo Ámbar Vibrante** (`#FBBF24`), que genera mayor contraste contra el fondo azul profundo.
+- Se actualizaron de forma agresiva tanto las variables CSS (en `index.html`) y las propiedades encapsuladas dentro de todos los componentes (`App.tsx`, `ProductCard.tsx`, `ProductCardV2.tsx`, y cualquier aparición de `FFD700`).
+
+### ⚙️ Instrucciones de Rescate (Rollback) 🛠️
+Si el cliente decide que esta paleta ("Voltio Industrial") debe ser descartada para revisar la "Opción B" o regresar a "Industrial Élite", ejecutar los siguientes comandos en la terminal desde la raíz del proyecto para realizar un Rollback perfecto y sin daños:
+
+1. **Revisar Historial de Commits**
+   `git log --oneline`
+2. **Revertir este cambio exacto sin borrar la historia (Recomendado):**
+   `git revert HEAD`
+   *(Esto creará un nuevo commit que deshace específicamente la implementación de colores de "Voltio Industrial")*
+3. **Alternativa drástica (Borra todo lo hecho posterior al último punto seguro):**
+   `git reset --hard HEAD~1`
+
+---
+
 ## [1.3.2] - 2026-04-17 🎨 AJUSTE FINAL DE PRECISIÓN: ECOSISTEMA FYC V1.1
 
 > **Contexto:** Se ejecutó un refinamiento visual y funcional del ecosistema FYC V1.1 para alinear los componentes con la filosofía de diseño "Industrial Élite", garantizando máxima legibilidad, jerarquía técnica y eliminación de ruido visual.

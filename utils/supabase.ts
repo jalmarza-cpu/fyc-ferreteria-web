@@ -91,5 +91,5 @@ export const getMaestroImageUrl = (maestroName: string, imagePath?: string) => {
     return `${SUPABASE_BASE_URL}/maestros/Testimonios/${imagePath}?v=innobate3`;
   }
   const encodedName = encodeURIComponent(maestroName || 'M');
-  return `https://ui-avatars.com/api/?name=${encodedName}&background=FFD700&color=0A0A0A&size=200&bold=true`;
+  return `https://ui-avatars.com/api/?name=${encodedName}&background=FBBF24&color=0A0A0A&size=200&bold=true`;
 };

@@ -69,25 +69,25 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         
         {/* Top Section: Sección de Confianza */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 border-b border-[#1A1A1A]">
-          <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFD700]/50 transition-colors">
-            <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFD700] transition-colors duration-300">
-               <Truck className="w-8 h-8 text-[#FFD700] group-hover:text-black transition-colors" />
+          <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFFFFF]/50 transition-colors">
+            <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFFFFF] transition-colors duration-300">
+               <Truck className="w-8 h-8 text-[#FFFFFF] group-hover:text-black transition-colors" />
             </div>
             <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Envíos en 24h</h4>
             <p className="text-xs text-neutral-500">Despacho express para mantener tu obra en movimiento.</p>
           </div>
           
-          <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFD700]/50 transition-colors">
-            <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFD700] transition-colors duration-300">
-              <ShieldCheck className="w-8 h-8 text-[#FFD700] group-hover:text-black transition-colors" />
+          <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFFFFF]/50 transition-colors">
+            <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFFFFF] transition-colors duration-300">
+              <ShieldCheck className="w-8 h-8 text-[#FFFFFF] group-hover:text-black transition-colors" />
             </div>
             <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Garantía de Calidad</h4>
             <p className="text-xs text-neutral-500">Productos certificados y 100% garantizados.</p>
           </div>
           
-          <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFD700]/50 transition-colors">
-            <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFD700] transition-colors duration-300">
-              <Headphones className="w-8 h-8 text-[#FFD700] group-hover:text-black transition-colors" />
+          <div className="flex flex-col items-center text-center p-6 bg-[#0E0E0E] border border-[#1A1A1A] group hover:border-[#FFFFFF]/50 transition-colors">
+            <div className="w-16 h-16 bg-[#1A1A1A] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFFFFF] transition-colors duration-300">
+              <Headphones className="w-8 h-8 text-[#FFFFFF] group-hover:text-black transition-colors" />
             </div>
             <h4 className="text-white font-industrial text-xl font-bold uppercase mb-2">Asesoría Técnica</h4>
             <p className="text-xs text-neutral-500">Expertos listos para resolver tus dudas por WhatsApp.</p>
@@ -99,17 +99,17 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand Column */}
           <div className="col-span-1 space-y-6">
              <div className="flex flex-col">
-                <h2 className="text-3xl font-industrial font-black text-white tracking-tighter">F y C <span className="text-[#FFD700]">SPA</span></h2>
+                <h2 className="text-3xl font-industrial font-black text-white tracking-tighter">F y C <span className="text-[#FFFFFF]">SPA</span></h2>
                 <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-600">Soluciones en Ferretería</span>
              </div>
              <p className="text-xs leading-relaxed max-w-xs">
                Tu socio estratégico en construcción. Herramientas profesionales y materiales de primera calidad al mejor precio del mercado.
              </p>
              <div className="flex gap-4 pt-4">
-               <a href="#" className="w-10 h-10 bg-[#1A1A1A] flex items-center justify-center hover:bg-[#FFD700] hover:text-black transition-all rounded-full border border-[#333]">
+               <a href="#" className="w-10 h-10 bg-[#1A1A1A] flex items-center justify-center hover:bg-[#FFFFFF] hover:text-black transition-all rounded-full border border-[#333]">
                  <Facebook className="w-5 h-5" />
                </a>
-               <a href="#" className="w-10 h-10 bg-[#1A1A1A] flex items-center justify-center hover:bg-[#FFD700] hover:text-black transition-all rounded-full border border-[#333]">
+               <a href="#" className="w-10 h-10 bg-[#1A1A1A] flex items-center justify-center hover:bg-[#FFFFFF] hover:text-black transition-all rounded-full border border-[#333]">
                  <Instagram className="w-5 h-5" />
                </a>
              </div>
@@ -117,26 +117,26 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-l-2 border-[#FFD700] pl-4">Navegación</h3>
+            <h3 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-l-2 border-[#FFFFFF] pl-4">Navegación</h3>
             <ul className="space-y-4 text-xs font-bold uppercase tracking-wider">
               <li>
-                <button onClick={() => onNavigate('inicio')} className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
-                  <ArrowRight className="w-3 h-3 text-[#FFD700] opacity-0 group-hover:opacity-100 transition-opacity" /> Inicio
+                <button onClick={() => onNavigate('inicio')} className="hover:text-[#FFFFFF] flex items-center gap-2 group text-left">
+                  <ArrowRight className="w-3 h-3 text-[#FFFFFF] opacity-0 group-hover:opacity-100 transition-opacity" /> Inicio
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('catalogo')} className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
-                  <ArrowRight className="w-3 h-3 text-[#FFD700] opacity-0 group-hover:opacity-100 transition-opacity" /> Catálogo
+                <button onClick={() => onNavigate('catalogo')} className="hover:text-[#FFFFFF] flex items-center gap-2 group text-left">
+                  <ArrowRight className="w-3 h-3 text-[#FFFFFF] opacity-0 group-hover:opacity-100 transition-opacity" /> Catálogo
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('nosotros')} className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
-                  <ArrowRight className="w-3 h-3 text-[#FFD700] opacity-0 group-hover:opacity-100 transition-opacity" /> Nosotros
+                <button onClick={() => onNavigate('nosotros')} className="hover:text-[#FFFFFF] flex items-center gap-2 group text-left">
+                  <ArrowRight className="w-3 h-3 text-[#FFFFFF] opacity-0 group-hover:opacity-100 transition-opacity" /> Nosotros
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('contacto')} className="hover:text-[#FFD700] flex items-center gap-2 group text-left">
-                  <ArrowRight className="w-3 h-3 text-[#FFD700] opacity-0 group-hover:opacity-100 transition-opacity" /> Contacto
+                <button onClick={() => onNavigate('contacto')} className="hover:text-[#FFFFFF] flex items-center gap-2 group text-left">
+                  <ArrowRight className="w-3 h-3 text-[#FFFFFF] opacity-0 group-hover:opacity-100 transition-opacity" /> Contacto
                 </button>
               </li>
             </ul>
@@ -144,35 +144,35 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Info Column (Merged Horarios + Ubicacion) */}
           <div>
-            <h3 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-l-2 border-[#FFD700] pl-4">Información</h3>
+            <h3 className="text-white font-black uppercase tracking-widest text-xs mb-8 border-l-2 border-[#FFFFFF] pl-4">Información</h3>
             
             <div className="space-y-6">
               {/* Horarios */}
               <ul className="space-y-2 text-xs tracking-wider mb-6">
                 <li className="flex justify-between border-b border-[#222] pb-1">
                   <span className="text-white font-bold">Lunes - Viernes</span>
-                  <span className="text-[#FFD700]">08:30 - 18:30</span>
+                  <span className="text-[#FFFFFF]">08:30 - 18:30</span>
                 </li>
                 <li className="flex justify-between pb-1">
                   <span className="text-white font-bold">Sábado</span>
-                  <span className="text-[#FFD700]">09:00 - 14:00</span>
+                  <span className="text-[#FFFFFF]">09:00 - 14:00</span>
                 </li>
               </ul>
 
               {/* Ubicación */}
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-[#FFD700] mt-1 shrink-0" />
+                  <MapPin className="w-4 h-4 text-[#FFFFFF] mt-1 shrink-0" />
                   <div className="flex flex-col">
                     <span className="text-[9px] font-black uppercase text-neutral-500">Casa Matriz</span>
                     <span className="text-white text-xs font-bold">Av. Libertador B. O'Higgins 1234, Santiago.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Phone className="w-4 h-4 text-[#FFD700] mt-1 shrink-0" />
+                  <Phone className="w-4 h-4 text-[#FFFFFF] mt-1 shrink-0" />
                   <div className="flex flex-col">
                      <span className="text-[9px] font-black uppercase text-neutral-500">Fono Ventas</span>
-                     <a href={`tel:${CONTACT_PHONE_DISPLAY}`} className="text-white text-xs font-bold hover:text-[#FFD700] transition-colors">{CONTACT_PHONE_DISPLAY}</a>
+                     <a href={`tel:${CONTACT_PHONE_DISPLAY}`} className="text-white text-xs font-bold hover:text-[#FFFFFF] transition-colors">{CONTACT_PHONE_DISPLAY}</a>
                   </div>
                 </div>
               </div>
@@ -181,10 +181,10 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* New Contact Form Column */}
           <div id="contacto" className="bg-[#0E0E0E] p-6 border border-[#222] rounded-xl relative overflow-hidden scroll-mt-32">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-[#FFD700] opacity-5 rounded-bl-full -mr-8 -mt-8 pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-16 h-16 bg-[#FFFFFF] opacity-5 rounded-bl-full -mr-8 -mt-8 pointer-events-none"></div>
             
             <h3 className="text-white font-black uppercase tracking-widest text-xs mb-4 flex items-center gap-2">
-              <Mail className="w-4 h-4 text-[#FFD700]" /> Te Llamamos
+              <Mail className="w-4 h-4 text-[#FFFFFF]" /> Te Llamamos
             </h3>
             <p className="text-[10px] text-neutral-500 mb-4">Déjanos tus datos y un ejecutivo técnico te contactará en breve.</p>
 
@@ -203,7 +203,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Tu Correo Electrónico"
-                    className={`w-full bg-[#1A1A1A] border ${errors.email ? 'border-red-500' : 'border-[#333] focus:border-[#FFD700]'} text-white text-xs py-3 px-4 rounded outline-none transition-colors placeholder-neutral-600`}
+                    className={`w-full bg-[#1A1A1A] border ${errors.email ? 'border-red-500' : 'border-[#333] focus:border-[#FFFFFF]'} text-white text-xs py-3 px-4 rounded outline-none transition-colors placeholder-neutral-600`}
                   />
                   {errors.email && (
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500">
@@ -220,7 +220,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="Tu Teléfono (+569...)"
-                    className={`w-full bg-[#1A1A1A] border ${errors.phone ? 'border-red-500' : 'border-[#333] focus:border-[#FFD700]'} text-white text-xs py-3 px-4 rounded outline-none transition-colors placeholder-neutral-600`}
+                    className={`w-full bg-[#1A1A1A] border ${errors.phone ? 'border-red-500' : 'border-[#333] focus:border-[#FFFFFF]'} text-white text-xs py-3 px-4 rounded outline-none transition-colors placeholder-neutral-600`}
                   />
                   {errors.phone && (
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500">
@@ -232,7 +232,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
                 <button 
                   type="submit"
-                  className="w-full bg-[#FFD700] hover:bg-white text-black font-black uppercase text-xs py-3 rounded transition-all flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(255,215,0,0.3)]"
+                  className="w-full bg-[#FFFFFF] hover:bg-white text-black font-black uppercase text-xs py-3 rounded transition-all flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(255,215,0,0.3)]"
                 >
                   Solicitar Contacto <Send className="w-3 h-3" />
                 </button>

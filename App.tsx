@@ -570,8 +570,24 @@ const AppContent = () => {
     let isMounted = true;
     const fetchSupabaseProducts = async () => {
       try {
-        const { data, error } = await supabase.from('productos').select('*');
+        const [prodRes, catRes] = await Promise.all([
+          supabase.from('productos').select('*'),
+          supabase.from('categorias').select('*')
+        ]);
         
+        let dbSubcats = [...SUBCATEGORY_MAP];
+        
+        if (catRes.data) {
+          const subs = catRes.data.filter((c: any) => c.es_subcategoria || (c.categoria_padre && c.categoria_padre !== c.nombre)).map((c: any) => ({
+            parentCategory: c.categoria_padre || c.padre || 'Herramientas',
+            subcategory: c.nombre
+          }));
+          if (subs.length > 0) {
+            dbSubcats = [...dbSubcats, ...subs];
+          }
+        }
+
+        const data = prodRes.data;
         if (data && data.length > 0 && isMounted) {
           setLiveProducts(() => {
             // Normalizar SKU SOLO para comparación segura
@@ -592,8 +608,8 @@ const AppContent = () => {
               let actualCategory = dbCatRaw;
               let actualSubcategory = d.subcategoria ? String(d.subcategoria).trim() : '';
 
-              // Verificamos si el string guardado como 'categoria_ppal' pertenece realmente a una subcategoría.
-              const isSubcategory = SUBCATEGORY_MAP.find(s => s.subcategory.toLowerCase() === dbCatRaw.toLowerCase());
+              // Verificamos si el string guardado como 'categoria_ppal' pertenece a una subcategoría de la BD o local.
+              const isSubcategory = dbSubcats.find(s => s.subcategory.toLowerCase() === dbCatRaw.toLowerCase());
               
               if (isSubcategory) {
                 actualCategory = isSubcategory.parentCategory;
@@ -629,14 +645,17 @@ const AppContent = () => {
     };
     fetchSupabaseProducts();
 
-    // Suscripción Realtime a Supabase Postgres
+    // Suscripción Realtime a Supabase Postgres para ambas tablas
     const channel = supabase
-      .channel('productos_realtime')
+      .channel('app_realtime')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'productos' }, () => {
-        // Al ocurrir un cambio, forzamos refetch para sincronizar
+        // Al ocurrir un cambio en productos, forzamos refetch para sincronizar
         fetchSupabaseProducts();
-        // Validamos el estado del carro en caso de tener el item agotado
         useCartStore.getState().validateCartStock();
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'categorias' }, () => {
+        // Al ocurrir un cambio en categorías, forzamos refetch para mapeo de subcategorías
+        fetchSupabaseProducts();
       })
       .subscribe();
 
@@ -688,6 +707,7 @@ const AppContent = () => {
         searchTerm={searchTerm}
         onSearchChange={handleSearchChange}
         onMenuClick={() => setSidebarOpen(true)}
+        allProducts={liveProducts}
       />
 
       <MobileSidebarDrawer isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)}>

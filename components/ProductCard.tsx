@@ -21,15 +21,22 @@ const formatProductName = (name: string) => {
 const DynamicImage = ({ product, className, onClick, style }: { product: Product, className?: string, onClick?: (e: React.MouseEvent) => void, style?: React.CSSProperties }) => {
   const urls = getProductImageFallbacks(product.imageUrl, product.sku);
   const [index, setIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const currentSrc = urls[index] || '/logo-fyc.png';
 
   useEffect(() => {
-    if (currentSrc === '/logo-fyc.png') return;
+    setIsLoading(true);
+    if (currentSrc === '/logo-fyc.png') {
+       setIsLoading(false);
+       return;
+    }
     
     let isMounted = true;
     const img = new window.Image();
     
-    img.onload = () => { /* Carga exitosa en background */ };
+    img.onload = () => { 
+      if (isMounted) setIsLoading(false); 
+    };
     img.onerror = () => {
       if (!isMounted) return;
       setIndex(i => Math.min(i + 1, urls.length - 1));
@@ -38,19 +45,23 @@ const DynamicImage = ({ product, className, onClick, style }: { product: Product
 
     return () => {
       isMounted = false;
-      // img.src = ''; // Dejar que el GC limpie
     };
   }, [currentSrc, urls]);
 
   return (
-    <img 
-      src={currentSrc} 
-      alt={`${product.name} - SKU: ${product.sku}`} 
-      className={className} 
-      onClick={onClick}
-      style={style}
-      loading="lazy"
-    />
+    <>
+      {isLoading && (
+        <div className="absolute inset-0 bg-[#1A1A1A] animate-pulse rounded-lg z-0 pointer-events-none" />
+      )}
+      <img 
+        src={currentSrc} 
+        alt={`${product.name} - SKU: ${product.sku}`} 
+        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 relative z-10`} 
+        onClick={onClick}
+        style={style}
+        loading="lazy"
+      />
+    </>
   );
 };
 
@@ -126,18 +137,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <>
-      <div className="group relative card-container transition-all duration-300 hover:border-[#3B82F6] hover:-translate-y-1 flex flex-col overflow-hidden shadow-[var(--card-shadow)] rounded-xl h-full p-4 gap-4">
+      <div className="group relative card-container transition-all duration-300 hover:border-[#3B82F6] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(59,130,246,0.12)] flex flex-col overflow-hidden shadow-[var(--card-shadow)] rounded-xl h-full p-4 gap-4">
 
         {/* BADGE SYSTEM: Floating Badges */}
         <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start pointer-events-none">
           {savingPercent > 0 && (
             <>
               {/* Red Sale Badge */}
-              <span className="bg-[#D32F2F] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-md rounded-sm flex items-center gap-1">
+              <span className="bg-[#D32F2F] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-md rounded-[4px] flex items-center gap-1">
                 <Zap className="w-3 h-3 fill-current" /> OFERTA
               </span>
               {/* Yellow Discount Badge */}
-              <span className="bg-[#FFFFFF] text-black px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-md rounded-sm">
+              <span className="bg-[#FFFFFF] text-black px-2 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-md rounded-[4px]">
                 -{savingPercent}% OFF
               </span>
             </>

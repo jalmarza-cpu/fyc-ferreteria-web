@@ -16,9 +16,9 @@ const About = () => {
           
           {/* Column 1: The Manifesto (Textos Principales) */}
           <div>
-            <div className="inline-flex items-center gap-2 mb-6 bg-[#FFD700]/10 border border-[#FFD700]/20 rounded-full px-4 py-1.5">
-               <Users className="w-4 h-4 text-[#FFD700]" />
-               <span className="text-[#FFD700] text-[10px] font-black uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 mb-6 bg-[#FFFFFF]/10 border border-[#FFFFFF]/20 rounded-full px-4 py-1.5">
+               <Users className="w-4 h-4 text-[#FFFFFF]" />
+               <span className="text-[#FFFFFF] text-[10px] font-black uppercase tracking-widest">
                   Nuestra Filosofía
                </span>
             </div>
@@ -30,7 +30,7 @@ const About = () => {
               className="text-4xl md:text-5xl lg:text-6xl font-industrial font-black text-white uppercase leading-[1] tracking-tighter mb-8"
             >
               El Socio que <br/>
-              <span className="text-[#FFD700]">Tu Obra Necesita</span>
+              <span className="text-[#FFFFFF]">Tu Obra Necesita</span>
             </motion.h2>
 
             <motion.div 
@@ -40,7 +40,7 @@ const About = () => {
               transition={{ delay: 0.2 }}
               className="space-y-6 text-neutral-400 text-sm md:text-base leading-relaxed"
             >
-              <p className="font-medium text-white border-l-4 border-[#FFD700] pl-6 py-1">
+              <p className="font-medium text-white border-l-4 border-[#FFFFFF] pl-6 py-1">
                 Sabemos que en la construcción, el tiempo es dinero. No te vendemos suministros; te entregamos tranquilidad. Tú enfócate en construir, nosotros del resto.
               </p>
               
@@ -69,9 +69,9 @@ const About = () => {
                 {/* Card 1: Asesoría Técnica */}
                 <motion.div 
                   whileHover={{ y: -5 }}
-                  className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFD700] transition-colors"
+                  className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFFFFF] transition-colors"
                 >
-                    <Wrench className="w-10 h-10 text-neutral-600 group-hover:text-[#FFD700] mb-4 transition-colors" />
+                    <Wrench className="w-10 h-10 text-neutral-600 group-hover:text-[#FFFFFF] mb-4 transition-colors" />
                     <h4 className="text-white font-bold uppercase text-sm mb-2">Asesoría Experta</h4>
                     <p className="text-xs text-neutral-500">Te guiamos en el uso correcto para asegurar resultados eficientes.</p>
                 </motion.div>
@@ -79,9 +79,9 @@ const About = () => {
                 {/* Card 2: Precios (Misión) */}
                 <motion.div 
                   whileHover={{ y: -5 }}
-                  className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFD700] transition-colors sm:mt-8"
+                  className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFFFFF] transition-colors sm:mt-8"
                 >
-                    <ShieldCheck className="w-10 h-10 text-neutral-600 group-hover:text-[#FFD700] mb-4 transition-colors" />
+                    <ShieldCheck className="w-10 h-10 text-neutral-600 group-hover:text-[#FFFFFF] mb-4 transition-colors" />
                     <h4 className="text-white font-bold uppercase text-sm mb-2">Precios Competitivos</h4>
                     <p className="text-xs text-neutral-500">Soluciones prácticas y valores justos que cuidan tu presupuesto.</p>
                 </motion.div>
@@ -89,9 +89,9 @@ const About = () => {
                  {/* Card 3: Visión Regional */}
                  <motion.div 
                   whileHover={{ y: -5 }}
-                  className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFD700] transition-colors"
+                  className="bg-[#151515] border border-[#222] p-6 rounded-2xl group hover:border-[#FFFFFF] transition-colors"
                 >
-                    <Handshake className="w-10 h-10 text-neutral-600 group-hover:text-[#FFD700] mb-4 transition-colors" />
+                    <Handshake className="w-10 h-10 text-neutral-600 group-hover:text-[#FFFFFF] mb-4 transition-colors" />
                     <h4 className="text-white font-bold uppercase text-sm mb-2">Confianza Regional</h4>
                     <p className="text-xs text-neutral-500">Crecimiento sostenido basado en la cercanía y el respeto.</p>
                 </motion.div>
@@ -106,7 +106,7 @@ const About = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                     <div className="absolute bottom-4 left-4">
-                        <span className="text-[#FFD700] font-black text-4xl">100%</span>
+                        <span className="text-[#FFFFFF] font-black text-4xl">100%</span>
                         <span className="block text-white text-[10px] font-bold uppercase tracking-widest">Técnicos</span>
                     </div>
                 </div>

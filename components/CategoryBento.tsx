@@ -64,7 +64,7 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
       <div className="max-w-[1600px] mx-auto">
         <div className="mb-10 flex items-end justify-between border-b border-[#222] pb-6">
           <div>
-            <span className="text-[#FFD700] font-black uppercase tracking-widest text-xs">Catálogo Destacado</span>
+            <span className="text-[#FFFFFF] font-black uppercase tracking-widest text-xs">Catálogo Destacado</span>
             <h2 className="text-3xl md:text-4xl font-industrial font-black text-white uppercase mt-2">
               Categorías Principales
             </h2>
@@ -98,12 +98,12 @@ const CategoryBento: React.FC<CategoryBentoProps> = ({ onSelectCategory }) => {
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
                 <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                   <div className="flex items-center gap-3 mb-2">
-                      <div className={`p-2 rounded bg-[#FFD700] text-black`}>
+                      <div className={`p-2 rounded bg-[#FFFFFF] text-black`}>
                          <cat.icon className="w-5 h-5" />
                       </div>
                       <h3 className="text-xl md:text-2xl font-industrial font-bold text-white uppercase">{cat.name}</h3>
                   </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 text-[#FFD700] text-xs font-bold uppercase tracking-widest mt-2">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 text-[#FFFFFF] text-xs font-bold uppercase tracking-widest mt-2">
                     Ver Productos <ArrowRight className="w-4 h-4" />
                   </div>
                 </div>

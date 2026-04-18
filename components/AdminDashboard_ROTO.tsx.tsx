@@ -200,8 +200,8 @@ const AdminDashboard = () => {
     return (
       <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4">
         <div className="bg-[#111] border border-[#222] p-8 rounded-2xl w-full max-w-sm shadow-2xl flex flex-col items-center">
-          <div className="w-16 h-16 bg-[#FFD700]/10 rounded-full flex items-center justify-center mb-6 border border-[#FFD700]/50">
-             <Lock className="w-8 h-8 text-[#FFD700]" />
+          <div className="w-16 h-16 bg-[#FFFFFF]/10 rounded-full flex items-center justify-center mb-6 border border-[#FFFFFF]/50">
+             <Lock className="w-8 h-8 text-[#FFFFFF]" />
           </div>
           <h2 className="text-2xl font-industrial font-black text-white uppercase tracking-wider mb-2">Acceso Restringido</h2>
           <p className="text-xs text-neutral-500 uppercase tracking-widest text-center mb-8">Directorio F&C</p>
@@ -212,11 +212,11 @@ const AdminDashboard = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => { if(e.key === 'Enter' && password === 'hola123') setIsAuthenticated(true); }}
-            className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] p-4 rounded-xl text-center text-white font-mono tracking-widest outline-none transition-colors mb-4"
+            className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] p-4 rounded-xl text-center text-white font-mono tracking-widest outline-none transition-colors mb-4"
           />
           <button 
             onClick={() => { if(password === 'hola123') setIsAuthenticated(true); else alert('Clave incorrecta'); }}
-            className="w-full bg-[#FFD700] text-black font-black uppercase py-4 rounded-xl hover:bg-white transition-colors"
+            className="w-full bg-[#FFFFFF] text-black font-black uppercase py-4 rounded-xl hover:bg-white transition-colors"
           >
             Entrar al Panel
           </button>
@@ -242,7 +242,7 @@ const AdminDashboard = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 bg-[#111] p-6 rounded-2xl border border-[#222]">
           <div>
             <div className="flex items-center gap-2 mb-2">
-               <Box className="w-6 h-6 text-[#FFD700]" />
+               <Box className="w-6 h-6 text-[#FFFFFF]" />
                <h1 className="text-3xl font-industrial font-black uppercase tracking-wider text-white">Centro de Control F&C</h1>
             </div>
             <p className="text-xs text-neutral-400 font-bold uppercase tracking-widest">Gestión Profesional de Catálogo</p>
@@ -251,9 +251,9 @@ const AdminDashboard = () => {
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center justify-center gap-2 px-6 py-3 bg-[#151515] border border-[#333] hover:border-[#FFD700] text-white font-black text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg min-w-[180px]"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-[#151515] border border-[#333] hover:border-[#FFFFFF] text-white font-black text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg min-w-[180px]"
             >
-              <Plus className="w-4 h-4 text-[#FFD700]" /> [+] NUEVO PRODUCTO
+              <Plus className="w-4 h-4 text-[#FFFFFF]" /> [+] NUEVO PRODUCTO
             </button>
 
             <div className="relative w-full md:w-64">
@@ -263,7 +263,7 @@ const AdminDashboard = () => {
                  placeholder="Buscar producto o SKU..." 
                  value={searchTerm}
                  onChange={(e) => setSearchTerm(e.target.value)}
-                 className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded-xl pl-10 pr-4 py-3 text-sm text-white outline-none transition-colors"
+                 className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded-xl pl-10 pr-4 py-3 text-sm text-white outline-none transition-colors"
                />
             </div>
             
@@ -273,7 +273,7 @@ const AdminDashboard = () => {
               className={`flex items-center justify-center gap-2 px-6 py-3 font-black text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg min-w-[180px]
                 ${isSaving ? 'bg-neutral-800 text-neutral-500' : 
                   saveStatus === 'success' ? 'bg-green-500 text-white' : 
-                  'bg-[#FFD700] text-black hover:bg-white border border-transparent'}
+                  'bg-[#FFFFFF] text-black hover:bg-white border border-transparent'}
               `}
             >
               {isSaving ? (
@@ -322,7 +322,7 @@ const AdminDashboard = () => {
                         <div className="flex justify-center">
                             <button 
                                 onClick={() => handleFieldChange(p.id, 'isVisible', !p.isVisible)}
-                                className={`p-2 rounded-lg transition-colors border ${p.isVisible ? 'bg-[#FFD700]/10 border-[#FFD700]/50 text-[#FFD700]' : 'bg-[#333]/50 border-[#333] text-neutral-500'}`}
+                                className={`p-2 rounded-lg transition-colors border ${p.isVisible ? 'bg-[#FFFFFF]/10 border-[#FFFFFF]/50 text-[#FFFFFF]' : 'bg-[#333]/50 border-[#333] text-neutral-500'}`}
                             >
                                 {p.isVisible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                             </button>
@@ -334,7 +334,7 @@ const AdminDashboard = () => {
                         <div className="flex flex-col items-center justify-center gap-2">
                             <div className="w-12 h-12 bg-[#0A0A0A] border border-[#333] rounded overflow-hidden flex items-center justify-center p-1 relative group cursor-pointer" onClick={() => triggerImageUpload(p.sku)}>
                                {p.imageUrl === 'uploading...' ? (
-                                  <RefreshCw className="w-4 h-4 text-[#FFD700] animate-spin" />
+                                  <RefreshCw className="w-4 h-4 text-[#FFFFFF] animate-spin" />
                                ) : (
                                   <>
                                     <img src={getProductImageUrl(p.name, p.imageUrl)} alt={p.sku} className="max-w-full max-h-full object-contain transition-opacity group-hover:opacity-30" />
@@ -363,7 +363,7 @@ const AdminDashboard = () => {
                           min="0"
                           value={p.priceRetail}
                           onChange={(e) => handleFieldChange(p.id, 'priceRetail', parseInt(e.target.value) || 0)}
-                          className="w-full max-w-[120px] bg-[#0A0A0A] border border-[#333] focus:border-[#FFD700] text-right font-industrial font-bold text-white px-3 py-2 rounded outline-none transition-colors"
+                          className="w-full max-w-[120px] bg-[#0A0A0A] border border-[#333] focus:border-[#FFFFFF] text-right font-industrial font-bold text-white px-3 py-2 rounded outline-none transition-colors"
                         />
                      </td>
                      <td className="p-4 text-right">
@@ -372,7 +372,7 @@ const AdminDashboard = () => {
                           min="0"
                           value={p.priceWholesale}
                           onChange={(e) => handleFieldChange(p.id, 'priceWholesale', parseInt(e.target.value) || 0)}
-                          className="w-full max-w-[120px] bg-[#0A0A0A] border border-[#FFD700]/30 focus:border-[#FFD700] text-right font-industrial font-black text-[#FFD700] px-3 py-2 rounded outline-none transition-colors"
+                          className="w-full max-w-[120px] bg-[#0A0A0A] border border-[#FFFFFF]/30 focus:border-[#FFFFFF] text-right font-industrial font-black text-[#FFFFFF] px-3 py-2 rounded outline-none transition-colors"
                         />
                      </td>
 
@@ -427,7 +427,7 @@ const AdminDashboard = () => {
                  >
                     <div className="flex justify-between items-center mb-6 border-b border-[#222] pb-4">
                         <h2 className="text-xl font-industrial font-black uppercase text-white tracking-wider flex items-center gap-2">
-                           <ImageIcon className="w-5 h-5 text-[#FFD700]" />
+                           <ImageIcon className="w-5 h-5 text-[#FFFFFF]" />
                            Nuevo Producto
                         </h2>
                         <button onClick={() => setIsModalOpen(false)} className="text-neutral-500 hover:text-white transition-colors">
@@ -438,36 +438,36 @@ const AdminDashboard = () => {
                     <div className="space-y-4">
                         <div>
                             <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Nombre *</label>
-                            <input type="text" value={newProduct.name} onChange={(e) => setNewProduct(prev => ({...prev, name: e.target.value}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-4 py-3 text-sm text-white outline-none" placeholder="Ej: Taladro Percutor 800W" />
+                            <input type="text" value={newProduct.name} onChange={(e) => setNewProduct(prev => ({...prev, name: e.target.value}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-4 py-3 text-sm text-white outline-none" placeholder="Ej: Taladro Percutor 800W" />
                         </div>
                         <div>
                             <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">SKU *</label>
-                            <input type="text" value={newProduct.sku} onChange={(e) => setNewProduct(prev => ({...prev, sku: e.target.value?.toUpperCase()}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-4 py-3 text-sm font-mono text-[#FFD700] outline-none" placeholder="EJ: TL-800" />
+                            <input type="text" value={newProduct.sku} onChange={(e) => setNewProduct(prev => ({...prev, sku: e.target.value?.toUpperCase()}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-4 py-3 text-sm font-mono text-[#FFFFFF] outline-none" placeholder="EJ: TL-800" />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Precio Detalle</label>
-                                <input type="number" value={newProduct.priceRetail} onChange={(e) => setNewProduct(prev => ({...prev, priceRetail: parseInt(e.target.value) || 0}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-4 py-3 text-sm text-white outline-none text-right" />
+                                <input type="number" value={newProduct.priceRetail} onChange={(e) => setNewProduct(prev => ({...prev, priceRetail: parseInt(e.target.value) || 0}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-4 py-3 text-sm text-white outline-none text-right" />
                             </div>
                             <div>
                                 <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Precio Mayorista</label>
-                                <input type="number" value={newProduct.priceWholesale} onChange={(e) => setNewProduct(prev => ({...prev, priceWholesale: parseInt(e.target.value) || 0}))} className="w-full bg-[#151515] border border-[#FFD700]/50 focus:border-[#FFD700] rounded px-4 py-3 text-sm text-[#FFD700] outline-none font-bold text-right" />
+                                <input type="number" value={newProduct.priceWholesale} onChange={(e) => setNewProduct(prev => ({...prev, priceWholesale: parseInt(e.target.value) || 0}))} className="w-full bg-[#151515] border border-[#FFFFFF]/50 focus:border-[#FFFFFF] rounded px-4 py-3 text-sm text-[#FFFFFF] outline-none font-bold text-right" />
                             </div>
                         </div>
                         <div>
                             <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Categoría</label>
-                            <input type="text" value={newProduct.category} onChange={(e) => setNewProduct(prev => ({...prev, category: e.target.value}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-4 py-3 text-sm text-white outline-none" placeholder="Ej: Herramientas Eléctricas" />
+                            <input type="text" value={newProduct.category} onChange={(e) => setNewProduct(prev => ({...prev, category: e.target.value}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-4 py-3 text-sm text-white outline-none" placeholder="Ej: Herramientas Eléctricas" />
                         </div>
                         <div>
                             <label className="block text-[10px] font-bold text-neutral-500 uppercase mb-1">Imagen (URL Opcional)</label>
-                            <input type="text" value={newProduct.imageUrl || ''} onChange={(e) => setNewProduct(prev => ({...prev, imageUrl: e.target.value}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFD700] rounded px-4 py-3 text-sm text-white outline-none" placeholder="https://... o cargar luego en la tabla" />
+                            <input type="text" value={newProduct.imageUrl || ''} onChange={(e) => setNewProduct(prev => ({...prev, imageUrl: e.target.value}))} className="w-full bg-[#151515] border border-[#333] focus:border-[#FFFFFF] rounded px-4 py-3 text-sm text-white outline-none" placeholder="https://... o cargar luego en la tabla" />
                         </div>
                         
                         <div className="pt-4 flex gap-4">
                            <button onClick={() => setIsModalOpen(false)} className="flex-1 py-3 border border-[#333] text-neutral-400 font-bold uppercase tracking-widest text-xs rounded-xl hover:text-white transition-colors">
                               Cancelar
                            </button>
-                           <button onClick={handleAddProduct} className="flex-1 py-3 bg-[#FFD700] hover:bg-white text-black font-black uppercase tracking-widest text-xs rounded-xl transition-colors shadow-lg shadow-[#FFD700]/10 flex items-center justify-center gap-2">
+                           <button onClick={handleAddProduct} className="flex-1 py-3 bg-[#FFFFFF] hover:bg-white text-black font-black uppercase tracking-widest text-xs rounded-xl transition-colors shadow-lg shadow-[#FFFFFF]/10 flex items-center justify-center gap-2">
                               <Plus className="w-4 h-4" /> Añadir
                            </button>
                         </div>

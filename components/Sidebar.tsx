@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CATEGORIES, SUBCATEGORY_MAP, EXPANDABLE_CATEGORIES } from '../constants';
-import { Filter, SlidersHorizontal, Check, ChevronDown } from 'lucide-react';
+import { Filter, SlidersHorizontal, Check, ChevronDown, Wrench, Zap, Trash2, Droplets, PaintRoller, Type, Lightbulb, Box, Factory, Wind, Paperclip, Package } from 'lucide-react';
 
 interface SidebarProps {
   selectedCategory: string;
@@ -77,13 +77,31 @@ const Sidebar: React.FC<SidebarProps> = ({
   const formatPrice = (val: number) =>
     new Intl.NumberFormat('es-CL').format(val);
 
+  const getCategoryIcon = (cat: string) => {
+    switch (cat) {
+      case 'Todas': return <Box className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Basurero': return <Trash2 className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Canalización': return <SlidersHorizontal className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Cielo falso': return <Type className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Cintas': return <Paperclip className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Electricidad': return <Zap className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Extractores de Aire': return <Wind className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Grifería': return <Droplets className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Herramientas': return <Wrench className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Iluminación LED': return <Lightbulb className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Maquinaria': return <Factory className="w-3.5 h-3.5 flex-shrink-0" />;
+      case 'Selladora': return <PaintRoller className="w-3.5 h-3.5 flex-shrink-0" />;
+      default: return <Package className="w-3.5 h-3.5 flex-shrink-0" />;
+    }
+  };
+
   return (
     <aside className="w-full lg:w-72 flex-shrink-0 space-y-6">
 
       {/* ── CATEGORÍAS CON ACORDEÓN ── */}
       <div className="bg-[#0E0E0E] border border-[#222] p-5 rounded-3xl shadow-xl">
         <div className="flex items-center gap-2 mb-5 pb-4 border-b border-[#222]">
-          <Filter className="w-4 h-4 text-[#FFD700]" />
+          <Filter className="w-4 h-4 text-[#FFFFFF]" />
           <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">Categorías</h4>
         </div>
 
@@ -114,7 +132,13 @@ const Sidebar: React.FC<SidebarProps> = ({
                   }}
                 >
                   <div className="flex items-center gap-2 flex-1 min-w-0">
-                    {isActive && <Check className="w-3 h-3 flex-shrink-0 text-[#FFD700]" />}
+                    {isActive ? (
+                      <Check className="w-3.5 h-3.5 flex-shrink-0 text-[#FFFFFF]" />
+                    ) : (
+                      <span className={count === 0 ? 'text-neutral-700' : 'text-[#3B82F6]/70'}>
+                        {getCategoryIcon(cat)}
+                      </span>
+                    )}
                     <span className="text-xs font-bold uppercase tracking-wider truncate">
                       {cat}
                     </span>
@@ -126,7 +150,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         ? 'bg-[#3B82F6]/20 text-[#3B82F6]'
                         : count === 0
                           ? 'bg-[#1a1a1a] text-neutral-700'
-                          : 'bg-[#FFD700]/10 text-[#FFD700]'
+                          : 'bg-[#FFFFFF]/10 text-[#FFFFFF]'
                       }`}>
                       {count}
                     </span>
@@ -177,7 +201,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                 }`}
                             >
                               <span className="flex items-center gap-1.5">
-                                <span className={`w-1 h-1 rounded-full bg-current flex-shrink-0 ${isSubActive ? 'text-[#FFD700] opacity-100' : 'opacity-60'}`} />
+                                <span className={`w-1 h-1 rounded-full bg-current flex-shrink-0 ${isSubActive ? 'text-[#FFFFFF] opacity-100' : 'opacity-60'}`} />
                                 {sub}
                               </span>
                               <span className={`text-[9px] font-black tabular-nums ${isSubActive ? 'text-[#3B82F6]' : subCount === 0 ? 'text-neutral-700' : 'text-neutral-500'
@@ -200,7 +224,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* ── PRESUPUESTO ── */}
       <div className="bg-[#0E0E0E] border border-[#222] p-5 rounded-3xl shadow-xl">
         <div className="flex items-center gap-2 mb-5 pb-4 border-b border-[#222]">
-          <SlidersHorizontal className="w-4 h-4 text-[#FFD700]" />
+          <SlidersHorizontal className="w-4 h-4 text-[#FFFFFF]" />
           <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">Presupuesto</h4>
         </div>
 
@@ -213,7 +237,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               step="1000"
               value={maxPrice}
               onChange={(e) => onPriceChange(parseInt(e.target.value))}
-              className="w-full h-1 bg-[#222] rounded-lg appearance-none cursor-pointer accent-[#FFD700] relative z-20"
+              className="w-full h-1 bg-[#222] rounded-lg appearance-none cursor-pointer accent-[#FFFFFF] relative z-20"
             />
             <div className="absolute top-0 left-0 w-full flex justify-between text-[9px] font-bold text-neutral-600 uppercase">
               <span>Min</span>
@@ -223,7 +247,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           <div className="flex items-center justify-between bg-[#151515] p-3 border border-[#222] rounded-xl">
             <span className="text-[10px] font-black uppercase text-neutral-500">Hasta</span>
-            <span className="text-lg font-industrial font-bold text-[#FFD700]">
+            <span className="text-lg font-industrial font-bold text-[#FFFFFF]">
               ${formatPrice(maxPrice)}
             </span>
           </div>
@@ -232,10 +256,10 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {/* ── BADGE ── */}
       <div className="p-5 border border-[#222] bg-[#111] flex flex-col items-center justify-center text-center opacity-80 hover:opacity-100 transition-opacity rounded-3xl">
-        <div className="w-12 h-12 mb-3 border-2 border-[#FFD700] rounded-full flex items-center justify-center text-[#FFD700] font-industrial font-bold text-lg shadow-[0_0_15px_rgba(255,215,0,0.2)]">
+        <div className="w-12 h-12 mb-3 border-2 border-[#FFFFFF] rounded-full flex items-center justify-center text-[#FFFFFF] font-industrial font-bold text-lg shadow-[0_0_15px_rgba(255,215,0,0.2)]">
           OK
         </div>
-        <p className="text-[#FFD700] font-black text-xs uppercase tracking-widest mb-1">Stock Garantizado</p>
+        <p className="text-[#FFFFFF] font-black text-xs uppercase tracking-widest mb-1">Stock Garantizado</p>
         <p className="text-[9px] text-neutral-500 font-medium leading-tight">
           Consulta disponibilidad en tiempo real vía WhatsApp.
         </p>
