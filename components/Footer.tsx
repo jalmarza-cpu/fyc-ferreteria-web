@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Clock, ArrowRight, Instagram, Facebook } from 'lucide-react';
-import { CONTACT_PHONE_DISPLAY, CONTACT_EMAIL, CONTACT_ADDRESS, CONTACT_MAP_URL, BUSINESS_HOURS } from '../constants';
+import { CONTACT_PHONE_DISPLAY, CONTACT_EMAIL, CONTACT_ADDRESS, CONTACT_MAP_URL, BUSINESS_HOURS, CONTACT_PHONE } from '../constants';
 import { Link } from 'react-router-dom';
 
 interface FooterProps {
@@ -26,12 +26,23 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               Calidad profesional al alcance de tu obra y hogar.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center hover:bg-[#FFFFFF] hover:text-black transition-all">
+              {/* Instagram — ACTIVO Etapa 1 */}
+              <a
+                href="https://www.instagram.com/fyc.ferreteria/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Síguenos en Instagram"
+                className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center hover:bg-[#FFFFFF] hover:text-black transition-all"
+              >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center hover:bg-[#FFFFFF] hover:text-black transition-all">
+              {/* Facebook — STANDBY Etapa 2 (deshabilitado) */}
+              <span
+                title="Facebook próximamente"
+                className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center opacity-40 cursor-default select-none"
+              >
                 <Facebook className="w-5 h-5" />
-              </a>
+              </span>
             </div>
           </div>
 
@@ -42,7 +53,12 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </h3>
             <ul className="space-y-4 text-sm">
               <li>
-                <a href={`tel:${CONTACT_PHONE_DISPLAY.replace(/\s/g, '')}`} className="flex items-start gap-3 hover:text-[#FFFFFF] transition-colors group">
+                <a
+                  href={`https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent('¡Hola FYC! Necesito una cotización.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3 hover:text-[#FFFFFF] transition-colors group"
+                >
                   <Phone className="w-5 h-5 text-[#FFFFFF] group-hover:animate-pulse" />
                   <span className="font-bold text-white">{CONTACT_PHONE_DISPLAY}</span>
                 </a>
