@@ -4,9 +4,10 @@ import { Truck, PackageCheck, ShieldCheck } from 'lucide-react';
 const clients = [
   {
     name: "K'iris Inmobiliaria",
-    logo: "/assets/clients/logo-Kiris-inmobiliaria.png",
-    // Logo con fondo blanco → invertimos para fondo oscuro
-    style: "grayscale invert brightness-150 opacity-50 hover:opacity-90 hover:grayscale-0 hover:invert-0 hover:brightness-100",
+    logo: "/assets/clients/logo-Kiris-sin-fondo.png",
+    // Texto negro + fondo transparente en sitio oscuro
+    // brightness-0 → todo negro puro → invert → todo blanco puro ✓
+    style: "brightness-0 invert opacity-50 hover:brightness-100 hover:invert-0 hover:opacity-90",
   },
   {
     name: "INNOBATE Agency",
