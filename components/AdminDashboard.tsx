@@ -438,7 +438,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   );
 
   return (
-    <div className="p-4 md:p-8 bg-slate-100 text-gray-800 min-h-screen font-sans relative">
+    <div className="p-4 md:p-8 bg-[#F8FAFC] text-gray-800 min-h-screen font-sans relative">
       {/* DELETE CONFIRMATION MODAL */}
       {isDeleteModalOpen && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
@@ -479,140 +479,173 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         </div>
       )}
 
-      {/* MODAL FORM */}
+      {/* MODAL FORM — ELITE INDUSTRIAL V3 */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
-          <div className="bg-[#0A0A0A] border border-[#222] w-full max-w-2xl rounded-2xl p-6 relative z-10 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar selection:bg-[#FFD700] selection:text-black">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-black uppercase text-yellow-500">
-                {isEditing ? 'Editar Ficha Producto' : 'Nuevo Producto'}
-              </h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-neutral-500 hover:text-white p-2 bg-neutral-900 rounded-full"><X size={20} /></button>
+          <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
+          <div className="bg-white w-full max-w-2xl rounded-2xl relative z-10 shadow-2xl max-h-[90vh] overflow-y-auto selection:bg-blue-200 selection:text-blue-900">
+
+            {/* Modal Header — Cobalt #0F172A */}
+            <div className="bg-[#0F172A] px-6 py-4 rounded-t-2xl flex justify-between items-center sticky top-0 z-10">
+              <div>
+                <h2 className="text-sm font-black uppercase text-white tracking-widest flex items-center gap-2">
+                  <Package size={16} className="text-blue-400" />
+                  {isEditing ? 'Editar Ficha de Producto' : 'Nuevo Producto'}
+                </h2>
+                <p className="text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">F&C Ferretería · Panel de Administración</p>
+              </div>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white p-2 hover:bg-white/10 rounded-full transition">
+                <X size={18} />
+              </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              
-              {/* Alerta de Error Clara y Visible */}
+            <form onSubmit={handleSubmit} className="p-6 space-y-6">
+
+              {/* Error Alert */}
               {saveError && (
-                <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-xl text-xs font-bold mb-4 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
-                  ⚠ ERROR DE GUARDADO: {saveError}
+                <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl text-xs font-bold flex items-center gap-2">
+                  <AlertTriangle size={16} className="flex-shrink-0" /> ERROR DE GUARDADO: {saveError}
                 </div>
               )}
 
-              <div className="bg-[#111] p-4 rounded-xl border border-dashed border-[#333]">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="w-full md:w-40 h-40 bg-black rounded-lg border border-[#222] overflow-hidden flex items-center justify-center relative group">
-                    {formData.sku || formData.imagen_url ? (
-                      <AdminDynamicImage
-                        nombre="Preview"
-                        imagen_url={formData.imagen_url}
-                        sku={formData.sku}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <ImageIcon className="text-zinc-800" size={48} />
-                    )}
-                    {uploading && <div className="absolute inset-0 bg-black/60 flex items-center justify-center"><Save className="animate-spin text-yellow-500" /></div>}
+              {/* IMAGEN + PREVIEW */}
+              <div className="flex gap-5 items-start p-4 bg-slate-50 rounded-xl border border-[#E2E8F0]">
+                <div className="w-28 h-28 bg-[#0F172A] rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center relative shadow-lg">
+                  {formData.sku || formData.imagen_url ? (
+                    <AdminDynamicImage nombre="Preview" imagen_url={formData.imagen_url} sku={formData.sku} className="w-full h-full object-cover" />
+                  ) : (
+                    <ImageIcon className="text-slate-500" size={32} />
+                  )}
+                  {uploading && <div className="absolute inset-0 bg-black/60 flex items-center justify-center"><Save className="animate-spin text-yellow-500" /></div>}
+                </div>
+                <div className="flex-1 space-y-2">
+                  <label className="block text-[10px] font-bold text-[#475569] uppercase tracking-widest">URL o Path de Imagen</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={formData.imagen_url || ''}
+                      onChange={e => setFormData({ ...formData, imagen_url: e.target.value })}
+                      className="flex-1 bg-white border border-[#E2E8F0] rounded-lg p-2.5 text-sm outline-none focus:border-[#3B82F6] focus:ring-2 focus:ring-blue-500/20 transition-all font-mono text-slate-700 placeholder:text-slate-300"
+                      placeholder="uploads/sku-imagen.jpg"
+                    />
+                    <button type="button" onClick={() => fileInputRef.current?.click()} className="bg-[#0F172A] hover:bg-slate-700 text-white p-2.5 rounded-lg transition-all">
+                      <Upload size={18} />
+                    </button>
                   </div>
+                  <p className="text-[10px] text-slate-400">Subir desde tu equipo o pegar URL externa</p>
+                  <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
+                </div>
+              </div>
 
-                  <div className="flex-1 space-y-4">
-                    <label className="block text-[10px] font-black text-neutral-500 uppercase tracking-widest">Previsualización e Imagen</label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={formData.imagen_url || ''}
-                        onChange={e => setFormData({ ...formData, imagen_url: e.target.value })}
-                        className="flex-1 bg-black border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-mono"
-                        placeholder="Path o URL de imagen..."
-                      />
-                      <button
-                        type="button"
-                        onClick={() => fileInputRef.current?.click()}
-                        className="bg-[#222] hover:bg-[#333] text-white p-2.5 rounded-lg transition border border-[#444]"
-                      >
-                        <Upload size={20} />
-                      </button>
-                    </div>
-                    <p className="text-[10px] text-zinc-500 italic">Rutas de Supabase (uploads/xxx) o URLs externas.</p>
-                    <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
+              {/* SECCIÓN 1 — Información General */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-1 h-4 bg-[#0F172A] rounded-full block"></span>
+                  <h3 className="text-[11px] font-black text-[#0F172A] uppercase tracking-widest">Información General</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-bold text-[#475569] uppercase tracking-widest">SKU <span className="text-[#EF4444]">*</span></label>
+                    <input required value={formData.sku} onChange={e => setFormData({ ...formData, sku: e.target.value })}
+                      className="w-full bg-white border border-[#E2E8F0] rounded-lg p-2.5 text-sm outline-none focus:border-[#3B82F6] focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-800 font-bold" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-bold text-[#475569] uppercase tracking-widest">Nombre Comercial <span className="text-[#EF4444]">*</span></label>
+                    <input required value={formData.nombre} onChange={e => setFormData({ ...formData, nombre: e.target.value })}
+                      className="w-full bg-white border border-[#E2E8F0] rounded-lg p-2.5 text-sm outline-none focus:border-[#3B82F6] focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-800 font-bold" />
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">SKU Requerido</label>
-                  <input required value={formData.sku} onChange={e => setFormData({ ...formData, sku: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold" />
+              {/* SECCIÓN 2 — Gestión de Inventario */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-1 h-4 bg-[#0F172A] rounded-full block"></span>
+                  <h3 className="text-[11px] font-black text-[#0F172A] uppercase tracking-widest">Gestión de Inventario</h3>
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Nombre Comercial</label>
-                  <input required value={formData.nombre} onChange={e => setFormData({ ...formData, nombre: e.target.value })} className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-bold" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-bold text-[#475569] uppercase tracking-widest">Categoría de Catálogo</label>
+                    <select
+                      value={formData.categoria}
+                      onChange={e => setFormData({ ...formData, categoria: e.target.value })}
+                      className="w-full bg-white border border-[#E2E8F0] rounded-lg p-2.5 text-sm outline-none focus:border-[#3B82F6] focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-800"
+                    >
+                      <option value="">Selecciona Categoría...</option>
+                      {dbCategorias.map(cat => (
+                        <optgroup label={cat} key={cat}>
+                          <option value={cat}>{cat} (General)</option>
+                          {dbSubcategorias.filter(s => s.parentCategory === cat).map(sub => (
+                            <option value={sub.subcategory} key={sub.subcategory}>-- {sub.subcategory}</option>
+                          ))}
+                        </optgroup>
+                      ))}
+                      {dbCategorias.length === 0 && <option value="" disabled>Cargando categorías...</option>}
+                    </select>
+                  </div>
+                  <div className="space-y-1.5 flex flex-col">
+                    <label className="block text-[10px] font-bold text-[#475569] uppercase tracking-widest">Estado de Stock</label>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, stock: !formData.stock })}
+                      className={`flex-1 rounded-lg font-black text-xs transition-all border-2 flex items-center justify-center gap-2 ${formData.stock
+                        ? 'bg-emerald-50 border-emerald-500 text-emerald-600 hover:bg-emerald-500 hover:text-white'
+                        : 'bg-red-50 border-[#EF4444] text-[#EF4444] hover:bg-[#EF4444] hover:text-white'
+                      }`}
+                    >
+                      {formData.stock ? <CheckCircle size={15} /> : <AlertTriangle size={15} />}
+                      {formData.stock ? 'PRODUCTO EN STOCK' : 'PRODUCTO AGOTADO'}
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 bg-yellow-500/5 p-4 rounded-xl border border-yellow-500/10">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black text-yellow-600 uppercase ml-1">Precio Mayorista ($)</label>
-                  <input type="number" required value={formData.precio_mayorista} onChange={e => setFormData({ ...formData, precio_mayorista: parseInt(e.target.value) })} className="w-full bg-black border border-yellow-500/20 rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-black" />
+              {/* SECCIÓN 3 — Precios y Ofertas */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-1 h-4 bg-[#3B82F6] rounded-full block"></span>
+                  <h3 className="text-[11px] font-black text-[#0F172A] uppercase tracking-widest">Precios y Ofertas</h3>
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black text-yellow-600 uppercase ml-1">Precio Detalle ($)</label>
-                  <input type="number" required value={formData.precio_retail} onChange={e => setFormData({ ...formData, precio_retail: parseInt(e.target.value) })} className="w-full bg-black border border-yellow-500/20 rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-black" />
+                <div className="grid grid-cols-2 gap-4 bg-blue-50/60 p-4 rounded-xl border border-blue-100">
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-bold text-[#475569] uppercase tracking-widest">Precio Mayorista ($) <span className="text-[#EF4444]">*</span></label>
+                    <input type="number" required value={formData.precio_mayorista} onChange={e => setFormData({ ...formData, precio_mayorista: parseInt(e.target.value) })}
+                      className="w-full bg-white border border-[#E2E8F0] rounded-lg p-2.5 text-sm outline-none focus:border-[#3B82F6] focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-800 font-black" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-bold text-[#475569] uppercase tracking-widest">Precio Detalle ($) <span className="text-[#EF4444]">*</span></label>
+                    <input type="number" required value={formData.precio_retail} onChange={e => setFormData({ ...formData, precio_retail: parseInt(e.target.value) })}
+                      className="w-full bg-white border border-[#E2E8F0] rounded-lg p-2.5 text-sm outline-none focus:border-[#3B82F6] focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-800 font-black" />
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black text-neutral-500 uppercase ml-1">Categoría de Catálogo</label>
-                  <select 
-                    value={formData.categoria} 
-                    onChange={e => setFormData({ ...formData, categoria: e.target.value })} 
-                    className="w-full bg-[#111] border border-[#333] rounded-lg p-2.5 text-sm outline-none focus:border-yellow-500 text-white font-normal"
-                  >
-                    <option value="" className="font-normal text-gray-400">Selecciona Categoría...</option>
-                    {dbCategorias.map(cat => (
-                      <optgroup label={cat} key={cat} className="font-bold text-white bg-[#0A0A0A] uppercase mt-2">
-                        {/* Padre: guarda solo el nombre del padre */}
-                        <option value={cat} className="font-normal normal-case text-gray-200">{cat} (General)</option>
-                        {/* Hijos: guarda SOLO el nombre de la subcategoría — NO el compuesto Padre|Hijo */}
-                        {dbSubcategorias.filter(s => s.parentCategory === cat).map(sub => (
-                          <option value={sub.subcategory} key={sub.subcategory} className="font-normal normal-case text-gray-300">-- {sub.subcategory}</option>
-                        ))}
-                      </optgroup>
-                    ))}
-                    {dbCategorias.length === 0 && (
-                      <option value="" disabled className="font-normal">Cargando categorías desde BD...</option>
-                    )}
-                  </select>
-                </div>
-                <div className="flex items-end">
+              {/* BOTONES DE ACCIÓN */}
+              <div className="flex gap-3 pt-5 border-t border-[#E2E8F0]">
+                {isEditing && (
                   <button
                     type="button"
-                    onClick={() => setFormData({ ...formData, stock: !formData.stock })}
-                    className={`w-full py-2.5 rounded-lg font-black text-xs transition border-2 flex items-center justify-center gap-2 ${formData.stock ? 'bg-green-600/10 border-green-600 text-green-500' : 'bg-red-600/10 border-red-600 text-red-500'}`}
-                  >
-                    {formData.stock ? <CheckCircle size={16} /> : <AlertTriangle size={16} />}
-                    {formData.stock ? ' PRODUCTO EN STOCK' : 'PRODUCTO AGOTADO'}
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex gap-3 pt-4 border-t border-[#222]">
-                {isEditing && (
-                  <button 
-                    type="button" 
-                    onClick={() => setIsDeleteModalOpen(true)} 
-                    className="bg-red-600/10 border border-red-600/50 text-red-500 px-4 py-3 rounded-xl font-black uppercase tracking-widest text-[11px] hover:bg-red-600 hover:text-white transition flex items-center justify-center gap-2"
+                    onClick={() => setIsDeleteModalOpen(true)}
+                    className="bg-white border border-[#EF4444]/40 text-[#EF4444] px-4 py-3 rounded-xl font-black uppercase tracking-widest text-[11px] hover:bg-[#EF4444] hover:text-white hover:border-[#EF4444] transition-all flex items-center justify-center gap-2"
                     title="Eliminar producto permanentemente"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={15} />
                     <span className="hidden sm:inline">Eliminar</span>
                   </button>
                 )}
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 bg-[#111] text-white py-3 rounded-xl font-bold uppercase text-[11px] hover:bg-[#222] transition border border-[#333]">Cancelar</button>
-                <button disabled={isSaving} type="submit" className="flex-[2] bg-yellow-500 text-black py-3 rounded-xl font-black uppercase tracking-widest text-[11px] hover:bg-yellow-400 transition flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(234,179,8,0.2)]">
-                  {isSaving ? <Save className="animate-spin" size={16} /> : <CheckCircle size={16} />}
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex-1 bg-transparent text-slate-500 py-3 rounded-xl font-bold uppercase text-[11px] hover:bg-slate-100 transition-all border border-[#E2E8F0]"
+                >
+                  Cancelar
+                </button>
+                <button
+                  disabled={isSaving}
+                  type="submit"
+                  className="flex-[2] bg-[#0F172A] hover:bg-slate-700 text-white py-3 rounded-xl font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSaving ? <Save className="animate-spin" size={15} /> : <CheckCircle size={15} />}
                   {isSaving ? 'Guardando...' : (isEditing ? 'Actualizar Producto' : 'Crear Producto')}
                 </button>
               </div>
