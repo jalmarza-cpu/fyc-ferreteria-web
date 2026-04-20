@@ -86,38 +86,47 @@ export const getProductImageUrl = (productName: string, imagePath?: string, sku?
 
 /**
  * Genera lista de URLs candidatas en orden de preferencia.
- * OPTIMIZADO: Solo 2 intentos para minimizar latencia en cascada.
+ * OPTIMIZADO: Prioriza WebP (60-80% más liviano), cae en JPG si no existe.
  *
  * Estrategia:
- *   1. JPG original desde Supabase Storage (siempre disponible, cacheado por Cloudflare)
- *   2. Fallback: logo local
+ *   1. WebP desde Supabase Storage CDN (Cloudflare lo cachea en Santiago)
+ *   2. JPG original como fallback
+ *   3. Logo local
  *
- * NOTA: El endpoint render/image (transformaciones WebP) añade latencia extra
- * al pasar por servidores Supabase antes del CDN. Usar /object/public/ directamente
- * es más rápido porque Cloudflare lo cachea desde el primer request desde Santiago.
+ * NOTA: Las imágenes WebP son generadas por scripts/convert-images-to-webp.mjs
+ * Cloudflare cachea /object/public/ directamente desde su PoP de Santiago.
  */
 export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
-  // Si ya es una URL completa (subida vía Admin), usarla directamente
+  const base = `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2`;
+
+  // Si ya es una URL completa (subida vía Admin Dashboard)
   if (imagePath?.startsWith('http')) {
+    // Intentar convertir la URL a su variante WebP si termina en .jpg/.png
+    const webpUrl = imagePath.replace(/\.(jpg|jpeg|png|JPG|JPEG|PNG)(\?.*)?$/, '.webp');
+    if (webpUrl !== imagePath) {
+      return [webpUrl, imagePath, '/logo-fyc.png'];
+    }
     return [imagePath, '/logo-fyc.png'];
   }
 
   if (sku) {
-    // Usar /object/public/ (CDN directo) en lugar de /render/image/ (pasa por servidor)
-    // Cloudflare tiene nodos en Santiago → cachea este endpoint en milisegundos.
-    const base = `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2`;
     return [
+      // 1º WebP (60-80% más liviano, mismo aspecto visual)
+      `${base}/${sku}.webp`,
+      // 2º JPG original (fallback por si WebP no fue generado aún)
       `${base}/${sku}.jpg`,
       `${base}/${sku}.JPG`,
+      // 3º Logo local
       '/logo-fyc.png'
     ];
   }
 
   // Si hay ruta relativa como "Alicates/070323-Alicate-Ford-8.jpg"
   if (imagePath) {
-    const base = `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2`;
+    const webpPath = imagePath.replace(/\.(jpg|jpeg|png|JPG|JPEG|PNG)$/, '.webp');
     return [
-      `${base}/${imagePath}`,
+      `${base}/${webpPath}`,   // Preferir WebP
+      `${base}/${imagePath}`,  // Fallback JPG original
       '/logo-fyc.png'
     ];
   }
