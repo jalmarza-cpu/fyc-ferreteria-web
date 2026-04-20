@@ -596,7 +596,8 @@ const AppContent = () => {
         let dbSubcats: { parentCategory: string, subcategory: string }[] = [];
         let dbCategoriesList: string[] = ['Todas'];
         
-        if (catRes.data) {
+        if (catRes.data && catRes.data.length > 0) {
+          // Tabla categorias existe y tiene datos → usar jerarquía real
           const principales = catRes.data.filter((c: any) => !c.parent_id);
           const principalesMap = new Map(principales.map((c: any) => [c.id, c.nombre]));
           dbCategoriesList = ['Todas', ...principales.map((c: any) => c.nombre)];
@@ -611,6 +612,24 @@ const AppContent = () => {
           if (isMounted) {
             setLiveCategories(dbCategoriesList);
             setLiveSubcats(dbSubcats);
+          }
+        } else if (prodRes.data && prodRes.data.length > 0) {
+          // FALLBACK: tabla categorias vacía o inaccesible → derivar desde productos
+          console.warn('[FYC] Tabla categorias vacía o inaccesible. Derivando categorías desde productos.');
+          const seen = new Set<string>();
+          const uniqueCats: string[] = [];
+          for (const p of prodRes.data) {
+            const cat = (p.categoria || '').trim();
+            if (cat && !seen.has(cat)) {
+              seen.add(cat);
+              uniqueCats.push(cat);
+            }
+          }
+          uniqueCats.sort();
+          dbCategoriesList = ['Todas', ...uniqueCats];
+          if (isMounted) {
+            setLiveCategories(dbCategoriesList);
+            setLiveSubcats([]); // Sin jerarquía disponible
           }
         }
 
