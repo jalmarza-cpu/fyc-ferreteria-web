@@ -97,7 +97,7 @@ export const getProductImageUrl = (productName: string, imagePath?: string, sku?
  * Cloudflare cachea /object/public/ directamente desde su PoP de Santiago.
  */
 export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
-  const base = `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2`;
+  const base = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/productos-v2`;
 
   // Si ya es una URL completa (subida vía Admin Dashboard)
   if (imagePath?.startsWith('http')) {

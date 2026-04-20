@@ -66,10 +66,10 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
 
           {/* Logo & Mobile Menu */}
           <div className="flex items-center gap-4">
-            <button onClick={onMenuClick} className="lg:hidden text-white hover:text-[#FFFFFF] transition-colors">
+            <button onClick={onMenuClick} aria-label="Abrir menú de navegación" className="lg:hidden text-white hover:text-[#FFFFFF] transition-colors">
               <Menu className="w-6 h-6" />
             </button>
-            <div className="select-none cursor-pointer hover:opacity-90 transition-opacity" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <div role="button" aria-label="Ir al inicio de FYC Ferretería" className="select-none cursor-pointer hover:opacity-90 transition-opacity" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <img
                 src="/logo-fyc.png"
                 alt="Ferretería FYC"
@@ -94,7 +94,9 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
               <Search className="h-4 w-4 text-neutral-500 group-focus-within:text-[#FFFFFF] transition-colors" />
             </div>
             <input
+              id="search-desktop"
               type="text"
+              aria-label="Buscar productos en el catálogo"
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
               onFocus={() => setShowDropdown(searchTerm.trim().length > 1)}
@@ -149,7 +151,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
           <div className="flex items-center gap-6">
             <div className="hidden md:flex flex-col items-end text-right">
               <span className="text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-0.5">Cotizar Ahora</span>
-              <a href={`https://wa.me/${CONTACT_PHONE}?text=Hola,%20necesito%20una%20cotización.`} target="_blank" rel="noopener noreferrer" className="text-white text-xs font-bold hover:text-[#FFFFFF] transition-colors flex items-center gap-1">
+              <a href={`https://wa.me/${CONTACT_PHONE}?text=Hola,%20necesito%20una%20cotización.`} target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" className="text-white text-xs font-bold hover:text-[#FFFFFF] transition-colors flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                 WhatsApp Directo
               </a>
@@ -158,6 +160,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
             {/* --- BOTÓN DE CARRITO (PALETA CORPORATIVA) --- */}
             <button
               onClick={toggleCart}
+              aria-label={`Abrir carrito de compras. ${totalItems} producto${totalItems !== 1 ? 's' : ''}. Total: ${formatPriceHeader(totalPrice)}`}
               className="relative group flex items-center gap-3 bg-[#FFFFFF] hover:bg-[#FFED4D] text-black pl-1.5 pr-5 py-1.5 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.4)]"
             >
               {/* Círculo Negro con Ícono Amarillo */}
@@ -194,7 +197,9 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onMenuClick
         <div className="lg:hidden mt-4 relative z-50">
           <Search className="absolute left-3 top-4 w-4 h-4 text-neutral-500" />
           <input
+            id="search-mobile"
             type="text"
+            aria-label="Buscar productos en el catálogo"
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             onFocus={() => setShowDropdown(searchTerm.trim().length > 1)}

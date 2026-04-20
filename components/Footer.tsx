@@ -32,6 +32,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Síguenos en Instagram"
+                aria-label="Síguenos en Instagram"
                 className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center hover:bg-[#FFFFFF] hover:text-black transition-all"
               >
                 <Instagram className="w-5 h-5" />

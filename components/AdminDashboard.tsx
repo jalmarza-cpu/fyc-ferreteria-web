@@ -3,9 +3,9 @@ import { supabase, getProductImageUrl, getProductImageFallbacks } from '../utils
 import { createClient } from '@supabase/supabase-js';
 import { Search, AlertTriangle, Plus, Package, Save, CheckCircle, X, Image as ImageIcon, CameraOff, Edit, Upload, Trash2, FilterX } from 'lucide-react';
 
-// 🛑 MODO EMERGENCIA: Forzamos Service Role Key para saltar políticas RLS
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://ppijxgxmqhblgssrjdky.supabase.co';
-const SERVICE_ROLE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwaWp4Z3htcWhibGdzc3JqZGt5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjIwNzE2MSwiZXhwIjoyMDkxNzgzMTYxfQ.TRhzmUtLcK0H4vC9wThV6QgY7RVrCFYnkIwNWWoBW48';
+// ADMIN PANEL: Requiere VITE_SUPABASE_SERVICE_ROLE_KEY en variables de entorno de Vercel
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SERVICE_ROLE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY;
 
 const adminSupabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
   auth: { persistSession: false }
@@ -87,9 +87,8 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         method: 'POST',
         mode: 'no-cors'
       });
-      console.log('Cloudflare purge triggered');
-    } catch (e) {
-      console.error('Error triggering Cloudflare purge:', e);
+    } catch (_e) {
+      // Error silencioso — el purge es best-effort
     }
   };
 
