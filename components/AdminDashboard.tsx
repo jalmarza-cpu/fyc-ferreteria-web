@@ -751,7 +751,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((p) => (
-                <tr key={p.id} className={`transition group ${!p.stock ? 'bg-red-50' : 'hover:bg-slate-50'}`}>
+                <tr key={p.id} className={`transition group ${!p.stock ? 'bg-red-50' : 'hover:bg-blue-50/30 even:bg-slate-50/60'}`}>
                   <td className="p-6">
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 bg-gray-100 rounded-lg border border-gray-200 overflow-hidden flex-shrink-0 flex items-center justify-center relative">
@@ -828,7 +828,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                   </td>
                   <td className="p-6">
                     <div className="flex flex-col gap-2">
-                      <button onClick={() => openEditModal(p)} className="w-full bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 py-2 rounded-lg text-[8px] font-black tracking-[0.2em] flex items-center justify-center gap-2 transition">
+                      <button onClick={() => openEditModal(p)} className="w-full bg-white hover:bg-[#0F172A] border border-[#0F172A]/30 text-[#0F172A] hover:text-white py-2 rounded-lg text-[8px] font-black tracking-[0.2em] flex items-center justify-center gap-2 transition-all duration-200 shadow-sm">
                         <Edit size={10} /> EDITAR
                       </button>
                       <button
