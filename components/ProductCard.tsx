@@ -24,43 +24,39 @@ const DynamicImage = ({ product, className, onClick, style }: { product: Product
   const [isLoading, setIsLoading] = useState(true);
   const currentSrc = urls[index] || '/logo-fyc.png';
 
+  // Resetear estado de carga cuando cambia el producto
   useEffect(() => {
+    setIndex(0);
     setIsLoading(true);
-    if (currentSrc === '/logo-fyc.png') {
-       setIsLoading(false);
-       return;
-    }
-    
-    let isMounted = true;
-    const img = new window.Image();
-    
-    img.onload = () => { 
-      if (isMounted) setIsLoading(false); 
-    };
-    img.onerror = () => {
-      if (!isMounted) return;
-      setIndex(i => Math.min(i + 1, urls.length - 1));
-    };
-    img.src = currentSrc;
+  }, [product.sku]);
 
-    return () => {
-      isMounted = false;
-    };
-  }, [currentSrc, urls]);
+  const handleLoad = () => setIsLoading(false);
+
+  const handleError = () => {
+    const next = index + 1;
+    if (next < urls.length) {
+      setIndex(next);
+    } else {
+      setIsLoading(false); // mostrar logo fallback sin pulsar
+    }
+  };
 
   return (
     <>
       {isLoading && (
         <div className="absolute inset-0 bg-[#1A1A1A] animate-pulse rounded-lg z-0 pointer-events-none" />
       )}
-      <img 
-        src={currentSrc} 
-        alt={`${product.name} - SKU: ${product.sku}`} 
-        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 relative z-10`} 
+      <img
+        key={currentSrc}
+        src={currentSrc}
+        alt={`${product.name} - SKU: ${product.sku}`}
+        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 relative z-10`}
         onClick={onClick}
         style={style}
         loading="lazy"
         decoding="async"
+        onLoad={handleLoad}
+        onError={handleError}
       />
     </>
   );

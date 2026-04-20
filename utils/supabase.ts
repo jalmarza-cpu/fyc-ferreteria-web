@@ -86,21 +86,42 @@ export const getProductImageUrl = (productName: string, imagePath?: string, sku?
 
 /**
  * Genera lista de URLs candidatas en orden de preferencia.
- * 1. WebP optimizado 480px (thumbnail rápido)
- * 2. WebP optimizado 800px (fallback calidad media)
- * 3. JPG original sin transformar
- * 4. Logo de fallback local
+ * OPTIMIZADO: Solo 2 intentos para minimizar latencia en cascada.
+ *
+ * Estrategia:
+ *   1. JPG original desde Supabase Storage (siempre disponible, cacheado por Cloudflare)
+ *   2. Fallback: logo local
+ *
+ * NOTA: El endpoint render/image (transformaciones WebP) añade latencia extra
+ * al pasar por servidores Supabase antes del CDN. Usar /object/public/ directamente
+ * es más rápido porque Cloudflare lo cachea desde el primer request desde Santiago.
  */
 export const getProductImageFallbacks = (imagePath?: string, sku?: string): string[] => {
+  // Si ya es una URL completa (subida vía Admin), usarla directamente
+  if (imagePath?.startsWith('http')) {
+    return [imagePath, '/logo-fyc.png'];
+  }
+
   if (sku) {
+    // Usar /object/public/ (CDN directo) en lugar de /render/image/ (pasa por servidor)
+    // Cloudflare tiene nodos en Santiago → cachea este endpoint en milisegundos.
+    const base = `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2`;
     return [
-      `${IMAGE_RENDER_URL}/${sku}.jpg?width=480&format=webp&quality=80`,
-      `${IMAGE_RENDER_URL}/${sku}.JPG?width=480&format=webp&quality=80`,
-      `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.jpg`,
-      `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2/${sku}.JPG`,
+      `${base}/${sku}.jpg`,
+      `${base}/${sku}.JPG`,
       '/logo-fyc.png'
     ];
   }
+
+  // Si hay ruta relativa como "Alicates/070323-Alicate-Ford-8.jpg"
+  if (imagePath) {
+    const base = `https://ppijxgxmqhblgssrjdky.supabase.co/storage/v1/object/public/productos-v2`;
+    return [
+      `${base}/${imagePath}`,
+      '/logo-fyc.png'
+    ];
+  }
+
   return ['/logo-fyc.png'];
 };
 
