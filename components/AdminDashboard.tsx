@@ -438,7 +438,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
   );
 
   return (
-    <div className="p-4 md:p-8 bg-[#050505] text-white min-h-screen font-sans relative">
+    <div className="p-4 md:p-8 bg-slate-100 text-gray-800 min-h-screen font-sans relative">
       {/* DELETE CONFIRMATION MODAL */}
       {isDeleteModalOpen && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
@@ -622,9 +622,9 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
       )}
 
       {/* HEADER & CONTROLS */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 bg-[#0A0A0A] p-6 rounded-2xl border border-[#222]">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-1 flex items-center gap-3 text-balance">
+          <h1 className="text-3xl font-black text-gray-900 tracking-tighter uppercase mb-1 flex items-center gap-3 text-balance">
             <Package className="text-yellow-500 hidden sm:block" /> Centro de <span className="text-yellow-500">Control</span>
           </h1>
           <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em]">Inventario Maestro | F&C Soluciones Ferreteras</p>
@@ -638,7 +638,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
               placeholder="BUSCAR SKU O NOMBRE..."
               value={localSearchTerm}
               onChange={(e) => setLocalSearchTerm(e.target.value)}
-              className="w-full bg-[#111] border border-[#333] focus:border-yellow-500 rounded-lg py-3 pl-10 pr-4 text-[10px] font-black uppercase transition-all outline-none"
+              className="w-full bg-white border border-gray-300 focus:border-yellow-500 rounded-lg py-3 pl-10 pr-4 text-[10px] font-black uppercase transition-all outline-none text-gray-700"
             />
             {localSearchTerm && (
               <button onClick={() => setLocalSearchTerm('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white">
@@ -658,49 +658,49 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
 
       {/* STATS MINI BAR - INTERACTIVE FILTERS */}
       <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-8">
-        <button onClick={() => setActiveFilter('all')} className={`bg-[#0A0A0A] border p-4 rounded-xl flex items-center gap-4 transition text-left group ${activeFilter === 'all' ? 'border-zinc-100 ring-1 ring-zinc-500' : 'border-[#222] hover:border-zinc-700'}`}>
+        <button onClick={() => setActiveFilter('all')} className={`bg-white border p-4 rounded-xl flex items-center gap-4 transition text-left group shadow-sm ${activeFilter === 'all' ? 'border-gray-700 ring-1 ring-gray-400' : 'border-gray-200 hover:border-gray-400'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'all' ? 'bg-zinc-100 text-black' : 'bg-zinc-900 text-zinc-400'}`}><Package size={18} /></div>
           <div>
-            <p className="text-[9px] text-neutral-500 font-black uppercase">Total SKU</p>
-            <p className="text-xl font-black text-white leading-none mt-1">{productos.filter(p => p.estado_visibilidad !== false).length}</p>
+            <p className="text-[9px] text-gray-500 font-black uppercase">Total SKU</p>
+            <p className="text-xl font-black text-gray-900 leading-none mt-1">{productos.filter(p => p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
-        <button onClick={() => setActiveFilter('out_of_stock')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'out_of_stock' ? 'border-red-600 ring-1 ring-red-900/50' : 'border-[#222] border-l-red-600/50 hover:border-red-900'}`}>
+        <button onClick={() => setActiveFilter('out_of_stock')} className={`bg-white border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left shadow-sm ${activeFilter === 'out_of_stock' ? 'border-red-600 ring-1 ring-red-200' : 'border-gray-200 border-l-red-400 hover:border-red-300'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'out_of_stock' ? 'bg-red-600 text-white' : 'bg-red-950/20 text-red-500'}`}><AlertTriangle size={18} /></div>
           <div>
-            <p className="text-[9px] text-neutral-500 font-black uppercase">Agotados</p>
+            <p className="text-[9px] text-gray-500 font-black uppercase">Agotados</p>
             <p className="text-xl font-black text-red-500 leading-none mt-1">{productos.filter(p => !p.stock && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
-        <button onClick={() => setActiveFilter('no_image')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'no_image' ? 'border-yellow-600 ring-1 ring-yellow-900/50' : 'border-[#222] border-l-yellow-600/50 hover:border-yellow-900'}`}>
+        <button onClick={() => setActiveFilter('no_image')} className={`bg-white border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left shadow-sm ${activeFilter === 'no_image' ? 'border-yellow-500 ring-1 ring-yellow-200' : 'border-gray-200 border-l-yellow-400 hover:border-yellow-300'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'no_image' ? 'bg-yellow-600 text-black' : 'bg-yellow-950/20 text-yellow-500'}`}><CameraOff size={18} /></div>
           <div>
-            <p className="text-[9px] text-neutral-500 font-black uppercase">Sin Foto</p>
+            <p className="text-[9px] text-gray-500 font-black uppercase">Sin Foto</p>
             <p className="text-xl font-black text-yellow-500 leading-none mt-1">{productos.filter(p => isNoImage(p.imagen_url) && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
-        <button onClick={() => setActiveFilter('in_stock')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'in_stock' ? 'border-green-600 ring-1 ring-green-900/50' : 'border-[#222] border-l-green-600/50 hover:border-green-900'}`}>
+        <button onClick={() => setActiveFilter('in_stock')} className={`bg-white border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left shadow-sm ${activeFilter === 'in_stock' ? 'border-green-600 ring-1 ring-green-200' : 'border-gray-200 border-l-green-400 hover:border-green-300'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'in_stock' ? 'bg-green-600 text-white' : 'bg-green-950/20 text-green-500'}`}><CheckCircle size={18} /></div>
           <div>
-            <p className="text-[9px] text-neutral-500 font-black uppercase">En Stock</p>
+            <p className="text-[9px] text-gray-500 font-black uppercase">En Stock</p>
             <p className="text-xl font-black text-green-500 leading-none mt-1">{productos.filter(p => p.stock && p.estado_visibilidad !== false).length}</p>
           </div>
         </button>
 
-        <button onClick={() => setActiveFilter('trash')} className={`bg-[#0A0A0A] border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left ${activeFilter === 'trash' ? 'border-zinc-500 ring-1 ring-zinc-500/50' : 'border-[#222] border-l-zinc-600/50 hover:border-zinc-500'}`}>
+        <button onClick={() => setActiveFilter('trash')} className={`bg-white border p-4 rounded-xl border-l-4 flex items-center gap-4 transition text-left shadow-sm ${activeFilter === 'trash' ? 'border-gray-500 ring-1 ring-gray-200' : 'border-gray-200 border-l-gray-400 hover:border-gray-400'}`}>
           <div className={`p-3 rounded-lg transition ${activeFilter === 'trash' ? 'bg-zinc-600 text-white' : 'bg-zinc-950/20 text-zinc-500'}`}><Trash2 size={18} /></div>
           <div>
-            <p className="text-[9px] text-neutral-500 font-black uppercase">Papelera</p>
+            <p className="text-[9px] text-gray-500 font-black uppercase">Papelera</p>
             <p className="text-xl font-black text-zinc-500 leading-none mt-1">{productos.filter(p => p.estado_visibilidad === false).length}</p>
           </div>
         </button>
 
-        <button onClick={() => { setActiveFilter('all'); setLocalSearchTerm(''); setSelectedCategory('Todas'); }} className="bg-zinc-900 hover:bg-zinc-800 p-4 rounded-xl flex items-center justify-center gap-3 transition group col-span-2 lg:col-span-1">
-          <FilterX className="text-zinc-500 group-hover:text-white transition" size={18} />
-          <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-white">Limpiar</span>
+        <button onClick={() => { setActiveFilter('all'); setLocalSearchTerm(''); setSelectedCategory('Todas'); }} className="bg-white hover:bg-gray-50 border border-gray-200 p-4 rounded-xl flex items-center justify-center gap-3 transition group col-span-2 lg:col-span-1 shadow-sm">
+          <FilterX className="text-gray-400 group-hover:text-gray-700 transition" size={18} />
+          <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-gray-700">Limpiar</span>
         </button>
       </div>
 
@@ -714,7 +714,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
               className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest whitespace-nowrap transition-all border
                 ${selectedCategory === cat
                   ? 'bg-yellow-500 text-black border-yellow-500'
-                  : 'bg-[#111] text-neutral-500 border-[#222] hover:border-neutral-700'}`}
+                  : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}`}
             >
               {cat}
             </button>
@@ -738,23 +738,23 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
         </div>
       )}
 
-      <div className="bg-[#0A0A0A] rounded-2xl border border-[#222] overflow-hidden shadow-2xl">
+      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#111] text-neutral-500 uppercase text-[9px] font-black tracking-[0.25em] border-b border-[#222]">
+              <tr className="bg-slate-50 text-gray-400 uppercase text-[9px] font-black tracking-[0.25em] border-b border-gray-200">
                 <th className="p-6">Maestro de Producto</th>
                 <th className="p-6 text-center">M. Mayorista</th>
                 <th className="p-6 text-center">M. Detalle</th>
                 <th className="p-6 text-center w-40">Acciones / Stock</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#222]">
+            <tbody className="divide-y divide-gray-100">
               {filtered.map((p) => (
-                <tr key={p.id} className={`transition group ${!p.stock ? 'bg-red-900/[0.03]' : 'hover:bg-zinc-900/40'}`}>
+                <tr key={p.id} className={`transition group ${!p.stock ? 'bg-red-50' : 'hover:bg-slate-50'}`}>
                   <td className="p-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 bg-zinc-950 rounded-lg border border-[#222] overflow-hidden flex-shrink-0 flex items-center justify-center relative">
+                      <div className="w-14 h-14 bg-gray-100 rounded-lg border border-gray-200 overflow-hidden flex-shrink-0 flex items-center justify-center relative">
                         {p.sku || !isNoImage(p.imagen_url) ? (
                           <AdminDynamicImage nombre={p.nombre} imagen_url={p.imagen_url} sku={p.sku} className="w-full h-full object-cover" />
                         ) : (
@@ -766,7 +766,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                         {isNoImage(p.imagen_url) && !p.sku && <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-yellow-500/80 rounded-full border border-black animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>}
                       </div>
                       <div>
-                        <div className={`font-black uppercase text-xs leading-tight max-w-sm truncate ${!p.stock ? 'text-red-400' : 'text-zinc-100'}`}>
+                        <div className={`font-black uppercase text-xs leading-tight max-w-sm truncate ${!p.stock ? 'text-red-500' : 'text-gray-900'}`}>
                           {p.nombre}
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
@@ -779,11 +779,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                     </div>
                   </td>
                   <td className="p-6 text-center">
-                    <div className="inline-flex items-center bg-[#111] border border-[#333] rounded-lg px-3 py-2 group-hover:border-yellow-500/30 transition-all">
+                    <div className="inline-flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 group-hover:border-yellow-500/50 transition-all">
                       <span className="text-neutral-600 font-black text-xs mr-1">$</span>
                       <input
                         type="number"
-                        className="bg-transparent w-20 text-center font-black text-sm outline-none text-zinc-300"
+                        className="bg-transparent w-20 text-center font-black text-sm outline-none text-gray-700"
                         defaultValue={p.precio_mayorista}
                         onBlur={async (e) => {
                           const val = parseInt(e.target.value);
@@ -828,7 +828,7 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                   </td>
                   <td className="p-6">
                     <div className="flex flex-col gap-2">
-                      <button onClick={() => openEditModal(p)} className="w-full bg-[#111] hover:bg-[#222] border border-[#333] text-white py-2 rounded-lg text-[8px] font-black tracking-[0.2em] flex items-center justify-center gap-2 transition">
+                      <button onClick={() => openEditModal(p)} className="w-full bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 py-2 rounded-lg text-[8px] font-black tracking-[0.2em] flex items-center justify-center gap-2 transition">
                         <Edit size={10} /> EDITAR
                       </button>
                       <button
