@@ -1,8 +1,29 @@
 import React from 'react';
 import { Truck, PackageCheck, ShieldCheck } from 'lucide-react';
 
-const partners = [
-  "DeWalt", "Makita", "Bosch", "Milwaukee", "Stanley", "Toughbuilt", "Truper"
+const clients = [
+  {
+    name: "K'iris Inmobiliaria",
+    logo: "/assets/clients/logo-Kiris-inmobiliaria.png",
+    // Logo con fondo blanco → invertimos para fondo oscuro
+    style: "grayscale invert brightness-150 opacity-50 hover:opacity-90 hover:grayscale-0 hover:invert-0 hover:brightness-100",
+  },
+  {
+    name: "INNOBATE Agency",
+    logo: "/assets/clients/logo-innobate.png",
+    style: "grayscale brightness-150 opacity-50 hover:opacity-90 hover:grayscale-0 hover:brightness-100",
+  },
+  {
+    name: "Taller Villar",
+    logo: "/assets/clients/logo-electricidad-y-mecanica-villar.png",
+    style: "grayscale brightness-150 opacity-50 hover:opacity-90 hover:grayscale-0 hover:brightness-100",
+  },
+  {
+    name: "TransBravo",
+    logo: "/assets/clients/Logo-transbravo-con-texto-con-fondo-negro.jpeg",
+    // Logo ya tiene fondo negro → ideal para fondo oscuro
+    style: "grayscale brightness-200 opacity-50 hover:opacity-90 hover:grayscale-0 hover:brightness-100",
+  },
 ];
 
 const AuthorityLayer: React.FC = () => {
@@ -33,17 +54,25 @@ const AuthorityLayer: React.FC = () => {
         </div>
       </div>
 
-      {/* Partners Carousel / Grid */}
+      {/* Clientes — Social Proof */}
       <div className="border-t border-[#111] bg-[#0A0A0A] py-10 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12">
-          <p className="text-center text-[10px] font-bold text-[#A0AEC0] uppercase tracking-[0.3em] mb-8">
-            HERRAMIENTAS DE CLASE MUNDIAL EN NUESTRO STOCK
+          <p className="text-center text-[10px] font-bold text-[#A0AEC0] uppercase tracking-[0.3em] mb-10">
+            EMPRESAS QUE CONFÍAN EN NOSOTROS
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
-            {partners.map((partner, idx) => (
-              <span key={idx} className="font-industrial font-black text-2xl md:text-3xl tracking-tighter text-white opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default">
-                {partner}
-              </span>
+          <div className="flex flex-wrap justify-center items-center gap-x-14 gap-y-8">
+            {clients.map((client, idx) => (
+              <div
+                key={idx}
+                title={client.name}
+                className="flex items-center justify-center h-16 cursor-default"
+              >
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className={`h-12 max-w-[160px] object-contain transition-all duration-300 ${client.style}`}
+                />
+              </div>
             ))}
           </div>
         </div>
