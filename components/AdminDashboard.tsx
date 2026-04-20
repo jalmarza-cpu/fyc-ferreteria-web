@@ -803,11 +803,11 @@ const AdminDashboard = ({ searchTerm = '', onSearchChange }) => {
                     </div>
                   </td>
                   <td className="p-6 text-center">
-                    <div className="inline-flex items-center bg-[#111] border border-[#333] rounded-lg px-3 py-2 group-hover:border-yellow-500/30 transition-all">
+                    <div className="inline-flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 group-hover:border-yellow-500/50 transition-all">
                       <span className="text-neutral-600 font-black text-xs mr-1">$</span>
                       <input
                         type="number"
-                        className="bg-transparent w-20 text-center font-black text-sm outline-none text-zinc-300"
+                        className="bg-transparent w-20 text-center font-black text-sm outline-none text-gray-700"
                         defaultValue={p.precio_retail}
                         onBlur={async (e) => {
                           const val = parseInt(e.target.value);
