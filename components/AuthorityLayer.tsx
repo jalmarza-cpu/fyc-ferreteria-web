@@ -5,25 +5,23 @@ const clients = [
   {
     name: "K'iris Inmobiliaria",
     logo: "/assets/clients/logo-Kiris-sin-fondo.png",
-    // Texto negro + fondo transparente en sitio oscuro
-    // brightness-0 → todo negro puro → invert → todo blanco puro ✓
-    style: "brightness-0 invert opacity-50 hover:brightness-100 hover:invert-0 hover:opacity-90",
+    // Texto negro en sitio oscuro → necesita fondo claro propio
+    needsLightBg: true,
   },
   {
     name: "INNOBATE Agency",
     logo: "/assets/clients/logo-innobate.png",
-    style: "grayscale brightness-150 opacity-50 hover:opacity-90 hover:grayscale-0 hover:brightness-100",
+    needsLightBg: false,
   },
   {
     name: "Taller Villar",
     logo: "/assets/clients/logo-electricidad-y-mecanica-villar.png",
-    style: "grayscale brightness-150 opacity-50 hover:opacity-90 hover:grayscale-0 hover:brightness-100",
+    needsLightBg: false,
   },
   {
     name: "TransBravo",
     logo: "/assets/clients/Logo-transbravo-con-texto-con-fondo-negro.jpeg",
-    // Logo ya tiene fondo negro → ideal para fondo oscuro
-    style: "grayscale brightness-200 opacity-50 hover:opacity-90 hover:grayscale-0 hover:brightness-100",
+    needsLightBg: false,
   },
 ];
 
@@ -56,22 +54,27 @@ const AuthorityLayer: React.FC = () => {
       </div>
 
       {/* Clientes — Social Proof */}
-      <div className="border-t border-[#111] bg-[#0A0A0A] py-10 overflow-hidden">
+      <div className="border-t border-[#111] bg-[#0A0A0A] py-14 overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12">
-          <p className="text-center text-[10px] font-bold text-[#A0AEC0] uppercase tracking-[0.3em] mb-10">
+          <p className="text-center text-[10px] font-bold text-[#A0AEC0] uppercase tracking-[0.3em] mb-12">
             EMPRESAS QUE CONFÍAN EN NOSOTROS
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-14 gap-y-8">
+
+          <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-10">
             {clients.map((client, idx) => (
               <div
                 key={idx}
                 title={client.name}
-                className="flex items-center justify-center h-16 cursor-default"
+                className={`flex items-center justify-center transition-all duration-300 hover:scale-105 ${
+                  client.needsLightBg
+                    ? 'bg-white rounded-xl px-5 py-3'
+                    : ''
+                }`}
               >
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className={`h-12 max-w-[160px] object-contain transition-all duration-300 ${client.style}`}
+                  className="h-20 max-w-[200px] object-contain"
                 />
               </div>
             ))}
