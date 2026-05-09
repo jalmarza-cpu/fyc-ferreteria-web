@@ -368,7 +368,7 @@ const CartDrawer = () => {
                         <Send className="w-4 h-4" /> Cotizar Rápido por WhatsApp
                       </button>
                       <button onClick={() => setStep('checkout')} className="w-full py-3 bg-transparent border border-[#333] hover:border-[#FFFFFF] text-neutral-300 hover:text-white font-bold text-[10px] uppercase tracking-wider rounded transition-colors flex items-center justify-center gap-2">
-                        Solicitar Factura Pyme <ArrowRight className="w-3 h-3" />
+                        Elegir Boleta o Factura <ArrowRight className="w-3 h-3" />
                       </button>
                     </>
                   ) : (
